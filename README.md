@@ -1,27 +1,31 @@
-#Założenia dot. użytkownika#
-* ogólne podejście typu "mam wolne 2 godziny, co mogę teraz obejrzeć?"
-* kilka wybranych programów dla których chciałby znaleźć czas, choć też w granicach rozsądku - środek nocy czy praca nie mają sensu
+# imanengineer
+Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 
-#Funkcjonalność#
+## Założenia dot. użytkownika
+* ogólne podejście typu "mam wolne 2 godziny, co mogę teraz obejrzeć?"
+* kilka wybranych programów dla których chciałby znaleźć czas, choć też w granicach rozsądku - środek nocy czy godziny pracy nie mają sensu
+
+## Funkcjonalność
 * rejestracja użytkowników
 * bez logowania:
-	* przegląd programu TV na dzisiaj
+	* przegląd programu TV na dzisiaj/jutro
 	* filtrowanie kanałów
 	* wyszukiwanie programów
 * zalogowany:
-	* zapamiętywanie ulubionych kanałów
+	* zapamiętywanie ulubionych kanałów/programów
 	* konfigurowalne powiadomienia
 		* poziom (tylko ręcznie włączane, cykliczne, polecane)
 		* czas (nie ma sensu powiadamianie użytkownika o programie lecącym o 10 rano, kiedy prawdopodobnie jest w pracy)
-	* **rekomendacje** - content based w oparciu o opisy, wspierany collaborative? dane o preferencjach na podstawie zapisanych ulubionych i wyszukiwań
+	* **rekomendacje** - content based w oparciu o opisy, wspierany collaborative?  - *ważna część, ale mają sens dopiero jeżeli cała reszta będzie gotowa*
+		* dane o preferencjach na podstawie zapisanych ulubionych i wyszukiwań
 		* tf-idf do analizy tekstu
 * od strony serwera - cykliczne uruchamianie grabbera do EPG
 
-#Podobne rozwiązania#
+## Podobne rozwiązania
 * [https://www.filmweb.pl/]() - program TV z rekomendacjami dla filmów. 
 * [https://tastedive.com/shows]() - ogólne rekomendacje dotyczące telewizji, muzyki, książek. nie ma programu
 
-#Źródła danych#
+## Źródła danych
 * [http://www.webgrabplus.com/download]("WebGrab+Plus") - zbiera program z 10 różnych stron (dla Polski); wynikiem jest plik xml zawierający listę dostępnych kanałów i nadawanych przez nie programów
 	* Przykładowy zapis kanału:
 ```xml
@@ -31,6 +35,7 @@
     	<url>http://www.filmweb.pl</url>
 	</channel>
 ```
+
 	* Przykładowy zapis programu:
 ```xml
   <programme start="20181016220500 +0200" stop="20181017003500 +0200" channel="Polsat">
@@ -74,9 +79,20 @@
     </rating>
   </programme>
 ```
+```xml
+<programme start="20181016203500 +0200" stop="20181016230000 +0200" channel="Canal+ Sport">
+    <title lang="pl">Piłka nożna: LOTTO Ekstraklasa - mecz: Legia Warszawa - Lech Poznań</title>
+    <category lang="pl">piłka nożna/futsal</category>
+  </programme>
+```
 
 * grabber z Filmweb udostępnia 396 kanałów, z Interii 404
 * opisy z kilku? pod content based recommendations
 
-
-#Narzędzia
+## Narzędzia
+* Serwer - **ASP.NET Core 2 Web API** - wbudowany XML, LINQ
+* Front-end - **Angular 6** + Bootstrap4 CSS
+* Częśc mobilna - **Android Studio**, hybrydowa aplikacja wykorzystująca WebView - Angularowy front-end
+* Baza danych - **SQLite** *prawdopodobnie* wystarczy. Lekki, prosty w konfiguracji, cała baza w jednym pliku. Jeżeli nie wystarczy - **MSSQL Server**
+* Połączenie z bazą - **Entity Framework Core** - wspiera oba warianty, gotowy Object-Relation Mapping
+* EPG - **WebGrab+Plus**
