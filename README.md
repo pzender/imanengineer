@@ -121,11 +121,11 @@ zbierając dane - opisy - z różnych dostawców programów można dostać dokł
 ## Narzędzia
 * Serwer - **ASP.NET Core 2 Web API** - wbudowany XML, LINQ
 * Front-end - **Angular 6** + Bootstrap4 CSS
-* Częśc mobilna - **Android Studio**, hybrydowa aplikacja wykorzystująca WebView - Angularowy front-end
-* Baza danych - **SQLite** *prawdopodobnie* wystarczy. Lekki, prosty w konfiguracji, cała baza w jednym pliku. Jeżeli nie wystarczy - **MSSQL Server**
+* Częśc mobilna - Progressive Web App - ponowne wykorzystanie Angularowego klienta
+* Baza danych - **SQLite** *prawdopodobnie* wystarczy. Lekki, prosty w konfiguracji, cała baza w jednym pliku. Jeżeli nie wystarczy - **MS-SQL Server**
 * Połączenie z bazą - **Entity Framework Core** - wspiera oba warianty, gotowy Object-Relation Mapping
 * EPG - **WebGrab+Plus**
-* Wdrożenie - **Azure** / raspberry - *tylko brakuje stałego ip*
+* Wdrożenie - **Azure** / raspberry - *tylko brakuje stałego ip* (DynDNS załatwia ten problem. zostaje pytanie o zabezpieczenia i performance. odpada, jeżeli chcemy poważniejszą bazę niż SQLite)
 
 ## Do doczytania
 * content-based recommendations
