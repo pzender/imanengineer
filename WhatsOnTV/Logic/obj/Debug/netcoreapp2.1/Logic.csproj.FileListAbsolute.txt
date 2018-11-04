@@ -1,0 +1,9 @@
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\bin\Debug\netcoreapp2.1\Logic.deps.json
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\bin\Debug\netcoreapp2.1\Logic.dll
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\bin\Debug\netcoreapp2.1\Logic.pdb
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\obj\Debug\netcoreapp2.1\Logic.csprojAssemblyReference.cache
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\obj\Debug\netcoreapp2.1\Logic.csproj.CoreCompileInputs.cache
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\obj\Debug\netcoreapp2.1\Logic.AssemblyInfoInputs.cache
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\obj\Debug\netcoreapp2.1\Logic.AssemblyInfo.cs
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\obj\Debug\netcoreapp2.1\Logic.dll
+D:\pzend\Desktop\imanengineer\WhatsOnTV\Logic\obj\Debug\netcoreapp2.1\Logic.pdb

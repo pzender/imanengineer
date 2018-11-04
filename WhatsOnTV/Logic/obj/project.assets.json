@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "LemmaGenerator/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/LemmaSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net20/LemmaSharp.dll": {}
+        }
+      },
       "Microsoft.NETCore.App/2.1.0": {
         "type": "package",
         "dependencies": {
@@ -211,6 +220,18 @@
     }
   },
   "libraries": {
+    "LemmaGenerator/1.1.0": {
+      "sha512": "K6beYwJIcRS4lyqjaq7wS8FSrMxG9f0n0dBp+xRhnswnB+WR45AGvLBZ1So1x9RBjHGDCjqYBJ1hktJG0qegRQ==",
+      "type": "package",
+      "path": "lemmagenerator/1.1.0",
+      "files": [
+        "content/Classes/7zip/Compress/LzmaAlone/LzmaAlone.csproj",
+        "content/Classes/7zip/Compress/LzmaAlone/LzmaAlone.sln",
+        "lemmagenerator.1.1.0.nupkg.sha512",
+        "lemmagenerator.nuspec",
+        "lib/net20/LemmaSharp.dll"
+      ]
+    },
     "Microsoft.NETCore.App/2.1.0": {
       "sha512": "AvT774nTFgU8cYcGO9j1EMwuayKslxqYTurg32HGpWa2hEYNuW2+XgYVVNcZe6Ndbr84QX6fwaOZfd5n+1m2OA==",
       "type": "package",
@@ -677,6 +698,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "LemmaGenerator >= 1.1.0",
       "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
@@ -721,6 +743,10 @@
     "frameworks": {
       "netcoreapp2.1": {
         "dependencies": {
+          "LemmaGenerator": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -735,5 +761,17 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Pakiet „LemmaGenerator 1.1.0” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1” zamiast platformy docelowej projektu „.NETCoreApp,Version=v2.1”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
+      "libraryId": "LemmaGenerator",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    }
+  ]
 }
