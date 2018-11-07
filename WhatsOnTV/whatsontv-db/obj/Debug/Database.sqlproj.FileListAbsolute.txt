@@ -1,0 +1,5 @@
+D:\pzend\Desktop\imanengineer\WhatsOnTV\whatsontv-db\bin\Debug\Database.dacpac
+D:\pzend\Desktop\imanengineer\WhatsOnTV\whatsontv-db\bin\Debug\whatsontv_db.dll
+D:\pzend\Desktop\imanengineer\WhatsOnTV\whatsontv-db\bin\Debug\whatsontv_db.pdb
+D:\pzend\Desktop\imanengineer\WhatsOnTV\whatsontv-db\obj\Debug\whatsontv_db.dll
+D:\pzend\Desktop\imanengineer\WhatsOnTV\whatsontv-db\obj\Debug\whatsontv_db.pdb
