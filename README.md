@@ -114,9 +114,13 @@ zbierając dane - opisy - z różnych dostawców programów można dostać dokł
 <category lang="pl">piłka nożna/futsal</category>
 </programme>
 ```
-
 * grabber z Filmweb udostępnia 396 kanałów, z Interii 404
 * opisy z kilku? pod content based recommendations
+
+## Dostępne cechy
+* sezon/odcinek - dla seriali. do wyłapania przez RegExp-a /\b(?:(?:[Ss]\d{1,2}.?)?[Ee]\d{1,3})\b/
+* aktorzy/reżyser/kraj produkcji/rok - dla filmów i seriali
+* grające drużyny - można wyłowić z tytułu, też RegExpem
 
 ## Narzędzia
 * Serwer - **ASP.NET Core 2 Web API** - wbudowany XML, LINQ
