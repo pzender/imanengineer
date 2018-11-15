@@ -20,13 +20,64 @@ Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 ### Uzasadnienie tematu
 ### Cel pracy
 ## Przegląd istniejących rozwiązań
+
+* [https://www.filmweb.pl/]() - program TV z rekomendacjami dla filmów. 
+	* skupiony na filmach
+	* nie ma danych dla programów sportowych, ograniczone dla popularnonaukowych
+* [https://tastedive.com/shows]() - ogólne rekomendacje dotyczące telewizji, muzyki, książek. nie ma programu. skupia się na "produkcjach telewizyjnych" - serialach itp
+* [https://www.cabletv.com/what-to-watch]() - poleca "produkcje telewizyjne" w oparciu o wskazane przykłady, nie uwzględnia programu
+* [https://www.pandora.com/]() dla muzyki korzysta z tego typu rekomendacji. dostępna tylko w Stanach
+
 ## Założenia projektowe
 ### Opis problemu, wizja
 ### Wymagania (funkcjonalne, niefunkcjonalne)
+`Jako $user, chcę $zrobić_coś, żeby $zyskać`
+#### Gość
+* ST-001: Jako gość, chcę przeglądać program TV, żeby sprawdzić co mogę obejrzeć
+* ST-002: Jako gość, chcę wybrać tylko te kanały które mnie interesują, żeby uprościć szukanie
+* ST-003: Jako gość, chcę zawęzić kanały do oferty mojego dostawcy, żeby uprościć szukanie
+* ST-004: Jako gość, chcę sprawdzić o której godzinie nadawany jest interesujący mnie program
+* ST-005: Jako gość, chcę zarejestrować się w systemie, żeby zapisać moje preferencje 
+
+#### [Zarejestrowany] użytkownik
+
+* ST-006: Jako użytkownik chcę sprawdzić kiedy nadawane są interesujące mnie programy
+* ST-007: Jako użytkownik chcę otrzymywać powiadomienia o interesujących mnie programach, żeby ich nie przegapić
+* ST-008: Jako użytkownik chcę zapisać filtr programów, żeby nie ustawiać go za każdym razem
+* ST-009: Jako użytkownik chcę otrzymać rekomendacje programów, które mogą mnie zainteresować, żeby ułatwić wyszukiwanie
+* ST-010: Jako użytkownik chcę potwierdzić lub odrzucić rekomendację, żeby otrzymywać dokładniejsze wyniki
+* ST-011: Jako użytkownik chcę ustawić w jakich godzinach otrzymuję powiadomienia, żeby nie otrzymywać ich wtedy, kiedy nie mam dostępu do telewizora
+
 ## Projekt aplikacji
 ### Baza danych
 ### Prototyp interfejsu
 ### Architektura aplikacji
+
+#### Aplikacja kliencka
+
+PWA z Angularem, powiadomienia
+
+#### Serwer - REST API
+
+Architektura 3-warstwowa:
+* Prezentacja - odpowiedzialna za obsługę żądań http
+	* Endpointy:
+		* */users/{id}/recommendations* - rekomendowane programy dla danego użytkownika - do wyświetlenia w głównym widoku
+		* */users/{id}/channels* - kanały, którymi jest zainteresowany - do wyświetlenia w widoku programu
+		* */users/{id}* - zarządzanie kontem (ustawienie hasła, zmiana domyślnego loginu, ...?)
+		* */users/{id}/notifications* - powiadomienia?
+		* */channels* - dostępne kanały
+		* */channels/{id}/programmes* - lista nadawanych programów na danym kanale
+		* */programmes* - wszystkie programy. pod szukajkę i może coś jeszcze?
+		* */programmes/{id}* - szczegóły programu
+		* */xmltv* - endpoint do podrzucania pliku z programem? trochę brzydkie - **refactor me?**
+* Logika biznesowa
+	* klasy odpowiedzialne za przetwarzanie XMLa z programem
+	* klasy odpowiedzialne za generowanie rekomendacji
+	* interfejsy repozytoriów
+* Dostęp do danych - odpowiedzialna za połączenie z bazą danych
+	* wzorzec Repozytorium
+
 ## Implementacja
 ## Testy
 ## Podsumowanie
@@ -53,34 +104,6 @@ Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 		* dane o preferencjach na podstawie zapisanych ulubionych i wyszukiwań (wyświetleń szczegółów programu)
 		* `tf-idf` do analizy tekstu
 * od strony serwera - cykliczne uruchamianie grabbera do EPG
-
-### *user-stories*
-
-`Jako $user, chcę $zrobić_coś, żeby $zyskać`
-#### Gość
-* ST-001: Jako gość, chcę przeglądać program TV, żeby sprawdzić co mogę obejrzeć
-* ST-002: Jako gość, chcę wybrać tylko te kanały które mnie interesują, żeby uprościć szukanie
-* ST-003: Jako gość, chcę zawęzić kanały do oferty mojego dostawcy, żeby uprościć szukanie
-* ST-004: Jako gość, chcę sprawdzić o której godzinie nadawany jest interesujący mnie program
-* ST-005: Jako gość, chcę zarejestrować się w systemie, żeby zapisać moje preferencje 
-
-#### [Zarejestrowany] użytkownik
-
-* ST-006: Jako użytkownik chcę sprawdzić kiedy nadawane są interesujące mnie programy
-* ST-007: Jako użytkownik chcę otrzymywać powiadomienia o interesujących mnie programach, żeby ich nie przegapić
-* ST-008: Jako użytkownik chcę zapisać filtr programów, żeby nie ustawiać go za każdym razem
-* ST-009: Jako użytkownik chcę otrzymać rekomendacje programów, które mogą mnie zainteresować, żeby ułatwić wyszukiwanie
-* ST-010: Jako użytkownik chcę potwierdzić lub odrzucić rekomendację, żeby otrzymywać dokładniejsze wyniki
-* ST-011: Jako użytkownik chcę ustawić w jakich godzinach otrzymuję powiadomienia, żeby nie otrzymywać ich wtedy, kiedy nie mam dostępu do telewizora
-
-
-## Podobne rozwiązania
-* [https://www.filmweb.pl/]() - program TV z rekomendacjami dla filmów. 
-	* skupiony na filmach
-	* nie ma danych dla programów sportowych, ograniczone dla popularnonaukowych
-* [https://tastedive.com/shows]() - ogólne rekomendacje dotyczące telewizji, muzyki, książek. nie ma programu. skupia się na "produkcjach telewizyjnych" - serialach itp
-* [https://www.cabletv.com/what-to-watch]() - poleca "produkcje telewizyjne" w oparciu o wskazane przykłady, nie uwzględnia programu
-* [https://www.pandora.com/]() dla muzyki korzysta z tego typu rekomendacji. dostępna tylko w Stanach
 
 zbierając dane - opisy - z różnych dostawców programów można dostać dokładniejszą analizę i w efekcie lepsze rekomendacje
 
