@@ -1,6 +1,37 @@
 # imanengineer
 Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 
+* Wstęp
+	* Uzasadnienie tematu
+	* Cel pracy
+* Przegląd istniejących rozwiązań
+* Założenia projektowe
+	* Opis problemu, wizja
+	* Wymagania (funkcjonalne, niefunkcjonalne)
+* Projekt aplikacji
+	* Baza danych
+	* Prototyp interfejsu
+	* Architektura aplikacji
+* Implementacja
+* Testy
+* Podsumowanie
+
+## Wstęp
+### Uzasadnienie tematu
+### Cel pracy
+## Przegląd istniejących rozwiązań
+## Założenia projektowe
+### Opis problemu, wizja
+### Wymagania (funkcjonalne, niefunkcjonalne)
+## Projekt aplikacji
+### Baza danych
+### Prototyp interfejsu
+### Architektura aplikacji
+## Implementacja
+## Testy
+## Podsumowanie
+
+
 ## Założenia dot. użytkownika
 * ogólne podejście typu "mam wolne 2 godziny, co mogę teraz obejrzeć?"
 * kilka wybranych programów dla których chciałby znaleźć czas, choć też w granicach rozsądku - środek nocy czy godziny pracy nie mają sensu
