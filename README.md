@@ -50,6 +50,9 @@ Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 
 ## Projekt aplikacji
 ### Baza danych
+
+* GuideUpdate - przechowuje dane o każdym z dodanych plików z programem - data dodania i źródło. można z tego korzystać przy opisach
+
 ### Prototyp interfejsu
 ### Architektura aplikacji
 
