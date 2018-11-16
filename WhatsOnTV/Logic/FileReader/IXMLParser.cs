@@ -15,7 +15,7 @@ namespace Logic.FileReader
         ICollection<Feature> ParsedFeatures { get;  }
         ICollection<Programme> ParsedProgrammes { get;  }
 
-        void ParseAll(XDocument arg); //void?
+        GuideUpdate ParseAll(XDocument arg);
         void ParseChannel(XElement arg);
         void ParseDescription(XElement arg, int programme_id, int source_id);
         void ParseDescriptionSource(XElement arg);

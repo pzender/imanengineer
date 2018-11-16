@@ -18,7 +18,7 @@ namespace Logic.FileReader
 
         public Dictionary<string, string> sourceByChannel = new Dictionary<string, string>();
 
-        public void ParseAll(XDocument arg)
+        public GuideUpdate ParseAll(XDocument arg)
         {
             
             throw new NotImplementedException();
