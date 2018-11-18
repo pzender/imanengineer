@@ -1,13 +1,19 @@
 # imanengineer
 Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 
+## Spis treści
+
 * Wstęp
 	* Uzasadnienie tematu
 	* Cel pracy
 * Przegląd istniejących rozwiązań
+	* Statyczne programy TV
+	* Silniki rekomendacji
+	* Serwisy streamingowe	
 * Założenia projektowe
-	* Opis problemu, wizja
-	* Wymagania (funkcjonalne, niefunkcjonalne)
+	* Opis problemu
+	* Wizja rozwiązania
+	* Wymagania funkcjonalne
 * Projekt aplikacji
 	* Baza danych
 	* Prototyp interfejsu
@@ -18,20 +24,72 @@ Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 
 ## Wstęp
 ### Uzasadnienie tematu
+
+Mimo rosnącej konkurencji ze strony internetu i serwisów streamingowych (jak Netflix lub Hulu), telewizja wciąż jest popularną formą rozrywki. Najpopularniejsze programy oglądają miliony ludzi, a gust każdego z nich jest inny. Ogromna różnorodność dostępnych opcji (ponad 400 kanałów na terenie Polski) sprawia, że znalezienie interesującego nas programu wymaga przejrzenia wielu stron pełnych spisów nadawanych audycji. W efekcie często zamiast zrelaksować się przy ulubionym programie, przełączamy po kolei kanały, licząc że w końcu trafimy na coś ciekawego. 
+
 ### Cel pracy
+
+Celem pracy jest ułatwienie użytkownikom poszukiwania istniejących programów przez opracowanie aplikacji pozwalającej na śledzenie swoich preferencji i polecanie im programów, które prawdopodobnie okażą się dla nich interesujące.
+
 ## Przegląd istniejących rozwiązań
 
-* [https://www.filmweb.pl/]() - program TV z rekomendacjami dla filmów. 
-	* skupiony na filmach
-	* nie ma danych dla programów sportowych, ograniczone dla popularnonaukowych
-* [https://tastedive.com/shows]() - ogólne rekomendacje dotyczące telewizji, muzyki, książek. nie ma programu. skupia się na "produkcjach telewizyjnych" - serialach itp
-* [https://www.cabletv.com/what-to-watch]() - poleca "produkcje telewizyjne" w oparciu o wskazane przykłady, nie uwzględnia programu
-* [https://www.pandora.com/]() dla muzyki korzysta z tego typu rekomendacji. dostępna tylko w Stanach
+Istniejące rozwiązania można podzielić na 3 główne grupy - statyczne programy TV, silniki rekomendacji i serwisy streamingowe. W dalszej części nastąpi przegląd każdej z tych grup zawierający przykłady, ich funkcjonalność i ograniczenia. 
+
+### Statyczne programy TV
+**Przykłady:**
+* https://programtv.onet.pl
+* http://tv.wp.pl
+* https://programtv.interia.pl
+
+**Funkcjonalność**
+* Przegląd audycji nadawanych w danym czasie
+
+**Ograniczenia**
+* Nie ma możliwości personalizacji wyników, lub personalizacja bardzo ograniczona - sprowadzająca się do wybrania kanałów i kategorii
+* Nie pozwalają na przechowywanie preferencji użytkownika
+
+Statyczny program jest niewystarczający, ponieważ wymaga od użytkownika określenia celu poszukiwań - użytkownik musi wiedzieć, jakiego programu szuka. Wymagają też ręcznego przeglądu wszystkich dostępnych kanałów.
+
+### Silniki rekomendacji
+**Przykłady:**
+* https://tastedive.com/shows
+* https://www.cabletv.com/what-to-watch
+
+**Funkcjonalność**
+* Rekomendacje dotyczące filmów i seriali na podstawie wprowadzonych przez użytkownika pozycji.
+
+**Ograniczenia**
+* Nie uwzględniają czasu nadawania programów
+* Nie uwzględniają kanałów
+* Nie zawierają programów sportowych, muzycznych itp.
+
+Oba te elementy znacząco ograniczają użyteczność rekomendacji, ponieważ użytkownik w dalszym ciągu nie wie, czy polecany program jest teraz nadawany, kiedy będzie i na jakim kanale.
+
+### Serwisy streamingowe
+**Przykłady**
+* https://www.popcornflix.com
+* https://123vidz.com
+
+**Funkcjonalność**
+* Oglądanie nadawanych w telewizji filmów lub seriali na żądanie
+
+**Ograniczenia**
+* W zależności od typu serwisu, opierają się albo na umowach licencyjnych z dostawcą treści albo na sieciach torrent. Serwisy oparte na sieciach torrent mają oczywisty problem dotyczący praw autorskich. Te oparte o umowy licencyjne najczęściej wymagają opłat, a ich zawartość jest mocno ograniczona.
+* Podobnie jak silniki rekomendacji, nie zawierają programów sportowych, muzycznych itp.
+
+Funkcjonalność dotyczącą rekomendacji i programu w pewien sposób łączy serwis Filmweb (https://www.filmweb.pl), jednak skupia się on tylko na filmach i serialach, w związku z czym również nie uwzględnia programów sportowych ani muzycznych, a dane dotyczące np. programów popularnonaukowych są mocno ograniczone.
 
 ## Założenia projektowe
-### Opis problemu, wizja
-### Wymagania (funkcjonalne, niefunkcjonalne)
-`Jako $user, chcę $zrobić_coś, żeby $zyskać`
+### Opis problemu
+
+Obecnie nie ma na rynku żadnego rozwiązania, które pozwalałoby stwierdzić który z aktualnie nadawanych programów zainteresowałby użytkownika. Takie rozwiązanie jest potrzebne, ze względu na dużą liczbę możliwości, która sprawia że ręczne szukanie jest niewygodne.
+
+### Wizja rozwiązania
+
+Aplikacja ma łączyć w sobie rozwiązania z silników rekomendacji i statycznych programów TV. Dzięki temu użytkownicy będą mogli dowiedzieć się jaki interesujący ich program jest nadawany, w momencie kiedy jest nadawany. To pozwoli im skupić się na oglądanym programie, zamiast na poszukiwaniach.
+
+### Wymagania funkcjonalne
+
 #### Gość
 * ST-001: Jako gość, chcę przeglądać program TV, żeby sprawdzić co mogę obejrzeć
 * ST-002: Jako gość, chcę wybrać tylko te kanały które mnie interesują, żeby uprościć szukanie
@@ -47,6 +105,8 @@ Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 * ST-009: Jako użytkownik chcę otrzymać rekomendacje programów, które mogą mnie zainteresować, żeby ułatwić wyszukiwanie
 * ST-010: Jako użytkownik chcę potwierdzić lub odrzucić rekomendację, żeby otrzymywać dokładniejsze wyniki
 * ST-011: Jako użytkownik chcę ustawić w jakich godzinach otrzymuję powiadomienia, żeby nie otrzymywać ich wtedy, kiedy nie mam dostępu do telewizora
+* ST-012: Jako użytkownik chcę śledzić kolejność odcinków wybranych seriali, żeby nie otrzymywać rekomendacji dotyczących odcinków, które już widziałem
+------
 
 ## Projekt aplikacji
 ### Baza danych
