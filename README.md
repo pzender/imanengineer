@@ -36,9 +36,13 @@ Celem pracy jest ułatwienie użytkownikom poszukiwania istniejących programów
 Istniejące rozwiązania można podzielić na 3 główne grupy - statyczne programy TV, silniki rekomendacji i serwisy streamingowe. W dalszej części nastąpi przegląd każdej z tych grup zawierający przykłady, ich funkcjonalność i ograniczenia. 
 
 ### Statyczne programy TV
+
 **Przykłady:**
-* https://programtv.onet.pl
+
+![Program WP](https://i.imgur.com/5s5u4hi.png)
+
 * http://tv.wp.pl
+* https://programtv.onet.pl
 * https://programtv.interia.pl
 
 **Funkcjonalność**
@@ -52,6 +56,9 @@ Statyczny program jest niewystarczający, ponieważ wymaga od użytkownika okre�
 
 ### Silniki rekomendacji
 **Przykłady:**
+
+![Tastedive](https://i.imgur.com/QkxtOb9.png)
+
 * https://tastedive.com/shows
 * https://www.cabletv.com/what-to-watch
 
@@ -67,6 +74,9 @@ Oba te elementy znacząco ograniczają użyteczność rekomendacji, ponieważ u�
 
 ### Serwisy streamingowe
 **Przykłady**
+
+![Popcornflix](https://i.imgur.com/Gh0iPOg.jpg)
+
 * https://www.popcornflix.com
 * https://123vidz.com
 
