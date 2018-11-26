@@ -29,7 +29,20 @@ Mimo rosnącej konkurencji ze strony internetu i serwisów streamingowych (jak N
 
 ### Cel pracy
 
-Celem pracy jest ułatwienie użytkownikom poszukiwania istniejących programów przez opracowanie aplikacji pozwalającej na śledzenie swoich preferencji i polecanie im programów, które prawdopodobnie okażą się dla nich interesujące.
+Celem pracy jest ułatwienie użytkownikom poszukiwania istniejących programów przez opracowanie aplikacji pozwalającej na zapisanie swoich preferencji i polecanie im programów, które prawdopodobnie okażą się dla nich interesujące.
+
+### Zakres prac
+
+* zebranie danych o nadawanych programach z internetu
+	* web scraping z wykorzystaniem gotowego narzędzia
+	* ekstrakcja informacji z plików wynikowych
+* zebranie danych o preferencjach od użytkowników
+	* interfejs webowy
+* wykorzystanie zebranych danych do przekazania użytkownikowi rekomendacji
+* powiadamianie użytkownika o rekomendowanych programach
+	* aplikacja mobilna
+
+### Przegląd treści?
 
 ## Przegląd istniejących rozwiązań
 
@@ -88,6 +101,14 @@ Oba te elementy znacząco ograniczają użyteczność rekomendacji, ponieważ u�
 * Podobnie jak silniki rekomendacji, nie zawierają programów sportowych, muzycznych itp.
 
 Funkcjonalność dotyczącą rekomendacji i programu w pewien sposób łączy serwis Filmweb (https://www.filmweb.pl), jednak skupia się on tylko na filmach i serialach, w związku z czym również nie uwzględnia programów sportowych ani muzycznych, a dane dotyczące np. programów popularnonaukowych są mocno ograniczone.
+
+### Porównanie rozwiązań
+
+|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 ## Założenia projektowe
 ### Opis problemu
