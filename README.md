@@ -116,11 +116,26 @@ Funkcjonalność dotyczącą rekomendacji i programu w pewien sposób łączy se
 
 ### Porównanie rozwiązań
 
-|   |   |   |   |   |
-|---|---|---|---|---|
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
+| funkcjonalność  | onet, interia | wp | filmweb  | tastedive  | cabletv  | ipla  | moja propozycja |
+|---|---|---|---|---|---|---|---|
+| przegląd nadawanych programów  | TAK  | TAK  | TAK  | NIE  | NIE  | NIE | TAK |
+| personalizacja kanałów  | TAK  |   |   |   |   |
+| personalizacja treści  | NIE  |   |   |   |   |
+| personalizacja czasu  | TAK  |   |   |   |   |
+| wyszukiwanie programów  | NIE  |   |   |   |   |
+| widok chronologiczny  | TAK  |   |   |   |   |
+| rekomendacje filmów  | ograniczone | ograniczone |   |   |   |
+| rekomendacje seriali  | ograniczone | ograniczone |   |   |   |
+| rekomendacje programów sportowych  | ograniczone | ograniczone |   |   |   |
+| śledzenie odcinków seriali  | NIE  |   |   |   |   |
+| VOD  | NIE  |   |   |   |   |
+| streaming treści na żywo  | NIE |   |   |   |   |
+| powiadomienia | NIE |
+| darmowy  | TAK  |   |   |   |   |
+|   |   |   |   |   |   |
+
+**Wnioski:**
+Brakuje na rynku rozwiązań oferujących rekomendacje z uwzględnieniem aktualnego programu. Aplikacje dostarczające treści (w formie VOD lub strumienia na żywo) najczęściej są płatne (co nie powinno dziwić ze względu na koszty samej treści). Z tego powodu implementacja tej funkcjonalności nie mieści się w zakresie pracy. 
 
 ## Założenia projektowe
 ### Opis problemu
