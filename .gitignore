@@ -1,2 +1,8 @@
 WhatsOnTV/.vs
 WebGrab+Plus
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
