@@ -36,11 +36,23 @@ Celem pracy jest ułatwienie użytkownikom poszukiwania istniejących programów
 * zebranie danych o nadawanych programach z internetu
 	* web scraping z wykorzystaniem gotowego narzędzia
 	* ekstrakcja informacji z plików wynikowych
+		* kanały
+		* programy
+		* godziny emisji
+		* opisy
 * zebranie danych o preferencjach od użytkowników
+	* rejestracja użytkowników
+	* przechowywanie danych o preferencjach - programy i seriale oznaczone jako ulubione, 
 	* interfejs webowy
+	* użytkownik zaznacza programy które oglądał lub które chce obejrzeć
+	* wyszukiwanie po tytule
 * wykorzystanie zebranych danych do przekazania użytkownikowi rekomendacji
+	* implementacja tf-idf do wyciągania słów kluczowych
+	* określenie podobieństwa pomiędzy pojedynczymi programami (filmy/mecze)
+	* wskazanie kolejnych odcinków seriali (na podstawie standardowej notacji SXXEYY)
+	* ekran ze zbiorem rekomendowanych programów - chronologicznie - i zaznaczeniem potencjalnych konfliktów
 * powiadamianie użytkownika o rekomendowanych programach
-	* aplikacja mobilna
+	* aplikacja mobilna - PWA
 
 ### Przegląd treści?
 

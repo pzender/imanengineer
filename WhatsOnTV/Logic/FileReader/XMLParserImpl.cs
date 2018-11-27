@@ -20,8 +20,21 @@ namespace Logic.FileReader
 
         public GuideUpdate ParseAll(XDocument arg)
         {
+            IEnumerable<XElement> elements = (
+                from element in arg.Root.Elements()
+                where element.Name == "channel"
+                select element
+                );
+            foreach (XElement e in elements)
+                ParseChannel(e);
             
-            throw new NotImplementedException();
+            return new GuideUpdate()
+            {
+                Id = 1,
+                Source = "FUCK.",
+                UpdateDate = DateTime.Now
+            };
+            //throw new NotImplementedException();
         }
 
         public void ParseChannel(XElement arg)
@@ -38,7 +51,7 @@ namespace Logic.FileReader
                 {
                     id = 3,
                     name = channel_name,
-                    icon_url = arg.Element("icon").Value
+                    icon_url = arg.Element("icon") != null ? arg.Element("icon").Value : ""
                 });
 
                 if (!sourceByChannel.ContainsKey(channel_name))
