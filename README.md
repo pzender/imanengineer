@@ -6,10 +6,13 @@ Temat: Aplikacja do spersonalizowanej selekcji programów telewizyjnych.
 * Wstęp
 	* Uzasadnienie tematu
 	* Cel pracy
+	* Zakres prac
 * Przegląd istniejących rozwiązań
 	* Statyczne programy TV
 	* Silniki rekomendacji
 	* Serwisy streamingowe	
+	* Tabela porównawcza
+	* Wnioski
 * Założenia projektowe
 	* Opis problemu
 	* Wizja rozwiązania
@@ -53,8 +56,6 @@ Celem pracy jest ułatwienie użytkownikom poszukiwania istniejących programów
 	* ekran ze zbiorem rekomendowanych programów - chronologicznie - i zaznaczeniem potencjalnych konfliktów
 * powiadamianie użytkownika o rekomendowanych programach
 	* aplikacja mobilna - PWA
-
-### Przegląd treści?
 
 ## Przegląd istniejących rozwiązań
 
@@ -116,26 +117,33 @@ Funkcjonalność dotyczącą rekomendacji i programu w pewien sposób łączy se
 
 ### Porównanie rozwiązań
 
-| funkcjonalność  | onet, interia | wp | filmweb  | tastedive  | cabletv  | ipla  | moja propozycja |
-|---|---|---|---|---|---|---|---|
-| przegląd nadawanych programów  | TAK  | TAK  | TAK  | NIE  | NIE  | NIE | TAK |
-| personalizacja kanałów  | TAK  |   |   |   |   |
-| personalizacja treści  | NIE  |   |   |   |   |
-| personalizacja czasu  | TAK  |   |   |   |   |
-| wyszukiwanie programów  | NIE  |   |   |   |   |
-| widok chronologiczny  | TAK  |   |   |   |   |
-| rekomendacje filmów  | ograniczone | ograniczone |   |   |   |
-| rekomendacje seriali  | ograniczone | ograniczone |   |   |   |
-| rekomendacje programów sportowych  | ograniczone | ograniczone |   |   |   |
-| śledzenie odcinków seriali  | NIE  |   |   |   |   |
-| VOD  | NIE  |   |   |   |   |
-| streaming treści na żywo  | NIE |   |   |   |   |
-| powiadomienia | NIE |
-| darmowy  | TAK  |   |   |   |   |
+| funkcjonalność  | programtv.onet.pl | tv.wp.pl | pilot.wp.pl | filmweb.pl  | tastedive.com  | cabletv.com  | ipla.pl | popcornflix.com | moja propozycja |
+|---|---|---|---|---|---|---|---|---|---|
+| przegląd nadawanych programów | TAK | TAK | TAK | TAK | NIE | NIE | NIE | NIE | TAK |
+| personalizacja kanałów | TAK | TAK | TAK | TAK | NIE | NIE | NIE | NIE | TAK |
+| personalizacja treści | NIE | NIE  | NIE | TAK | NIE | TAK | TAK | TAK | TAK |
+| personalizacja czasu nadawania | TAK | TAK  | NIE | ograniczona | NIE | NIE | TAK | TAK | TAK |
+| wyszukiwanie programów | TAK | TAK  | TAK | ograniczone | TAK | TAK | TAK | TAK | TAK |
+| widok chronologiczny | TAK | TAK  | NIE  | TAK | NIE | NIE | NIE | NIE | TAK |
+| rekomendacje filmów | ograniczone | ograniczone | NIE | TAK | TAK | NIE | ograniczone | TAK | TAK |
+| rekomendacje seriali | ograniczone | ograniczone | NIE | TAK | TAK | TAK | ograniczone | TAK | TAK |
+| rekomendacje programów sportowych | ograniczone | ograniczone | NIE | NIE | NIE | NIE | ograniczone | NIE | TAK |
+| śledzenie odcinków seriali | NIE | NIE | NIE | TAK | NIE | NIE | NIE | NIE | TAK |
+| VOD | NIE | NIE | NIE | NIE | NIE | NIE | TAK | TAK | NIE |
+| streaming treści na żywo | NIE | NIE | TAK | NIE | NIE | NIE | TAK | NIE | NIE |
+| powiadomienia | NIE | NIE | NIE | NIE | NIE | NIE | NIE | NIE | TAK |
+| darmowy | TAK  | TAK  | częściowo | TAK | TAK | TAK | częściowo | TAK | TAK |
 |   |   |   |   |   |   |
 
+**Uwagi**
+
+* ograniczenia w personalizacji czasu nadawania polegają na możliwości wyboru tylko określonych pór dnia (cały dzień, po południu lub wieczorem)
+* ograniczenia w wyszukiwaniu programów - można znaleźć tylko tytuły
+* ograniczenia w rekomendacjach - wyświetlane są "najpopularniejsze" programy danego typu, bez uwzględnienia preferencji użytkownika
+* pilot.wp.pl ma darmowy zestaw 28 kanałów, ipla.tv pozwala za darmo obejrzeć tylko pojedyncze programy (głównie informacyjne). popcornflix.com jest darmowy, ale dostępne treści są ograniczone do tych mniej popularnych
+
 **Wnioski:**
-Brakuje na rynku rozwiązań oferujących rekomendacje z uwzględnieniem aktualnego programu. Aplikacje dostarczające treści (w formie VOD lub strumienia na żywo) najczęściej są płatne (co nie powinno dziwić ze względu na koszty samej treści). Z tego powodu implementacja tej funkcjonalności nie mieści się w zakresie pracy. 
+Brakuje na rynku rozwiązań oferujących rekomendacje z uwzględnieniem aktualnego programu. Legalnie działające aplikacje dostarczające treści (w formie VOD lub strumienia na żywo) najczęściej są płatne (co nie powinno dziwić ze względu na koszty samej treści). Z tego powodu implementacja tej funkcjonalności nie mieści się w zakresie pracy. 
 
 ## Założenia projektowe
 ### Opis problemu
