@@ -26,7 +26,7 @@ namespace Logic.FileReader
         public GuideUpdate ParseAll(XDocument arg)
         {
             currentUpdate = GuideUpdateRepo.Insert(new GuideUpdate(){
-                timestamp = DateTime.Now,
+                posted = DateTime.Now,
                 source = (
                     from element in arg.Root.Elements()
                     where element.Name == "channel"
@@ -38,24 +38,15 @@ namespace Logic.FileReader
                     ).First().First()
             }).Last();
 
-            IEnumerable<XElement> channels = (
-                from element in arg.Root.Elements()
-                where element.Name == "channel"
-                select element
-                );
-            foreach (XElement e in channels)
+            foreach (XElement e in 
+                from element in arg.Root.Elements() where element.Name == "channel" select element)
                 ParseChannel(e);
 
-            IEnumerable<XElement> programmes = (
-                from element in arg.Root.Elements()
-                where element.Name == "programme"
-                select element
-                );
-            foreach (XElement e in programmes)
-            {
+            foreach (XElement e in
+                from element in arg.Root.Elements() where element.Name == "programme" select element)
                 ParseProgramme(e);
 
-            }
+            
 
 
             return currentUpdate;
@@ -87,19 +78,15 @@ namespace Logic.FileReader
                 throw new ArgumentException("Incorrect arg");
 
             }
-            string title = arg.Elements().Where(e => e.Name == "title").Select(e => e.Value).Single();
-            Programme programme = (from Programme p
-                           in ProgrammeRepo.GetAll()
-                           where p.title == title
-                           select p).SingleOrDefault();
+            string title = arg.Elements().Where(e => e.Name == "title" && e.Attribute("lang").Value == "pl").Select(e => e.Value).Single();
+            Programme programme = (
+                from Programme p in ProgrammeRepo.Get(prog => prog.title == title) select p).SingleOrDefault();
             if(programme == default(Programme))
             {
                 programme = new Programme()
                 {
                     title = title,
-                    id = (from Programme p
-                          in ProgrammeRepo.GetAll()
-                          select p.id).Max() + 1,
+                    id = (from Programme p in ProgrammeRepo.GetAll() select p.id).Max() + 1,
 
                 };
                 if (arg.Element("icon") != null)
@@ -148,6 +135,7 @@ namespace Logic.FileReader
                         type = "country",
                         value = arg.Element("country").Value
                     });
+                ProgrammeRepo.Insert(programme);
             }
 
         }
@@ -164,8 +152,10 @@ namespace Logic.FileReader
         }
 
 
-        public XMLParser()
+        public XMLParser(IRepository<Channel> channelRepository, IRepository<GuideUpdate> guideUpdateRepository)
         {
+            ChannelRepo = channelRepository;
+            GuideUpdateRepo = guideUpdateRepository;
 
         }
     }

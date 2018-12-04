@@ -31,6 +31,9 @@ namespace WebAPI
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddTransient<IRepository<Channel>, RepositoryImpl<Channel>>();
+            services.AddTransient<IRepository<GuideUpdate>, RepositoryImpl<GuideUpdate>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

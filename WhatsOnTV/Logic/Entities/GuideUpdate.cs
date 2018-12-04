@@ -7,7 +7,7 @@ namespace Logic.Entities
     public class GuideUpdate
     {
         public int id { get; set; }
-        public DateTime timestamp { get; set; }
+        public DateTime posted { get; set; }
         public string source { get; set; }
     }
 }

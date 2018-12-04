@@ -36,17 +36,20 @@ namespace DataAccess.Repositories
 
         public IEnumerable<T> Get(Func<T, bool> filter)
         {
-            throw new NotImplementedException();
+            //slow AF?
+            List<T> candidates = Connection.Query<T>(sqlBuilder.BuildSelect()).ToList();
+            return candidates.Where(filter);
+            //throw new NotImplementedException();
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return Connection.Query<T>(sqlBuilder.BuildSelect());
         }
 
         public T GetByID(int id)
         {
-            throw new NotImplementedException();
+            return Connection.Query<T>(sqlBuilder.BuildSelect(where: new Dictionary<string, string>() { { "id", $"{id}" } })).Single();
         }
 
         public IEnumerable<T> Insert(T value)

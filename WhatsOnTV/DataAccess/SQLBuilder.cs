@@ -31,7 +31,10 @@ namespace DataAccess
                     }
                     else if (attr.PropertyType == typeof(string))
                         query += $"'{attr.GetValue(value)}', ";
-                    else 
+                    else if (attr.PropertyType == typeof(DateTime))
+                        query += $"'{attr.GetValue(value)}', ";
+
+                    else
                         query += $"{attr.GetValue(value)}, ";
                 }
                 query += $"),\n";
@@ -43,12 +46,7 @@ namespace DataAccess
             
         }
 
-        public string BuildSelect(IDictionary<string, string> where = null, string orderby = "")
-        {
-            return BuildSelect("*", where, orderby);
-        }
-
-        public string BuildSelect(string field, IDictionary<string, string> where = null, string orderby = "")
+        public string BuildSelect(string field = "*", IDictionary<string, string> where = null, string orderby = "")
         {
             string query = $"SELECT {field} FROM {typeof(T).Name} ";
             if (where != null)
@@ -56,11 +54,19 @@ namespace DataAccess
                 query += "WHERE 1=1 ";
                 foreach (var attr in where)
                 {
-                    string attr_type = typeof(T).GetProperties().Where(t => t.Name == attr.Key).GetType().Name;
-                    string attr_value = attr_type == "string" ? $" LIKE '{attr.Value}'" : $" = {attr.Value}";
-                    query += $"AND {typeof(T).Name}.{attr.Key} {attr_value}";
+                    //string attr_type = typeof(T).GetProperties().Where(t => t.Name == attr.Key).First().GetType().Name;
+                    Type attr_type = typeof(T).GetProperty(attr.Key).PropertyType;
+                    string attr_value = "";
+                    if (attr_type == typeof(string))
+                        attr_value = $" LIKE '{attr.Value}'";
+                    else if (attr_type == typeof(DateTime))
+                        attr_value = $" = '{attr.Value}'";
+                    else attr_value = $" = {attr.Value}";
+
+                    query += $"AND {typeof(T).Name}.{attr.Key}{attr_value} ";
                 }
             }
+            if (orderby != "") query += $"ORDER BY {orderby} ";
             query += ";";
             return query;
         }

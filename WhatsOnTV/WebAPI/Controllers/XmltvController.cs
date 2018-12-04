@@ -34,9 +34,8 @@ namespace WebAPI.Controllers
                 return BadRequest(new { message = "Cannot create an XDocument", exception = e.StackTrace});
             }
             
-            IXMLParser parser = new XMLParserImpl();
+            XMLParser parser = new XMLParser(ChannelRepository, GuideUpdateRepository);
             GuideUpdate result = parser.ParseAll(document);
-            ChannelRepository.InsertAll(parser.ParsedChannels);
 
             return Created("/api/Xmltv/", result);
         }
@@ -53,9 +52,10 @@ namespace WebAPI.Controllers
             throw new NotImplementedException();
         }
 
-        public XmltvController(IRepository<Channel> channelRepository)
+        public XmltvController(IRepository<Channel> channelRepository, IRepository<GuideUpdate> guideUpdateRepository)
         {
             ChannelRepository = channelRepository;
+            GuideUpdateRepository = guideUpdateRepository;
         }
     }   
 }
