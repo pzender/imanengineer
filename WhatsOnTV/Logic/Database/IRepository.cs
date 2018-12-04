@@ -12,8 +12,8 @@ namespace Logic.Database
         IEnumerable<T> Get(Func<T, bool> filter);
         T GetByID(int id);
 
-        void Insert(T value);
-        void InsertAll(IEnumerable<T> values);
+        IEnumerable<T> Insert(T value);
+        IEnumerable<T> InsertAll(IEnumerable<T> values);
 
         void Replace(int id, T value);
         void Delete(int id);

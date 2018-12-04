@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             GuideUpdate result = parser.ParseAll(document);
             ChannelRepository.InsertAll(parser.ParsedChannels);
 
-            return Created("/api/Xmltv/"+result.Id, result);
+            return Created("/api/Xmltv/", result);
         }
 
         [HttpGet]

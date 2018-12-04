@@ -8,7 +8,7 @@ namespace Logic.Entities
     {
         public int id { get; set; }
         public string content { get; set; }
-        public int source_id { get; set; }
-        public int programme_id { get; set; }
+        public string guideupdate_id { get; set; }
+        public string programme_id { get; set; }
     }
 }

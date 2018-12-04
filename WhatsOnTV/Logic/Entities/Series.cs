@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Logic.Entities
 {
-    public class DescriptionSource
+    public class Series
     {
         public int id { get; set; }
-        public string name { get; set; }
+        public string title { get; set; }
     }
 }

@@ -7,8 +7,7 @@ namespace Logic.Entities
     public class Feature
     {
         public int id { get; set; }
-        public string name { get; set; }
+        public string type { get; set; }
         public string value { get; set; }
-        public int programme_id { get; set; }
     }
 }

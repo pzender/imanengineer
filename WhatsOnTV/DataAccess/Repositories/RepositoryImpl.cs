@@ -9,20 +9,20 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace DataAccess
+namespace DataAccess.Repositories
 {
-    public class ChannelRepository : IRepository<Channel>
+    public class RepositoryImpl<T> : IRepository<T>
     {
         private readonly string connectionString = "Server=tcp:whatsontv-db.database.windows.net,1433;Initial Catalog=whatsontv-db;Persist Security Info=False;User ID=TvApplication;Password=Tv@pplicati0n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        
-        private IDbConnection Connection {
+        private IDbConnection Connection
+        {
             get
             {
                 return new SqlConnection(connectionString);
             }
         }
+        private readonly SQLBuilder<T> sqlBuilder = new SQLBuilder<T>();
 
-        private readonly SQLBuilder<Channel> sqlBuilder = new SQLBuilder<Channel>();
 
         public int Count()
         {
@@ -34,34 +34,34 @@ namespace DataAccess
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Channel> Get(Func<Channel, bool> filter)
+        public IEnumerable<T> Get(Func<T, bool> filter)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Channel> GetAll()
+        public IEnumerable<T> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Channel GetByID(int id)
+        public T GetByID(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Channel> Insert(Channel value)
+        public IEnumerable<T> Insert(T value)
         {
-            Connection.Execute(sqlBuilder.BuildInsert(new List<Channel>() { value }));
-            return Connection.Query<Channel>(sqlBuilder.BuildSelect());
+            Connection.Execute(sqlBuilder.BuildInsert(new List<T>() { value }));
+            return Connection.Query<T>(sqlBuilder.BuildSelect());
         }
 
-        public IEnumerable<Channel> InsertAll(IEnumerable<Channel> values)
+        public IEnumerable<T> InsertAll(IEnumerable<T> values)
         {
             Connection.Execute(sqlBuilder.BuildInsert(values));
-            return Connection.Query<Channel>(sqlBuilder.BuildSelect());
+            return Connection.Query<T>(sqlBuilder.BuildSelect());
         }
 
-        public void Replace(int id, Channel value)
+        public void Replace(int id, T value)
         {
             throw new NotImplementedException();
         }

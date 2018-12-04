@@ -4,37 +4,61 @@ using System.Text;
 using System.Xml.Linq;
 using System.Linq;
 using Logic.Entities;
+using Logic.Database;
 
 namespace Logic.FileReader
 {
-    public class XMLParserImpl : IXMLParser
+    public class XMLParser
     {
-        public ICollection<Channel> ParsedChannels { get ; protected set ; }
-        public ICollection<Description> ParsedDescriptions { get ; protected set ; }
-        public ICollection<DescriptionSource> ParsedDescriptionSources { get ; protected set ; }
-        public ICollection<Emission> ParsedEmissions { get ; protected set ; }
-        public ICollection<Feature> ParsedFeatures { get ; protected set; }
-        public ICollection<Programme> ParsedProgrammes { get ; protected set ; }
+        private GuideUpdate currentUpdate = new GuideUpdate();
+
+        public IRepository<Channel> ChannelRepo { get ; protected set ; }
+        public IRepository<Description> DescriptionRepo { get ; protected set ; }
+        public IRepository<Emission> EmissionRepo { get ; protected set ; }
+        public IRepository<Feature> FeatureRepo { get ; protected set; }
+        public IRepository<Programme> ProgrammeRepo { get ; protected set ; }
+        public IRepository<GuideUpdate> GuideUpdateRepo { get; protected set; }
+        public IRepository<Series> SeriesRepo { get; protected set; }
 
         public Dictionary<string, string> sourceByChannel = new Dictionary<string, string>();
 
+
         public GuideUpdate ParseAll(XDocument arg)
         {
-            IEnumerable<XElement> elements = (
+            currentUpdate = GuideUpdateRepo.Insert(new GuideUpdate(){
+                timestamp = DateTime.Now,
+                source = (
+                    from element in arg.Root.Elements()
+                    where element.Name == "channel"
+                    select (
+                        from child in element.Elements()
+                        where child.Name == "url"
+                        select child.Value
+                        )
+                    ).First().First()
+            }).Last();
+
+            IEnumerable<XElement> channels = (
                 from element in arg.Root.Elements()
                 where element.Name == "channel"
                 select element
                 );
-            foreach (XElement e in elements)
+            foreach (XElement e in channels)
                 ParseChannel(e);
-            
-            return new GuideUpdate()
+
+            IEnumerable<XElement> programmes = (
+                from element in arg.Root.Elements()
+                where element.Name == "programme"
+                select element
+                );
+            foreach (XElement e in programmes)
             {
-                Id = 1,
-                Source = "FUCK.",
-                UpdateDate = DateTime.Now
-            };
-            //throw new NotImplementedException();
+                ParseProgramme(e);
+
+            }
+
+
+            return currentUpdate;
         }
 
         public void ParseChannel(XElement arg)
@@ -42,40 +66,94 @@ namespace Logic.FileReader
             if (arg.Attribute("id") == null) throw new ArgumentException("Channel id doesnt exist!");
             string channel_name = arg.Attribute("id").Value;
             Channel channel = (from Channel c 
-                               in ParsedChannels
+                               in ChannelRepo.GetAll()
                                where c.name == channel_name
                                select c).SingleOrDefault();
             if (channel == default(Channel))
             {
-                ParsedChannels.Add(new Channel()
+                ChannelRepo.Insert(new Channel()
                 {
-                    id = 3,
                     name = channel_name,
                     icon_url = arg.Element("icon") != null ? arg.Element("icon").Value : ""
                 });
 
-                if (!sourceByChannel.ContainsKey(channel_name))
-                    sourceByChannel.Add(channel_name, arg.Element("url").Value);
             }
         }
 
-        public void ParseCredits(XElement arg)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void ParseDescriptionSource(XElement arg)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ParseFeature(XElement arg)
-        {
-            throw new NotImplementedException();
-        }
-
         public void ParseProgramme(XElement arg)
+        {
+            if (arg.Attribute("start") == null || arg.Attribute("stop") == null || arg.Attribute("channel") == null)
+            {
+                throw new ArgumentException("Incorrect arg");
+
+            }
+            string title = arg.Elements().Where(e => e.Name == "title").Select(e => e.Value).Single();
+            Programme programme = (from Programme p
+                           in ProgrammeRepo.GetAll()
+                           where p.title == title
+                           select p).SingleOrDefault();
+            if(programme == default(Programme))
+            {
+                programme = new Programme()
+                {
+                    title = title,
+                    id = (from Programme p
+                          in ProgrammeRepo.GetAll()
+                          select p.id).Max() + 1,
+
+                };
+                if (arg.Element("icon") != null)
+                    programme.icon_url = arg.Element("icon").Attribute("src").Value;
+                if (arg.Element("episode-num") != null)
+                {
+                    programme.seq_number = arg.Element("icon").Value;
+                    programme.series_id = SeriesRepo.Get(s => s.title == programme.title).Single().id;
+                }
+
+                if (arg.Element("credits") != null)
+                {
+                    ParseCredits(arg.Element("credits"));
+                }
+                
+                if (currentUpdate.source.Contains("filmweb") && arg.Element("rating") != null)
+                {
+                    FeatureRepo.Insert(new Feature()
+                    {
+                        id = programme.id,
+                        type = "Filmweb rating",
+                        value = arg.Element("rating").Value
+                    });
+                }
+                if(arg.Element("category") != null)
+                    foreach(XElement e in arg.Elements("category"))
+                    {
+                        FeatureRepo.Insert(new Feature()
+                        {
+                            id = programme.id,
+                            type = "category",
+                            value = arg.Element("category").Value
+                        });
+                    }
+                if (arg.Element("date") != null)
+                    FeatureRepo.Insert(new Feature()
+                    {
+                        id = programme.id,
+                        type = "year",
+                        value = arg.Element("date").Value
+                    });
+                if (arg.Element("country") != null)
+                    FeatureRepo.Insert(new Feature()
+                    {
+                        id = programme.id,
+                        type = "country",
+                        value = arg.Element("country").Value
+                    });
+            }
+
+        }
+
+
+        public void ParseCredits(XElement arg)
         {
             throw new NotImplementedException();
         }
@@ -85,19 +163,10 @@ namespace Logic.FileReader
             throw new NotImplementedException();
         }
 
-        public void ParseEmission(XElement arg, int programme_id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public XMLParserImpl()
+        public XMLParser()
         {
-            ParsedChannels = new List<Channel>();
-            ParsedDescriptions = new List<Description>();
-            ParsedDescriptionSources = new List<DescriptionSource>();
-            ParsedEmissions = new List<Emission>();
-            ParsedFeatures = new List<Feature>();
-            ParsedProgrammes = new List<Programme>();
+
         }
     }
 }
