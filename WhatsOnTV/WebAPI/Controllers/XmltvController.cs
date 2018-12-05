@@ -17,8 +17,12 @@ namespace WebAPI.Controllers
     [ApiController]
     public class XmltvController : ControllerBase
     {
-        IRepository<GuideUpdate> GuideUpdateRepository;
-        IRepository<Channel> ChannelRepository;
+        IRepository<Channel> channelRepository = null;
+        IRepository<GuideUpdate> guideUpdateRepository = null;
+        IRepository<Programme> programmeRepository = null;
+        IRepository<Feature> featureRepository = null;
+        IRepository<Description> descriptionRepository = null;
+        IRepository<FeatureExample> featureExampleRepository = null;
         XDocument document = null;
         // POST: api/Xmltv
         [HttpPost]
@@ -34,7 +38,8 @@ namespace WebAPI.Controllers
                 return BadRequest(new { message = "Cannot create an XDocument", exception = e.StackTrace});
             }
             
-            XMLParser parser = new XMLParser(ChannelRepository, GuideUpdateRepository);
+            XMLParser parser = new XMLParser(channelRepository, guideUpdateRepository, programmeRepository, featureRepository, descriptionRepository, featureExampleRepository);
+
             GuideUpdate result = parser.ParseAll(document);
 
             return Created("/api/Xmltv/", result);
@@ -43,7 +48,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IEnumerable<GuideUpdate> GetListOfUpdates()
         {
-            return GuideUpdateRepository.GetAll();
+            return guideUpdateRepository.GetAll();
         }
 
         [HttpGet("{id}")]
@@ -52,10 +57,21 @@ namespace WebAPI.Controllers
             throw new NotImplementedException();
         }
 
-        public XmltvController(IRepository<Channel> channelRepository, IRepository<GuideUpdate> guideUpdateRepository)
+        public XmltvController(
+            IRepository<Channel> channelRepository = null,
+            IRepository<GuideUpdate> guideUpdateRepository = null,
+            IRepository<Programme> programmeRepository = null,
+            IRepository<Feature> featureRepository = null,
+            IRepository<Description> descriptionRepository = null,
+            IRepository<FeatureExample> featureExampleRepository = null
+        )
         {
-            ChannelRepository = channelRepository;
-            GuideUpdateRepository = guideUpdateRepository;
+            this.channelRepository = channelRepository;
+            this.guideUpdateRepository = guideUpdateRepository;
+            this.programmeRepository = programmeRepository;
+            this.featureRepository = featureRepository;
+            this.descriptionRepository = descriptionRepository;
+            this.featureExampleRepository = featureExampleRepository;
         }
     }   
 }

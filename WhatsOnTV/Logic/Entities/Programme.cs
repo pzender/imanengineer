@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Logic.Entities
 {
-    public class Programme
+    public class Programme : AbstractEntity
     {
-        public int id { get; set; }
         public string title { get; set; }
         public string icon_url { get; set; }
         public string seq_number { get; set; }

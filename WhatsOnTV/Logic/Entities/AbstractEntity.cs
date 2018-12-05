@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Logic.Entities
 {
-    public class Series : AbstractEntity
+    public abstract class AbstractEntity
     {
-        public string title { get; set; }
+        public int id { get; set; }
     }
 }

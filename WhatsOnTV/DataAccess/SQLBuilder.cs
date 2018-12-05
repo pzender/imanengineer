@@ -23,12 +23,12 @@ namespace DataAccess
                 foreach(var attr in value.GetType().GetProperties())
                 {
                     if (attr.Name == "id") continue;
-                    if (attr.Name.EndsWith("_id"))
-                    {
+                    //if (attr.Name.EndsWith("_id"))
+                    //{
 
-                        //var selectBuilder = new SQLBuilder<>;
-                        query += $"(SELECT id from {attr.Name.Replace("_id", "")} WHERE name LIKE '{attr.GetValue(value)}'), ";
-                    }
+                    //    //var selectBuilder = new SQLBuilder<>;
+                    //    query += $"(SELECT id from {attr.Name.Replace("_id", "")} WHERE name LIKE '{attr.GetValue(value)}'), ";
+                    //}
                     else if (attr.PropertyType == typeof(string))
                         query += $"'{attr.GetValue(value)}', ";
                     else if (attr.PropertyType == typeof(DateTime))
@@ -46,9 +46,10 @@ namespace DataAccess
             
         }
 
-        public string BuildSelect(string field = "*", IDictionary<string, string> where = null, string orderby = "")
+        public string BuildSelect(string field = "*", string from = "$TABLE", IDictionary<string, string> where = null, string orderby = "")
         {
-            string query = $"SELECT {field} FROM {typeof(T).Name} ";
+            if (from == "$TABLE") from = typeof(T).Name;
+            string query = $"SELECT {field} FROM {from} ";
             if (where != null)
             {
                 query += "WHERE 1=1 ";

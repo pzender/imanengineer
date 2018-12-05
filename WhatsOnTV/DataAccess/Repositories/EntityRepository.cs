@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace DataAccess.Repositories
 {
-    public class RepositoryImpl<T> : IRepository<T>
+    public class EntityRepository<T> : IRepository<T> where T : AbstractEntity
     {
         private readonly string connectionString = "Server=tcp:whatsontv-db.database.windows.net,1433;Initial Catalog=whatsontv-db;Persist Security Info=False;User ID=TvApplication;Password=Tv@pplicati0n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private IDbConnection Connection

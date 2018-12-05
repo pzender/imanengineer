@@ -4,12 +4,11 @@ using System.Text;
 
 namespace Logic.Entities
 {
-    public class Emission
+    public class Emission : AbstractEntity
     {
-        public int id { get; set; }
         public DateTime start { get; set; }
         public DateTime stop { get; set; }
-        public string channel_id { get; set; }
-        public string programme_id { get; set; }
+        public int channel_id { get; set; }
+        public int programme_id { get; set; }
     }
 }

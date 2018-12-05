@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Logic.Database;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Logic.Entities
 {
-    public class FeatureExample
+    public class FeatureExample : IConnection<Programme, Feature>
     {
-        public int feature_id { get; set; }
-        public int programme_id { get; set; }
+        public int t1_id { get ; set ; }
+        public int t2_id { get ; set ; }
+
+        public string table => this.GetType().Name;
     }
 }
