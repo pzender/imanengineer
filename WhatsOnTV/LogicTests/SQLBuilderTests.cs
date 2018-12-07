@@ -23,10 +23,10 @@ namespace LogicTests
                 ";";
             SQLBuilder<Channel> tstBuilder = new SQLBuilder<Channel>();
             //Act
-            string actual = tstBuilder.BuildInsert(new List<Channel>() { tst});
+            string actual = tstBuilder.BuildInsert(new List<Channel>() { tst });
             //Assert
 
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace LogicTests
             string actual = tstBuilder.BuildInsert(new List<Description>() { tst });
             //Assert
 
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace LogicTests
             //Act
             string actual = tstBuilder.BuildSelect();
             //Assert
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
 
         }
         [Fact]
@@ -73,7 +73,7 @@ namespace LogicTests
             //Act
             string actual = tstBuilder.BuildSelect(field: "id");
             //Assert
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
 
         }
 
@@ -86,7 +86,7 @@ namespace LogicTests
             //Act
             string actual = tstBuilder.BuildSelect(where: new Dictionary<string, string>() { { "name", "POLSAT" } });
             //Assert
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
 
         }
 
@@ -99,7 +99,7 @@ namespace LogicTests
             //Act
             string actual = tstBuilder.BuildSelect(where: new Dictionary<string, string>() { { "id", "7" } });
             //Assert
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
 
         }
 
@@ -113,7 +113,7 @@ namespace LogicTests
             //Act
             string actual = tstBuilder.BuildSelect(orderby: "name");
             //Assert
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
 
         }
 
@@ -124,13 +124,24 @@ namespace LogicTests
             SQLBuilder<Channel> tstBuilder = new SQLBuilder<Channel>();
             string expected = "SELECT id FROM Channel WHERE 1=1 AND Channel.id = 7 AND Channel.name LIKE 'POLSAT' ORDER BY name ;";
             //Act
-            string actual = tstBuilder.BuildSelect(field:"id", where: new Dictionary<string, string>() { { "id", "7" }, { "name", "POLSAT" } }, orderby: "name");
+            string actual = tstBuilder.BuildSelect(field: "id", where: new Dictionary<string, string>() { { "id", "7" }, { "name", "POLSAT" } }, orderby: "name");
             //Assert
-            Assert.True(expected == actual);
+            Assert.Equal(expected, actual);
 
         }
 
+        [Fact]
+        public void BuildUpdate_ShouldReturnCorrectSQL()
+        {
+            //Arrange
+            SQLBuilder<Series> tstBuilder = new SQLBuilder<Series>();
+            string expected = "UPDATE Series SET Series.title = 'Kung Fu Panda'\nWHERE 1=1 AND Series.title LIKE 'Kung Fu Panda - legenda o niezwykłości' ;";
+            //Act
+            string actual = tstBuilder.BuildUpdate(set: new Dictionary<string, string>() { { "title", "Kung Fu Panda" } }, where: new Dictionary<string, string>() { { "title", "Kung Fu Panda - legenda o niezwykłości" } });
+            //Assert
+            Assert.Equal(expected, actual);
 
+        }
 
 
     }

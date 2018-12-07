@@ -22,6 +22,8 @@ namespace WebAPI.Controllers
         IRepository<Programme> programmeRepository = null;
         IRepository<Feature> featureRepository = null;
         IRepository<Description> descriptionRepository = null;
+        IRepository<Series> seriesRepository = null;
+
         IRepository<FeatureExample> featureExampleRepository = null;
         XDocument document = null;
         // POST: api/Xmltv
@@ -38,7 +40,7 @@ namespace WebAPI.Controllers
                 return BadRequest(new { message = "Cannot create an XDocument", exception = e.StackTrace});
             }
             
-            XMLParser parser = new XMLParser(channelRepository, guideUpdateRepository, programmeRepository, featureRepository, descriptionRepository, featureExampleRepository);
+            XMLParser parser = new XMLParser(channelRepository, guideUpdateRepository, programmeRepository, featureRepository, descriptionRepository, featureExampleRepository, seriesRepository);
 
             GuideUpdate result = parser.ParseAll(document);
 
@@ -63,6 +65,7 @@ namespace WebAPI.Controllers
             IRepository<Programme> programmeRepository = null,
             IRepository<Feature> featureRepository = null,
             IRepository<Description> descriptionRepository = null,
+            IRepository<Series> seriesRepository = null,
             IRepository<FeatureExample> featureExampleRepository = null
         )
         {
@@ -71,6 +74,8 @@ namespace WebAPI.Controllers
             this.programmeRepository = programmeRepository;
             this.featureRepository = featureRepository;
             this.descriptionRepository = descriptionRepository;
+            this.seriesRepository = seriesRepository;
+
             this.featureExampleRepository = featureExampleRepository;
         }
     }   

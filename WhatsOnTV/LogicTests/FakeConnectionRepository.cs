@@ -45,6 +45,7 @@ namespace LogicTests
 
         public void Replace(int id, T value)
         {
+
             throw new NotImplementedException();
         }
 

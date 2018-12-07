@@ -66,7 +66,17 @@ namespace DataAccess.Repositories
 
         public void Replace(int id, T value)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> newVals = new Dictionary<string, string>();
+            foreach(var attr in value.GetType().GetProperties())
+            {
+                if (attr.Name == "id") continue;
+                else
+                {
+                    newVals.Add(attr.Name, $"{attr.GetValue(value)}");
+                }
+            }
+            Connection.Execute(sqlBuilder.BuildUpdate());
+            //throw new NotImplementedException();
         }
     }
 }

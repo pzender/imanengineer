@@ -37,6 +37,7 @@ namespace WebAPI
             services.AddTransient<IRepository<Programme>, EntityRepository<Programme>>();
             services.AddTransient<IRepository<Feature>, EntityRepository<Feature>>();
             services.AddTransient<IRepository<Description>, EntityRepository<Description>>();
+            services.AddTransient<IRepository<Series>, EntityRepository<Series>>();
 
             services.AddTransient<IRepository<FeatureExample>, ConnectionRepository<FeatureExample, Programme, Feature>>();
         }

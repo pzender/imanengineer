@@ -53,7 +53,8 @@ namespace LogicTests
 
         public void Replace(int id, T value)
         {
-            throw new NotImplementedException();
+            int index_to_replace = content.FindIndex(t => t.id == id);
+            content[index_to_replace] = value;
         }
     }
 }

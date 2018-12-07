@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using System.Linq;
 using Logic.Entities;
 using Logic.Database;
+using System.Text.RegularExpressions;
 
 namespace Logic.FileReader
 {
@@ -44,24 +45,78 @@ namespace Logic.FileReader
                 from element in arg.Root.Elements() where element.Name == "channel" select element)
                 ParseChannel(e);
 
+            foreach (string s in ExtractSeriesTitles(GetAllSeriesEpisodeTitles(
+                from element in arg.Root.Elements() where element.Name == "programme" select element)))
+                AddSeriesIfDoesntExist(s);
+
             foreach (XElement e in
                 from element in arg.Root.Elements() where element.Name == "programme" select element)
                 ParseProgramme(e);
 
-            
-
-
             return currentUpdate;
+        }
+
+        public void AddSeriesIfDoesntExist(string title)
+        {
+            Series series = (
+                from Series s in SeriesRepo.GetAll() where s.title.Contains(title) || title.Contains(s.title) select s).SingleOrDefault();
+
+            if (series == default(Series))
+            {
+                SeriesRepo.Insert(new Series() { title = title });
+            }
+            else if (series.title.Length > title.Length)
+                SeriesRepo.Replace(series.id, new Series() { id = series.id, title = title });
+
+        }
+
+        public IEnumerable<string> GetAllSeriesEpisodeTitles(IEnumerable<XElement> arg)
+        {
+            return (from element in arg where element.Name == "programme" && element.Element("episode-num") != null select             //LINQ <3
+                (from node in element.Elements() where node.Name == "title" && node.Attribute("lang").Value == "pl" select node.Value).Single()).Distinct();
+        }
+
+        public IEnumerable<string> ExtractSeriesTitles(IEnumerable<string> arg)
+        {
+            //IEnumerable<IEnumerable<string>> titlesSplit = arg.OrderBy(s => s).Select(s => Regex.Replace(s, "[/;:\\.&\\s]+", " ").Split(" "));
+            List<string> results = new List<string>();
+            string matches = arg.First();
+            foreach (string title in arg.OrderBy(s => s))
+            {
+                string temp = MatchingBeginnings(matches, title);
+                if (temp.Count() == 0)
+                {
+                    results.Add(matches);
+                    matches = title;
+                }
+                else matches = temp;
+            }
+            results.Add(matches.TrimEnd());
+
+            return results;
+            //throw new NotImplementedException();
+        }
+
+        public string MatchingBeginnings(string str1, string str2)
+        {
+            string[] str_split1 = str1.Split(" ");
+            string[] str_split2 = str2.Split(" ");
+            List<string> matching = new List<string>();
+            for(int i = 0; i < Math.Min(str_split1.Length, str_split2.Length) && str_split1[i].TrimEnd(' ', '-', ':', '.') == str_split2[i].TrimEnd(' ', '-', ':', '.'); i++)
+            {
+                matching.Add(str_split1[i]);
+            }
+            string ret = matching.Aggregate("", (acc, s) => acc = acc + s + " ").TrimEnd(' ', '-', ':', '.');
+            return ret;
+            //throw new NotImplementedException();
         }
 
         public void ParseChannel(XElement arg)
         {
             if (arg.Attribute("id") == null) throw new ArgumentException("Channel id doesnt exist!");
             string channel_name = arg.Attribute("id").Value;
-            Channel channel = (from Channel c 
-                               in ChannelRepo.GetAll()
-                               where c.name == channel_name
-                               select c).SingleOrDefault();
+            Channel channel = (
+                from Channel c in ChannelRepo.GetAll() where c.name == channel_name select c).SingleOrDefault();
             if (channel == default(Channel))
             {
                 ChannelRepo.Insert(new Channel()
@@ -72,6 +127,7 @@ namespace Logic.FileReader
 
             }
         }
+
 
         public void ParseProgramme(XElement arg)
         {
@@ -94,9 +150,13 @@ namespace Logic.FileReader
 
                 if (arg.Element("icon") != null)
                     programme.icon_url = arg.Element("icon").Attribute("src").Value;
+
+                //series
+
                 if (arg.Element("episode-num") != null)
                 {
                     programme.seq_number = arg.Element("episode-num").Value;
+                    //FIXME
                     programme.series_id = SeriesRepo.Get(s => s.title == programme.title).Single().id;
                 }
 
@@ -181,7 +241,8 @@ namespace Logic.FileReader
             IRepository<Programme> programmeRepository = null,
             IRepository<Feature> featureRepository = null,
             IRepository<Description> descriptionRepository = null,
-            IRepository<FeatureExample> featureExampleRepository = null
+            IRepository<FeatureExample> featureExampleRepository = null,
+            IRepository<Series> seriesRepository = null
         )
         {
             ChannelRepo = channelRepository;
@@ -190,6 +251,7 @@ namespace Logic.FileReader
             FeatureRepo = featureRepository;
             DescriptionRepo = descriptionRepository;
             FeatureExampleRepo = featureExampleRepository;
+            SeriesRepo = seriesRepository;
         }
     }
 }
