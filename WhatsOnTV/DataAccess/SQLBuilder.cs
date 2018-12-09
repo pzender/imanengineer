@@ -23,11 +23,8 @@ namespace DataAccess
                 foreach (var attr in value.GetType().GetProperties())
                 {
                     if (attr.Name == "id") continue;
-                    else if (attr.PropertyType == typeof(string))
-                        query += $"'{attr.GetValue(value)}', ";
-                    else if (attr.PropertyType == typeof(DateTime))
-                        query += $"'{attr.GetValue(value)}', ";
-
+                    else if (attr.PropertyType == typeof(string) || attr.PropertyType == typeof(DateTime))
+                        query += $"'{attr.GetValue(value).ToString().Replace("'", "''")}', ";
                     else
                         query += $"{attr.GetValue(value)}, ";
                 }
@@ -50,16 +47,16 @@ namespace DataAccess
             return query;
         }
 
-        public string BuildUpdate(string table = "$TABLE", IDictionary<string, string> set = null, IDictionary<string, string> where = null)
+        public string BuildUpdate(IDictionary<string, string> set, IDictionary<string, string> where = null)
         {
-            if (table == "$TABLE") table = typeof(T).Name;
+            string table = typeof(T).Name;
             string query = $"UPDATE {table} SET ";
             foreach (var attr in set)
             {
                 Type attr_type = typeof(T).GetProperty(attr.Key).PropertyType;
                 string attr_value = "";
                 if (attr_type == typeof(string) || attr_type == typeof(DateTime))
-                    attr_value = $" = '{attr.Value}'";
+                    attr_value = $" = '{attr.Value.Replace("'", "''")}'";
                 else attr_value = $" = {attr.Value}";
                 query += $"{typeof(T).Name}.{attr.Key}{attr_value}";
             }
@@ -89,7 +86,7 @@ namespace DataAccess
                 Type attr_type = typeof(T).GetProperty(pair.Key).PropertyType;
                 string attr_value = "";
                 if (attr_type == typeof(string))
-                    attr_value = $" LIKE '{pair.Value}'";
+                    attr_value = $" LIKE '{pair.Value.Replace("'", "''")}'";
                 else if (attr_type == typeof(DateTime))
                     attr_value = $" = '{pair.Value}'";
                 else attr_value = $" = {pair.Value}";

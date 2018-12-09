@@ -28,7 +28,7 @@ namespace Logic.FileReader
 
         public GuideUpdate ParseAll(XDocument arg)
         {
-            currentUpdate = GuideUpdateRepo.Insert(new GuideUpdate(){
+            currentUpdate = GuideUpdateRepo.Insert(new GuideUpdate() {
                 posted = DateTime.Now,
                 source = (
                     from element in arg.Root.Elements()
@@ -41,13 +41,23 @@ namespace Logic.FileReader
                     ).First().First()
             }).Last();
 
-            foreach (XElement e in 
-                from element in arg.Root.Elements() where element.Name == "channel" select element)
-                ParseChannel(e);
+            //foreach (XElement e in
+            //    from element in arg.Root.Elements() where element.Name == "channel" select element)
+            //    ParseChannel(e);
 
-            foreach (string s in ExtractSeriesTitles(GetAllSeriesEpisodeTitles(
-                from element in arg.Root.Elements() where element.Name == "programme" select element)))
-                AddSeriesIfDoesntExist(s);
+            IEnumerable<Series> current_episodes = GetAllSeriesEpisodeTitles(arg.Root.Elements())
+                .Select(title => new Series() { id = -1, title = title});
+            IEnumerable<Series> known_series = SeriesRepo.GetAll();
+            IEnumerable<Series> found_series = GroupEpisodes(current_episodes.Concat(known_series));
+            IEnumerable<Series> new_series = found_series.Except(known_series);
+
+            foreach(Series series in new_series)
+            {
+
+                if (series.id > 0)
+                    SeriesRepo.Replace(series.id, series);
+                else SeriesRepo.Insert(series);
+            }
 
             foreach (XElement e in
                 from element in arg.Root.Elements() where element.Name == "programme" select element)
@@ -56,26 +66,38 @@ namespace Logic.FileReader
             return currentUpdate;
         }
 
-        public void AddSeriesIfDoesntExist(string title)
-        {
-            Series series = (
-                from Series s in SeriesRepo.GetAll() where s.title.Contains(title) || title.Contains(s.title) select s).SingleOrDefault();
-
-            if (series == default(Series))
-            {
-                SeriesRepo.Insert(new Series() { title = title });
-            }
-            else if (series.title.Length > title.Length)
-                SeriesRepo.Replace(series.id, new Series() { id = series.id, title = title });
-
-        }
-
         public IEnumerable<string> GetAllSeriesEpisodeTitles(IEnumerable<XElement> arg)
         {
-            return (from element in arg where element.Name == "programme" && element.Element("episode-num") != null select             //LINQ <3
-                (from node in element.Elements() where node.Name == "title" && node.Attribute("lang").Value == "pl" select node.Value).Single()).Distinct();
+            return (from element in arg where element.Name == "programme" && element.Element("episode-num") != null select 
+                   (from node in element.Elements() where node.Name == "title" && node.Attribute("lang").Value == "pl" select node.Value).Single()).Distinct();
         }
 
+        public IEnumerable<Series> GroupEpisodes (IEnumerable<Series> episodes)
+        {
+            List<Series> results = new List<Series>();
+            Series current = episodes.First();
+            foreach(Series series in episodes.OrderBy(s => s.title))
+            {
+                //group titles
+                string temp = StringUtilities.MatchingBeginnings(current.title, series.title);
+
+                if (StringUtilities.Clean(temp).Length == 0)
+                {
+                    if (current.title.Length > 5) results.Add(new Series() { id = current.id, title = current.title });
+                    current.title = series.title;
+                }
+                else
+                {
+                    if (current.id == -1 && series.id > 0) current.id = series.id;
+                    current.title = temp; //check for ids also
+                }
+            }
+
+            return results;
+        }
+
+        //Possible TODO:
+        //Naprawić "CSI: Kryminalne Zagadki CzegośTam - na razie CSI: Kryminalne Zagadki jest jednym serialem
         public IEnumerable<string> ExtractSeriesTitles(IEnumerable<string> arg)
         {
             //IEnumerable<IEnumerable<string>> titlesSplit = arg.OrderBy(s => s).Select(s => Regex.Replace(s, "[/;:\\.&\\s]+", " ").Split(" "));
@@ -83,33 +105,20 @@ namespace Logic.FileReader
             string matches = arg.First();
             foreach (string title in arg.OrderBy(s => s))
             {
-                string temp = MatchingBeginnings(matches, title);
+                string temp = StringUtilities.MatchingBeginnings(matches, title);
                 if (temp.Count() == 0)
                 {
-                    results.Add(matches);
+                    if (matches.Length > 5) results.Add(matches);
                     matches = title;
                 }
                 else matches = temp;
             }
-            results.Add(matches.TrimEnd());
 
+            results.Add(matches);
             return results;
             //throw new NotImplementedException();
         }
 
-        public string MatchingBeginnings(string str1, string str2)
-        {
-            string[] str_split1 = str1.Split(" ");
-            string[] str_split2 = str2.Split(" ");
-            List<string> matching = new List<string>();
-            for(int i = 0; i < Math.Min(str_split1.Length, str_split2.Length) && str_split1[i].TrimEnd(' ', '-', ':', '.') == str_split2[i].TrimEnd(' ', '-', ':', '.'); i++)
-            {
-                matching.Add(str_split1[i]);
-            }
-            string ret = matching.Aggregate("", (acc, s) => acc = acc + s + " ").TrimEnd(' ', '-', ':', '.');
-            return ret;
-            //throw new NotImplementedException();
-        }
 
         public void ParseChannel(XElement arg)
         {

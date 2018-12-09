@@ -53,6 +53,28 @@ namespace LogicTests
         }
 
         [Fact]
+        public void BuildInsert_ShouldReturnCorrectSQLEscapedQuote()
+        {
+            //Arrange
+            Description tst = new Description()
+            {
+                content = "Let's GO!",
+                programme_id = 1,
+                guideupdate_id = 3
+            };
+            string expected = $"INSERT INTO Description (content, guideupdate_id, programme_id) VALUES\n" +
+                "('Let''s GO!', 3, 1)\n" +
+                ";";
+            SQLBuilder<Description> tstBuilder = new SQLBuilder<Description>();
+            //Act
+            string actual = tstBuilder.BuildInsert(new List<Description>() { tst });
+            //Assert
+
+            Assert.Equal(expected, actual);
+        }
+
+
+        [Fact]
         public void BuildSelect_NoFieldNoFilterNoOrder_ShouldReturnCorrectSQL()
         {
             //Arrange

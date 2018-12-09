@@ -75,7 +75,7 @@ namespace DataAccess.Repositories
                     newVals.Add(attr.Name, $"{attr.GetValue(value)}");
                 }
             }
-            Connection.Execute(sqlBuilder.BuildUpdate());
+            Connection.Execute(sqlBuilder.BuildUpdate(newVals, new Dictionary<string, string>() { { "id", $"{id}"} }));
             //throw new NotImplementedException();
         }
     }

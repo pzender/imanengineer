@@ -240,9 +240,9 @@ namespace LogicTests
 
             //Assert
             Assert.Collection(result,
-                item => { Assert.Contains("Inwazja kórlików", item); },
-                item => { Assert.Contains("Kung Fu Panda - legenda o niezwykłości", item); },
-                item => { Assert.Contains("SpongeBob Kanciastoporty", item); }
+                item => { Assert.Contains("inwazja kórlików", item); },
+                item => { Assert.Contains("kung fu panda legenda o niezwykłości", item); },
+                item => { Assert.Contains("spongebob kanciastoporty", item); }
             );
         }
 
@@ -301,53 +301,7 @@ namespace LogicTests
                 item => { Assert.Contains("Kung Fu Panda - legenda o niezwykłości: Dobry zły krokodyl. Kung Fu Panda: Legends of Awesomeness, s01e11", item); });
         }
 
-        [Fact]
-        public void AddSeriesIfDoesntExist_AddsSeriesOnce()
-        {
-            //Arrange
-            FakeRepository <Series> FakeSeries = new FakeRepository<Series>();
-            XMLParser test = new XMLParser(seriesRepository: FakeSeries);
 
-            //Act
-            test.AddSeriesIfDoesntExist("Kung Fu Panda - legenda o niezwykłości");
-            test.AddSeriesIfDoesntExist("Kung Fu Panda - legenda o niezwykłości");
-
-            //Assert
-            Assert.Collection(FakeSeries.content,
-                item => { Assert.Contains(item.title, "Kung Fu Panda - legenda o niezwykłości"); });
-        }
-
-        [Fact]
-        public void AddSeriesIfDoesntExist_ReplacesSeriesWithShorter()
-        {
-            //Arrange
-            FakeRepository<Series> FakeSeries = new FakeRepository<Series>();
-            XMLParser test = new XMLParser(seriesRepository: FakeSeries);
-            test.AddSeriesIfDoesntExist("Kung Fu Panda - legenda o niezwykłości");
-
-            //Act
-            test.AddSeriesIfDoesntExist("Kung Fu Panda");
-
-            //Assert
-            Assert.Collection(FakeSeries.content,
-                item => { Assert.Contains(item.title, "Kung Fu Panda"); });
-        }
-
-        [Fact]
-        public void AddSeriesIfDoesntExist_DoesntReplaceWithLonger()
-        {
-            //Arrange
-            FakeRepository<Series> FakeSeries = new FakeRepository<Series>();
-            XMLParser test = new XMLParser(seriesRepository: FakeSeries);
-            test.AddSeriesIfDoesntExist("Kung Fu Panda");
-
-            //Act
-            test.AddSeriesIfDoesntExist("Kung Fu Panda - legenda o niezwykłości");
-
-            //Assert
-            Assert.Collection(FakeSeries.content,
-                item => { Assert.Contains(item.title, "Kung Fu Panda"); });
-        }
 
         [Fact]
         public void MatchingBeginnings_ReturnsCorrectValues()
@@ -355,7 +309,7 @@ namespace LogicTests
             //Arrange
             string t1 = "Kung Fu Panda - legenda o niezwykłości: Wyzwanie.Kung Fu Panda: Legends of Awesomeness, s01e10";
             string t2 = "Kung Fu Panda - legenda o niezwykłości: Dobry zły krokodyl. Kung Fu Panda: Legends of Awesomeness, s01e11";
-            string expected = "Kung Fu Panda - legenda o niezwykłości";
+            string expected = "kung fu panda legenda o niezwykłości";
             XMLParser test = new XMLParser();
             //Act
             var match = test.MatchingBeginnings(t1, t2);
@@ -385,7 +339,7 @@ namespace LogicTests
             var result = test.ExtractSeriesTitles(input);
 
             //Assert
-            Assert.Collection(result, item => { Assert.Equal("Castle", item); });
+            Assert.Collection(result, item => { Assert.Equal("castle", item); });
 
         }
 
