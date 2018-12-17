@@ -76,3 +76,18 @@ CREATE TABLE FavoriteChannels(
     channel_id int not null references Channel
 );
 
+GRANT DELETE, INSERT, SELECT, UPDATE ON OBJECT
+    UserData, 
+    GuideUpdate,
+    Series,
+    Programme,
+    Channel,
+    Feature,
+    Description,
+    TrackedSeries,
+    FeatureExample,
+    FavoriteFeatures,
+    FavoriteProgrammes,
+    Emission,
+    FavoriteChannels
+TO TvApplication
