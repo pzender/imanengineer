@@ -8,17 +8,21 @@ using Dapper;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.IO;
 
 namespace DataAccess
 {
     public class ChannelRepository : IRepository<Channel>
     {
-        private readonly string connectionString = "Server=tcp:whatsontv-db.database.windows.net,1433;Initial Catalog=whatsontv-db;Persist Security Info=False;User ID=TvApplication;Password=Tv@pplicati0n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        //private readonly string connectionString = "Server=tcp:whatsontv-db.database.windows.net,1433;Initial Catalog=whatsontv-db;Persist Security Info=False;User ID=TvApplication;Password=Tv@pplicati0n;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
         
+        private readonly string PROJECT_DIRECTORY_NAME = "WhatsOnTV";
+
         private IDbConnection Connection {
             get
             {
-                return new SqlConnection(connectionString);
+                return new SqlConnection($"Data Source={PathToSqliteBase("tv-db.sqlite")};Version=3;");
             }
         }
 
@@ -65,5 +69,20 @@ namespace DataAccess
         {
             throw new NotImplementedException();
         }
+
+
+
+
+        public string PathToSqliteBase(string filename)
+        {
+            string path = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
+
+            if (path.Contains(PROJECT_DIRECTORY_NAME))
+            {
+                return Path.Combine(path.Substring(0, path.LastIndexOf(PROJECT_DIRECTORY_NAME)), PROJECT_DIRECTORY_NAME, filename);
+            }
+            else throw new DirectoryNotFoundException($"directory {PROJECT_DIRECTORY_NAME} not found in path {path}");
+        }
+
     }
 }

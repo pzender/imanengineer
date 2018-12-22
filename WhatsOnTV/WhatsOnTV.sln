@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{8ECA05F8-ACAD-42F5-AE5C-F1FEF1613270}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{B148B32F-146F-434C-9068-E55EB57B8F41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{B148B32F-146F-434C-9068-E55EB57B8F41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
