@@ -1,10 +1,15 @@
 <div class="media border m-1 py-2">
-  <img src="{{programme.iconUrl}}" width="100px" class="align-self-center m-1">
+  <img src="{{programme.iconUrl}}" width="100px" class="align-self-center m-1 mr-3">
   <div class="media-body">
     <h5><a href="#">{{programme.title}}</a></h5>
-      <span *ngFor="let e of programme.emissions">{{e.start}} - {{e.stop}}</span>
+      <div *ngFor="let e of programme.emissions">{{e.start}} - {{e.stop}}</div>
       <div *ngFor="let ft of feat_types()">{{ft}}: 
         <span *ngFor="let f of feat_array(ft)"><a href="#">{{f}}</a>, </span> 
+      </div>
+      <div class="btn-group mt-3" role="group" aria-label="Rating buttons">
+        <button type="button" class="btn btn-secondary">Podobał mi się</button>
+        <button type="button" class="btn btn-secondary">Nie podobał mi się</button>
+        <button type="button" class="btn btn-secondary">Chcę obejrzeć</button>
       </div>
   </div>
 </div>
