@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IProgrammeList } from '../interfaces/ProgrammeListModel';
 import { ListingService } from '../listing.service';
+import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 
 @Component({
   selector: 'app-listing',
@@ -14,9 +15,6 @@ export class ListingComponent implements OnInit {
     this._listingService.getListing().subscribe(result => this.listing = result);
   }
 
-
-  listing : IProgrammeList ={
-    "title":"",
-    "listing":[]
-  };
+  title : string = "Program dla HBO"
+  listing : IProgrammeListElement[] = []
 }

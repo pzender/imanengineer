@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TV_App.EFModels;
 using Microsoft.EntityFrameworkCore;
+using TV_App.Responses;
 
 namespace TV_App.Controllers
 {
@@ -16,9 +17,30 @@ namespace TV_App.Controllers
         readonly testContext DbContext = new testContext();
         // GET: api/Programmes
         [HttpGet]
-        public IEnumerable<Programme> Get([FromQuery] string channel = "", [FromQuery] string user = "")
+        public IEnumerable<ProgrammeResponse> Get([FromQuery] string channel = "", [FromQuery] string username = "")
         {
-            var list = DbContext.Programme.AsQueryable();
+            var list = DbContext.Programme
+                .Include(prog => prog.Emission)
+                    .ThenInclude(em => em.Channel)
+                .Include(prog => prog.FeatureExample)
+                    .ThenInclude(fe => fe.Feature)
+                        .ThenInclude(f => f.TypeNavigation)
+                .AsEnumerable();
+;           
+            if(username != "")
+            {
+                User user = DbContext.User
+                    .Include(u => u.Rating)
+                        .ThenInclude(rat => rat.Programme)
+                            .ThenInclude(prog => prog.FeatureExample)
+                                .ThenInclude(fe => fe.Feature)
+                                    .ThenInclude(feat => feat.TypeNavigation)
+                    .Where(u => u.Login == username)
+                    .Single();
+                RecommendationBuilder r = new RecommendationBuilder(user);
+                list = r.Build(list);
+            }
+
             if (channel != "")
             {
                 list = (
@@ -29,16 +51,14 @@ namespace TV_App.Controllers
             }
 
             return list
-                .Include(p => p.Emission)
-                    .ThenInclude(e => e.Channel)
-                .Include(p => p.FeatureExample);
+                .Select(prog => new ProgrammeResponse(prog));//.ToList();
         }
 
         // GET: api/Programmes/5
         [HttpGet("{id}")]
-        public Programme Get(int id)
+        public ProgrammeResponse Get(int id)
         {
-            return DbContext.Programme.Where(p => p.Id == id).Single();
+            return new ProgrammeResponse(DbContext.Programme.Where(p => p.Id == id).Single());
         }
 
         // POST: api/Programmes
@@ -58,5 +78,6 @@ namespace TV_App.Controllers
         public void Delete(int id)
         {
         }
+
     }
 }
