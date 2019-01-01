@@ -31,9 +31,9 @@ namespace TV_App.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            XMLParser p = new XMLParser();
+            //XMLParser p = new XMLParser();
             string guide_content = value;
-            p.ParseAll(XDocument.Parse(guide_content));
+            //p.ParseAll(XDocument.Parse(guide_content));
 
         }
     }

@@ -18,6 +18,10 @@ export class ListingElementComponent implements OnInit {
       .filter(this.onlyUnique)
   };
 
+  parse_date(iso_date : string) {
+    return Date.parse(iso_date);
+  }
+
   feat_array(desired_type : string) : string[] {
     let chosen_feats = this.programme.features
       .filter(function(f : {type : string, value : string}){ return f.type === desired_type})
