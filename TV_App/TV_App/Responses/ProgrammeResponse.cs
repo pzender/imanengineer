@@ -13,6 +13,7 @@ namespace TV_App.Responses
             Title = src.Title;
             IconUrl = src.IconUrl;
             SeqNumber = src.SeqNumber;
+            Description = src.Description.FirstOrDefault()?.Content;
 
             Series = null;
 
@@ -24,6 +25,8 @@ namespace TV_App.Responses
         public string Title { get; set; }
         public string IconUrl { get; set; }
         public string SeqNumber { get; set; }
+        public string Description { get; set; }
+
 
         public virtual SeriesResponse Series { get; set; }
         public virtual IEnumerable<EmissionResponse> Emissions { get; set; }

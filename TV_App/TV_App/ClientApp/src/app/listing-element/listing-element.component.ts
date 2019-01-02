@@ -22,10 +22,13 @@ export class ListingElementComponent implements OnInit {
     return Date.parse(iso_date);
   }
 
-  feat_array(desired_type : string) : string[] {
+  feat_array(desired_type : string) : {"id" : number, "name" : string}[] {
     let chosen_feats = this.programme.features
-      .filter(function(f : {type : string, value : string}){ return f.type === desired_type})
-      .map(function(f : {type : string, value : string}){ return f.value})
+      .filter(function(f : {id : number, type : string, value : string}){ return f.type === desired_type})
+      .map(function(f : {id : number, type : string, value : string}){ return {
+        "id" : f.id, 
+        "name" : f.value
+      }})
     return chosen_feats;
   };
 

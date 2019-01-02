@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import localePlExtra from '@angular/common/locales/extra/pl';
+import { ProgrammedetailsComponent } from './programmedetails/programmedetails.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import localePlExtra from '@angular/common/locales/extra/pl';
     NavbarComponent,
     FilterSidebarComponent,
     ListingComponent,
-    ListingElementComponent
+    ListingElementComponent,
+    ProgrammedetailsComponent
   ],
   imports: [
     BrowserModule,

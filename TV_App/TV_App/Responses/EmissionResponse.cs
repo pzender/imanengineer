@@ -8,13 +8,13 @@ namespace TV_App.Responses
     {
         public DateTime Start { get; set; }
         public DateTime Stop { get; set; }
-        public string Channel { get; set; }
+        public ChannelResponse Channel { get; set; }
 
         public EmissionResponse(Emission e)
         {
             Start = DateTime.Parse(e.Start);
             Stop = DateTime.Parse(e.Stop);
-            Channel = e.Channel.Name;
+            Channel = new ChannelResponse(e.Channel);
         }
     }
 }

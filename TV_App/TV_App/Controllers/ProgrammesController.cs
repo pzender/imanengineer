@@ -53,6 +53,23 @@ namespace TV_App.Controllers
             return list
                 .Select(prog => new ProgrammeResponse(prog));//.ToList();
         }
+        // GET: api/Programmes/5/similar
+        [HttpGet("{id}/Programmes")]
+        public IEnumerable<ProgrammeResponse> GetSimilar(int id)
+        {
+            var list = DbContext.Programme
+                .Include(prog => prog.Emission)
+                    .ThenInclude(em => em.Channel)
+                .Include(prog => prog.FeatureExample)
+                    .ThenInclude(fe => fe.Feature)
+                        .ThenInclude(f => f.TypeNavigation)
+                .AsEnumerable();
+
+            RecommendationBuilder r = new RecommendationBuilder(null);
+            return r.Similar(list, list.Where(p => p.Id == id).Single())
+                .Select(p => new ProgrammeResponse(p));
+        }
+
 
         // GET: api/Programmes/5
         [HttpGet("{id}")]

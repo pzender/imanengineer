@@ -16,6 +16,7 @@ namespace TV_App.EFModels
         }
 
         public virtual DbSet<Channel> Channel { get; set; }
+        public virtual DbSet<Description> Description { get; set; }
         public virtual DbSet<Emission> Emission { get; set; }
         public virtual DbSet<Feature> Feature { get; set; }
         public virtual DbSet<FeatureExample> FeatureExample { get; set; }
@@ -56,6 +57,30 @@ namespace TV_App.EFModels
                     .IsRequired()
                     .HasColumnName("name")
                     .HasColumnType("STRING");
+            });
+
+            modelBuilder.Entity<Description>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Content)
+                    .IsRequired()
+                    .HasColumnName("content");
+
+                entity.Property(e => e.IdProgramme).HasColumnName("id_programme");
+
+                entity.Property(e => e.Source).HasColumnName("source");
+
+                entity.HasOne(d => d.IdProgrammeNavigation)
+                    .WithMany(p => p.Description)
+                    .HasForeignKey(d => d.IdProgramme);
+
+                entity.HasOne(d => d.SourceNavigation)
+                    .WithMany(p => p.Description)
+                    .HasForeignKey(d => d.Source)
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Emission>(entity =>

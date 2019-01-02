@@ -1,12 +1,17 @@
 export interface IProgrammeListElement {
+    id : number,
     title : string,
     iconUrl : string,
     emissions : {
-        channelName : string,
+        channel : {
+            id: number,
+            name : string
+        },
         start : string,
         stop : string
     } [],
     features : {
+        id : number,
         type : string,
         value : string
     } []

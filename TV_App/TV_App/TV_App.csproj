@@ -10,7 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
-    <ApplicationIcon>Icons-Land-Vista-Hardware-Devices-TV-Set-Retro.ico</ApplicationIcon>
+    <ApplicationIcon>tv_icon.ico</ApplicationIcon>
     <Win32Resource />
     <StartupObject>TV_App.Program</StartupObject>
   </PropertyGroup>
@@ -19,7 +19,7 @@
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.109.2" />
   </ItemGroup>
 
