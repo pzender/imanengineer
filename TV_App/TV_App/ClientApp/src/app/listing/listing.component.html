@@ -1,7 +1,0 @@
-<app-programmedetails *ngIf="show_details()"></app-programmedetails>
-<h1>{{title}}</h1>
-<app-listing-element 
-    *ngFor="let p of this.listing" 
-    [programme]="p"
-    (buttonClicked)="onButtonClicked($event)">
-</app-listing-element>
