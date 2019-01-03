@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -8,8 +9,9 @@ import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
   styleUrls: ['./listing-element.component.scss']
 })
 export class ListingElementComponent implements OnInit {
+  @Output() buttonClicked = new EventEmitter<string>();
   @Input('programme') programme : IProgrammeListElement
-  constructor() { }
+  constructor(private _http : HttpClient) { }
 
   feat_types() : string[] {
 
@@ -32,11 +34,42 @@ export class ListingElementComponent implements OnInit {
     return chosen_feats;
   };
 
+  rateButton(value : number){
+    this._http.post(
+      "/api/Users/"+"Przemek", 
+      {programme_id : this.programme.id, rating_value : value},
+      {responseType : 'json'}
+    )
+    .subscribe(result => this.buttonClicked.emit(result.toString()))
+  }
 
   ngOnInit() {
   }
 
-  onlyUnique(value, index, self) { 
+  onlyUnique(value : any, index : number, self : any[]) { 
     return self.indexOf(value) === index;
+  }
+
+  translateDate(initial : string) : string {
+    return initial
+      .replace("Mon", "Pn")
+      .replace("Tue", "Wt")
+      .replace("Wed", "Śr")
+      .replace("Thu", "Cz")
+      .replace("Fri", "Pt")
+      .replace("Sat", "Sb")
+      .replace("Sun", "Nd")
+      .replace("Jan", "Sty")
+      .replace("Feb", "Lut")
+      .replace("Mar", "Mar")
+      .replace("Apr", "Kwi")
+      .replace("May", "Maj")
+      .replace("Jun", "Cze")
+      .replace("Jul", "Lip")
+      .replace("Aug", "Sie")
+      .replace("Sep", "Wrz")
+      .replace("Oct", "Paź")
+      .replace("Nov", "Lis")
+      .replace("Dec", "Gru")
   }
 }

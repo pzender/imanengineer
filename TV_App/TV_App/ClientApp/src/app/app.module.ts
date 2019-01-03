@@ -9,9 +9,6 @@ import { ListingComponent } from './listing/listing.component';
 import { ListingElementComponent } from './listing-element/listing-element.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { registerLocaleData } from '@angular/common';
-import localePl from '@angular/common/locales/pl';
-import localePlExtra from '@angular/common/locales/extra/pl';
 import { ProgrammedetailsComponent } from './programmedetails/programmedetails.component';
 
 

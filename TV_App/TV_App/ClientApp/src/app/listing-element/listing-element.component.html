@@ -2,14 +2,16 @@
   <img src="{{programme.iconUrl}}" width="100px" class="align-self-center m-1 mr-3">
   <div class="media-body">
     <h5><a href="/Programmes/{{programme.id}}">{{programme.title}}</a></h5>
-      <div *ngFor="let e of programme.emissions">{{e.start | date:'EE, d MMM, H:mm'}} - {{e.stop | date:'EE, d MMM, H:mm'}} on <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a></div>
+      <div *ngFor="let e of programme.emissions">
+          <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(e.start | date:'EE, d MMM, H:mm')}} - {{translateDate(e.stop | date:'EE, d MMM, H:mm')}}
+      </div>
       <div *ngFor="let ft of feat_types()">{{ft}}: 
         <span *ngFor="let f of feat_array(ft)"><a href="/Features/{{f.id}}">{{f.name}}</a>, </span> 
       </div>
       <div class="btn-group mt-3" role="group" aria-label="Rating buttons">
-        <button type="button" class="btn btn-secondary">Podobał mi się</button>
-        <button type="button" class="btn btn-secondary">Nie podobał mi się</button>
-        <button type="button" class="btn btn-secondary">Chcę obejrzeć</button>
+        <button type="button" class="btn btn-secondary" (click)=this.rateButton(1)>Podobał mi się</button>
+        <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie podobał mi się</button>
+        <button type="button" class="btn btn-secondary" (click)=this.rateButton(2)>Chcę obejrzeć</button>
       </div>
   </div>
 </div>
