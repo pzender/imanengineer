@@ -5,6 +5,7 @@ import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { QueryParamsService } from '../utilities/query-params.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { Title } from '@angular/platform-browser';
 export class ListingComponent implements OnInit {
   constructor(private _listingService : ListingService,
               private _route : ActivatedRoute,
-              private _httpClient : HttpClient) 
+              private _httpClient : HttpClient,
+              private _queryParams : QueryParamsService) 
     {
       if(this._route.snapshot.params.feature === "Programmes"){
         this.title = "Podobne programy"
@@ -38,9 +40,10 @@ export class ListingComponent implements OnInit {
         this.title = "Twoje rekomendacje"
       }
   
-      this._listingService.setEndpoint(this._route.snapshot.params.feature)
-      this._listingService.setId(this._route.snapshot.params.id)
-      this._listingService.refresh()
+      this._queryParams.endpoint = {
+        feature : this._route.snapshot.params.feature,
+        id : this._route.snapshot.params.id
+      };
       this._listingService.getListing().subscribe(result => this.listing = result);
     }
 
@@ -56,8 +59,6 @@ export class ListingComponent implements OnInit {
   }
 
   onButtonClicked(response : string){
-    console.log("onButtonClicked" + response)
-    this._listingService.refresh()
     this._listingService.getListing().subscribe(result => this.listing = result);
   }
 }

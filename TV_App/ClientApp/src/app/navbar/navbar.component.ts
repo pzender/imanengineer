@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QueryParamsService } from '../utilities/query-params.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _queryParams: QueryParamsService) { }
 
+  
   ngOnInit() {
   }
 

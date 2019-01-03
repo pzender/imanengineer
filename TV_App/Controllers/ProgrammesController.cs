@@ -17,7 +17,7 @@ namespace TV_App.Controllers
         readonly testContext DbContext = new testContext();
         // GET: api/Programmes
         [HttpGet]
-        public IEnumerable<ProgrammeResponse> Get([FromQuery] string channel = "", [FromQuery] string username = "")
+        public IEnumerable<ProgrammeResponse> Get([FromQuery] string channel = "", [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             var list = DbContext.Programme
                 .Include(prog => prog.Emission)
@@ -41,6 +41,8 @@ namespace TV_App.Controllers
                 list = r.Build(list);
             }
 
+
+
             if (channel != "")
             {
                 list = (
@@ -50,6 +52,20 @@ namespace TV_App.Controllers
                 );
             }
 
+            TimeSpan from_ts = new TimeSpan(
+                int.Parse(from.Split(':')[0]),
+                int.Parse(from.Split(':')[1]),
+                0
+            );
+            TimeSpan to_ts = new TimeSpan(
+                int.Parse(to.Split(':')[0]),
+                int.Parse(to.Split(':')[1]),
+                0
+            );
+
+            list = list
+                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            
             return list
                 .Select(prog => new ProgrammeResponse(prog));//.ToList();
         }
@@ -95,6 +111,5 @@ namespace TV_App.Controllers
         public void Delete(int id)
         {
         }
-
     }
 }
