@@ -8,16 +8,21 @@
     </li>
   </ul>
   <form class="form-inline mx-auto">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+  </form>
 
-  <ul class="navbar-nav ml-auto">
+  <li class="form-inline ml-auto" *ngIf="userEmpty()">
+    <input class="form-control mr-sm-2" type="login" placeholder="Nazwa użytkownika" aria-label="Search" (keyup.enter)="login()" [(ngModel)]="new_name">
+    <a (click)="login()" class="nav-link">Zaloguj</a>
+  </li>
+  
+  <ul class="navbar-nav ml-auto" *ngIf="!userEmpty()">
     <li class="nav-item text-right" >
-      <span class="navbar-text mx-5">Witaj, {{this._queryParams.currentUser}}</span>
+      <span class="navbar-text mx-5">Witaj, {{getUser()}}</span>
     </li>
     <li class="nav-item text-right">
-      <a href="#" class="nav-link">Wyloguj</a>
+      <a (click)="logout()" class="nav-link">Wyloguj</a>
     </li>
   </ul>
 

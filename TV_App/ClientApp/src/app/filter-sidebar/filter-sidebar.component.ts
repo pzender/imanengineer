@@ -16,7 +16,7 @@ export class FilterSidebarComponent implements OnInit {
   ngOnInit() {
   }
   timeFrom : Time = {hours : 0, minutes: 0}
-  timeTo : Time  = {hours : 23, minutes: 59}
+  timeTo : Time  = {hours : 0, minutes: 0}
   onFromInput($event){
     this.timeFrom = this.parseTime($event.target.value);
     this._queryParams.hourStart = this.timeFrom;

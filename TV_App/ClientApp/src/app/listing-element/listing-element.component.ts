@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 import { HttpClient } from '@angular/common/http';
+import { QueryParamsService } from '../utilities/query-params.service';
 
 
 @Component({
@@ -11,7 +12,8 @@ import { HttpClient } from '@angular/common/http';
 export class ListingElementComponent implements OnInit {
   @Output() buttonClicked = new EventEmitter<string>();
   @Input('programme') programme : IProgrammeListElement
-  constructor(private _http : HttpClient) { }
+  constructor(private _http : HttpClient,
+              private _queryParams : QueryParamsService) { }
 
   feat_types() : string[] {
 
@@ -36,7 +38,7 @@ export class ListingElementComponent implements OnInit {
 
   rateButton(value : number){
     this._http.post(
-      "/api/Users/"+"Przemek", 
+      "/api/Users/"+this._queryParams.currentUser+"/Ratings", 
       {programme_id : this.programme.id, rating_value : value},
       {responseType : 'json'}
     )

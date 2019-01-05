@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,16 +24,16 @@ namespace TV_App.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        // GET: api/Users/Przemek
+        [HttpGet("{name}", Name = "Get")]
+        public User Get(string name)
         {
-            return "value";
+            return DbContext.User.Where(u => u.Login == name).SingleOrDefault();
         }
 
-        // POST: api/Users/Przemek/
-        [HttpPost("{name}")]
-        public EFModels.Rating Post(string name, [FromBody] Rating body)
+        // POST: api/Users/Przemek/Ratings
+        [HttpPost("{name}/Ratings")]
+        public EFModels.Rating PostRating(string name, [FromBody] Rating body)
         {
             EFModels.Rating rating = new EFModels.Rating()
             {
@@ -44,8 +46,33 @@ namespace TV_App.Controllers
             return rating;
         }
 
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
+        // POST: api/Users
+        [HttpPost]
+        public User Post()
+        {
+            string name = "";
+            using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                name = sr.ReadToEnd();
+            }
+            
+            User user = DbContext.User.Where(u => u.Login == name).SingleOrDefault();
+            if (user == null)
+            {
+                user = new User()
+                {
+                    Login = name
+                };
+                DbContext.User.Add(user);
+                DbContext.SaveChanges();
+            }
+            return user;
+        }
+
+
+
+        // PUT: api/Users/Przemek
+        [HttpPut("{username}")]
         public void Put(int id, [FromBody] string value)
         {
             

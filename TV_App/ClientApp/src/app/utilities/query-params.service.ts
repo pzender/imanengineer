@@ -7,7 +7,7 @@ import { Time } from '@angular/common';
 export class QueryParamsService {
 
   constructor() { }
-  public currentUser : string = "Przemek"
+  public currentUser : string = ""
   public endpoint : {feature : string, id : number} 
   public hourStart : Time = {hours : 0, minutes: 0}
   public hourEnd : Time = {hours : 0, minutes: 0}

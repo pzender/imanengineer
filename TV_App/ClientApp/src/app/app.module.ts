@@ -10,6 +10,7 @@ import { ListingElementComponent } from './listing-element/listing-element.compo
 import { HttpClientModule } from '@angular/common/http';
 
 import { ProgrammedetailsComponent } from './programmedetails/programmedetails.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ProgrammedetailsComponent } from './programmedetails/programmedetails.c
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [/*{provide: LOCALE_ID, useValue: 'pl'}*/],
   bootstrap: [AppComponent]

@@ -27,7 +27,7 @@ namespace TV_App.Controllers
                         .ThenInclude(f => f.TypeNavigation)
                 .AsEnumerable();
 ;           
-            if(username != "")
+            if(username != null && username != "")
             {
                 User user = DbContext.User
                     .Include(u => u.Rating)
