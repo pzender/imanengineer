@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DataLayer;
@@ -29,12 +31,19 @@ namespace TV_App.Controllers
 
         // POST: api/GuideUpdate
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post()
         {
-            //XMLParser p = new XMLParser();
-            string guide_content = value;
-            //p.ParseAll(XDocument.Parse(guide_content));
 
+            string body = "";
+            using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                body = sr.ReadToEnd();
+            }
+            if(body != "")
+            {
+                XMLParser parser = new XMLParser();
+                parser.ParseAll(XDocument.Parse(body));
+            }
         }
     }
 }

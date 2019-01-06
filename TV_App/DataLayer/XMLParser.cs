@@ -4,160 +4,111 @@ using System.Text;
 using System.Xml.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
-//using Entities;
+using TV_App.EFModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer
 {
     public class XMLParser
     {
-        //public void ParseAll(XDocument doc)
-        //{
-        //    //guideupdate
-        //    QueryExecutor updateExecutor = new QueryExecutor();
-        //    SQLBuilder<GuideUpdate> updateSql = new SQLBuilder<GuideUpdate>();
-        //    updateExecutor.Query<GuideUpdate>(updateSql.BuildInsert(new List<GuideUpdate>(){ new GuideUpdate() {
-        //        posted = DateTime.Now,
-        //        source = doc.Root.Elements("channel").First().Element("url").Value
-        //    }}));
-        //    GuideUpdate last = updateExecutor.Query<GuideUpdate>(
-        //        "select * from GuideUpdate where id = (select MAX(id) from GuideUpdate);").Single();
+        private readonly testContext DbContext = new testContext();
 
-        //    //kanały
-        //    SQLBuilder<Channel> channelSql = new SQLBuilder<Channel>();
-        //    QueryExecutor channelExecutor = new QueryExecutor();
-        //    List<Channel> channels = new List<Channel>();
-        //    foreach(XElement e in doc.Root.Elements("channel"))
-        //    {
-        //        if (e.Attribute("id") == null) throw new ArgumentException("Channel id doesnt exist!");
-        //        channels.Add(new Channel()
-        //        {
-        //            name = e.Attribute("id").Value,
-        //            icon_url = e.Element("icon") != null ? e.Element("icon").Value : null
-        //        });
-                
-        //    }
-        //    if (channels.Count > 0)
-        //    {
-        //        channelExecutor.Query<Channel>(channelSql.BuildInsert(channels));
-        //    }
+        public void ParseAll(XDocument doc)
+        {
 
-        //    //programy
-        //    QueryExecutor programmeExecutor = new QueryExecutor();
-        //    List<Programme> programmes = new List<Programme>();
-        //    SQLBuilder<Programme> programmeSql = new SQLBuilder<Programme>();
+            IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
 
-        //    foreach (XElement e in doc.Root.Elements("programme"))
-        //    {
-        //        string title = e.Elements("title").First().Value;
-        //        programmes.Add(new Programme()
-        //        {
-        //            title = title,
-        //            icon_url = (e.Element("icon") != null && e.Element("icon").Attribute("src") != null) ?
-        //                e.Element("icon").Attribute("src").Value : null,
-        //            seq_number = null,
-        //        });
-                
-        //    }
-        //    if(programmes.Count > 0)
-        //    {
-        //        programmeExecutor.Query<Programme>(programmeSql.BuildInsert(programmes));
-        //    }
+            //guideupdate
+            GuideUpdate new_gu = new GuideUpdate()
+            {
+                Id = DbContext.GuideUpdate.Select(gu => gu.Id).Max() + 1,
+                Posted = DateTime.Now.ToString(),
+                Source = channels_in_xml.First().Element("url").Value
+            };
+            DbContext.GuideUpdate.Add(new_gu);
 
-        //    //emisje, ficzery, opisy itepe
-        //    QueryExecutor featureExecutor = new QueryExecutor();
-        //    QueryExecutor exampleExecutor = new QueryExecutor();
-        //    List<Feature> features = new List<Feature>();
-        //    SQLBuilder<Feature> featureSql = new SQLBuilder<Feature>();
+            DbContext.SaveChanges();
 
-        //    QueryExecutor emissionExecutor = new QueryExecutor();
-        //    List<Emission> emissions = new List<Emission>();
-        //    string emissionQuery = "INSERT INTO Emission (start, stop, channel_id, programme_id) VALUES ";
+            //kanały
+            foreach (XElement channel in channels_in_xml)
+            {
+                if (!DbContext.Channel.Where(ch => ch.Name == channel.Attribute("id").Value).Any())
+                {
+                    Channel new_channel = new Channel()
+                    {
+                        Id = DbContext.Channel.Select(ch => ch.Id).Max() + 1,
+                        Name = channel.Attribute("id").Value,
+                        IconUrl = channel.Element("icon")?.Attribute("src").Value,
+                    };
+                    DbContext.Channel.Add(new_channel);
+                    DbContext.SaveChanges();
 
-        //    foreach (XElement e in doc.Root.Elements("programme"))
-        //    {
-        //        string title = e.Elements("title").First().Value;
-        //        emissionQuery += "(";
-        //        emissionQuery += $"'{ParseDateTime(e.Attribute("start").Value)}', ";
-        //        emissionQuery += $"'{ParseDateTime(e.Attribute("stop").Value)}', ";
-        //        emissionQuery += $"(SELECT id FROM Channel WHERE name like '{e.Attribute("channel").Value.Replace("'", "''")}'), ";
-        //        emissionQuery += $"(SELECT id FROM Programme WHERE title like '{title.Replace("'", "''")}')";
+                }
+            }
 
-        //        emissionQuery += "), ";
+            //programy
+            IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme");
+            foreach (XElement programme in programmes_in_xml)
+            {
+                Programme new_prog = DbContext.Programme.Where(prog => prog.Title == programme.Elements("title").First().Value).SingleOrDefault();
+                if (new_prog == null)
+                {
+                    new_prog = new Programme()
+                    {
+                        Id = DbContext.Programme.Select(gu => gu.Id).Max() + 1,
+                        Title = programme.Elements("title").First().Value,
+                        IconUrl = programme.Element("icon")?.Attribute("src").Value
+                    };
+                    DbContext.Programme.Add(new_prog);
+                    DbContext.SaveChanges();
 
+                }
+                Emission new_em = DbContext.Emission
+                    .Where(e => DateTime.Parse(e.Start) == ParseDateTimeXml(programme.Attribute("start").Value) 
+                             && DateTime.Parse(e.Stop) == ParseDateTimeXml(programme.Attribute("stop").Value))
+                    .SingleOrDefault();
+                if(new_em == null)
+                {
+                    new_em = new Emission()
+                    {
+                        Id = DbContext.Emission.Select(gu => gu.Id).Max() + 1,
+                        Channel = DbContext.Channel.Where(ch => ch.Name == programme.Attribute("channel").Value).Single(),
+                        Start = ParseDateTimeXml(programme.Attribute("start").Value).ToString(),
+                        Stop = ParseDateTimeXml(programme.Attribute("stop").Value).ToString(),
+                        Programme = new_prog
+                    };
+                    DbContext.Emission.Add(new_em);
+                    DbContext.SaveChanges();
 
-        //        if (e.Element("country") != null)
-        //            features.Add(new Feature()
-        //            {
-        //                type = "country",
-        //                value = e.Element("country").Value
-        //            });
-        //        if (e.Element("date") != null)
-        //            features.Add(new Feature()
-        //            {
-        //                type = "date",
-        //                value = e.Element("date").Value
-        //            });
-        //        else
-        //            features.Add(new Feature()
-        //            {
-        //                type = "date",
-        //                value = $"{DateTime.Now.Year}"
-        //            });
+                }
 
-        //        if (e.Element("credits") != null && e.Element("credits").HasElements)
-        //        {
-        //            features.AddRange(e.Element("credits").Elements().Select(
-        //                el => new Feature()
-        //                {
-        //                    type = el.Name.LocalName,
-        //                    value = el.Value
-        //                }
-        //                ));
-        //        }
+            }
 
-        //        if (e.Elements("category") != null)
-        //        {
-        //            features.AddRange(e.Elements("category").Select(
-        //            el => new Feature()
-        //            {
-        //                type = el.Name.LocalName,
-        //                value = el.Value
-        //            }
-        //            ));
-        //        }
-        //        if (features.Count > 0)
-        //        {
-        //            featureExecutor.Query<Feature>(featureSql.BuildInsert(features));
-        //            foreach (Feature f in features)
-        //            {
-        //                exampleExecutor.Query<FeatureExample>($"INSERT INTO FeatureExample VALUES (" +
-        //                    $"(SELECT id FROM Feature WHERE type LIKE '{f.type.Replace("'", "''")}' AND value LIKE '{f.value.Replace("'", "''")}'), " +
-        //                    $"(SELECT id FROM Programme WHERE title LIKE '{title.Replace("'", "''")}')" +
-        //                    $")");
-        //            }
-        //        }
-        //        features.Clear();
-        //    }
-        //    emissionQuery += ";";
-        //    if (!emissionQuery.EndsWith("VALUES ;"))
-        //    {
-        //        emissionQuery = emissionQuery.Replace(", ;", ";");
-        //        emissionExecutor.Query<Emission>(emissionQuery);
-        //    }
-
-        //    //throw new NotImplementedException();
-        //}
+            //throw new NotImplementedException();
+        }
         //01234567 89
         //20181017 03 25 00 +0200
-        private DateTime ParseDateTime(string inp)
+        private DateTime ParseDateTimeXml(string inp)
         {
             return new DateTime(
-                year: int.Parse(inp.Substring(0,4)),
-                month: int.Parse(inp.Substring(4,2)),
-                day: int.Parse(inp.Substring(6,2)),
-                hour: int.Parse(inp.Substring(8,2)),
-                minute: int.Parse(inp.Substring(10,2)),
-                second: int.Parse(inp.Substring(12,2))
+                year: int.Parse(inp.Substring(0, 4)),
+                month: int.Parse(inp.Substring(4, 2)),
+                day: int.Parse(inp.Substring(6, 2)),
+                hour: int.Parse(inp.Substring(8, 2)),
+                minute: int.Parse(inp.Substring(10, 2)),
+                second: int.Parse(inp.Substring(12, 2))
+            );
+        }
+
+        private DateTime ParseDateTimeDb(string inp)
+        {
+            return new DateTime(
+                year: int.Parse(inp.Substring(0, 4)),
+                month: int.Parse(inp.Substring(5,2)),
+                day: int.Parse(inp.Substring(8,2)),
+                hour: int.Parse(inp.Substring(11,2)),
+                minute: int.Parse(inp.Substring(14,2)),
+                second: int.Parse(inp.Substring(17, 2))
             );
         }
     }
