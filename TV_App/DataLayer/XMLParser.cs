@@ -63,6 +63,7 @@ namespace DataLayer
                     DbContext.SaveChanges();
 
                 }
+
                 Emission new_em = DbContext.Emission
                     .Where(e => DateTime.Parse(e.Start) == ParseDateTimeXml(programme.Attribute("start").Value) 
                              && DateTime.Parse(e.Stop) == ParseDateTimeXml(programme.Attribute("stop").Value))
@@ -81,6 +82,78 @@ namespace DataLayer
                     DbContext.SaveChanges();
 
                 }
+
+                Description new_desc = DbContext.Description
+                    .Include(desc => desc.IdProgrammeNavigation)
+                    .Include(desc => desc.SourceNavigation)
+                    .Where(desc => desc.IdProgrammeNavigation == new_prog && desc.SourceNavigation == new_gu)
+                    .SingleOrDefault();
+                if(new_desc == null)
+                {
+                    new_desc = new Description()
+                    {
+                        Id = DbContext.Description.Select(de => de.Id).Max() + 1,
+                        IdProgrammeNavigation = new_prog,
+                        SourceNavigation = new_gu,
+                        Content = programme.Element("desc")?.Value ?? ""
+                    };
+                    DbContext.Description.Add(new_desc);
+                    DbContext.SaveChanges();
+                }
+
+                string[] feat_names = { "date", "category", "country" };
+                List<XElement> features = programme.Elements().Where(elem => feat_names.Contains(elem.Name.LocalName)).ToList();
+                if(programme.Element("credits") != null)
+                    features.AddRange(programme.Element("credits").Elements());
+                if (features.Where(el => el.Name.LocalName == "date").Count() == 0)
+                    features.Add(new XElement("date", $"{DateTime.Now.Year-1}"));
+
+                foreach(XElement feat in features)
+                {
+                    string type = feat.Name.LocalName;
+                    string value = feat.Value;
+
+                    Feature new_feat = DbContext.Feature
+                        .Include(f => f.TypeNavigation)
+                        .Where(f => f.TypeNavigation.TypeName == type && f.Value == value)
+                        .SingleOrDefault();
+                    if(new_feat == null)
+                    {
+                        new_feat = new Feature()
+                        {
+                            Id = DbContext.Feature.Select(f => f.Id).Max() + 1,
+                            TypeNavigation = DbContext.FeatureTypes.First(ft => ft.TypeName == type),
+                            Value = value
+                        };
+                        DbContext.Feature.Add(new_feat);
+                        //DbContext.SaveChanges();
+                    }
+
+                    FeatureExample new_fe = DbContext.FeatureExample
+                        .Include(fe => fe.Programme)
+                        .Include(fe => fe.Feature)
+                        .SingleOrDefault(fe => fe.Feature == new_feat && fe.Programme == new_prog);
+                    if(new_fe == null)
+                    {
+                        new_fe = new FeatureExample()
+                        {
+                            Feature = new_feat,
+                            Programme = new_prog
+                        };
+                        DbContext.FeatureExample.Add(new_fe);
+                        //DbContext.SaveChanges();
+                    }
+                    DbContext.SaveChanges();
+                }
+
+                //string year = programme.Element("date")?.Value ?? $"DateTime.Now.Year";
+
+
+                //FeatureExample new_fe = DbContext.FeatureExample
+                //    .Include(fe => fe.Feature)
+                //    .Include(fe => fe.Programme)
+                //    .Where(fe => fe.Feature == new_year && fe.Programme == new_prog)
+                //    .SingleOrDefault();
 
             }
 

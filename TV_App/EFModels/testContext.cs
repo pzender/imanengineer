@@ -31,11 +31,9 @@ namespace TV_App.EFModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlite("Data Source=DataLayer\\test.sqlite");
-                
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlite("Data Source=DataLayer\\\\\\\\test.sqlite");
             }
-            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -125,7 +123,7 @@ namespace TV_App.EFModels
                     .HasName("IND_feature_id")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Value)
+                entity.HasIndex(e => new { e.Type, e.Value })
                     .IsUnique();
 
                 entity.Property(e => e.Id)
