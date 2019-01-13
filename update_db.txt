@@ -1,1 +1,1 @@
-Scaffold-DbContext "Data Source=test.sqlite" Microsoft.EntityFrameworkCore.Sqlite -OutputDir EFModels -force
+Scaffold-DbContext "Data Source=DataLayer\\test.sqlite" Microsoft.EntityFrameworkCore.Sqlite -OutputDir EFModels -force

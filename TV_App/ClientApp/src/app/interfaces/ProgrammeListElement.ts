@@ -15,5 +15,5 @@ export interface IProgrammeListElement {
         type : string,
         value : string
     } []
-
+    description : string
 }

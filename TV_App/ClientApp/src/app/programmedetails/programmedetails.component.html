@@ -1,3 +1,18 @@
-<p>
-  programmedetails works!
-</p>
+<div class="media border m-3 p-3">
+    <img src="{{programme.iconUrl}}" width="100px" class="align-self-center m-1 mr-3">
+    <div class="media-body">
+      <h1><a href="/Programmes/{{programme.id}}">{{programme.title}}</a></h1>
+      <p>
+        {{programme.description}}
+      </p>
+        <div *ngFor="let e of programme.emissions">
+            <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.e.start | date:'EE, d MMM, H:mm'}} - {{e.stop | date:'EE, d MMM, H:mm'}}
+        </div>
+        <div class="btn-group mt-3" role="group" aria-label="Rating buttons">
+          <button type="button" class="btn btn-secondary" (click)=this.rateButton(1)>Podobał mi się</button>
+          <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie podobał mi się</button>
+          <button type="button" class="btn btn-secondary" (click)=this.rateButton(2)>Chcę obejrzeć</button>
+        </div>
+    </div>
+  </div>
+  

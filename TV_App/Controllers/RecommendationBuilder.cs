@@ -18,7 +18,7 @@ namespace TV_App.Controllers
         {
             Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => TotalSimilarity(p, given));
             return recom_supports
-                .Where(rs => rs.Value > 0)
+                .Where(rs => rs.Value > 0.5)
                 .OrderByDescending(rs => rs.Value)
                 .ToDictionary(kv => kv.Key, kv => kv.Value)
                 .Keys
@@ -29,7 +29,7 @@ namespace TV_App.Controllers
         {
             Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => RecommendationSupport(p));
             return recom_supports
-                .Where(rs => rs.Value > 0)
+                .Where(rs => rs.Value > 0.5)
                 .OrderByDescending(rs => rs.Value)
                 .ToDictionary(kv => kv.Key, kv => kv.Value)
                 .Keys

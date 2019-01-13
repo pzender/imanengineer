@@ -61,6 +61,12 @@ namespace TV_App.EFModels
 
             modelBuilder.Entity<Description>(entity =>
             {
+                entity.HasIndex(e => e.Content)
+                    .IsUnique();
+
+                entity.HasIndex(e => new { e.IdProgramme, e.Source })
+                    .IsUnique();
+
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .ValueGeneratedNever();
@@ -75,7 +81,8 @@ namespace TV_App.EFModels
 
                 entity.HasOne(d => d.IdProgrammeNavigation)
                     .WithMany(p => p.Description)
-                    .HasForeignKey(d => d.IdProgramme);
+                    .HasForeignKey(d => d.IdProgramme)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.SourceNavigation)
                     .WithMany(p => p.Description)

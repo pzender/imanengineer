@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TV_App.EFModels;
 using Microsoft.EntityFrameworkCore;
+using LemmaSharp;
 
-namespace DataLayer
+namespace TV_App.DataLayer
 {
     public class XMLParser
     {
@@ -19,9 +20,10 @@ namespace DataLayer
             IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
 
             //guideupdate
+            long new_id = DbContext.GuideUpdate.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             GuideUpdate new_gu = new GuideUpdate()
             {
-                Id = DbContext.GuideUpdate.Select(gu => gu.Id).Max() + 1,
+                Id = new_id,
                 Posted = DateTime.Now.ToString(),
                 Source = channels_in_xml.First().Element("url").Value
             };
@@ -30,24 +32,30 @@ namespace DataLayer
             DbContext.SaveChanges();
 
             //kanały
+            new_id = DbContext.Channel.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             foreach (XElement channel in channels_in_xml)
             {
                 if (!DbContext.Channel.Where(ch => ch.Name == channel.Attribute("id").Value).Any())
                 {
                     Channel new_channel = new Channel()
                     {
-                        Id = DbContext.Channel.Select(ch => ch.Id).Max() + 1,
+                        Id = new_id,
                         Name = channel.Attribute("id").Value,
                         IconUrl = channel.Element("icon")?.Attribute("src").Value,
                     };
                     DbContext.Channel.Add(new_channel);
-                    DbContext.SaveChanges();
+                    new_id++;
 
                 }
             }
+            DbContext.SaveChanges();
 
             //programy
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme");
+            new_id = DbContext.Programme.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+            long em_id = DbContext.Emission.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+            long desc_id = DbContext.Description.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+            long feat_id = DbContext.Feature.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             foreach (XElement programme in programmes_in_xml)
             {
                 Programme new_prog = DbContext.Programme.Where(prog => prog.Title == programme.Elements("title").First().Value).SingleOrDefault();
@@ -55,13 +63,13 @@ namespace DataLayer
                 {
                     new_prog = new Programme()
                     {
-                        Id = DbContext.Programme.Select(gu => gu.Id).Max() + 1,
+                        Id = new_id,
                         Title = programme.Elements("title").First().Value,
                         IconUrl = programme.Element("icon")?.Attribute("src").Value
                     };
                     DbContext.Programme.Add(new_prog);
                     DbContext.SaveChanges();
-
+                    new_id++;
                 }
 
                 Emission new_em = DbContext.Emission
@@ -72,7 +80,7 @@ namespace DataLayer
                 {
                     new_em = new Emission()
                     {
-                        Id = DbContext.Emission.Select(gu => gu.Id).Max() + 1,
+                        Id = em_id,
                         Channel = DbContext.Channel.Where(ch => ch.Name == programme.Attribute("channel").Value).Single(),
                         Start = ParseDateTimeXml(programme.Attribute("start").Value).ToString(),
                         Stop = ParseDateTimeXml(programme.Attribute("stop").Value).ToString(),
@@ -80,25 +88,27 @@ namespace DataLayer
                     };
                     DbContext.Emission.Add(new_em);
                     DbContext.SaveChanges();
+                    em_id++;
 
                 }
 
                 Description new_desc = DbContext.Description
                     .Include(desc => desc.IdProgrammeNavigation)
                     .Include(desc => desc.SourceNavigation)
-                    .Where(desc => desc.IdProgrammeNavigation == new_prog && desc.SourceNavigation == new_gu)
+                    .Where(desc => desc.IdProgrammeNavigation == new_prog)
                     .SingleOrDefault();
                 if(new_desc == null)
                 {
                     new_desc = new Description()
                     {
-                        Id = DbContext.Description.Select(de => de.Id).Max() + 1,
+                        Id = desc_id,
                         IdProgrammeNavigation = new_prog,
                         SourceNavigation = new_gu,
                         Content = programme.Element("desc")?.Value ?? ""
                     };
                     DbContext.Description.Add(new_desc);
                     DbContext.SaveChanges();
+                    desc_id++;
                 }
 
                 string[] feat_names = { "date", "category", "country" };
@@ -110,8 +120,12 @@ namespace DataLayer
 
                 foreach(XElement feat in features)
                 {
+                    ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
+
                     string type = feat.Name.LocalName;
                     string value = feat.Value;
+                    if (type == "category")
+                        value = lemmatizer.Lemmatize(value);
 
                     Feature new_feat = DbContext.Feature
                         .Include(f => f.TypeNavigation)
@@ -121,44 +135,39 @@ namespace DataLayer
                     {
                         new_feat = new Feature()
                         {
-                            Id = DbContext.Feature.Select(f => f.Id).Max() + 1,
+                            Id = feat_id,
                             TypeNavigation = DbContext.FeatureTypes.First(ft => ft.TypeName == type),
                             Value = value
                         };
                         DbContext.Feature.Add(new_feat);
-                        //DbContext.SaveChanges();
+                        DbContext.SaveChanges();
+                        feat_id++;
                     }
 
                     FeatureExample new_fe = DbContext.FeatureExample
-                        .Include(fe => fe.Programme)
-                        .Include(fe => fe.Feature)
-                        .SingleOrDefault(fe => fe.Feature == new_feat && fe.Programme == new_prog);
-                    if(new_fe == null)
+                        .Where(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id)
+                        .SingleOrDefault();
+                    if(new_fe == default(FeatureExample))
                     {
                         new_fe = new FeatureExample()
                         {
+                            FeatureId = new_feat.Id,
+                            ProgrammeId = new_prog.Id,
                             Feature = new_feat,
                             Programme = new_prog
                         };
                         DbContext.FeatureExample.Add(new_fe);
-                        //DbContext.SaveChanges();
+                        DbContext.SaveChanges();
                     }
-                    DbContext.SaveChanges();
+                    
                 }
 
-                //string year = programme.Element("date")?.Value ?? $"DateTime.Now.Year";
-
-
-                //FeatureExample new_fe = DbContext.FeatureExample
-                //    .Include(fe => fe.Feature)
-                //    .Include(fe => fe.Programme)
-                //    .Where(fe => fe.Feature == new_year && fe.Programme == new_prog)
-                //    .SingleOrDefault();
-
             }
-
+            DbContext.SaveChanges();
             //throw new NotImplementedException();
         }
+
+
         //01234567 89
         //20181017 03 25 00 +0200
         private DateTime ParseDateTimeXml(string inp)
