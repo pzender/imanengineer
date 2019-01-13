@@ -27,7 +27,7 @@ namespace TV_App.DataLayer
             {
                 var featnames = DbContext.FeatureExample
                     .Include(fe => fe.Feature)
-                    .Where(fe => fe.ProgrammeId == p.Id)
+                    .Where(fe => fe.ProgrammeId == p.Id && fe.Feature.Type != 8)
                     .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()));
                 var keywords = ExtractKeywords(description, 20);
                 var keywords_pruned = keywords.Where(keyword => !featnames.Any(feat => feat.Contains(keyword)));
