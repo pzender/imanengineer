@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://localhost:52153/api/GuideUpdate'
+url = 'http://localhost:5000/api/GuideUpdate'
 
 xmldata = ''
 with open('guide.xml', 'r', encoding='utf8') as file:

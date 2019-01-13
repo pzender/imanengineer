@@ -73,17 +73,19 @@ namespace TV_App.DataLayer
                 }
 
                 Emission new_em = DbContext.Emission
-                    .Where(e => DateTime.Parse(e.Start) == ParseDateTimeXml(programme.Attribute("start").Value) 
-                             && DateTime.Parse(e.Stop) == ParseDateTimeXml(programme.Attribute("stop").Value))
+                    .Where(e => DateTime.ParseExact(e.Start, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("start").Value) 
+                             && DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("stop").Value))
                     .SingleOrDefault();
                 if(new_em == null)
                 {
+                    DateTime start = ParseDateTimeXml(programme.Attribute("start").Value);
+                    DateTime stop = ParseDateTimeXml(programme.Attribute("stop").Value);
                     new_em = new Emission()
                     {
                         Id = em_id,
                         Channel = DbContext.Channel.Where(ch => ch.Name == programme.Attribute("channel").Value).Single(),
-                        Start = ParseDateTimeXml(programme.Attribute("start").Value).ToString(),
-                        Stop = ParseDateTimeXml(programme.Attribute("stop").Value).ToString(),
+                        Start = $"{start:dd.MM.yyyy HH:mm:ss}",
+                        Stop = $"{stop:dd.MM.yyyy HH:mm:ss}",
                         Programme = new_prog
                     };
                     DbContext.Emission.Add(new_em);
