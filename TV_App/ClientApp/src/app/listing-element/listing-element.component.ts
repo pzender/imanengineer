@@ -16,7 +16,6 @@ export class ListingElementComponent implements OnInit {
               private _queryParams : QueryParamsService) { }
 
   feat_types() : string[] {
-
     return this.programme.features
       .map(function(f : {type : string, value : string}){ return f.type})
       .filter(this.onlyUnique)

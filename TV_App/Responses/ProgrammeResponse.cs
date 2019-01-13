@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TV_App.Controllers;
+using TV_App.EFModels;
 
 namespace TV_App.Responses
 {
     public class ProgrammeResponse
     {
-        public ProgrammeResponse(EFModels.Programme src)
+        public ProgrammeResponse(Programme src)
         {
             Id = src.Id;
             Title = src.Title;
@@ -31,6 +34,18 @@ namespace TV_App.Responses
         public virtual SeriesResponse Series { get; set; }
         public virtual IEnumerable<EmissionResponse> Emissions { get; set; }
         public virtual IEnumerable<FeatureResponse> Features { get; set; }
+        public IEnumerable<ShortProgrammeLink> Similar { get; set; }
+    }
 
+    public class ShortProgrammeLink
+    {
+        public ShortProgrammeLink(Programme src)
+        {
+            Id = src.Id;
+            Title = src.Title;
+        }
+
+        public long Id { get; set; }
+        public string Title { get; set; }
     }
 }

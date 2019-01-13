@@ -21,9 +21,7 @@ export class ListingComponent implements OnInit {
     {
       if(this._route.snapshot.params.feature === "Programmes"){
         this.title = "Podobne programy"
-        this._httpClient
-          .get<IProgrammeListElement>("/api/Programmes/"+this._route.snapshot.params.id)
-          .subscribe(result => this.details = result)
+        this.details_id = this._route.snapshot.params.id
       }
       else if(this._route.snapshot.params.feature === "Channels"){
         this.title = "Na kanale "
@@ -33,11 +31,16 @@ export class ListingComponent implements OnInit {
       }
       else if(this._route.snapshot.params.feature === "Features"){
         this._httpClient
-          .get<{id : number, name : string}>(this._route.snapshot.root.url +"/api/Features/"+this._route.snapshot.params.id)
-          .subscribe(result => this.title = result.name)
+          .get<{id : number, value : string, type : string}>(this._route.snapshot.root.url +"/api/Features/"+this._route.snapshot.params.id)
+          .subscribe(result => this.title = result.value)
       }
       else {
-        this.title = "Twoje rekomendacje"
+        if(this._queryParams.currentUser != ""){
+          this.title = "Twoje rekomendacje"
+        }
+        else {
+          this.title = ""
+        }
       }
   
       this._queryParams.endpoint = {
@@ -50,12 +53,19 @@ export class ListingComponent implements OnInit {
   ngOnInit() {
 
   }
-  details : IProgrammeListElement
+  details_id : number
   title : string
   listing : IProgrammeListElement[] = []
 
   show_details() : boolean {
-    return this._route.snapshot.params.feature == "programme"
+    return this._route.snapshot.params.feature === "Programmes"
+  }
+
+  show_listing() : boolean {
+    return this._route.snapshot.params.feature === "Programmes" ||
+           this._route.snapshot.params.feature === "Channels" ||
+           this._route.snapshot.params.feature === "Features" ||
+           this._queryParams.currentUser != ""
   }
 
   onButtonClicked(response : string){

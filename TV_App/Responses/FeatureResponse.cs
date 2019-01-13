@@ -15,5 +15,12 @@ namespace TV_App.Responses
             Value = fe.Feature.Value;
             Type = fe.Feature.TypeNavigation.TypeName;
         }
+
+        public FeatureResponse(Feature f)
+        {
+            Id = (int)f.Id;
+            Value = f.Value;
+            Type = f.TypeNavigation.TypeName;
+        }
     }
 }
