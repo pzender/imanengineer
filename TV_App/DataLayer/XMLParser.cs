@@ -27,6 +27,8 @@ namespace TV_App.DataLayer
             logger.LogInformation($"{channels_in_xml.Count()} channels found. Parsing channels.");
             //guideupdate
             long new_id = DbContext.GuideUpdate.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+            ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
+
             GuideUpdate new_gu = new GuideUpdate()
             {
                 Id = new_id,
@@ -59,14 +61,25 @@ namespace TV_App.DataLayer
             logger.LogInformation($"Channels done. ");
 
             //programy
-            IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme");
+            IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme").ToList();
+
             int count = programmes_in_xml.Count(), i = 0;
             logger.LogInformation($"{count} programmes found. Parsing programmes.");
 
+
+            List<Programme> new_programmes = new List<Programme>();
             new_id = DbContext.Programme.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+
+            List<Emission> new_emissions = new List<Emission>();
             long em_id = DbContext.Emission.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+
+            List<Description> new_descriptions = new List<Description>();
             long desc_id = DbContext.Description.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+
+            List<Feature> new_features = new List<Feature>();
             long feat_id = DbContext.Feature.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+
+            List<FeatureExample> new_feature_examples = new List<FeatureExample>();
             foreach (XElement programme in programmes_in_xml)
             {
                 i++;
@@ -81,13 +94,13 @@ namespace TV_App.DataLayer
                         IconUrl = programme.Element("icon")?.Attribute("src").Value
                     };
                     DbContext.Programme.Add(new_prog);
-                    DbContext.SaveChanges();
                     new_id++;
                 }
 
                 Emission new_em = DbContext.Emission
                     .Where(e => DateTime.ParseExact(e.Start, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("start").Value) 
-                             && DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("stop").Value))
+                             && DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("stop").Value)
+                             && e.ProgrammeId == new_prog.Id)
                     .SingleOrDefault();
                 if(new_em == null)
                 {
@@ -102,7 +115,6 @@ namespace TV_App.DataLayer
                         Programme = new_prog
                     };
                     DbContext.Emission.Add(new_em);
-                    DbContext.SaveChanges();
                     em_id++;
 
                 }
@@ -117,12 +129,13 @@ namespace TV_App.DataLayer
                     new_desc = new Description()
                     {
                         Id = desc_id,
+                        IdProgramme = new_prog.Id,
                         IdProgrammeNavigation = new_prog,
                         SourceNavigation = new_gu,
+                        Source = new_gu.Id,
                         Content = programme.Element("desc")?.Value ?? ""
                     };
                     DbContext.Description.Add(new_desc);
-                    DbContext.SaveChanges();
                     desc_id++;
                 }
 
@@ -135,7 +148,6 @@ namespace TV_App.DataLayer
 
                 foreach(XElement feat in features)
                 {
-                    ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
 
                     string type = feat.Name.LocalName;
                     string value = feat.Value;
@@ -155,7 +167,6 @@ namespace TV_App.DataLayer
                             Value = value
                         };
                         DbContext.Feature.Add(new_feat);
-                        DbContext.SaveChanges();
                         feat_id++;
                     }
 
@@ -172,13 +183,41 @@ namespace TV_App.DataLayer
                             Programme = new_prog
                         };
                         DbContext.FeatureExample.Add(new_fe);
-                        DbContext.SaveChanges();
                     }
                     
                 }
 
             }
+
+            DbContext.Database.OpenConnection();
+            DbContext.Database.ExecuteSqlCommand("PRAGMA foreign_keys=OFF;");
             DbContext.SaveChanges();
+            DbContext.Database.CloseConnection();
+
+            try
+            {
+
+                //DbContext.Programme.AddRange(new_programmes);
+                //DbContext.SaveChanges();
+
+                //DbContext.Feature.AddRange(new_features);
+                //DbContext.SaveChanges();
+
+                //DbContext.Emission.AddRange(new_emissions);
+                //DbContext.SaveChanges();
+
+                //DbContext.FeatureExample.AddRange(new_feature_examples);
+                //DbContext.SaveChanges();
+
+                //DbContext.Description.AddRange(new_descriptions);
+                //DbContext.SaveChanges();
+
+            }
+            catch (DbUpdateException e)
+            {
+                logger.LogError(e.InnerException.Message);
+                logger.LogError(e.StackTrace);
+            }
             //throw new NotImplementedException();
         }
 

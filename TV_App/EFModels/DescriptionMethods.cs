@@ -12,7 +12,7 @@ namespace TV_App.EFModels
         private static Random r = new Random();
         private IEnumerable<string> totalCorpus = DbContext.Description.Select(desc => desc.Content);
 
-        ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
+        private static ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
 
 
         public IEnumerable<string> GetKeywords()

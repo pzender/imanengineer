@@ -70,7 +70,7 @@ namespace TV_App.Controllers
                 {
                     i++;
                     logger.LogInformation($"Processing keywords for programme {i} of {count}");
-                    IEnumerable<string> keywords = keywordExtractor.ProcessKeywords(p);
+                    List<string> keywords = keywordExtractor.ProcessKeywords(p);
                     foreach (string keyword in keywords)
                     {
                         string type = "keyword";

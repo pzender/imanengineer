@@ -19,7 +19,7 @@ namespace TV_App.DataLayer
 
         private IEnumerable<string> totalCorpus = DbContext.Description.Select(desc => desc.Content);
 
-        public IEnumerable<string> ProcessKeywords(Programme p)
+        public List<string> ProcessKeywords(Programme p)
         {
             //logger.LogInformation($"Keyword extraction for programme {p.Id}");
 
@@ -36,15 +36,17 @@ namespace TV_App.DataLayer
                     .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()));
                 var keywords = ExtractKeywords(description, 20);
                 var keywords_pruned = keywords.Where(keyword => !featnames.Any(feat => feat.Contains(keyword)));
+
                 return keywords_pruned
-                    .Take(10);
+                    .Take(10)
+                    .ToList();
             }
         }
 
         private IEnumerable<string> ExtractKeywords(string description, int corp_size)
         {
-            IEnumerable<string> LemmatizedWords = LemmatizeDescription(description).Where(word => word.Length > 3 && !word.EndsWith('ć'));
-            List<IEnumerable<string>> corpus = TemporaryCorpus(corp_size).ToList();
+            List<string> LemmatizedWords = LemmatizeDescription(description);
+            List<List<string>> corpus = TemporaryCorpus(corp_size);
             corpus.Add(LemmatizedWords);
 
             IDictionary<string, double> TermFrequency = LemmatizedWords
@@ -69,9 +71,9 @@ namespace TV_App.DataLayer
                 .OrderByDescending(lw => TermFrequency[lw] * InverseDocumentFrequency[lw]);
         }
 
-        private IEnumerable<IEnumerable<string>> TemporaryCorpus(int size = 0)
+        private List<List<string>> TemporaryCorpus(int size = 0)
         {
-            List<IEnumerable<string>> ret = new List<IEnumerable<string>>();
+            List<List<string>> ret = new List<List<string>>();
             for(int i = 0; i < size; i++)
             {
                 ret.Add(LemmatizeDescription(totalCorpus.ElementAt(r.Next(totalCorpus.Count()))));
@@ -79,10 +81,12 @@ namespace TV_App.DataLayer
             return ret;
         }
 
-        private IEnumerable<string> LemmatizeDescription(string description)
+        private List<string> LemmatizeDescription(string description)
         {
             return description.Split(new char[] { ' ', ',', '.', ')', '(', '\n', '"', ':' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(word => lemmatizer.Lemmatize(word.ToLower()));
+                .Where(word => word.Length > 3 && !word.EndsWith('ć'))
+                .Select(word => lemmatizer.Lemmatize(word.ToLower()))
+                .ToList();
         }
 
         public KeywordExtractor(ILogger logger)
