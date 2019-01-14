@@ -17,5 +17,31 @@ namespace TV_App.EFModels
             return FeatureExample.Select(fe => fe.Feature.Value);
         }
 
+        public IEnumerable<Programme> GetSimilar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetSimilarity(Programme other, User u = null)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        private double GetSetSimilarity(Programme other, FeatureTypes featureGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        private double GetSingleSimilarity(Programme other, FeatureTypes featureGroup)
+        {
+            throw new NotImplementedException();
+        }
+
+        private double GetDateSimilarity(Programme other)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

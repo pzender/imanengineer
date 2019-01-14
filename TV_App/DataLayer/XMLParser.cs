@@ -7,18 +7,24 @@ using System.Text.RegularExpressions;
 using TV_App.EFModels;
 using Microsoft.EntityFrameworkCore;
 using LemmaSharp;
+using Microsoft.Extensions.Logging;
 
 namespace TV_App.DataLayer
 {
     public class XMLParser
     {
         private readonly testContext DbContext = new testContext();
+        private readonly ILogger logger;
+
+        public XMLParser(ILogger logger)
+        {
+            this.logger = logger;
+        }
 
         public void ParseAll(XDocument doc)
         {
-
             IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
-
+            logger.LogInformation($"{channels_in_xml.Count()} channels found. Parsing channels.");
             //guideupdate
             long new_id = DbContext.GuideUpdate.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             GuideUpdate new_gu = new GuideUpdate()
@@ -33,6 +39,7 @@ namespace TV_App.DataLayer
 
             //kanały
             new_id = DbContext.Channel.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+
             foreach (XElement channel in channels_in_xml)
             {
                 if (!DbContext.Channel.Where(ch => ch.Name == channel.Attribute("id").Value).Any())
@@ -49,15 +56,21 @@ namespace TV_App.DataLayer
                 }
             }
             DbContext.SaveChanges();
+            logger.LogInformation($"Channels done. ");
 
             //programy
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme");
+            int count = programmes_in_xml.Count(), i = 0;
+            logger.LogInformation($"{count} programmes found. Parsing programmes.");
+
             new_id = DbContext.Programme.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             long em_id = DbContext.Emission.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             long desc_id = DbContext.Description.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             long feat_id = DbContext.Feature.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             foreach (XElement programme in programmes_in_xml)
             {
+                i++;
+                logger.LogInformation($"Programme {i} of {count}");
                 Programme new_prog = DbContext.Programme.Where(prog => prog.Title == programme.Elements("title").First().Value).SingleOrDefault();
                 if (new_prog == null)
                 {

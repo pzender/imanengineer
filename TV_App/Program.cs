@@ -15,7 +15,7 @@ namespace TV_App
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args)
-                .UseUrls("https://localhost:5000")
+                .UseUrls("http://localhost:5000")
                 .Build().Run();
         }
 

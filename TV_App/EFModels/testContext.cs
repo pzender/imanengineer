@@ -22,6 +22,12 @@ namespace TV_App.EFModels
         public virtual DbSet<FeatureExample> FeatureExample { get; set; }
         public virtual DbSet<FeatureTypes> FeatureTypes { get; set; }
         public virtual DbSet<GuideUpdate> GuideUpdate { get; set; }
+
+        internal Feature Include()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual DbSet<Programme> Programme { get; set; }
         public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<Series> Series { get; set; }

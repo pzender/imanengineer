@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TV_App.DataLayer;
 using TV_App.EFModels;
 
@@ -17,8 +18,15 @@ namespace TV_App.Controllers
     [ApiController]
     public class GuideUpdateController : ControllerBase
     {
-        testContext DbContext = new testContext();
-        KeywordExtractor keywordExtractor = new KeywordExtractor();
+
+        private readonly ILoggerFactory loggerFactory;
+        private readonly testContext DbContext = new testContext();
+
+        public GuideUpdateController(ILoggerFactory loggerFactory)
+        {
+            this.loggerFactory = loggerFactory;
+            
+        }
 
         // GET: api/GuideUpdate
         [HttpGet]
@@ -38,20 +46,30 @@ namespace TV_App.Controllers
         [HttpPost]
         public void Post()
         {
-
+            var logger = loggerFactory.CreateLogger("GuideUpdatePOST");
+            logger.LogInformation("GuideUpdateController.Post() called");
             string body = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 body = sr.ReadToEnd();
             }
+
             if(body != "")
             {
-                XMLParser parser = new XMLParser();
+                logger.LogInformation("Request body found. Parsing.");
+                XMLParser parser = new XMLParser(logger);
                 parser.ParseAll(XDocument.Parse(body));
                 long feat_id = DbContext.Feature.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+                logger.LogInformation("Parsing done. ");
+                KeywordExtractor keywordExtractor = new KeywordExtractor(logger);
 
-                foreach (Programme p in DbContext.Programme.Include(prog => prog.Description))
+                IEnumerable<Programme> list = DbContext.Programme.Include(prog => prog.Description);
+                int count = list.Count(), i = 0;
+
+                foreach (Programme p in list)
                 {
+                    i++;
+                    logger.LogInformation($"Processing keywords for programme {i} of {count}");
                     IEnumerable<string> keywords = keywordExtractor.ProcessKeywords(p);
                     foreach (string keyword in keywords)
                     {
