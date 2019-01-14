@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TV_App.EFModels;
+using TV_App.Responses;
 
 namespace TV_App.Controllers
 {
@@ -44,6 +45,24 @@ namespace TV_App.Controllers
             DbContext.Rating.Add(rating);
             DbContext.SaveChanges();
             return rating;
+        }
+
+        // GET: api/Users/Przemek/Ratings
+        [HttpGet("{name}/Ratings")]
+        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromBody] Rating body)
+        {
+            var list = DbContext.Programme
+                .Include(prog => prog.Rating)
+                .Include(prog => prog.Emission)
+                    .ThenInclude(em => em.Channel)
+                .Include(prog => prog.FeatureExample)
+                    .ThenInclude(fe => fe.Feature)
+                        .ThenInclude(f => f.TypeNavigation)
+                .Where(prog => prog.Rating
+                    .SingleOrDefault(rat => rat.UserLogin == name) != null)
+                .AsEnumerable();
+
+            return list.Select(prog => new ProgrammeResponse(prog));
         }
 
         // POST: api/Users

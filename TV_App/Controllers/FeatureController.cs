@@ -25,9 +25,13 @@ namespace TV_App.Controllers
 
         // GET: api/Feature/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public FeatureResponse Get(int id)
         {
-            return "value";
+            Feature feat = DbContext.Feature
+                .Include(f => f.TypeNavigation)
+                .SingleOrDefault(f => f.Id == id);
+
+            return new FeatureResponse(feat);
         }
 
         // GET: api/GuideUpdate/5/Programmes

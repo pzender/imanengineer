@@ -15,11 +15,14 @@ namespace TV_App.Controllers
     public class ProgrammesController : ControllerBase
     {
         readonly testContext DbContext = new testContext();
+
+
         // GET: api/Programmes
         [HttpGet]
         public IEnumerable<ProgrammeResponse> Get([FromQuery] string channel = "", [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             var list = DbContext.Programme
+                .Include(prog => prog.Description)
                 .Include(prog => prog.Emission)
                     .ThenInclude(em => em.Channel)
                 .Include(prog => prog.FeatureExample)
@@ -64,11 +67,17 @@ namespace TV_App.Controllers
             );
 
             list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-            
-            return list
-                .Select(prog => new ProgrammeResponse(prog));//.ToList();
+                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0)
+                .Take(15);
+
+            IEnumerable<ProgrammeResponse> preparedResponse = list.Select(prog => new ProgrammeResponse(prog));
+
+
+
+            return preparedResponse;
         }
+
+
         // GET: api/Programmes/5/similar
         [HttpGet("{id}/Programmes")]
         public IEnumerable<ProgrammeResponse> GetSimilar(int id)
@@ -91,7 +100,15 @@ namespace TV_App.Controllers
         [HttpGet("{id}")]
         public ProgrammeResponse Get(int id)
         {
-            return new ProgrammeResponse(DbContext.Programme.Where(p => p.Id == id).Single());
+            Programme programme = DbContext.Programme
+                .Include(prog => prog.Description)
+                .Include(prog => prog.Emission)
+                    .ThenInclude(em => em.Channel)
+                .Include(prog => prog.FeatureExample)
+                    .ThenInclude(fe => fe.Feature)
+                        .ThenInclude(f => f.TypeNavigation)
+                .SingleOrDefault(prog => prog.Id == id);
+            return new ProgrammeResponse(programme);
         }
 
         // POST: api/Programmes

@@ -21,7 +21,7 @@ namespace TV_App.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            KeywordExtractor ke = new KeywordExtractor();
+            KeywordExtractor ke = new KeywordExtractor(null);
 
             Programme p = DbContext.Programme
                 .Include(prog => prog.Description)

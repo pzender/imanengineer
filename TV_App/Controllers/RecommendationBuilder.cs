@@ -11,29 +11,34 @@ namespace TV_App.Controllers
         public User User { get; set; }
         private IEnumerable<Programme> positively_rated;
         private const double DATE_SIMILARITY_HALF = 0.05;
-        private readonly double w_act = 0.2, w_country = 0.1, w_year = 0.1, w_dir = 0.2, w_cat = 0.4, w_keyw = 0;
+        private readonly double w_act = 0.1, w_country = 0.1, w_year = 0.1, w_dir = 0.1, w_cat = 0.3, w_keyw = 0.3;
         private readonly int ACT_TYPE = 4, CAT_TYPE = 7, KEYW_TYPE = 8, DATE_TYPE = 2, COUNTRY_TYPE = 1, DIRECTOR_TYPE = 5;
 
         public IEnumerable<Programme> Similar(IEnumerable<Programme> available_programmes, Programme given)
         {
             Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => TotalSimilarity(p, given));
-            return recom_supports
-                .Where(rs => rs.Value > 0.5)
+            IEnumerable<Programme> recommended = recom_supports
+                .Where(rs => rs.Value > 0)
                 .OrderByDescending(rs => rs.Value)
                 .ToDictionary(kv => kv.Key, kv => kv.Value)
                 .Keys
-                .Except(new List<Programme>() { given});
+                .Where(prog => prog.Id != given.Id);
+
+            return recommended;
         }
 
         public IEnumerable<Programme> Build(IEnumerable<Programme> available_programmes)
         {
             Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => RecommendationSupport(p));
-            return recom_supports
-                .Where(rs => rs.Value > 0.5)
+            IEnumerable<Programme> recommended = recom_supports
+                .Where(rs => rs.Value > 0)
                 .OrderByDescending(rs => rs.Value)
                 .ToDictionary(kv => kv.Key, kv => kv.Value)
                 .Keys
                 .Except(User.Rating.Select(r => r.Programme));
+
+
+            return recommended;
         }
 
         private double SetSimilarity(IEnumerable<Feature> one, IEnumerable<Feature> other)

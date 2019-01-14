@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
+import { HttpClient } from '@angular/common/http';
+import { QueryParamsService } from '../utilities/query-params.service';
 
 @Component({
   selector: 'app-programmedetails',
@@ -8,27 +10,71 @@ import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 })
 export class ProgrammedetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _http : HttpClient, private _queryParams : QueryParamsService) { }
+  @Input('prog_id') prog_id : number
+  @Output() buttonClicked = new EventEmitter<string>();
 
   ngOnInit() {
+    this._http.get<IProgrammeListElement>('/api/Programmes/'+this.prog_id.toString())
+      .subscribe(result => this.programme = result)
+  }
+  feat_types() : string[] {
+    return this.programme.features
+      .map(function(f : {type : string, value : string}){ return f.type})
+      .filter(this.onlyUnique)
+  };
+
+  parse_date(iso_date : string) {
+    return Date.parse(iso_date);
   }
 
-  public programme : IProgrammeListElement = {
-    id : 1,
-    title : 'Asterix i Obelix: Misja Kleopatra',
-    iconUrl : 'https://ssl-gfx.filmweb.pl/po/08/96/30896/6900390.3.jpg',
-    emissions : [{
-      channel : {
-        name : 'Polsat',
-        id : 1
-      },
-      start : 'Oct',
-      stop : 'Sep'
-    }],
-    features : [
+  feat_array(desired_type : string) : {"id" : number, "name" : string}[] {
+    let chosen_feats = this.programme.features
+      .filter(function(f : {id : number, type : string, value : string}){ return f.type === desired_type})
+      .map(function(f : {id : number, type : string, value : string}){ return {
+        "id" : f.id, 
+        "name" : f.value
+      }})
+    return chosen_feats;
+  };
 
-    ],
-    description : 'Wie pan, moim zdaniem to nie ma tak, że dobrze albo że nie dobrze. Gdybym miał powiedzieć, co cenię w życiu najbardziej, powiedziałbym, że ludzi. Eeem… Ludzi, którzy podali mi pomocną dłoń, kiedy sobie nie radziłem, kiedy byłem sam, i, co ciekawe, to właśnie przypadkowe spotkania wpływają na nasze życie. Chodzi o to, że kiedy wyznaje się pewne wartości, nawet pozornie uniwersalne, bywa, że nie znajduje się zrozumienia, które by tak rzec, które pomaga… się nam rozwijać. Ja miałem szczęście, by tak rzec, ponieważ je znalazłem. I dziękuję życiu. Dziękuję mu, życie to śpiew, życie to taniec, życie to miłość. Wielu ludzi pyta mnie o to samo: "Ale jak ty to robisz?", "Skąd czerpiesz tę radość?". A ja odpowiadam, że to proste, to umiłowanie życia, to właśnie ono sprawia, że dzisiaj na przykład buduję maszyny, a jutro… kto wie, dlaczego by nie, oddam się pracy społecznej i będę ot, choćby… sadzić… znaczy… marchew.'
+  rateButton(value : number){
+    this._http.post(
+      "/api/Users/"+this._queryParams.currentUser+"/Ratings", 
+      {programme_id : this.programme.id, rating_value : value},
+      {responseType : 'json'}
+    )
+    .subscribe(result => this.buttonClicked.emit(result.toString()))
   }
+
+  onlyUnique(value : any, index : number, self : any[]) { 
+    return self.indexOf(value) === index;
+  }
+
+  translateDate(initial : string) : string {
+    return initial
+      .replace("Mon", "Pn")
+      .replace("Tue", "Wt")
+      .replace("Wed", "Śr")
+      .replace("Thu", "Cz")
+      .replace("Fri", "Pt")
+      .replace("Sat", "Sb")
+      .replace("Sun", "Nd")
+      .replace("Jan", "Sty")
+      .replace("Feb", "Lut")
+      .replace("Mar", "Mar")
+      .replace("Apr", "Kwi")
+      .replace("May", "Maj")
+      .replace("Jun", "Cze")
+      .replace("Jul", "Lip")
+      .replace("Aug", "Sie")
+      .replace("Sep", "Wrz")
+      .replace("Oct", "Paź")
+      .replace("Nov", "Lis")
+      .replace("Dec", "Gru")
+  }
+
+
+  public programme : IProgrammeListElement = null
 
 }

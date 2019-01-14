@@ -44,7 +44,6 @@ namespace TV_App
             }
             app.UseCors(builder => builder.AllowAnyOrigin());
 
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

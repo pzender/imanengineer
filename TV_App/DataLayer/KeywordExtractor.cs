@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using TV_App.EFModels;
 using LemmaSharp;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace TV_App.DataLayer
 {
     public class KeywordExtractor
     {
+        private readonly ILogger logger;
+
         private static testContext DbContext = new testContext();
         private static Random r = new Random();
         ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
@@ -18,6 +21,8 @@ namespace TV_App.DataLayer
 
         public IEnumerable<string> ProcessKeywords(Programme p)
         {
+            //logger.LogInformation($"Keyword extraction for programme {p.Id}");
+
             string description = p.Description.FirstOrDefault(d => d.Content != "")?.Content;
             if (description == null)
             {
@@ -27,7 +32,7 @@ namespace TV_App.DataLayer
             {
                 var featnames = DbContext.FeatureExample
                     .Include(fe => fe.Feature)
-                    .Where(fe => fe.ProgrammeId == p.Id)
+                    .Where(fe => fe.ProgrammeId == p.Id && fe.Feature.Type != 8)
                     .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()));
                 var keywords = ExtractKeywords(description, 20);
                 var keywords_pruned = keywords.Where(keyword => !featnames.Any(feat => feat.Contains(keyword)));
@@ -78,6 +83,11 @@ namespace TV_App.DataLayer
         {
             return description.Split(new char[] { ' ', ',', '.', ')', '(', '\n', '"', ':' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(word => lemmatizer.Lemmatize(word.ToLower()));
+        }
+
+        public KeywordExtractor(ILogger logger)
+        {
+            this.logger = logger;
         }
     }
 }

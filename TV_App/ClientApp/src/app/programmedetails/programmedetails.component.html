@@ -1,18 +1,19 @@
-<div class="media border m-3 p-3">
-    <img src="{{programme.iconUrl}}" width="100px" class="align-self-center m-1 mr-3">
-    <div class="media-body">
-      <h1><a href="/Programmes/{{programme.id}}">{{programme.title}}</a></h1>
-      <p>
-        {{programme.description}}
-      </p>
-        <div *ngFor="let e of programme.emissions">
-            <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.e.start | date:'EE, d MMM, H:mm'}} - {{e.stop | date:'EE, d MMM, H:mm'}}
-        </div>
-        <div class="btn-group mt-3" role="group" aria-label="Rating buttons">
-          <button type="button" class="btn btn-secondary" (click)=this.rateButton(1)>Podobał mi się</button>
-          <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie podobał mi się</button>
-          <button type="button" class="btn btn-secondary" (click)=this.rateButton(2)>Chcę obejrzeć</button>
-        </div>
-    </div>
+<div class="border my-3 p-3">
+  <h1>{{programme.title}}</h1>
+  <div *ngFor="let e of programme.emissions">
+    <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(this.e.start | date:'EE, d MMM, H:mm')}} - {{this.translateDate(e.stop | date:'EE, d MMM, H:mm')}}
   </div>
+  <img src="{{programme.iconUrl}}" class="m-1">
+  <p class="text-justify my-3">
+    {{programme.description}}
+  </p>
+  <div *ngFor="let ft of feat_types()">{{ft}}: 
+    <span *ngFor="let f of feat_array(ft)"><a href="/Features/{{f.id}}">{{f.name}}</a>, </span> 
+  </div>  
+  <div class="btn-group mt-3" role="group" aria-label="Rating buttons">
+    <button type="button" class="btn btn-secondary" (click)=this.rateButton(1)>Podobał mi się</button>
+    <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie podobał mi się</button>
+    <button type="button" class="btn btn-secondary" (click)=this.rateButton(2)>Chcę obejrzeć</button>
+  </div>
+</div>
   
