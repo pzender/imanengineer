@@ -173,7 +173,7 @@ namespace TV_App.DataLayer
                     FeatureExample new_fe = DbContext.FeatureExample
                         .Where(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id)
                         .SingleOrDefault();
-                    if(new_fe == default(FeatureExample))
+                    if(new_fe == null)
                     {
                         new_fe = new FeatureExample()
                         {

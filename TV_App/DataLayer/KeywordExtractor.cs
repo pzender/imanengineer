@@ -14,15 +14,11 @@ namespace TV_App.DataLayer
         private readonly ILogger logger;
 
         private static testContext DbContext = new testContext();
-        private static Random r = new Random();
+        private readonly static Random r = new Random();
         ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
-
-        private IEnumerable<string> totalCorpus = DbContext.Description.Select(desc => desc.Content);
 
         public List<string> ProcessKeywords(Programme p)
         {
-            //logger.LogInformation($"Keyword extraction for programme {p.Id}");
-
             string description = p.Description.FirstOrDefault(d => d.Content != "")?.Content;
             if (description == null)
             {
@@ -34,7 +30,8 @@ namespace TV_App.DataLayer
                     .Include(fe => fe.Feature)
                     .Where(fe => fe.ProgrammeId == p.Id && fe.Feature.Type != 8)
                     .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()));
-                var keywords = ExtractKeywords(description, 20);
+                var keywords = ExtractKeywords(description);
+
                 var keywords_pruned = keywords.Where(keyword => !featnames.Any(feat => feat.Contains(keyword)));
 
                 return keywords_pruned
@@ -43,20 +40,20 @@ namespace TV_App.DataLayer
             }
         }
 
-        private IEnumerable<string> ExtractKeywords(string description, int corp_size)
+        private IEnumerable<string> ExtractKeywords(string description)
         {
-            List<string> LemmatizedWords = LemmatizeDescription(description);
-            List<List<string>> corpus = TemporaryCorpus(corp_size);
-            corpus.Add(LemmatizedWords);
+            List<string> LemmatizedDescription = Corpus.LemmatizeDescription(description);
+            List<List<string>> corpus = new List<List<string>>(Corpus.GetInstance().GetLemmatizedContent());
+            corpus.Add(LemmatizedDescription);
 
-            IDictionary<string, double> TermFrequency = LemmatizedWords
+            IDictionary<string, double> TermFrequency = LemmatizedDescription
                 .Distinct()
                 .ToDictionary(
                     word => word,
-                    word => LemmatizedWords.Count(w => w == word) / (double)LemmatizedWords.Count()
+                    word => LemmatizedDescription.Count(w => w == word) / (double)LemmatizedDescription.Count()
                 );
 
-            IDictionary<string, double> InverseDocumentFrequency = LemmatizedWords
+            IDictionary<string, double> InverseDocumentFrequency = LemmatizedDescription
                 .Distinct()
                 .ToDictionary(
                     word => word,
@@ -66,28 +63,11 @@ namespace TV_App.DataLayer
                 );
 
 
-            return LemmatizedWords
+            return LemmatizedDescription
                 .Distinct()
                 .OrderByDescending(lw => TermFrequency[lw] * InverseDocumentFrequency[lw]);
         }
 
-        private List<List<string>> TemporaryCorpus(int size = 0)
-        {
-            List<List<string>> ret = new List<List<string>>();
-            for(int i = 0; i < size; i++)
-            {
-                ret.Add(LemmatizeDescription(totalCorpus.ElementAt(r.Next(totalCorpus.Count()))));
-            }
-            return ret;
-        }
-
-        private List<string> LemmatizeDescription(string description)
-        {
-            return description.Split(new char[] { ' ', ',', '.', ')', '(', '\n', '"', ':' }, StringSplitOptions.RemoveEmptyEntries)
-                .Where(word => word.Length > 3 && !word.EndsWith('ć'))
-                .Select(word => lemmatizer.Lemmatize(word.ToLower()))
-                .ToList();
-        }
 
         public KeywordExtractor(ILogger logger)
         {
