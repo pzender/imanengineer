@@ -82,8 +82,8 @@ namespace TV_App.DataLayer
             List<FeatureExample> new_feature_examples = new List<FeatureExample>();
             foreach (XElement programme in programmes_in_xml)
             {
-                i++;
-                logger.LogInformation($"Programme {i} of {count}");
+                //i++;
+                //logger.LogInformation($"Programme {i} of {count}");
                 Programme new_prog = DbContext.Programme.Where(prog => prog.Title == programme.Elements("title").First().Value).SingleOrDefault();
                 if (new_prog == null)
                 {
