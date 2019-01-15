@@ -11,7 +11,6 @@ namespace TV_App.Controllers
         public User User { get; set; }
         private IEnumerable<Programme> positively_rated;
         private const double DATE_SIMILARITY_HALF = 0.05;
-        private readonly double w_act = 0.1, w_country = 0.1, w_year = 0.1, w_dir = 0.1, w_cat = 0.3, w_keyw = 0.3;
         private readonly int ACT_TYPE = 4, CAT_TYPE = 7, KEYW_TYPE = 8, DATE_TYPE = 2, COUNTRY_TYPE = 1, DIRECTOR_TYPE = 5;
 
         public IEnumerable<Programme> Similar(IEnumerable<Programme> available_programmes, Programme given)
@@ -83,12 +82,12 @@ namespace TV_App.Controllers
             double sim_year = DateSimilarity(one_features.Where(f => f.Type == DATE_TYPE).SingleOrDefault(), other_features.Where(f => f.Type == DATE_TYPE).SingleOrDefault());
             double sim_country = SingleSimilarity(one_features.Where(f => f.Type == COUNTRY_TYPE).SingleOrDefault(), other_features.Where(f => f.Type == COUNTRY_TYPE).SingleOrDefault());
 
-            return w_act * sim_act
-                + w_cat * sim_cat
-                + w_keyw * sim_keyw
-                + w_dir * sim_dir
-                + w_year * sim_year
-                + w_country * sim_cat;
+            return User.WeightActor * sim_act
+                + User.WeightCategory  * sim_cat
+                + User.WeightKeyword * sim_keyw
+                + User.WeightDirector * sim_dir
+                + User.WeightYear * sim_year
+                + User.WeightCountry * sim_country;
         }
 
         private double RecommendationSupport(Programme p)

@@ -41,7 +41,8 @@ namespace TV_App.Controllers
                     .Where(u => u.Login == username)
                     .Single();
                 RecommendationBuilder r = new RecommendationBuilder(user);
-                list = r.Build(list);
+                if(user.GetPositivelyRated().Count() > 0)
+                    list = r.Build(list);
             }
 
 
@@ -51,7 +52,9 @@ namespace TV_App.Controllers
                 list = (
                     from prog in list
                     where prog.Emission.Any(e => e.Channel.Name == channel)
+                    orderby prog.Emission.First().Start
                     select prog
+                    
                 );
             }
 
@@ -71,9 +74,6 @@ namespace TV_App.Controllers
                 .Take(15);
 
             IEnumerable<ProgrammeResponse> preparedResponse = list.Select(prog => new ProgrammeResponse(prog));
-
-
-
             return preparedResponse;
         }
 

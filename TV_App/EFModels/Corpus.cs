@@ -40,7 +40,8 @@ namespace TV_App.EFModels
 
         public static List<string> LemmatizeDescription(string description)
         {
-            return description.Split(new char[] { ' ', ',', '.', ')', '(', '\n', '"', ':' }, StringSplitOptions.RemoveEmptyEntries)
+            return description
+                .Split(new char[] { ' ', ',', '.', ')', '(', '\n', '"', ':' }, StringSplitOptions.RemoveEmptyEntries)
                 .Where(word => word.Length > 3)
                 .Select(word => lemmatizer.Lemmatize(word.ToLower()))
                 .ToList();
