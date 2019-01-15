@@ -1,4 +1,4 @@
-WhatsOnTV/.vs
+.*
 WhatsOnTV/ConsoleTests
 WebGrab+Plus
 *.suo
@@ -7,3 +7,7 @@ _ReSharper.*
 bin
 obj
 packages
+*.sqlite
+
+
+!/.gitignore
