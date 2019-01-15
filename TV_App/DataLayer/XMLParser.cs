@@ -84,7 +84,14 @@ namespace TV_App.DataLayer
             {
                 //i++;
                 //logger.LogInformation($"Programme {i} of {count}");
-                Programme new_prog = DbContext.Programme.Where(prog => prog.Title == programme.Elements("title").First().Value).SingleOrDefault();
+                Programme new_prog = DbContext.Programme
+                    .Include(prog => prog.Description)
+                    .Include(prog => prog.Emission)
+                    .Include(prog => prog.FeatureExample)
+                    .ThenInclude(fe => fe.Feature)
+                    .SingleOrDefault(prog => prog.Title == programme.Elements("title").First().Value);
+                if (new_prog == null)
+                    new_prog = new_programmes.SingleOrDefault(prog => prog.Title == programme.Elements("title").First().Value);
                 if (new_prog == null)
                 {
                     new_prog = new Programme()
@@ -93,37 +100,41 @@ namespace TV_App.DataLayer
                         Title = programme.Elements("title").First().Value,
                         IconUrl = programme.Element("icon")?.Attribute("src").Value
                     };
-                    DbContext.Programme.Add(new_prog);
+                    new_programmes.Add(new_prog);
                     new_id++;
                 }
 
-                Emission new_em = DbContext.Emission
-                    .Where(e => DateTime.ParseExact(e.Start, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("start").Value) 
-                             && DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("stop").Value)
-                             && e.ProgrammeId == new_prog.Id)
-                    .SingleOrDefault();
+                Emission new_em = new_prog.Emission
+                    .SingleOrDefault(e => DateTime.ParseExact(e.Start, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("start").Value)
+                                       && DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("stop").Value));
                 if(new_em == null)
                 {
                     DateTime start = ParseDateTimeXml(programme.Attribute("start").Value);
                     DateTime stop = ParseDateTimeXml(programme.Attribute("stop").Value);
+                    Channel channel = DbContext.Channel.Where(ch => ch.Name == programme.Attribute("channel").Value).Single();
                     new_em = new Emission()
                     {
                         Id = em_id,
-                        Channel = DbContext.Channel.Where(ch => ch.Name == programme.Attribute("channel").Value).Single(),
+                        Channel = channel,
+                        ChannelId = channel.Id,
                         Start = $"{start:dd.MM.yyyy HH:mm:ss}",
                         Stop = $"{stop:dd.MM.yyyy HH:mm:ss}",
-                        Programme = new_prog
+                        Programme = new_prog,
+                        ProgrammeId = new_prog.Id
                     };
-                    DbContext.Emission.Add(new_em);
-                    em_id++;
 
+                    if (!new_prog.Emission.Contains(new_em))
+                    {
+                        new_prog.Emission.Add(new_em);
+                        em_id++;
+                    }
                 }
 
                 Description new_desc = DbContext.Description
                     .Include(desc => desc.IdProgrammeNavigation)
                     .Include(desc => desc.SourceNavigation)
-                    .Where(desc => desc.IdProgrammeNavigation == new_prog)
-                    .SingleOrDefault();
+                    .SingleOrDefault(desc => desc.IdProgrammeNavigation == new_prog);
+
                 if(new_desc == null)
                 {
                     new_desc = new Description()
@@ -135,8 +146,11 @@ namespace TV_App.DataLayer
                         Source = new_gu.Id,
                         Content = programme.Element("desc")?.Value ?? ""
                     };
-                    DbContext.Description.Add(new_desc);
-                    desc_id++;
+                    if (!new_prog.Description.Contains(new_desc))
+                    {
+                        new_prog.Description.Add(new_desc);
+                        desc_id++;
+                    }
                 }
 
                 string[] feat_names = { "date", "category", "country" };
@@ -156,43 +170,41 @@ namespace TV_App.DataLayer
 
                     Feature new_feat = DbContext.Feature
                         .Include(f => f.TypeNavigation)
-                        .Where(f => f.TypeNavigation.TypeName == type && f.Value == value)
-                        .SingleOrDefault();
+                        .SingleOrDefault(f => f.TypeNavigation.TypeName == type && f.Value == value);
+                    if (new_feat == null)
+                        new_feat = new_features.SingleOrDefault(f => f.TypeNavigation.TypeName == type && f.Value == value);
                     if(new_feat == null)
                     {
                         new_feat = new Feature()
                         {
                             Id = feat_id,
-                            TypeNavigation = DbContext.FeatureTypes.First(ft => ft.TypeName == type),
+                            TypeNavigation = DbContext.FeatureTypes.Single(ft => ft.TypeName == type),
                             Value = value
                         };
+                        new_features.Add(new_feat);
                         DbContext.Feature.Add(new_feat);
                         feat_id++;
                     }
 
-                    FeatureExample new_fe = DbContext.FeatureExample
-                        .Where(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id)
-                        .SingleOrDefault();
-                    if(new_fe == null)
+                    if (new_prog.FeatureExample.SingleOrDefault(fe => fe.Feature == new_feat) == null)
                     {
-                        new_fe = new FeatureExample()
+                        new_prog.FeatureExample.Add(new FeatureExample()
                         {
-                            FeatureId = new_feat.Id,
                             ProgrammeId = new_prog.Id,
-                            Feature = new_feat,
-                            Programme = new_prog
-                        };
-                        DbContext.FeatureExample.Add(new_fe);
-                    }
-                    
+                            FeatureId = new_feat.Id,
+                            Programme = new_prog,
+                            Feature = new_feat
+                        });
+                    }                    
                 }
 
             }
 
-            DbContext.Database.OpenConnection();
-            DbContext.Database.ExecuteSqlCommand("PRAGMA foreign_keys=OFF;");
+            //DbContext.Database.OpenConnection();
+            //DbContext.Database.ExecuteSqlCommand("PRAGMA foreign_keys=OFF;");
+            DbContext.AddRange(new_programmes);
             DbContext.SaveChanges();
-            DbContext.Database.CloseConnection();
+            //DbContext.Database.CloseConnection();
 
             try
             {

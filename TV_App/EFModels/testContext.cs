@@ -22,12 +22,6 @@ namespace TV_App.EFModels
         public virtual DbSet<FeatureExample> FeatureExample { get; set; }
         public virtual DbSet<FeatureTypes> FeatureTypes { get; set; }
         public virtual DbSet<GuideUpdate> GuideUpdate { get; set; }
-
-        internal Feature Include()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual DbSet<Programme> Programme { get; set; }
         public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<Series> Series { get; set; }
@@ -37,10 +31,9 @@ namespace TV_App.EFModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlite("Data Source=DataLayer\\\\\\\\test.sqlite");
                 optionsBuilder.EnableSensitiveDataLogging();
-                optionsBuilder.EnableDetailedErrors();
             }
         }
 
@@ -287,6 +280,36 @@ namespace TV_App.EFModels
                     .HasColumnName("login")
                     .HasColumnType("STRING")
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.WeightActor)
+                    .HasColumnName("weight_actor")
+                    .HasColumnType("DOUBLE")
+                    .HasDefaultValueSql("0.1");
+
+                entity.Property(e => e.WeightCategory)
+                    .HasColumnName("weight_category")
+                    .HasColumnType("DOUBLE")
+                    .HasDefaultValueSql("0.3");
+
+                entity.Property(e => e.WeightCountry)
+                    .HasColumnName("weight_country")
+                    .HasColumnType("DOUBLE")
+                    .HasDefaultValueSql("0.1");
+
+                entity.Property(e => e.WeightDirector)
+                    .HasColumnName("weight_director")
+                    .HasColumnType("DOUBLE")
+                    .HasDefaultValueSql("0.1");
+
+                entity.Property(e => e.WeightKeyword)
+                    .HasColumnName("weight_keyword")
+                    .HasColumnType("DOUBLE")
+                    .HasDefaultValueSql("0.3");
+
+                entity.Property(e => e.WeightYear)
+                    .HasColumnName("weight_year")
+                    .HasColumnType("DOUBLE")
+                    .HasDefaultValueSql("0.1");
             });
         }
     }
