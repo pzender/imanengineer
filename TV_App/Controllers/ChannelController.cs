@@ -34,7 +34,7 @@ namespace Controllers
 
         // GET: api/Channel/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "")
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             Channel channel = DbContext.Channel
                 .Include(ch => ch.Emission)
@@ -44,10 +44,25 @@ namespace Controllers
                 .ThenInclude(ft => ft.TypeNavigation)
                 .Single(ch => ch.Id == 1);
 
-            IEnumerable<Emission> emissions =
+            IEnumerable<Emission> list =
                 channel.Emission.OrderBy(em => em.StartToDate());
 
-            return emissions.Select(em => new ProgrammeResponse(em.Programme));
+            TimeSpan from_ts = new TimeSpan(
+                int.Parse(from.Split(':')[0]),
+                int.Parse(from.Split(':')[1]),
+                0
+            );
+            TimeSpan to_ts = new TimeSpan(
+                int.Parse(to.Split(':')[0]),
+                int.Parse(to.Split(':')[1]),
+                0
+            );
+
+            list = list
+                .Where(em => em.Programme.EmissionsBetween(from_ts, to_ts).Count() > 0);
+
+
+            return list.Select(em => new ProgrammeResponse(em.Programme));
 
         }
 

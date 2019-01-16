@@ -68,7 +68,6 @@ namespace TV_App.Controllers
 
             list = list
                 .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-                //.Take(15);
 
             IEnumerable<ProgrammeResponse> preparedResponse = list.Select(prog => new ProgrammeResponse(prog));
             return preparedResponse;
@@ -77,7 +76,7 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes/5/Similar
         [HttpGet("{id}/Similar")]
-        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "")
+        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             Programme programme = DbContext.Programme
                 .Include(prog => prog.Emission)
@@ -96,19 +95,20 @@ namespace TV_App.Controllers
 
             IEnumerable<Programme> list = programme.GetSimilar(avg_w_act, avg_w_cat, avg_w_keyw, avg_w_dir, avg_w_country, avg_w_year);
 
-            //if (username != "")
-            //{
-            //    User user = DbContext.User
-            //        .Include(u => u.Rating)
-            //        .ThenInclude(r => r.Programme)
-            //        .ThenInclude(p => p.FeatureExample)
-            //        .ThenInclude(fe => fe.Feature)
-            //        .ThenInclude(f => f.TypeNavigation)
-            //        .Single(u => u.Login == username);
+            TimeSpan from_ts = new TimeSpan(
+                int.Parse(from.Split(':')[0]),
+                int.Parse(from.Split(':')[1]),
+                0
+            );
+            TimeSpan to_ts = new TimeSpan(
+                int.Parse(to.Split(':')[0]),
+                int.Parse(to.Split(':')[1]),
+                0
+            );
 
-            //    list = user.GetRecommendations(list);
+            list = list
+                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
 
-            //}
 
             return list
                 .Select(prog => new ProgrammeResponse(prog));

@@ -49,7 +49,7 @@ namespace TV_App.Controllers
 
         // GET: api/Users/Przemek/Ratings
         [HttpGet("{name}/Ratings")]
-        public IEnumerable<ProgrammeResponse> GetRatings(string name)
+        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             User user = DbContext.User
                 .Include(u => u.Rating)
@@ -59,11 +59,28 @@ namespace TV_App.Controllers
                 .ThenInclude(f => f.TypeNavigation)
                 .Single(u => u.Login == name);
 
-            return user.GetRated().Select(reco => new ProgrammeResponse(reco));
+            var list = user.GetRated();
+            TimeSpan from_ts = new TimeSpan(
+                int.Parse(from.Split(':')[0]),
+                int.Parse(from.Split(':')[1]),
+                0
+            );
+            TimeSpan to_ts = new TimeSpan(
+                int.Parse(to.Split(':')[0]),
+                int.Parse(to.Split(':')[1]),
+                0
+            );
+
+            list = list
+                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+
+
+
+            return list.Select(reco => new ProgrammeResponse(reco));
         }
 
         [HttpGet("{name}/Recommended")]
-        public IEnumerable<ProgrammeResponse> GetRecommendations(string name)
+        public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             User user = DbContext.User
                 .Include(u => u.Rating)
@@ -79,8 +96,24 @@ namespace TV_App.Controllers
                 .ThenInclude(fe => fe.Feature)
                 .ThenInclude(f => f.TypeNavigation);
 
-            return user.GetRecommendations(programmes).Select(reco => new ProgrammeResponse(reco));
+            var list = user.GetRecommendations(programmes);
 
+            TimeSpan from_ts = new TimeSpan(
+                int.Parse(from.Split(':')[0]),
+                int.Parse(from.Split(':')[1]),
+                0
+            );
+            TimeSpan to_ts = new TimeSpan(
+                int.Parse(to.Split(':')[0]),
+                int.Parse(to.Split(':')[1]),
+                0
+            );
+
+            list = list
+                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+
+
+            return list.Select(reco => new ProgrammeResponse(reco));
         }
 
 
