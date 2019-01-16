@@ -49,21 +49,41 @@ namespace TV_App.Controllers
 
         // GET: api/Users/Przemek/Ratings
         [HttpGet("{name}/Ratings")]
-        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromBody] Rating body)
+        public IEnumerable<ProgrammeResponse> GetRatings(string name)
         {
-            var list = DbContext.Programme
-                .Include(prog => prog.Rating)
-                .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
-                .Where(prog => prog.Rating
-                    .SingleOrDefault(rat => rat.UserLogin == name) != null)
-                .AsEnumerable();
+            User user = DbContext.User
+                .Include(u => u.Rating)
+                .ThenInclude(r => r.Programme)
+                .ThenInclude(p => p.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation)
+                .Single(u => u.Login == name);
 
-            return list.Select(prog => new ProgrammeResponse(prog));
+            return user.GetRated().Select(reco => new ProgrammeResponse(reco));
         }
+
+        [HttpGet("{name}/Recommended")]
+        public IEnumerable<ProgrammeResponse> GetRecommendations(string name)
+        {
+            User user = DbContext.User
+                .Include(u => u.Rating)
+                .ThenInclude(r => r.Programme)
+                .ThenInclude(p => p.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation)
+                .Single(u => u.Login == name);
+
+            IEnumerable<Programme> programmes = DbContext.Programme
+                .Include(prog => prog.Description)
+                .Include(prog => prog.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation);
+
+            return user.GetRecommendations(programmes).Select(reco => new ProgrammeResponse(reco));
+
+        }
+
+
 
         // POST: api/Users
         [HttpPost]

@@ -24,7 +24,7 @@ namespace Controllers
             return DbContext.Channel.Select(ch => new ChannelResponse(ch));
         }
 
-        // GET: api/GuideUpdate/5
+        // GET: api/Channel/5
         [HttpGet("{id}")]
         public ChannelResponse Get(int id)
         {
@@ -32,21 +32,22 @@ namespace Controllers
             return new ChannelResponse(DbContext.Channel.Where(ch => ch.Id == id).Single());
         }
 
-        // GET: api/GuideUpdate/5/Programmes
+        // GET: api/Channel/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id)
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "")
         {
-            var list = DbContext.Programme
-                .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
-                .AsEnumerable();
+            Channel channel = DbContext.Channel
+                .Include(ch => ch.Emission)
+                .ThenInclude(em => em.Programme)
+                .ThenInclude(pr => pr.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(ft => ft.TypeNavigation)
+                .Single(ch => ch.Id == 1);
 
-            return list
-                .Where(prog => prog.Emission.Any(e => e.ChannelId == id))
-                .Select(prog => new ProgrammeResponse(prog));
+            IEnumerable<Emission> emissions =
+                channel.Emission.OrderBy(em => em.StartToDate());
+
+            return emissions.Select(em => new ProgrammeResponse(em.Programme));
 
         }
 

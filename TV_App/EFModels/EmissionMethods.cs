@@ -21,5 +21,9 @@ namespace TV_App.EFModels
 
         }
 
+        public DateTime StartToDate()
+        {
+            return DateTime.ParseExact(Start, "dd.MM.yyyy HH:mm:ss", null);
+        }
     }
 }
