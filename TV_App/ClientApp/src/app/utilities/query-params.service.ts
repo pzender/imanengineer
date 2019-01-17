@@ -7,17 +7,17 @@ import { Time } from '@angular/common';
 export class QueryParamsService {
 
   constructor() { }
-  private currentUser = '';
   private endpoint: string;
   public hourStart: Time = {hours : 0, minutes: 0};
   public hourEnd: Time = {hours : 0, minutes: 0};
 
   public getCurrentUser(): string {
-    return this.currentUser;
+    const currentUser = localStorage.getItem('currentUser')
+    return currentUser !== null ? currentUser : '';
   }
 
   public setCurrentUser(value: string): void {
-    this.currentUser = value;
+    localStorage.setItem('currentUser', value)
   }
 
   public getUrl(): string {
@@ -31,11 +31,11 @@ export class QueryParamsService {
   }
 
   public setRecommended(): void {
-    this.endpoint = `api/Users/${this.currentUser}/Recommended`;
+    this.endpoint = `api/Users/${this.getCurrentUser()}/Recommended`;
   }
 
   public setProfile(): void {
-    this.endpoint =  `api/Users/${this.currentUser}/Ratings`;
+    this.endpoint =  `api/Users/${this.getCurrentUser()}/Ratings`;
   }
 
   public setChannel(id: number): void {
@@ -50,14 +50,13 @@ export class QueryParamsService {
     this.endpoint = `api/Programmes/${id}/Similar`;
   }
 
-
   public getParams(): any {
     const params = {
       'from' : this.timeString(this.hourStart),
       'to' : this.timeString(this.hourEnd)
     };
     if (!this.endpoint.endsWith('Recommended') && !this.endpoint.endsWith('Profile')) {
-      params['username'] = this.currentUser;
+      params['username'] = this.getCurrentUser();
     }
     return params;
   }
