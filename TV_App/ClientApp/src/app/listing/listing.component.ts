@@ -12,35 +12,24 @@ import { QueryParamsService } from '../utilities/query-params.service';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
+  title: string;
+  @Input('listing') listing: IProgrammeListElement[];
 
-  //private 
+  constructor(private _listingService: ListingService,
+              private _httpClient: HttpClient,
+              private _queryParams: QueryParamsService) {  }
 
-  constructor(private _listingService : ListingService,
-              private _httpClient : HttpClient,
-              private _queryParams : QueryParamsService) 
-    {
+  ngOnInit() {  }
 
-    }
-
-  ngOnInit() {
-    
-    //this._listingService.getListing().subscribe(result => this.listing = result);
+  show_details(): boolean {
+    return true;
   }
 
-  @Input('listing') listing : IProgrammeListElement[]
-
-  title : string
-  //listing : IProgrammeListElement[] = []
-
-  show_details() : boolean {
-    return true
+  show_listing(): boolean {
+    return false;
   }
 
-  show_listing() : boolean {
-    return false
-  }
-
-  onButtonClicked(response : string){
+  onButtonClicked(response: string) {
     this._listingService.getListing().subscribe(result => this.listing = result);
   }
 }

@@ -1,7 +1,7 @@
-import { IProgrammeListElement } from "./ProgrammeListElement";
+import { IProgrammeListElement } from './ProgrammeListElement';
 
 export interface IProgrammeList {
-    title : string;
-    listing : IProgrammeListElement[];
+    title: string;
+    listing: IProgrammeListElement[];
 
 }

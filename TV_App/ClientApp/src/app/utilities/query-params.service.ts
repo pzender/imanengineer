@@ -7,53 +7,61 @@ import { Time } from '@angular/common';
 export class QueryParamsService {
 
   constructor() { }
-  public currentUser : string = ""
-  private endpoint : string
-  public hourStart : Time = {hours : 0, minutes: 0}
-  public hourEnd : Time = {hours : 0, minutes: 0}
+  private endpoint: string;
+  public hourStart: Time = {hours : 0, minutes: 0};
+  public hourEnd: Time = {hours : 0, minutes: 0};
 
-  public getUrl() : string{
-    if(this.endpoint.endsWith('Recommended'))
-      this.setRecommended()
-    else if(this.endpoint.endsWith('Ratings'))
-      this.setProfile()
-    
-    return this.endpoint
+  public getCurrentUser(): string {
+    const currentUser = localStorage.getItem('currentUser')
+    return currentUser !== null ? currentUser : '';
   }
 
-  public setRecommended() : void {
-    this.endpoint = `api/Users/${this.currentUser}/Recommended`
+  public setCurrentUser(value: string): void {
+    localStorage.setItem('currentUser', value)
   }
 
-  public setProfile() : void {
-    this.endpoint =  `api/Users/${this.currentUser}/Ratings`
+  public getUrl(): string {
+    if (this.endpoint.endsWith('Recommended')) {
+      this.setRecommended();
+    } else
+    if (this.endpoint.endsWith('Ratings')) {
+      this.setProfile();
+    }
+    return this.endpoint;
   }
 
-  public setChannel(id : number) : void {
-    this.endpoint =  `api/Channels/${id}/Programmes`
+  public setRecommended(): void {
+    this.endpoint = `api/Users/${this.getCurrentUser()}/Recommended`;
   }
 
-  public setFeature(id : number) : void {
-    this.endpoint =  `api/Features/${id}/Programmes`
+  public setProfile(): void {
+    this.endpoint =  `api/Users/${this.getCurrentUser()}/Ratings`;
   }
 
-  public setProgramme(id : number) : void {
-    this.endpoint = `api/Programmes/${id}/Similar`
+  public setChannel(id: number): void {
+    this.endpoint =  `api/Channels/${id}/Programmes`;
   }
 
+  public setFeature(id: number): void {
+    this.endpoint =  `api/Features/${id}/Programmes`;
+  }
 
-  public getParams() : any {
-    let params = {
+  public setProgramme(id: number): void {
+    this.endpoint = `api/Programmes/${id}/Similar`;
+  }
+
+  public getParams(): any {
+    const params = {
       'from' : this.timeString(this.hourStart),
       'to' : this.timeString(this.hourEnd)
     };
-    if(!this.endpoint.endsWith('Recommended') && !this.endpoint.endsWith('Profile'))
-      params['username'] = this.currentUser;
-    
-    return params
+    if (!this.endpoint.endsWith('Recommended') && !this.endpoint.endsWith('Profile')) {
+      params['username'] = this.getCurrentUser();
+    }
+    return params;
   }
 
-  private timeString(value : Time){
-    return value.hours.toString() + ":" + value.minutes.toString()
+  private timeString(value: Time) {
+    return value.hours.toString() + ':' + value.minutes.toString();
   }
 }

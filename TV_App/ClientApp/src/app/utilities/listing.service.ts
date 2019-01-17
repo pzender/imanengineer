@@ -10,26 +10,24 @@ import { QueryParamsService } from './query-params.service';
 
 
 export class ListingService {
+  private listingSubject: BehaviorSubject<IProgrammeListElement[]> = new BehaviorSubject<IProgrammeListElement[]>([]);
 
+  constructor(private http: HttpClient,
+              private query_params: QueryParamsService) {}
 
-  constructor(private http : HttpClient,
-              private query_params : QueryParamsService) { 
+  public refresh(): void {
+    this.requestListing().subscribe(result => this.listingSubject.next(result));
   }
 
-  public refresh() : void {
-    this.requestListing().subscribe(result => this.listingSubject.next(result))
+  public getListing(): Observable<IProgrammeListElement[]> {
+    this.requestListing().subscribe(result => this.listingSubject.next(result));
+    return this.listingSubject.asObservable();
   }
 
-  public getListing() : Observable<IProgrammeListElement[]> {
-    this.requestListing().subscribe(result => this.listingSubject.next(result))
-    return this.listingSubject.asObservable()
-  }
-
-  private requestListing() : Observable<IProgrammeListElement[]> {
-    return this.http.get<IProgrammeListElement[]>(this.query_params.getUrl(), 
+  private requestListing(): Observable<IProgrammeListElement[]> {
+    return this.http.get<IProgrammeListElement[]>(this.query_params.getUrl(),
       { params : this.query_params.getParams()}
     );
   }
 
-  private listingSubject : BehaviorSubject<IProgrammeListElement[]> = new BehaviorSubject<IProgrammeListElement[]>([]);
 }

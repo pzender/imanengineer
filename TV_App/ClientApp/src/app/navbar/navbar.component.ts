@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QueryParamsService } from '../utilities/query-params.service';
 import { ListingService } from '../utilities/listing.service';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -10,36 +10,37 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  public new_name = '';
   constructor(private _queryParams: QueryParamsService,
-              private _listingService : ListingService,
-              private _http : HttpClient) { }
-  public getUser() : string{
-    return this._queryParams.currentUser;
+              private _listingService: ListingService,
+              private _http: HttpClient) { }
+
+  ngOnInit() {
   }
 
-  public setUser(value : string){
-    this._queryParams.currentUser = value;
+  public getUser(): string {
+    return this._queryParams.getCurrentUser();
+  }
+
+  public setUser(value: string) {
+    this._queryParams.setCurrentUser(value);
     this._listingService.refresh();
   }
 
-  public userEmpty() : boolean {
-    return this.getUser() == "";
+  public userEmpty(): boolean {
+    return this.getUser() === '';
   }
 
-  public logout() : void {
-    this.setUser("");
+  public logout(): void {
+    this.setUser('');
   }
 
-  public login() : void {
+  public login(): void {
     this._http
       .post('/api/Users/', this.new_name)
       .subscribe(result =>
-        this.setUser(result["login"])
-      )
-  }
-  public new_name = ""
-  ngOnInit() {
+        this.setUser(result['login'])
+      );
   }
 
 }

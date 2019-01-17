@@ -1,7 +1,7 @@
 <div *ngIf="this.isLogged(); else needToLogin">
-  <h1>Twoje oceny: </h1>
+  <h1>Programy dla ciebie: </h1>
   <app-listing 
-    *ngIf="!this.listingEmpty(); else listingEmpty"
+    *ngIf="!this.listingEmpty(); else nothingFound"
     [listing] = 'this.listing'>
   </app-listing>
 </div>
@@ -12,7 +12,7 @@
   </div>
 </ng-template>
 
-<ng-template #listingEmpty>
+<ng-template #nothingFound>
   <p>
     Rekomendacje niedostępne
   </p>

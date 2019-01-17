@@ -13,21 +13,20 @@ import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 export class FeatureComponent implements OnInit {
 
   constructor(
-    private _listingService : ListingService,
-    private _route : ActivatedRoute,
-    private _queryParams : QueryParamsService,
-    private _httpClient : HttpClient
+    private _listingService: ListingService,
+    private _route: ActivatedRoute,
+    private _queryParams: QueryParamsService,
+    private _httpClient: HttpClient
   ) { }
 
-  private listing : IProgrammeListElement[]
-  private title : string
+  private listing: IProgrammeListElement[];
+  private title: string;
 
   ngOnInit() {
-    let id : number = this._route.snapshot.params['id']
-    this._queryParams.setFeature(id)
+    const id: number = this._route.snapshot.params['id'];
+    this._queryParams.setFeature(id);
     this._listingService.getListing().subscribe(result => this.listing = result);
-
-    this._httpClient.get(`/api/Features/${id}`).subscribe(result => this.title = `${result['type']}: ${result['value']}`)
+    this._httpClient.get(`/api/Features/${id}`).subscribe(result => this.title = `${result['type']}: ${result['value']}`);
   }
 
 }
