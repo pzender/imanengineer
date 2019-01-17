@@ -16,46 +16,43 @@ namespace TV_App.Controllers
     {
         readonly testContext DbContext = new testContext();
 
+        private int TermMatches(Programme prog, IEnumerable<string> search_terms)
+        {
+            IEnumerable<string> prog_terms = prog
+                .FeatureExample.Select(fe => fe.Feature.Value)
+                .Concat(prog.Title.Split(' '));
+
+            int count = prog_terms
+                .Where(prog_term => search_terms
+                    .Any(search_term => prog_term.ToLower().Contains(search_term.ToLower())))
+                .Count();
+
+            return count;
+        }
 
         // GET: api/Programmes
         [HttpGet]
-        public IEnumerable<ProgrammeResponse> Get([FromQuery] string channel = "", [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
+        public IEnumerable<ProgrammeResponse> Get([FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             var list = DbContext.Programme
                 .Include(prog => prog.Description)
                 .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
+                .ThenInclude(em => em.Channel)
                 .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation)
                 .AsEnumerable();
-;           
-            if(username != null && username != "")
+
+            if(search != "")
             {
-                User user = DbContext.User
-                    .Include(u => u.Rating)
-                        .ThenInclude(rat => rat.Programme)
-                            .ThenInclude(prog => prog.FeatureExample)
-                                .ThenInclude(fe => fe.Feature)
-                                    .ThenInclude(feat => feat.TypeNavigation)
-                    .Where(u => u.Login == username)
-                    .Single();
-                RecommendationBuilder r = new RecommendationBuilder(user);
-                if(user.GetPositivelyRated().Count() > 0)
-                    list = r.Build(list);
-            }
-
-
-
-            if (channel != "")
-            {
-                list = (
-                    from prog in list
-                    where prog.Emission.Any(e => e.Channel.Name == channel)
-                    orderby prog.Emission.First().Start
-                    select prog
-                    
-                );
+                IEnumerable<string> search_terms = search.Split(' ');
+                IDictionary<Programme, int> list_matches = list
+                    .ToDictionary(prog => prog, prog => TermMatches(prog, search_terms))
+                    .OrderByDescending(prog_match => prog_match.Value)
+                    .Where(prog_match => prog_match.Value > 0)
+                    .ToDictionary(kv => kv.Key, kv => kv.Value);
+                list = list_matches
+                    .Select(prog_match => prog_match.Key);
             }
 
             TimeSpan from_ts = new TimeSpan(
@@ -70,29 +67,54 @@ namespace TV_App.Controllers
             );
 
             list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0)
-                .Take(15);
+                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
 
             IEnumerable<ProgrammeResponse> preparedResponse = list.Select(prog => new ProgrammeResponse(prog));
             return preparedResponse;
         }
 
 
-        // GET: api/Programmes/5/similar
-        [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetSimilar(int id)
+        // GET: api/Programmes/5/Similar
+        [HttpGet("{id}/Similar")]
+        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
-            var list = DbContext.Programme
+            Programme programme = DbContext.Programme
                 .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
+                .ThenInclude(em => em.Channel)
                 .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
-                .AsEnumerable();
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation)
+                .Single(prog => prog.Id == id);
 
-            RecommendationBuilder r = new RecommendationBuilder(null);
-            return r.Similar(list, list.Where(p => p.Id == id).Single())
-                .Select(p => new ProgrammeResponse(p));
+            double avg_w_act = DbContext.User.Average(u => u.WeightActor);
+            double avg_w_cat = DbContext.User.Average(u => u.WeightCategory);
+            double avg_w_keyw = DbContext.User.Average(u => u.WeightKeyword);
+            double avg_w_dir = DbContext.User.Average(u => u.WeightDirector);
+            double avg_w_country = DbContext.User.Average(u => u.WeightCountry);
+            double avg_w_year = DbContext.User.Average(u => u.WeightYear);
+
+            IEnumerable<Programme> list = programme.GetSimilar(avg_w_act, avg_w_cat, avg_w_keyw, avg_w_dir, avg_w_country, avg_w_year);
+
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
+
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
+
+
+            return list
+                .Select(prog => new ProgrammeResponse(prog));
         }
 
 

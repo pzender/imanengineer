@@ -24,7 +24,7 @@ namespace Controllers
             return DbContext.Channel.Select(ch => new ChannelResponse(ch));
         }
 
-        // GET: api/GuideUpdate/5
+        // GET: api/Channel/5
         [HttpGet("{id}")]
         public ChannelResponse Get(int id)
         {
@@ -32,21 +32,39 @@ namespace Controllers
             return new ChannelResponse(DbContext.Channel.Where(ch => ch.Id == id).Single());
         }
 
-        // GET: api/GuideUpdate/5/Programmes
+        // GET: api/Channel/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id)
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
-            var list = DbContext.Programme
-                .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
-                .AsEnumerable();
+            Channel channel = DbContext.Channel
+                .Include(ch => ch.Emission)
+                .ThenInclude(em => em.Programme)
+                .ThenInclude(pr => pr.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(ft => ft.TypeNavigation)
+                .Single(ch => ch.Id == id);
 
-            return list
-                .Where(prog => prog.Emission.Any(e => e.ChannelId == id))
-                .Select(prog => new ProgrammeResponse(prog));
+            IEnumerable<Emission> list =
+                channel.Emission.OrderBy(em => em.StartToDate());
+
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
+
+                list = list
+                    .Where(em => em.Programme.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
+
+            return list.Select(em => new ProgrammeResponse(em.Programme));
 
         }
 

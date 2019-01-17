@@ -34,17 +34,49 @@ namespace TV_App.Controllers
             return new FeatureResponse(feat);
         }
 
-        // GET: api/GuideUpdate/5/Programmes
+        // GET: api/Feature/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id)
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
-            var list = DbContext.Programme
+            IEnumerable<Programme> list = DbContext.Programme
                 .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
+                .ThenInclude(em => em.Channel)
                 .Include(prog => prog.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation);
+
+            list = list.OrderBy(prog => prog.Emission.First().StartToDate());
+
+            if (username != null)
+            {
+                User user = DbContext.User
+                    .Include(u => u.Rating)
+                    .ThenInclude(r => r.Programme)
+                    .ThenInclude(p => p.FeatureExample)
                     .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
-                .AsEnumerable();
+                    .ThenInclude(f => f.TypeNavigation)
+                    .Single(u => u.Login == username);
+
+                list = user.GetRecommendations(list);
+
+            }
+
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
+
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
 
             return list
                 .Where(prog => prog.FeatureExample.Any(fe => fe.FeatureId == id))

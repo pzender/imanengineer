@@ -9,6 +9,7 @@ using TV_App.EFModels;
 using LemmaSharp;
 using TV_App.DataLayer;
 using System.Diagnostics;
+using TV_App.Responses;
 
 namespace TV_App.Controllers
 {
@@ -19,22 +20,20 @@ namespace TV_App.Controllers
         testContext DbContext = new testContext();
         // GET: api/Test
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ProgrammeResponse> Get()
         {
-            KeywordExtractor ke = new KeywordExtractor(null);
+            Channel channel = DbContext.Channel
+                .Include(ch => ch.Emission)
+                .ThenInclude(em => em.Programme)
+                .ThenInclude(pr => pr.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(ft => ft.TypeNavigation)
+                .Single(ch => ch.Id == 1);
 
-            Programme p = DbContext.Programme
-                .Include(prog => prog.Description)
-                .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                .First(prog => prog.Id == 4189);
+            IEnumerable<Emission> emissions = 
+                channel.Emission.OrderBy(em => em.StartToDate());
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            var result = ke.ProcessKeywords(p);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
-            return result;
+            return emissions.Select(em => new ProgrammeResponse(em.Programme));
         }
 
         // GET: api/Test/5

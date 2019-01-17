@@ -9,9 +9,18 @@ namespace TV_App.EFModels
     {
         //public 
 
-        public IEnumerable<Programme> GetRecommendations()
+        public IEnumerable<Programme> GetRecommendations(IEnumerable<Programme> available_programmes)
         {
-            throw new NotImplementedException();
+            Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => RecommendationSupport(p));
+            IEnumerable<Programme> recommended = recom_supports
+                .Where(rs => rs.Value > 0)
+                .OrderByDescending(rs => rs.Value)
+                .ToDictionary(kv => kv.Key, kv => kv.Value)
+                .Keys
+                .Except(GetRated());
+
+            return recommended;
+
         }
 
         public IEnumerable<Programme> GetPositivelyRated()
@@ -31,7 +40,7 @@ namespace TV_App.EFModels
 
         public double RecommendationSupport(Programme p)
         {
-            throw new NotImplementedException();
+            return GetPositivelyRated().Select(pos => pos.TotalSimilarity(p, WeightActor, WeightCategory, WeightKeyword, WeightDirector, WeightCountry, WeightYear)).Sum();
         }
 
     }

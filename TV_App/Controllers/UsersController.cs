@@ -49,21 +49,80 @@ namespace TV_App.Controllers
 
         // GET: api/Users/Przemek/Ratings
         [HttpGet("{name}/Ratings")]
-        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromBody] Rating body)
+        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
-            var list = DbContext.Programme
-                .Include(prog => prog.Rating)
-                .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
-                .Where(prog => prog.Rating
-                    .SingleOrDefault(rat => rat.UserLogin == name) != null)
-                .AsEnumerable();
+            User user = DbContext.User
+                .Include(u => u.Rating)
+                .ThenInclude(r => r.Programme)
+                .ThenInclude(p => p.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation)
+                .Single(u => u.Login == name);
 
-            return list.Select(prog => new ProgrammeResponse(prog));
+            var list = user.GetRated();
+
+
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
+
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
+
+
+            return list.Select(reco => new ProgrammeResponse(reco));
         }
+
+        [HttpGet("{name}/Recommended")]
+        public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
+        {
+            User user = DbContext.User
+                .Include(u => u.Rating)
+                .ThenInclude(r => r.Programme)
+                .ThenInclude(p => p.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation)
+                .Single(u => u.Login == name);
+
+            IEnumerable<Programme> programmes = DbContext.Programme
+                .Include(prog => prog.Description)
+                .Include(prog => prog.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(f => f.TypeNavigation);
+
+            var list = user.GetRecommendations(programmes);
+
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
+
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
+
+            return list.Select(reco => new ProgrammeResponse(reco));
+        }
+
+
 
         // POST: api/Users
         [HttpPost]

@@ -1,0 +1,19 @@
+<div *ngIf="this.isLogged(); else needToLogin">
+  <h1>Twoje oceny: </h1>
+  <app-listing 
+    *ngIf="!this.listingEmpty(); else listingEmpty"
+    [listing] = 'this.listing'>
+  </app-listing>
+</div>
+  
+<ng-template #needToLogin>
+  <div>
+    Zaloguj się, aby otrzymać rekomendacje
+  </div>
+</ng-template>
+
+<ng-template #listingEmpty>
+  <p>
+    Rekomendacje niedostępne
+  </p>
+</ng-template>
