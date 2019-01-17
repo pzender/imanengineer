@@ -36,7 +36,7 @@ namespace TV_App.Controllers
 
         // GET: api/Feature/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
         {
             IEnumerable<Programme> list = DbContext.Programme
                 .Include(prog => prog.Emission)
@@ -46,8 +46,8 @@ namespace TV_App.Controllers
                 .ThenInclude(f => f.TypeNavigation);
 
             list = list.OrderBy(prog => prog.Emission.First().StartToDate());
-            
-            if(username != "")
+
+            if (username != null)
             {
                 User user = DbContext.User
                     .Include(u => u.Rating)
@@ -61,21 +61,22 @@ namespace TV_App.Controllers
 
             }
 
-            TimeSpan from_ts = new TimeSpan(
-                int.Parse(from.Split(':')[0]),
-                int.Parse(from.Split(':')[1]),
-                0
-            );
-            TimeSpan to_ts = new TimeSpan(
-                int.Parse(to.Split(':')[0]),
-                int.Parse(to.Split(':')[1]),
-                0
-            );
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
 
-            list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-
-
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
 
             return list
                 .Where(prog => prog.FeatureExample.Any(fe => fe.FeatureId == id))

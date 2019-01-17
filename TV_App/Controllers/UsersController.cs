@@ -60,20 +60,24 @@ namespace TV_App.Controllers
                 .Single(u => u.Login == name);
 
             var list = user.GetRated();
-            TimeSpan from_ts = new TimeSpan(
-                int.Parse(from.Split(':')[0]),
-                int.Parse(from.Split(':')[1]),
-                0
-            );
-            TimeSpan to_ts = new TimeSpan(
-                int.Parse(to.Split(':')[0]),
-                int.Parse(to.Split(':')[1]),
-                0
-            );
 
-            list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
 
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
+
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
 
 
             return list.Select(reco => new ProgrammeResponse(reco));
@@ -98,20 +102,22 @@ namespace TV_App.Controllers
 
             var list = user.GetRecommendations(programmes);
 
-            TimeSpan from_ts = new TimeSpan(
-                int.Parse(from.Split(':')[0]),
-                int.Parse(from.Split(':')[1]),
-                0
-            );
-            TimeSpan to_ts = new TimeSpan(
-                int.Parse(to.Split(':')[0]),
-                int.Parse(to.Split(':')[1]),
-                0
-            );
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
 
-            list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
 
             return list.Select(reco => new ProgrammeResponse(reco));
         }

@@ -1,16 +1,7 @@
-<app-programmedetails 
-    *ngIf="this.show_details()"
-    [prog_id]="this.details_id"
+<div class="p-0">
+  <app-listing-element 
+    *ngFor="let p of this.listing" 
+    [programme]="p"
     (buttonClicked)="onButtonClicked($event)">
-</app-programmedetails>
-<h1>{{title}}</h1>
-<div *ngIf="this.show_listing()">
-    <app-listing-element 
-        *ngFor="let p of this.listing" 
-        [programme]="p"
-        (buttonClicked)="onButtonClicked($event)">
-    </app-listing-element>
+  </app-listing-element>
 </div>
-<p *ngIf="!this.show_listing()" class="my-5 text-center text-secondary">
-    Zaloguj się, aby otrzymać rekomendacje
-</p>

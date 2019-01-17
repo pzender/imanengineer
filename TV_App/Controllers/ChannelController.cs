@@ -42,25 +42,27 @@ namespace Controllers
                 .ThenInclude(pr => pr.FeatureExample)
                 .ThenInclude(fe => fe.Feature)
                 .ThenInclude(ft => ft.TypeNavigation)
-                .Single(ch => ch.Id == 1);
+                .Single(ch => ch.Id == id);
 
             IEnumerable<Emission> list =
                 channel.Emission.OrderBy(em => em.StartToDate());
 
-            TimeSpan from_ts = new TimeSpan(
-                int.Parse(from.Split(':')[0]),
-                int.Parse(from.Split(':')[1]),
-                0
-            );
-            TimeSpan to_ts = new TimeSpan(
-                int.Parse(to.Split(':')[0]),
-                int.Parse(to.Split(':')[1]),
-                0
-            );
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
 
-            list = list
-                .Where(em => em.Programme.EmissionsBetween(from_ts, to_ts).Count() > 0);
-
+                list = list
+                    .Where(em => em.Programme.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
 
             return list.Select(em => new ProgrammeResponse(em.Programme));
 

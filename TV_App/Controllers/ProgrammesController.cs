@@ -95,19 +95,22 @@ namespace TV_App.Controllers
 
             IEnumerable<Programme> list = programme.GetSimilar(avg_w_act, avg_w_cat, avg_w_keyw, avg_w_dir, avg_w_country, avg_w_year);
 
-            TimeSpan from_ts = new TimeSpan(
-                int.Parse(from.Split(':')[0]),
-                int.Parse(from.Split(':')[1]),
-                0
-            );
-            TimeSpan to_ts = new TimeSpan(
-                int.Parse(to.Split(':')[0]),
-                int.Parse(to.Split(':')[1]),
-                0
-            );
+            if (from != to)
+            {
+                TimeSpan from_ts = new TimeSpan(
+                    int.Parse(from.Split(':')[0]),
+                    int.Parse(from.Split(':')[1]),
+                    0
+                );
+                TimeSpan to_ts = new TimeSpan(
+                    int.Parse(to.Split(':')[0]),
+                    int.Parse(to.Split(':')[1]),
+                    0
+                );
 
-            list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+                list = list
+                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
+            }
 
 
             return list

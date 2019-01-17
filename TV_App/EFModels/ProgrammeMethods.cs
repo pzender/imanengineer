@@ -32,7 +32,7 @@ namespace TV_App.EFModels
 
             IEnumerable<Programme> list = similar
                 .OrderByDescending(prog => prog.Value)
-                .Where(prog => prog.Value > 0)
+                .Where(prog => prog.Value > 0 && prog.Key.Id != this.Id)
                 .Select(prog => prog.Key);
 
             return list;

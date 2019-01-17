@@ -11,6 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ProgrammedetailsComponent } from './programmedetails/programmedetails.component';
 import { FormsModule } from '@angular/forms';
+import { GuideComponent } from './guide/guide.component';
+import { RecommendedComponent } from './recommended/recommended.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FeatureComponent } from './feature/feature.component';
+import { ProgrammeComponent } from './programme/programme.component';
+import { ChannelComponent } from './channel/channel.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 
 @NgModule({
@@ -20,7 +27,14 @@ import { FormsModule } from '@angular/forms';
     FilterSidebarComponent,
     ListingComponent,
     ListingElementComponent,
-    ProgrammedetailsComponent
+    ProgrammedetailsComponent,
+    GuideComponent,
+    RecommendedComponent,
+    ProfileComponent,
+    FeatureComponent,
+    ProgrammeComponent,
+    ChannelComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,
