@@ -13,17 +13,17 @@ import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 export class ProgrammeComponent implements OnInit {
 
   constructor(
-    private _listingService : ListingService,
-    private _route : ActivatedRoute,
-    private _queryParams : QueryParamsService,
+    private _listingService: ListingService,
+    private _route: ActivatedRoute,
+    private _queryParams: QueryParamsService,
   ) { }
 
-  private listing : IProgrammeListElement[]
-  private id : number
+  private listing: IProgrammeListElement[];
+  private id: number;
 
   ngOnInit() {
-    this.id = this._route.snapshot.params['id']
-    this._queryParams.setProgramme(this.id)
+    this.id = this._route.snapshot.params['id'];
+    this._queryParams.setProgramme(this.id);
     this._listingService.getListing().subscribe(result => this.listing = result);
   }
 

@@ -12,25 +12,20 @@ import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 export class RecommendedComponent implements OnInit {
 
   constructor(
-    private _listingService : ListingService,
-    private _route : ActivatedRoute,
-    private _queryParams : QueryParamsService,
+    private _listingService: ListingService,
+    private _route: ActivatedRoute,
+    private _queryParams: QueryParamsService,
   ) { }
 
-  private listing : IProgrammeListElement[]
-  
-  private isLogged() : boolean {
-    return this._queryParams.currentUser != ""
+  private listing: IProgrammeListElement[];
+  private isLogged(): boolean {
+    return this._queryParams.getCurrentUser() !== '';
   }
-
-  private listingEmpty() : boolean {
-    return this.listing.length == 0
+  private listingEmpty(): boolean {
+    return this.listing.length === 0;
   }
-
-
   ngOnInit() {
-    //this.id = this._route.snapshot.params['id']
-    this._queryParams.setRecommended()
+    this._queryParams.setRecommended();
     this._listingService.getListing().subscribe(result => this.listing = result);
   }
 
