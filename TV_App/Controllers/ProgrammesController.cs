@@ -14,7 +14,7 @@ namespace TV_App.Controllers
     [ApiController]
     public class ProgrammesController : ControllerBase
     {
-        static readonly testContext DbContext = new testContext();
+        readonly testContext DbContext = new testContext();
 
         private int TermMatches(Programme prog, IEnumerable<string> search_terms)
         {

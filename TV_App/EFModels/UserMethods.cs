@@ -12,15 +12,15 @@ namespace TV_App.EFModels
         public IEnumerable<Programme> GetRecommendations(IEnumerable<Programme> available_programmes)
         {
             Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => RecommendationSupport(p));
-            IEnumerable<Programme> recommended = recom_supports
-                .Where(rs => rs.Value > 0)
+            recom_supports = recom_supports
+                .Where(rs => rs.Value > 0.1)
                 .OrderByDescending(rs => rs.Value)
-                .ToDictionary(kv => kv.Key, kv => kv.Value)
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
+
+            return recom_supports
                 .Keys
-                .Except(GetRated());
-
-            return recommended;
-
+                .Except(GetRated())
+                .Take(20);
         }
 
         public IEnumerable<Programme> GetPositivelyRated()
@@ -40,7 +40,7 @@ namespace TV_App.EFModels
 
         public double RecommendationSupport(Programme p)
         {
-            return GetPositivelyRated().Select(pos => pos.TotalSimilarity(p, WeightActor, WeightCategory, WeightKeyword, WeightDirector, WeightCountry, WeightYear)).Sum();
+            return GetPositivelyRated().Select(pos => pos.TotalSimilarity(p, WeightActor, WeightCategory, WeightKeyword, WeightDirector, WeightCountry, WeightYear)).Average();
         }
 
     }

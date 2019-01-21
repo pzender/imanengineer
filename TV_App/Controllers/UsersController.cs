@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TV_App.EFModels;
 using TV_App.Responses;
 
@@ -16,7 +17,14 @@ namespace TV_App.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private static readonly testContext DbContext = new testContext();
+        private readonly testContext DbContext = new testContext();
+        private readonly ILoggerFactory loggerFactory;
+
+        public UsersController(ILoggerFactory loggerFactory)
+        {
+            this.loggerFactory = loggerFactory;
+
+        }
 
         // GET: api/Users
         [HttpGet]
@@ -66,6 +74,9 @@ namespace TV_App.Controllers
         [HttpGet("{name}/Recommended")]
         public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
+            var logger = loggerFactory.CreateLogger("UsersControllerGET");
+            logger.LogInformation("UsersController.GetRecommendations() called");
+
             User user = DbContext.User
                 .Include(u => u.Rating)
                 .ThenInclude(r => r.Programme)
@@ -82,7 +93,7 @@ namespace TV_App.Controllers
                 .ThenInclude(fe => fe.Feature)
                 .ThenInclude(f => f.TypeNavigation);
 
-            var list = user.GetRecommendations(programmes);
+            logger.LogInformation($"{programmes.Count()} programmes initially");
 
             if (from != to)
             {
@@ -97,15 +108,21 @@ namespace TV_App.Controllers
                     0
                 );
 
-                list = list
+                programmes = programmes
                     .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
             }
 
             if (date != 0)
             {
                 DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-                list = list.Where(prog => prog.EmittedOn(desiredDate));
+                programmes = programmes.Where(prog => prog.EmittedOn(desiredDate));
             }
+
+            logger.LogInformation($"date&time: down to {programmes.Count()}");
+
+            var list = user.GetRecommendations(programmes);
+
+            logger.LogInformation($"recommendations: down to {programmes.Count()}");
 
             return list.Select(reco => new ProgrammeResponse(reco));
         }

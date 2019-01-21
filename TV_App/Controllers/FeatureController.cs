@@ -14,7 +14,7 @@ namespace TV_App.Controllers
     [ApiController]
     public class FeaturesController : ControllerBase
     {
-        static readonly testContext DbContext = new testContext();
+        readonly testContext DbContext = new testContext();
 
         // GET: api/Feature
         [HttpGet]

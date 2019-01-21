@@ -16,7 +16,7 @@ namespace Controllers
     [Route("api/[controller]")]
     public class ChannelsController : Controller
     {
-        static readonly testContext DbContext = new testContext();
+        readonly testContext DbContext = new testContext();
 
         [HttpGet]
         public IEnumerable<ChannelResponse> Get()
