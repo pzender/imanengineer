@@ -9,12 +9,14 @@ namespace TV_App.Responses
         public DateTime Start { get; set; }
         public DateTime Stop { get; set; }
         public ChannelResponse Channel { get; set; }
+        public string Title { get; set; }
 
         public EmissionResponse(Emission e)
         {
             Start = DateTime.ParseExact(e.Start, "dd.MM.yyyy HH:mm:ss", null);
             Stop = DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null);
             Channel = new ChannelResponse(e.Channel);
+            Title = e.Programme?.Title;
         }
     }
 }

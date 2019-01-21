@@ -21,10 +21,13 @@ export class ChannelComponent implements OnInit {
 
   private listing: IProgrammeListElement[];
   private id: number;
+  private title: string;
 
   ngOnInit() {
     this.id = this._route.snapshot.params['id'];
     this._queryParams.setChannel(this.id);
+    this._httpClient.get(`http://localhost:5000/api/Channels/${this.id}`)
+      .subscribe(result => this.title = result['name'])
     this._listingService.getListing().subscribe(result => this.listing = result);
   }
 

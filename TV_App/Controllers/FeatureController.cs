@@ -14,7 +14,7 @@ namespace TV_App.Controllers
     [ApiController]
     public class FeaturesController : ControllerBase
     {
-        readonly testContext DbContext = new testContext();
+        static readonly testContext DbContext = new testContext();
 
         // GET: api/Feature
         [HttpGet]
@@ -36,7 +36,7 @@ namespace TV_App.Controllers
 
         // GET: api/Feature/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
             IEnumerable<Programme> list = DbContext.Programme
                 .Include(prog => prog.Emission)
@@ -57,7 +57,9 @@ namespace TV_App.Controllers
                     .ThenInclude(f => f.TypeNavigation)
                     .Single(u => u.Login == username);
 
-                list = user.GetRecommendations(list);
+                IEnumerable<Programme> reco = user.GetRecommendations(list);
+                if(reco.Count() > 0) 
+                    list = user.GetRecommendations(list);
 
             }
 
@@ -77,6 +79,13 @@ namespace TV_App.Controllers
                 list = list
                     .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
             }
+
+            //if (date != 0)
+            //{
+            //    DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
+            //    list = list.Where(prog => prog.EmittedOn(desiredDate));
+            //}
+
 
             return list
                 .Where(prog => prog.FeatureExample.Any(fe => fe.FeatureId == id))
