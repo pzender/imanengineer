@@ -1,6 +1,11 @@
 <form>
   <div class="form-group">
     <h5>Kiedy?</h5>
+    <label for="day">Data:  </label>
+    <div id="day" class="p-1 border rounded w-100">
+      <a (click)="prevDay()" class="btn btn-sm btn-secondary">&lt;</a> 
+      <span class="mx-2 w-75">{{this.translateDate(this.getDate() | date:'EE, d MMM')}}</span>
+      <a (click)="nextDay()" class="btn btn-sm btn-secondary">&gt;</a></div>
     <label for="time_from">Od godziny: </label>
     <input type="time" id="time_from" class="form-control" value = "00:00" (keyup)="onFromInput($event)" >
     <label for="time_from">Do godziny: </label>

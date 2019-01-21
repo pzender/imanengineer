@@ -3,7 +3,7 @@
   <div class="media-body">
     <h5><a href="/Programmes/{{programme.id}}">{{programme.title}}</a></h5>
       <div *ngFor="let e of programme.emissions">
-          <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(e.start | date:'EE, d MMM, H:mm')}} - {{translateDate(e.stop | date:'EE, d MMM, H:mm')}}
+          <a href="/Channels/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(e.start | date:'EE, d MMM, H:mm')}} - {{this.translateDate(e.stop | date:'EE, d MMM, H:mm')}}
       </div>
       <div *ngFor="let ft of feat_types()">{{ft}}: 
         <span *ngFor="let f of feat_array(ft)"><a href="/Features/{{f.id}}">{{f.name}}</a>, </span> 

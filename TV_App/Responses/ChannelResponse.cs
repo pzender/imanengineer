@@ -9,7 +9,7 @@ namespace TV_App.Responses
 
         public ChannelResponse(Channel channel)
         {
-            Id = (int)channel.Id;
+            Id = (int)channel?.Id;
             Name = channel.Name;
         }
     }

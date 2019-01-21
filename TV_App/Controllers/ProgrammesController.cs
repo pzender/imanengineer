@@ -14,7 +14,7 @@ namespace TV_App.Controllers
     [ApiController]
     public class ProgrammesController : ControllerBase
     {
-        readonly testContext DbContext = new testContext();
+        static readonly testContext DbContext = new testContext();
 
         private int TermMatches(Programme prog, IEnumerable<string> search_terms)
         {
@@ -76,7 +76,7 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes/5/Similar
         [HttpGet("{id}/Similar")]
-        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
+        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
             Programme programme = DbContext.Programme
                 .Include(prog => prog.Emission)
@@ -112,6 +112,11 @@ namespace TV_App.Controllers
                     .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
             }
 
+            //if (date != 0)
+            //{
+            //    DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
+            //    list = list.Where(prog => prog.EmittedOn(desiredDate));
+            //}
 
             return list
                 .Select(prog => new ProgrammeResponse(prog));

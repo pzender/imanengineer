@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../interfaces/ProgrammeListElement';
 import { HttpClient } from '@angular/common/http';
 import { QueryParamsService } from '../utilities/query-params.service';
+import { TranslationsService } from '../utilities/translations.service';
 
 
 @Component({
@@ -13,7 +14,8 @@ export class ListingElementComponent implements OnInit {
   @Output() buttonClicked = new EventEmitter<string>();
   @Input('programme') programme: IProgrammeListElement;
   constructor(private _http: HttpClient,
-              private _queryParams: QueryParamsService) { }
+              private _queryParams: QueryParamsService,
+              private _translations: TranslationsService) { }
 
   feat_types(): string[] {
     return this.programme.features
@@ -51,7 +53,7 @@ export class ListingElementComponent implements OnInit {
     return self.indexOf(value) === index;
   }
 
-  translateDate(initial: string): string {
+  public translateDate(initial: string): string {
     return initial
       .replace('Mon', 'Pn')
       .replace('Tue', 'Wt')
@@ -73,4 +75,6 @@ export class ListingElementComponent implements OnInit {
       .replace('Nov', 'Lis')
       .replace('Dec', 'Gru');
   }
+
+
 }
