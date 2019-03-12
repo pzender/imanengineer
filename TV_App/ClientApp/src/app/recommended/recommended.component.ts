@@ -18,7 +18,7 @@ export class RecommendedComponent implements OnInit {
   ) { }
 
   private listing: IProgrammeListElement[];
-  private isLogged(): boolean {
+  public isLogged(): boolean {
     return this._queryParams.getCurrentUser() !== '';
   }
   private listingEmpty(): boolean {

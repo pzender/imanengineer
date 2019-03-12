@@ -18,8 +18,8 @@ export class ProgrammeComponent implements OnInit {
     private _queryParams: QueryParamsService,
   ) { }
 
-  private listing: IProgrammeListElement[];
-  private id: number;
+  public listing: IProgrammeListElement[];
+  public id: number;
 
   ngOnInit() {
     this.id = this._route.snapshot.params['id'];

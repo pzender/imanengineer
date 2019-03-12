@@ -28,16 +28,16 @@ export class FilterSidebarComponent implements OnInit {
     this._queryParams.hourEnd = this.timeTo;
     this.listing_service.refresh();
   }
-  private getDate(): number{
+  public getDate(): number{
     return this._queryParams.date;
   }
 
-  private nextDay() {
+  public nextDay() {
     this._queryParams.date += (1000 * 60 * 60 * 24);
     this.listing_service.refresh();
   }
 
-  private prevDay() {
+  public prevDay() {
     this._queryParams.date -= (1000 * 60 * 60 * 24);
     this.listing_service.refresh();
   }

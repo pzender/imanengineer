@@ -19,8 +19,8 @@ export class FeatureComponent implements OnInit {
     private _httpClient: HttpClient
   ) { }
 
-  private listing: IProgrammeListElement[];
-  private title: string;
+  public listing: IProgrammeListElement[];
+  public title: string;
 
   ngOnInit() {
     const id: number = this._route.snapshot.params['id'];

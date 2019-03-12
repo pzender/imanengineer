@@ -19,9 +19,9 @@ export class ChannelComponent implements OnInit {
     private _httpClient: HttpClient
   ) { }
 
-  private listing: IProgrammeListElement[];
-  private id: number;
-  private title: string;
+  public listing: IProgrammeListElement[];
+  public id: number;
+  public title: string;
 
   ngOnInit() {
     this.id = this._route.snapshot.params['id'];

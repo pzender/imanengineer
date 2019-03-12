@@ -18,11 +18,11 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   private listing: IProgrammeListElement[];
-  private isLogged(): boolean {
+  public isLogged(): boolean {
     return this._queryParams.getCurrentUser() !== '';
   }
 
-  private listingEmpty(): boolean {
+  public listingEmpty(): boolean {
     return this.listing.length === 0;
   }
 
