@@ -70,6 +70,7 @@ namespace TV_App.Controllers
                 .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
 
             IEnumerable<ProgrammeResponse> preparedResponse = list.Select(prog => new ProgrammeResponse(prog));
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", preparedResponse.Count().ToString());
             return preparedResponse;
         }
 
@@ -111,12 +112,7 @@ namespace TV_App.Controllers
                 list = list
                     .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
             }
-
-            //if (date != 0)
-            //{
-            //    DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-            //    list = list.Where(prog => prog.EmittedOn(desiredDate));
-            //}
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
 
             return list
                 .Select(prog => new ProgrammeResponse(prog));

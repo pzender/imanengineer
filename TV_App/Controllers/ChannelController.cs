@@ -69,7 +69,7 @@ namespace Controllers
                 DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
                 list = list.Where(em => em.StartToDate().Date == desiredDate);
             }
-
+            Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(em => new ProgrammeResponse(em.Programme));
 
         }

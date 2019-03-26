@@ -86,7 +86,7 @@ namespace TV_App.Controllers
             //    list = list.Where(prog => prog.EmittedOn(desiredDate));
             //}
 
-
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list
                 .Where(prog => prog.FeatureExample.Any(fe => fe.FeatureId == id))
                 .Select(prog => new ProgrammeResponse(prog));

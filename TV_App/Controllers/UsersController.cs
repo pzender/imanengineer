@@ -68,6 +68,7 @@ namespace TV_App.Controllers
                 .Single(u => u.Login == name);
 
             var list = user.GetRated();
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(reco => new ProgrammeResponse(reco));
         }
 
@@ -123,7 +124,7 @@ namespace TV_App.Controllers
             var list = user.GetRecommendations(programmes);
 
             logger.LogInformation($"recommendations: down to {programmes.Count()}");
-
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(reco => new ProgrammeResponse(reco));
         }
 
