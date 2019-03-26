@@ -1,0 +1,11 @@
+<div class="p-0" *ngIf="this.listing.length > 0; else empty">
+  <app-listing-element 
+    *ngFor="let p of this.listing" 
+    [programme]="p"
+    (buttonClicked)="onButtonClicked($event)">
+  </app-listing-element>
+</div>
+
+<ng-template #empty>
+  Nic tu nie ma ¯\_(ツ)_/¯
+</ng-template>

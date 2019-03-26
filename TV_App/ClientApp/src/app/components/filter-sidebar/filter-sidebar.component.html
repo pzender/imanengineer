@@ -1,0 +1,55 @@
+<form>
+  <div class="form-group">
+    <h5>Kiedy?</h5>
+    <label for="day">Data:  </label>
+    <div id="day" class="p-1 border rounded w-100">
+      <a (click)="prevDay()" class="btn btn-sm btn-secondary">&lt;</a> 
+      <span class="mx-2 w-75">DUPA</span>
+      <a (click)="nextDay()" class="btn btn-sm btn-secondary">&gt;</a></div>
+    <label for="time_from">Od godziny: </label>
+    <input type="time" id="time_from" class="form-control" value = "00:00" (keyup)="onFromInput($event)" >
+    <label for="time_from">Do godziny: </label>
+    <input type="time" id="time_to" class="form-control" value = "00:00" (keyup)="onToInput($event)" >
+  </div>
+  <hr>
+  <!-- <div class="form-group">
+    <h5>Gdzie?</h5>
+    <div class="form-check">
+      <input type="radio" name="channel_offer" value="tracked_only" class="form-check-input" id="channel_offer_1">
+      <label class="form-check-label" for="channel_offer_1">Tylko obserwowane kanały</label> 
+    </div>
+    <div class="form-check">
+      <input type="radio" name="channel_offer" value="my_provider" class="form-check-input" id="channel_offer_2"> 
+      <label class="form-check-label" for="channel_offer_2">Kanały mojego dostawcy</label>
+    </div>
+    <div class="form-check">
+      <input type="radio" name="channel_offer" value="all_channels" class="form-check-input" id="channel_offer_3"> 
+      <label class="form-check-label" for="channel_offer_3">Wszystkie kanały</label>
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <h5>Co?</h5>
+    <div class="form-check">
+      <input type="checkbox" name="programme_types" value="movies" class="form-check-input" id="programme_types_1">
+      <label class="form-check-label" for="programme_types_1">Filmy</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" name="programme_types" value="movies" class="form-check-input" id="programme_types_2">
+      <label class="form-check-label" for="programme_types_2">Seriale</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" name="programme_types" value="movies" class="form-check-input" id="programme_types_3">
+      <label class="form-check-label" for="programme_types_3">Sport</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" name="programme_types" value="movies" class="form-check-input" id="programme_types_4">
+      <label class="form-check-label" for="programme_types_4">Dokumentalne</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" name="programme_types" value="movies" class="form-check-input" id="programme_types_5">
+      <label class="form-check-label" for="programme_types_5">Animowane</label>
+    </div>
+                    
+  </div> -->
+</form>
