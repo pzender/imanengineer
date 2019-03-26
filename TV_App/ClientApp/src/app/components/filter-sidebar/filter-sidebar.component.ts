@@ -9,26 +9,35 @@ import { ISO8601_DATE_REGEX } from '@angular/common/src/i18n/format_date';
 })
 export class FilterSidebarComponent implements OnInit {
 
-  @Output() filtersChanged = new EventEmitter<any>();
+  @Output() filtersChanged = new EventEmitter<{from: string, to: string, date: number}>();
 
   constructor() { }
-  timeFrom: Time = { hours: 0, minutes: 0 };
-  timeTo: Time  = { hours: 0, minutes: 0 };
-  currentDate: Date = new Date(Date.now());
+  timeFrom: string;
+  timeTo: string;
+  currentDate: number = Date.now();
   ngOnInit() {  }
   onFromInput($event) {
-    this.timeFrom = this.parseTime($event.target.value);
+    this.timeFrom = ($event.target.value);
+    console.log($event.target.value)
+    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
   }
 
   onToInput($event) {
-    this.timeTo = this.parseTime($event.target.value);
+    this.timeTo = ($event.target.value);
+    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+
   }
 
   public nextDay() {
+    this.currentDate += (1000 * 60 * 60 * 24);
+    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate});
 
   }
 
   public prevDay() {
+    this.currentDate -= (1000 * 60 * 60 * 24);
+    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+
   }
 
   private parseTime(input: string): Time {

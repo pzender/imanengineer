@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/utilities/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,16 +14,18 @@ export class NavbarComponent implements OnInit {
   public searchterms = '';
 
   constructor(private _router: Router,
-              private _http: HttpClient) { }
+              private _http: HttpClient,
+              private service: UserService) { }
 
   ngOnInit() {
   }
 
   public getUser(): string {
-    return ""
+    return this.service.getUser();
   }
 
   public setUser(value: string) {
+    this.service.setUser(value);
   }
 
   public userEmpty(): boolean {
@@ -30,15 +33,11 @@ export class NavbarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.setUser('');
+    this.setUser(undefined);
   }
 
   public login(): void {
-    this._http
-      .post('/api/Users/', this.new_name)
-      .subscribe(result =>
-        this.setUser(result['login'])
-      );
+    this.setUser(this.new_name)
   }
 
   public search() {

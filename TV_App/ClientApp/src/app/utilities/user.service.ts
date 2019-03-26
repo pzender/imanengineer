@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +13,14 @@ export class UserService {
   }
 
   setUser(value: string): void{
-    localStorage.setItem(UserService.USER, value);
+    this._http.post(`${environment.api}Users`, value)
+      .subscribe(result => {
+        localStorage.setItem(UserService.USER, result['login']);
+      });
   }
 
   isAnonymous(): boolean{
-    return localStorage.getItem(UserService.USER) != undefined;
+    return localStorage.getItem(UserService.USER) === "";
   }
-  constructor() { }
+  constructor(private _http: HttpClient) { }
 }

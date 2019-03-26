@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChannelListingService } from './channel-listing.service';
 import { ActivatedRoute } from '@angular/router';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-channel-listing',
@@ -15,15 +16,16 @@ export class ChannelListingComponent implements OnInit {
   error: {status: number, message: string};
   title: string
   id: number;
-  
+  filters: {from: Time, to: Time, date: number};
 
-  filters($event){
-    console.log($event);
+  updateFilters($event){
+    this.filters = $event;
+    this.fetch();
   }
 
   fetch(){
     this.error = {status: undefined, message:'Szukamy!'};
-    this.service.fetch(this.id).subscribe(
+    this.service.fetch(this.id, this.filters).subscribe(
       response => { 
         this.listing = response; 
         this.error = {status: 200, message: 'OK'};
