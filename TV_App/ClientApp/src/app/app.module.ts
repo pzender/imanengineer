@@ -13,6 +13,10 @@ import { ProgrammedetailsComponent } from './components/programmedetails/program
 import { FormsModule } from '@angular/forms';
 import { ChannelListingComponent } from './containers/channel-listing/channel-listing.component';
 import { GuideComponent } from './containers/guide/guide.component';
+import { RecommendationsComponent } from './containers/recommendations/recommendations.component';
+import { ProfileComponent } from './containers/profile/profile.component';
+import { DetailsComponent } from './containers/details/details.component';
+import { FeatureComponent } from './containers/feature/feature.component';
 
 
 @NgModule({
@@ -24,7 +28,11 @@ import { GuideComponent } from './containers/guide/guide.component';
     ListingElementComponent,
     ProgrammedetailsComponent,
     ChannelListingComponent,
-    GuideComponent
+    GuideComponent,
+    RecommendationsComponent,
+    ProfileComponent,
+    DetailsComponent,
+    FeatureComponent
   ],
   imports: [
     BrowserModule,
