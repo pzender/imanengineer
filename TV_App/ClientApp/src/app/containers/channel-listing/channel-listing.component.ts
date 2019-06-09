@@ -13,7 +13,7 @@ export class ChannelListingComponent implements OnInit {
   constructor(private service: ChannelListingService, private route: ActivatedRoute) { }
 
   listing: any[];
-  error: {status: number, message: string};
+  requestStatus: string;
   title: string
   id: number;
   filters: {from: Time, to: Time, date: number};
@@ -24,15 +24,14 @@ export class ChannelListingComponent implements OnInit {
   }
 
   fetch(){
-    this.error = {status: undefined, message:'Szukamy!'};
+    this.requestStatus = "waiting";
     this.service.fetch(this.id, this.filters).subscribe(
       response => { 
         this.listing = response; 
-        this.error = {status: 200, message: 'OK'};
+        this.requestStatus = response.length > 0 ? "success" : "empty";
       },
       error => {
-        //this.listing = [];
-        this.error = {status: error.status, message: error.statusText};
+        this.requestStatus = "failure";
       }
     )
     this.service.info(this.id).subscribe(

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../../interfaces/ProgrammeListElement';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/utilities/user.service';
 
 @Component({
   selector: 'app-programmedetails',
@@ -9,13 +11,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProgrammedetailsComponent implements OnInit {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, public user: UserService) { }
   @Input('prog_id') prog_id: number;
   @Output() buttonClicked = new EventEmitter<string>();
   public programme: IProgrammeListElement = null;
 
   ngOnInit() {
-    this._http.get<IProgrammeListElement>(`/api/Programmes/${this.prog_id}`)
+    this._http.get<IProgrammeListElement>(`${environment.api}Programmes/${this.prog_id}`)
       .subscribe(result => this.programme = result);
   }
   feat_types(): string[] {
@@ -40,7 +42,7 @@ export class ProgrammedetailsComponent implements OnInit {
 
   rateButton(value: number) {
     this._http.post(
-      `/api/Users/tester/Ratings`,
+      `${environment.api}Users/${this.user.getUser()}/Ratings`,
       {programme_id: this.programme.id, rating_value: value},
       {responseType: 'json'}
     ).subscribe(result => this.buttonClicked.emit(result.toString()));

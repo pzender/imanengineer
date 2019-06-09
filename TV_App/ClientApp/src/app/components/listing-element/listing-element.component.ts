@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../../interfaces/ProgrammeListElement';
 import { HttpClient } from '@angular/common/http';
 import { TranslationsService } from '../../utilities/translations.service';
+import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/utilities/user.service';
 
 
 @Component({
@@ -12,8 +14,7 @@ import { TranslationsService } from '../../utilities/translations.service';
 export class ListingElementComponent implements OnInit {
   @Output() buttonClicked = new EventEmitter<string>();
   @Input('programme') programme: IProgrammeListElement;
-  constructor(private _http: HttpClient,
-              private _translations: TranslationsService) { }
+  constructor(private _http: HttpClient, public user: UserService) { }
 
   feat_types(): string[] {
     return this.programme.features
@@ -37,7 +38,7 @@ export class ListingElementComponent implements OnInit {
 
   rateButton(value: number) {
     this._http.post(
-      `/api/Users/tester/Ratings`,
+      `${environment.api}Users/${this.user.getUser()}/Ratings`,
       {programme_id: this.programme.id, rating_value: value},
       {responseType: 'json'}
     )

@@ -6,12 +6,17 @@
   </div>
   <div class="col-10">
     <h1>{{title}}</h1>
-    <app-listing *ngIf="listing; else messageSpot"
+    <app-listing *ngIf="this.requestStatus === 'success'; else messageSpot"
       [listing]="listing"
     ></app-listing>
   </div>
 </div>
 
 <ng-template #messageSpot>
-  <img [src]="'https://http.cat/'+error.status" [alt]="error.message">
+  <div [ngSwitch]="this.requestStatus">
+    <div *ngSwitchCase="'waiting'">Szukamy ┬─┬ノ( º _ ºノ)</div>
+    <div *ngSwitchCase="'failure'">Coś nie poszło (ノಠ益ಠ)ノ彡┻━┻</div>
+    <div *ngSwitchCase="'empty'">Nic tu nie ma ¯\_(ツ)_/¯</div>
+    <div *ngSwitchDefault>┬┴┬┴┤(･_├┬┴┬┴</div>
+  </div>
 </ng-template>
