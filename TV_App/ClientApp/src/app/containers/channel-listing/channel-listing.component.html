@@ -14,9 +14,9 @@
 
 <ng-template #messageSpot>
   <div [ngSwitch]="this.requestStatus">
-    <div *ngSwitchCase="'waiting'">Szukamy ┬─┬ノ( º _ ºノ)</div>
-    <div *ngSwitchCase="'failure'">Coś nie poszło (ノಠ益ಠ)ノ彡┻━┻</div>
-    <div *ngSwitchCase="'empty'">Nic tu nie ma ¯\_(ツ)_/¯</div>
-    <div *ngSwitchDefault>┬┴┬┴┤(･_├┬┴┬┴</div>
+    <div *ngSwitchCase="'waiting'" class="alert alert-info">Szukamy ┬─┬ノ( º _ ºノ)</div>
+    <div *ngSwitchCase="'failure'" class="alert alert-danger">Coś nie poszło (ノಠ益ಠ)ノ彡┻━┻</div>
+    <div *ngSwitchCase="'empty'" class="alert alert-info">Nic tu nie ma ¯\_(ツ)_/¯</div>
+    <div *ngSwitchDefault class="alert alert-danger">┬┴┬┴┤(･_├┬┴┬┴</div>
   </div>
 </ng-template>

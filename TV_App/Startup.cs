@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TV_App.Controllers;
 
 namespace TV_App
 {
@@ -22,7 +23,7 @@ namespace TV_App
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+            services.AddSignalR();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -42,7 +43,12 @@ namespace TV_App
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseCors(builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+            );
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -54,13 +60,15 @@ namespace TV_App
                     template: "{controller}/{action=Index}/{id?}");
             });
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/api/notificationHub");
+            });
+
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
-
+             
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");

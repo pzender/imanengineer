@@ -78,12 +78,12 @@ namespace Controllers
         public IEnumerable<EmissionResponse> GetEmissions(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
             Channel channel = DbContext.Channel
-    .Include(ch => ch.Emission)
-    .ThenInclude(em => em.Programme)
-    .ThenInclude(pr => pr.FeatureExample)
-    .ThenInclude(fe => fe.Feature)
-    .ThenInclude(ft => ft.TypeNavigation)
-    .Single(ch => ch.Id == id);
+                .Include(ch => ch.Emission)
+                .ThenInclude(em => em.Programme)
+                .ThenInclude(pr => pr.FeatureExample)
+                .ThenInclude(fe => fe.Feature)
+                .ThenInclude(ft => ft.TypeNavigation)
+                .Single(ch => ch.Id == id);
 
             IEnumerable<Emission> list =
                 channel.Emission.OrderBy(em => em.StartToDate());

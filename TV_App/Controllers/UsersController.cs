@@ -86,6 +86,8 @@ namespace TV_App.Controllers
                 .ThenInclude(f => f.TypeNavigation)
                 .Single(u => u.Login == name);
 
+            if (user.GetPositivelyRated().Count() == 0) return new List<ProgrammeResponse>();
+
             IEnumerable<Programme> programmes = DbContext.Programme
                 .Include(prog => prog.Emission)
                 .ThenInclude(em => em.Channel)
@@ -123,7 +125,7 @@ namespace TV_App.Controllers
 
             var list = user.GetRecommendations(programmes);
 
-            logger.LogInformation($"recommendations: down to {programmes.Count()}");
+            logger.LogInformation($"recommendations: down to {list.Count()}");
             Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(reco => new ProgrammeResponse(reco));
         }

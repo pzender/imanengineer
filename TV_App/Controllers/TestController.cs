@@ -10,6 +10,7 @@ using LemmaSharp;
 using TV_App.DataLayer;
 using System.Diagnostics;
 using TV_App.Responses;
+using Microsoft.AspNetCore.SignalR;
 
 namespace TV_App.Controllers
 {
@@ -18,6 +19,13 @@ namespace TV_App.Controllers
     public class TestController : ControllerBase
     {
         testContext DbContext = new testContext();
+        IHubContext<NotificationHub> hubContext;
+
+        public TestController(IHubContext<NotificationHub> hubContext)
+        {
+            this.hubContext = hubContext;
+        }
+
         // GET: api/Test
         [HttpGet]
         public IEnumerable<ProgrammeResponse> Get()
@@ -36,17 +44,25 @@ namespace TV_App.Controllers
             return emissions.Select(em => new ProgrammeResponse(em.Programme));
         }
 
+        [HttpPost]
+        public string Notify()
+        {
+            try
+            {
+                hubContext.Clients.All.SendAsync("notify", "DUPA DUPA DUPA");
+                return "success!";
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
+        }
+
         // GET: api/Test/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
-        }
-
-        // POST: api/Test
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
         }
 
         // PUT: api/Test/5

@@ -9,10 +9,12 @@ import { UserService } from './utilities/user.service';
 import { ProgrammedetailsComponent } from './components/programmedetails/programmedetails.component';
 import { DetailsComponent } from './containers/details/details.component';
 import { UserKnownGuard } from './utilities/user-known.guard';
+import { AllChannelsComponent } from './containers/all-channels/all-channels.component';
 
 const routes: Routes = [
   { path: 'Recommended', component: RecommendationsComponent, canActivate: [UserKnownGuard] }, //bez username'a powinien wyświetlić obecnego, bez obecnego przekierować do...?
   { path: 'Profile', component: ProfileComponent, canActivate: [UserKnownGuard] },             // ^dat again
+  { path: 'Channel', component: AllChannelsComponent },
   { path: 'Channel/:id', component: ChannelListingComponent }, 
   { path: 'Feature/:id', component: FeatureComponent },
   { path: 'Programme/:id', component: DetailsComponent },

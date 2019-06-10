@@ -17,6 +17,9 @@ import { RecommendationsComponent } from './containers/recommendations/recommend
 import { ProfileComponent } from './containers/profile/profile.component';
 import { DetailsComponent } from './containers/details/details.component';
 import { FeatureComponent } from './containers/feature/feature.component';
+import { AllChannelsComponent } from './containers/all-channels/all-channels.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -32,13 +35,15 @@ import { FeatureComponent } from './containers/feature/feature.component';
     RecommendationsComponent,
     ProfileComponent,
     DetailsComponent,
-    FeatureComponent
+    FeatureComponent,
+    AllChannelsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [/*{provide: LOCALE_ID, useValue: 'pl'}*/],
   bootstrap: [AppComponent]
