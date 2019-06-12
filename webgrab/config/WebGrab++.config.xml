@@ -1,0 +1,67 @@
+﻿<?xml version="1.0"?>
+<settings>
+   
+  <!-- for detailed info about the settings see http://webgrabplus.com/documentation/configuration/webgrabconfigxml -->
+   
+  <filename>/data/guide.xml</filename>
+  <mode></mode>
+  <postprocess grab="y" run="n">mdb</postprocess>
+  <user-agent>Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0</user-agent>
+  <logging>on</logging>
+  <retry time-out="5">4</retry>
+  <timespan>3</timespan>
+  <update>i</update>
+ 
+  <!--
+            Replace the next dummy channel entry with the channels you want.
+			You can look into the installed siteini.pack folder on your computer
+  
+            For the latest version,
+            see http://webgrabplus.com/epg-channels for the available sites/channels
+  -->
+  
+  <channel update="i" site="filmweb.pl" site_id="2" xmltv_id="TVP 2">TVP 2</channel>
+  <channel update="i" site="filmweb.pl" site_id="3" xmltv_id="Polsat">Polsat</channel>
+  <channel update="i" site="filmweb.pl" site_id="4" xmltv_id="TVN">TVN</channel>
+  <channel update="i" site="filmweb.pl" site_id="28" xmltv_id="TV Puls">TV Puls</channel>
+  <channel update="i" site="filmweb.pl" site_id="27" xmltv_id="TV4">TV4</channel>
+  <channel update="i" site="filmweb.pl" site_id="5" xmltv_id="TVN Siedem">TVN Siedem</channel>
+  <channel update="i" site="filmweb.pl" site_id="94" xmltv_id="Puls 2">Puls 2</channel>
+  <channel update="i" site="filmweb.pl" site_id="78" xmltv_id="TV6">TV6</channel>
+  <channel update="i" site="filmweb.pl" site_id="103" xmltv_id="TVP HD">TVP HD</channel>
+  <channel update="i" site="filmweb.pl" site_id="30" xmltv_id="TVP Info">TVP Info</channel>
+  <channel update="i" site="filmweb.pl" site_id="26" xmltv_id="TV Polonia">TV Polonia</channel>
+  <channel update="i" site="filmweb.pl" site_id="47" xmltv_id="TVP Seriale">TVP Seriale</channel>
+  <channel update="i" site="filmweb.pl" site_id="108" xmltv_id="TVP Rozrywka">TVP Rozrywka</channel>
+  <channel update="i" site="filmweb.pl" site_id="36" xmltv_id="TVP Kultura">TVP Kultura</channel>
+  <channel update="i" site="filmweb.pl" site_id="64" xmltv_id="TVP Historia">TVP Historia</channel>
+  <channel update="i" site="filmweb.pl" site_id="65" xmltv_id="TVP Sport">TVP Sport</channel>
+  <channel update="i" site="filmweb.pl" site_id="17" xmltv_id="Discovery Channel">Discovery Channel</channel>
+  <channel update="i" site="filmweb.pl" site_id="55" xmltv_id="Discovery Historia">Discovery Historia</channel>
+  <channel update="i" site="filmweb.pl" site_id="56" xmltv_id="Discovery Science">Discovery Science</channel>
+  <channel update="i" site="filmweb.pl" site_id="100" xmltv_id="Investigation Discovery">Investigation Discovery</channel>
+  <channel update="i" site="filmweb.pl" site_id="57" xmltv_id="Discovery Turbo Xtra">Discovery Turbo Xtra</channel>
+  <channel update="i" site="filmweb.pl" site_id="49" xmltv_id="Discovery LIFE">Discovery LIFE</channel>
+  <channel update="i" site="filmweb.pl" site_id="68" xmltv_id="Animal Planet HD">Animal Planet HD</channel>
+  <channel update="i" site="filmweb.pl" site_id="15" xmltv_id="National Geographic">National Geographic</channel>
+  <channel update="i" site="filmweb.pl" site_id="61" xmltv_id="Nat Geo Wild">Nat Geo Wild</channel>
+  <channel update="i" site="filmweb.pl" site_id="259" xmltv_id="Nat Geo People">Nat Geo People</channel>
+  <channel update="i" site="filmweb.pl" site_id="120" xmltv_id="Fokus TV">Fokus TV</channel>
+  <channel update="i" site="filmweb.pl" site_id="168" xmltv_id="Da Vinci Learning">Da Vinci Learning</channel>
+  <channel update="i" site="filmweb.pl" site_id="282" xmltv_id="Polsat JimJam">Polsat JimJam</channel>
+  <channel update="i" site="filmweb.pl" site_id="16" xmltv_id="Cartoon Network">Cartoon Network</channel>
+  <channel update="i" site="filmweb.pl" site_id="81" xmltv_id="Disney Channel">Disney Channel</channel>
+  <channel update="i" site="filmweb.pl" site_id="82" xmltv_id="Disney XD">Disney XD</channel>
+  <channel update="i" site="filmweb.pl" site_id="113" xmltv_id="Disney Junior">Disney Junior</channel>
+  <channel update="i" site="filmweb.pl" site_id="67" xmltv_id="Boomerang">Boomerang</channel>
+  <channel update="i" site="filmweb.pl" site_id="62" xmltv_id="Nickelodeon">Nickelodeon</channel>
+  <channel update="i" site="filmweb.pl" site_id="93" xmltv_id="Nickelodeon HD">Nickelodeon HD</channel>
+  <channel update="i" site="filmweb.pl" site_id="92" xmltv_id="Nick Jr.">Nick Jr.</channel>
+  <channel update="i" site="filmweb.pl" site_id="106" xmltv_id="MiniMini+">MiniMini+</channel>
+  <channel update="i" site="filmweb.pl" site_id="190" xmltv_id="Eska TV">Eska TV</channel>
+  <channel update="i" site="filmweb.pl" site_id="131" xmltv_id="4fun.tv">4fun.tv</channel>
+  <channel update="i" site="filmweb.pl" site_id="130" xmltv_id="4fun Hits">4fun Hits</channel>
+
+
+
+</settings>

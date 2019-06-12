@@ -1,0 +1,43 @@
+version: "2"
+services:
+  webgrabplus:
+    image: linuxserver/webgrabplus
+    container_name: webgrabplus
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./webgrab/config:/config
+      - ./TV_App/.data:/data
+    restart: unless-stopped
+  server:
+    image: localhost:5000/server
+    build: ./server
+    container_name: server
+    ports:
+      - 5000:5000
+    environment:
+      - TZ=Europe/Warsaw 
+  client:
+    image: localhost:5000/client
+    build: ./client
+    container_name: web-client
+    ports:
+      - 80:80
+    environment:
+      - TZ=Europe/Warsaw 
+    restart: unless-stopped
+  database:
+    image: mysql
+    container_name: db
+    environment:
+      - MYSQL_DATABASE=tv_db
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_USER=tv_app
+      - MYSQL_PASSWORD=tv_app
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.database:/var/lib/mysql
+    restart: unless-stopped

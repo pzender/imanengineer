@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TV_App", "TV_App\TV_App.csproj", "{BD5F67FD-3F4B-48AB-914F-B9EA3C839169}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TV_App", "server\TV_App.csproj", "{15476AC5-D7EA-4313-8E80-9C7392A64F15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BD5F67FD-3F4B-48AB-914F-B9EA3C839169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD5F67FD-3F4B-48AB-914F-B9EA3C839169}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD5F67FD-3F4B-48AB-914F-B9EA3C839169}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD5F67FD-3F4B-48AB-914F-B9EA3C839169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15476AC5-D7EA-4313-8E80-9C7392A64F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15476AC5-D7EA-4313-8E80-9C7392A64F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15476AC5-D7EA-4313-8E80-9C7392A64F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15476AC5-D7EA-4313-8E80-9C7392A64F15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
