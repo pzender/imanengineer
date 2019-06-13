@@ -12,7 +12,7 @@ namespace TV_App.EFModels
 
         public long Id { get; set; }
         public string Source { get; set; }
-        public string Posted { get; set; }
+        public DateTime Posted { get; set; }
 
         public virtual ICollection<Description> Description { get; set; }
     }

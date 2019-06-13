@@ -45,7 +45,7 @@ namespace TV_App.Controllers
                 .ThenInclude(fe => fe.Feature)
                 .ThenInclude(f => f.TypeNavigation);
 
-            list = list.OrderBy(prog => prog.Emission.First().StartToDate());
+            list = list.OrderBy(prog => prog.Emission.First().Start);
 
             if (username != null)
             {

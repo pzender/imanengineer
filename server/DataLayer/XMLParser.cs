@@ -32,7 +32,7 @@ namespace TV_App.DataLayer
             GuideUpdate new_gu = new GuideUpdate()
             {
                 Id = new_id,
-                Posted = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                Posted = DateTime.Now,
                 Source = channels_in_xml.First().Element("url").Value
             };
             DbContext.GuideUpdate.Add(new_gu);
@@ -103,8 +103,8 @@ namespace TV_App.DataLayer
                 }
 
                 Emission new_em = new_prog.Emission
-                    .SingleOrDefault(e => DateTime.ParseExact(e.Start, "yyyy-MM-dd HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("start").Value)
-                                       && DateTime.ParseExact(e.Stop, "yyyy-MM-dd HH:mm:ss", null) == ParseDateTimeXml(programme.Attribute("stop").Value));
+                    .SingleOrDefault(e => e.Start == ParseDateTimeXml(programme.Attribute("start").Value)
+                                       && e.Stop == ParseDateTimeXml(programme.Attribute("stop").Value));
                 if(new_em == null)
                 {
                     DateTime start = ParseDateTimeXml(programme.Attribute("start").Value);
@@ -115,8 +115,8 @@ namespace TV_App.DataLayer
                         Id = em_id,
                         Channel = channel,
                         ChannelId = channel.Id,
-                        Start = $"{start:yyyy-MM-dd HH:mm:ss}",
-                        Stop = $"{stop:yyyy-MM-dd HH:mm:ss}",
+                        Start = start,
+                        Stop = stop,
                         Programme = new_prog,
                         ProgrammeId = new_prog.Id
                     };

@@ -12,7 +12,7 @@ services:
       - ./TV_App/.data:/data
     restart: unless-stopped
   server:
-    image: localhost:5000/server
+    image: pzender/eng-server
     build: ./server
     container_name: server
     ports:
@@ -20,7 +20,7 @@ services:
     environment:
       - TZ=Europe/Warsaw 
   client:
-    image: localhost:5000/client
+    image: pzender/eng-client
     build: ./client
     container_name: web-client
     ports:

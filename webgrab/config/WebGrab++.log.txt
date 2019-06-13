@@ -1,0 +1,126 @@
+﻿[        ] 
+[        ]              WebGrab+Plus/w MDB & REX Postprocess -- version V2.1.9             
+[        ] 
+[        ]                                 Jan van Straaten                                
+[        ]                              Francis De Paemeleere                              
+[        ] 
+[        ]             thanks to Paul Weterings and all the contributing users             
+[        ] --------------------------------------------------------------------------------
+[        ] 
+[        ] Job started at 12/06/2019 20:00:01
+[  Debug ] 
+[  Debug ] Running  on: Unix 4.9.125.0
+[  Debug ] Environment: 4.0.30319.42000
+[  Debug ] Mono version: 5.20.1.19 (tarball Thu Apr 11 09:02:17 UTC 2019)
+[  Debug ] 
+[  Debug ] Loading timezone data
+[  Debug ] Embedded timezones source: timezone.timezonesdata.txt
+[  Debug ] Reading config file: /config/WebGrab++.config.xml
+[  Debug ] 
+[  Info  ] found: /config/siteini.pack/Poland/filmweb.pl.ini -- Revision 00
+[  Debug ] xmltv input file - /data/guide.xml - found
+[  Debug ] 0 superfluous shows removed
+[  Info  ] Found existing channel (xmltv_id=TVP 2) in the config file
+[  Info  ] Found existing channel (xmltv_id=Polsat) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN) in the config file
+[  Info  ] Found existing channel (xmltv_id=TV Puls) in the config file
+[  Info  ] Found existing channel (xmltv_id=TV4) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN Siedem) in the config file
+[  Info  ] Found existing channel (xmltv_id=Puls 2) in the config file
+[  Info  ] Found existing channel (xmltv_id=TV6) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Info) in the config file
+[  Info  ] Found existing channel (xmltv_id=TV Polonia) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Seriale) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Rozrywka) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Kultura) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Historia) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Sport) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery Channel) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery Historia) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery Science) in the config file
+[  Info  ] Found existing channel (xmltv_id=Investigation Discovery) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery Turbo Xtra) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery LIFE) in the config file
+[  Info  ] Found existing channel (xmltv_id=Animal Planet HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=National Geographic) in the config file
+[  Info  ] Found existing channel (xmltv_id=Nat Geo Wild) in the config file
+[  Info  ] Found existing channel (xmltv_id=Nat Geo People) in the config file
+[  Info  ] Found existing channel (xmltv_id=Fokus TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=Da Vinci Learning) in the config file
+[  Info  ] Found existing channel (xmltv_id=Polsat JimJam) in the config file
+[  Info  ] Found existing channel (xmltv_id=Cartoon Network) in the config file
+[  Info  ] Found existing channel (xmltv_id=Disney Channel) in the config file
+[  Info  ] Found existing channel (xmltv_id=Disney XD) in the config file
+[  Info  ] Found existing channel (xmltv_id=Disney Junior) in the config file
+[  Info  ] Found existing channel (xmltv_id=Boomerang) in the config file
+[  Info  ] Found existing channel (xmltv_id=Nickelodeon) in the config file
+[  Info  ] Found existing channel (xmltv_id=Nickelodeon HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=Nick Jr.) in the config file
+[  Info  ] Found existing channel (xmltv_id=MiniMini+) in the config file
+[  Info  ] Found existing channel (xmltv_id=Eska TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=4fun.tv) in the config file
+[  Info  ] Found existing channel (xmltv_id=4fun Hits) in the config file
+[  Info  ] 
+[  Info  ] 
+[  Info  ]       i=index  .=same  c=change  g=gab  r=replace  n=new
+[  Info  ] 
+[  Info  ] 
+[  Info  ] Group (0) :
+[  Info  ] update requested for - 41 - out of - 41 - channels for 4 day(s)
+[  Debug ] 
+[  Info  ] (   1/41  ) FILMWEB.PL -- chan. (xmltv_id=TVP 2) -- mode Incremental
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 02:00:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 14/06/2019 03:00:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 15/06/2019 02:25:00
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   2/41  ) FILMWEB.PL -- chan. (xmltv_id=Polsat) -- mode Incremental
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 00:50:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 20:10:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 15/06/2019 00:15:00
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   3/41  ) FILMWEB.PL -- chan. (xmltv_id=TVN) -- mode Incremental
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 02:55:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 14/06/2019 02:10:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 15/06/2019 02:55:00
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   4/41  ) FILMWEB.PL -- chan. (xmltv_id=TV Puls) -- mode Incremental
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 04:10:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 14/06/2019 04:10:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 15/06/2019 05:00:00
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   5/41  ) FILMWEB.PL -- chan. (xmltv_id=TV4) -- mode Incremental
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 04:40:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 14/06/2019 00:00:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 15/06/2019 04:40:00
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   6/41  ) FILMWEB.PL -- chan. (xmltv_id=TVN Siedem) -- mode Incremental
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 02:25:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 13/06/2019 23:40:00
+[  Debug ]    skipped : no value for next starttime
+[  Debug ]    skipped show without a title at 15/06/2019 02:55:00
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   7/41  ) FILMWEB.PL -- chan. (xmltv_id=Puls 2) -- mode Incremental

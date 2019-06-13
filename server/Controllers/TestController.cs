@@ -40,7 +40,7 @@ namespace TV_App.Controllers
                 .Single(ch => ch.Id == 1);
 
             IEnumerable<Emission> emissions = 
-                channel.Emission.OrderBy(em => em.StartToDate());
+                channel.Emission.OrderBy(em => em.Start);
 
             return emissions.Select(em => new ProgrammeResponse(em.Programme));
         }

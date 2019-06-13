@@ -17,7 +17,7 @@ namespace TV_App.EFModels
 
         public bool EmittedOn(DateTime date)
         {
-            return Emission.Any(em => em.StartToDate().ToShortDateString() == date.ToShortDateString());
+            return Emission.Any(em => em.Start.ToShortDateString() == date.ToShortDateString());
         }
 
         public IEnumerable<string> GetFeatureNames()

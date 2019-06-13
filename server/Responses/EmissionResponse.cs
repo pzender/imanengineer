@@ -13,8 +13,8 @@ namespace TV_App.Responses
 
         public EmissionResponse(Emission e)
         {
-            Start = DateTime.ParseExact(e.Start, "dd.MM.yyyy HH:mm:ss", null);
-            Stop = DateTime.ParseExact(e.Stop, "dd.MM.yyyy HH:mm:ss", null);
+            Start = e.Start;
+            Stop = e.Stop;
             Channel = new ChannelResponse(e.Channel);
             Title = e.Programme?.Title;
         }

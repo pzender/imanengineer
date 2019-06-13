@@ -45,7 +45,7 @@ namespace Controllers
                 .Single(ch => ch.Id == id);
 
             IEnumerable<Emission> list =
-                channel.Emission.OrderBy(em => em.StartToDate());
+                channel.Emission.OrderBy(em => em.Start);
 
             if (from != to)
             {
@@ -67,7 +67,7 @@ namespace Controllers
             if(date != 0)
             {
                 DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-                list = list.Where(em => em.StartToDate().Date == desiredDate);
+                list = list.Where(em => em.Start.Date == desiredDate);
             }
             Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(em => new ProgrammeResponse(em.Programme));
@@ -86,7 +86,7 @@ namespace Controllers
                 .Single(ch => ch.Id == id);
 
             IEnumerable<Emission> list =
-                channel.Emission.OrderBy(em => em.StartToDate());
+                channel.Emission.OrderBy(em => em.Start);
 
             if (from != to)
             {
@@ -108,7 +108,7 @@ namespace Controllers
             if (date != 0)
             {
                 DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-                list = list.Where(em => em.StartToDate().Date == desiredDate);
+                list = list.Where(em => em.Start.Date == desiredDate);
             }
 
             return list.Select(em => new EmissionResponse(em));
