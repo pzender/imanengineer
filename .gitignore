@@ -8,6 +8,6 @@ bin
 obj
 packages
 *.sqlite
-
+.vs
 
 !/.gitignore

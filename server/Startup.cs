@@ -22,8 +22,9 @@ namespace TV_App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSignalR();
+            services.AddRouting();
+            services.AddControllers();
+            services.AddSignalR().AddJsonProtocol();
 
             services.AddSingleton<IScheduledTask, SendNotificationTask>();
             services.AddScheduler((sender, args) =>
@@ -45,24 +46,18 @@ namespace TV_App
                 app.UseHsts();
             }
             app.UseCors(builder => builder
-                .AllowAnyOrigin()
+                .WithOrigins("web-client")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
             );
 
             app.UseStaticFiles();
-
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<NotificationHub>("/api/notificationHub");
+                endpoints.MapHub<NotificationHub>("/api/notificationHub");
+                endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
         }
     }
