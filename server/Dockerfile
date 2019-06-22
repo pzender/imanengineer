@@ -1,15 +1,12 @@
+# etap 1 - kompilacja
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-bionic AS build-env
 WORKDIR /app
-
-# Copy csproj and restore as distinct layers
 COPY *.csproj ./
 RUN dotnet restore
-
-# Copy everything else and build
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-# Build runtime image
+# etap 2 - obraz z gotową aplikacją
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-bionic
 WORKDIR /app
 COPY --from=build-env /app/out .

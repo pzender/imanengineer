@@ -1,4 +1,4 @@
-### STAGE 1: Build ###
+# etap 1 - kompilacja
 FROM node:10-alpine as builder
 COPY package.json package-lock.json ./
 RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
@@ -6,7 +6,7 @@ WORKDIR /ng-app
 COPY . .
 RUN npm run ng build -- --prod --output-path=dist
 
-### STAGE 2: Setup ###
+# etap 2 - obraz z gotową aplikacją
 FROM nginx:1.14.1-alpine
 COPY nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
