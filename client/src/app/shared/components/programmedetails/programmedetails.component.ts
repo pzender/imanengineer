@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IProgrammeListElement } from '../../interfaces/ProgrammeListElement';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/utilities/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-programmedetails',

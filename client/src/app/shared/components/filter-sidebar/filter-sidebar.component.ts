@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Time } from '@angular/common';
-import { ISO8601_DATE_REGEX } from '@angular/common/src/i18n/format_date';
 
 @Component({
   selector: 'app-filter-sidebar',

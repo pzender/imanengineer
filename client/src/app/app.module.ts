@@ -3,13 +3,13 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { FilterSidebarComponent } from './components/filter-sidebar/filter-sidebar.component';
-import { ListingComponent } from './components/listing/listing.component';
-import { ListingElementComponent } from './components/listing-element/listing-element.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FilterSidebarComponent } from './shared/components/filter-sidebar/filter-sidebar.component';
+import { ListingComponent } from './shared/components/listing/listing.component';
+import { ListingElementComponent } from './shared/components/listing-element/listing-element.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ProgrammedetailsComponent } from './components/programmedetails/programmedetails.component';
+import { ProgrammedetailsComponent } from './shared/components/programmedetails/programmedetails.component';
 import { FormsModule } from '@angular/forms';
 import { ChannelListingComponent } from './containers/channel-listing/channel-listing.component';
 import { GuideComponent } from './containers/guide/guide.component';

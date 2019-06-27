@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { ActivatedRoute } from '@angular/router';
 import { Time } from '@angular/common';
-import { UserService } from 'src/app/utilities/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-profile',

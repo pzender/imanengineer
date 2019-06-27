@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService } from './utilities/notifications.service';
+import { NotificationsService } from './shared/services/notifications.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

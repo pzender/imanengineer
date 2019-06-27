@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IProgrammeList } from '../../interfaces/ProgrammeListModel';
 import { IProgrammeListElement } from '../../interfaces/ProgrammeListElement';
 import { HttpClient } from '@angular/common/http';
 
