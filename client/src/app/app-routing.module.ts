@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GuideComponent } from './containers/guide/guide.component';
 import { ChannelListingComponent } from './containers/channel-listing/channel-listing.component';
 import { RecommendationsComponent } from './containers/recommendations/recommendations.component';
 import { ProfileComponent } from './containers/profile/profile.component';
 import { FeatureComponent } from './containers/feature/feature.component';
-import { UserService } from './utilities/user.service';
-import { ProgrammedetailsComponent } from './components/programmedetails/programmedetails.component';
 import { DetailsComponent } from './containers/details/details.component';
-import { UserKnownGuard } from './utilities/user-known.guard';
+import { UserKnownGuard } from './shared/services/user-known.guard';
 import { AllChannelsComponent } from './containers/all-channels/all-channels.component';
 
 const routes: Routes = [

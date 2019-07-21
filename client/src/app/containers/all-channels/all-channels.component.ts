@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChannelLink } from 'src/app/interfaces/Channel';
+import { ChannelLink } from 'src/app/shared/interfaces/Channel';
 import { AllChannelsService } from './all-channels.service';
 
 @Component({

@@ -9,7 +9,7 @@
   <user-agent>Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0</user-agent>
   <logging>on</logging>
   <retry time-out="5">4</retry>
-  <timespan>3</timespan>
+  <timespan>4</timespan>
   <update>i</update>
  
   <!--
@@ -20,47 +20,100 @@
             see http://webgrabplus.com/epg-channels for the available sites/channels
   -->
   
-  <channel update="i" site="filmweb.pl" site_id="2" xmltv_id="TVP 2">TVP 2</channel>
-  <channel update="i" site="filmweb.pl" site_id="3" xmltv_id="Polsat">Polsat</channel>
-  <channel update="i" site="filmweb.pl" site_id="4" xmltv_id="TVN">TVN</channel>
-  <channel update="i" site="filmweb.pl" site_id="28" xmltv_id="TV Puls">TV Puls</channel>
-  <channel update="i" site="filmweb.pl" site_id="27" xmltv_id="TV4">TV4</channel>
-  <channel update="i" site="filmweb.pl" site_id="5" xmltv_id="TVN Siedem">TVN Siedem</channel>
-  <channel update="i" site="filmweb.pl" site_id="94" xmltv_id="Puls 2">Puls 2</channel>
-  <channel update="i" site="filmweb.pl" site_id="78" xmltv_id="TV6">TV6</channel>
-  <channel update="i" site="filmweb.pl" site_id="103" xmltv_id="TVP HD">TVP HD</channel>
-  <channel update="i" site="filmweb.pl" site_id="30" xmltv_id="TVP Info">TVP Info</channel>
-  <channel update="i" site="filmweb.pl" site_id="26" xmltv_id="TV Polonia">TV Polonia</channel>
-  <channel update="i" site="filmweb.pl" site_id="47" xmltv_id="TVP Seriale">TVP Seriale</channel>
-  <channel update="i" site="filmweb.pl" site_id="108" xmltv_id="TVP Rozrywka">TVP Rozrywka</channel>
-  <channel update="i" site="filmweb.pl" site_id="36" xmltv_id="TVP Kultura">TVP Kultura</channel>
-  <channel update="i" site="filmweb.pl" site_id="64" xmltv_id="TVP Historia">TVP Historia</channel>
-  <channel update="i" site="filmweb.pl" site_id="65" xmltv_id="TVP Sport">TVP Sport</channel>
-  <channel update="i" site="filmweb.pl" site_id="17" xmltv_id="Discovery Channel">Discovery Channel</channel>
-  <channel update="i" site="filmweb.pl" site_id="55" xmltv_id="Discovery Historia">Discovery Historia</channel>
-  <channel update="i" site="filmweb.pl" site_id="56" xmltv_id="Discovery Science">Discovery Science</channel>
-  <channel update="i" site="filmweb.pl" site_id="100" xmltv_id="Investigation Discovery">Investigation Discovery</channel>
-  <channel update="i" site="filmweb.pl" site_id="57" xmltv_id="Discovery Turbo Xtra">Discovery Turbo Xtra</channel>
-  <channel update="i" site="filmweb.pl" site_id="49" xmltv_id="Discovery LIFE">Discovery LIFE</channel>
-  <channel update="i" site="filmweb.pl" site_id="68" xmltv_id="Animal Planet HD">Animal Planet HD</channel>
-  <channel update="i" site="filmweb.pl" site_id="15" xmltv_id="National Geographic">National Geographic</channel>
-  <channel update="i" site="filmweb.pl" site_id="61" xmltv_id="Nat Geo Wild">Nat Geo Wild</channel>
-  <channel update="i" site="filmweb.pl" site_id="259" xmltv_id="Nat Geo People">Nat Geo People</channel>
-  <channel update="i" site="filmweb.pl" site_id="120" xmltv_id="Fokus TV">Fokus TV</channel>
-  <channel update="i" site="filmweb.pl" site_id="168" xmltv_id="Da Vinci Learning">Da Vinci Learning</channel>
-  <channel update="i" site="filmweb.pl" site_id="282" xmltv_id="Polsat JimJam">Polsat JimJam</channel>
-  <channel update="i" site="filmweb.pl" site_id="16" xmltv_id="Cartoon Network">Cartoon Network</channel>
-  <channel update="i" site="filmweb.pl" site_id="81" xmltv_id="Disney Channel">Disney Channel</channel>
-  <channel update="i" site="filmweb.pl" site_id="82" xmltv_id="Disney XD">Disney XD</channel>
-  <channel update="i" site="filmweb.pl" site_id="113" xmltv_id="Disney Junior">Disney Junior</channel>
-  <channel update="i" site="filmweb.pl" site_id="67" xmltv_id="Boomerang">Boomerang</channel>
-  <channel update="i" site="filmweb.pl" site_id="62" xmltv_id="Nickelodeon">Nickelodeon</channel>
-  <channel update="i" site="filmweb.pl" site_id="93" xmltv_id="Nickelodeon HD">Nickelodeon HD</channel>
-  <channel update="i" site="filmweb.pl" site_id="92" xmltv_id="Nick Jr.">Nick Jr.</channel>
-  <channel update="i" site="filmweb.pl" site_id="106" xmltv_id="MiniMini+">MiniMini+</channel>
-  <channel update="i" site="filmweb.pl" site_id="190" xmltv_id="Eska TV">Eska TV</channel>
-  <channel update="i" site="filmweb.pl" site_id="131" xmltv_id="4fun.tv">4fun.tv</channel>
-  <channel update="i" site="filmweb.pl" site_id="130" xmltv_id="4fun Hits">4fun Hits</channel>
+    <channel update="i" site="tv.wp.pl" site_id="1" xmltv_id="TVP 1">TVP 1</channel>
+    <channel update="i" site="tv.wp.pl" site_id="2" xmltv_id="TVP 2">TVP 2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="5" xmltv_id="POLSAT">POLSAT</channel>
+    <channel update="i" site="tv.wp.pl" site_id="17" xmltv_id="TVN">TVN</channel>
+    <channel update="i" site="tv.wp.pl" site_id="7" xmltv_id="TVN 7">TVN 7</channel>
+    <channel update="i" site="tv.wp.pl" site_id="18" xmltv_id="TV 4">TV 4</channel>
+    <channel update="i" site="tv.wp.pl" site_id="3" xmltv_id="TVP Polonia">TVP Polonia</channel>
+    <channel update="i" site="tv.wp.pl" site_id="268" xmltv_id="TV 6">TV 6</channel>
+    <channel update="i" site="tv.wp.pl" site_id="11" xmltv_id="TV Puls">TV Puls</channel>
+    <channel update="i" site="tv.wp.pl" site_id="343" xmltv_id="TVP Kultura">TVP Kultura</channel>
+    <channel update="i" site="tv.wp.pl" site_id="280" xmltv_id="PULS 2">PULS 2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="6" xmltv_id="POLSAT 2">POLSAT 2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="390" xmltv_id="TVP Historia">TVP Historia</channel>
+    <channel update="i" site="tv.wp.pl" site_id="663" xmltv_id="HISTORY2">HISTORY2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="31" xmltv_id="TVP Info">TVP Info</channel>
+    <channel update="i" site="tv.wp.pl" site_id="151" xmltv_id="TVN 24">TVN 24</channel>
+    <channel update="i" site="tv.wp.pl" site_id="397" xmltv_id="TVN 24 Biznes i Świat">TVN 24 Biznes i Świat</channel>
+    <channel update="i" site="tv.wp.pl" site_id="431" xmltv_id="POLSAT News">POLSAT News</channel>
+    <channel update="i" site="tv.wp.pl" site_id="334" xmltv_id="POLSAT News 2">POLSAT News 2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="333" xmltv_id="TVN Style">TVN Style</channel>
+    <channel update="i" site="tv.wp.pl" site_id="85" xmltv_id="Ale kino+">Ale kino+</channel>
+    <channel update="i" site="tv.wp.pl" site_id="497" xmltv_id="TVP Seriale">TVP Seriale</channel>
+    <channel update="i" site="tv.wp.pl" site_id="240" xmltv_id="TVN Fabuła">TVN Fabuła</channel>
+    <channel update="i" site="tv.wp.pl" site_id="4" xmltv_id="Kino Polska">Kino Polska</channel>
+    <channel update="i" site="tv.wp.pl" site_id="147" xmltv_id="AXN">AXN</channel>
+    <channel update="i" site="tv.wp.pl" site_id="640" xmltv_id="Fokus TV">Fokus TV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="95" xmltv_id="TLC">TLC</channel>
+    <channel update="i" site="tv.wp.pl" site_id="76" xmltv_id="National Geographic">National Geographic</channel>
+    <channel update="i" site="tv.wp.pl" site_id="392" xmltv_id="National Geographic Wild">National Geographic Wild</channel>
+    <channel update="i" site="tv.wp.pl" site_id="513" xmltv_id="Paramount Channel HD">Paramount Channel HD</channel>
+    <channel update="i" site="tv.wp.pl" site_id="403" xmltv_id="Kino TV">Kino TV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="387" xmltv_id="TNT">TNT</channel>
+    <channel update="i" site="tv.wp.pl" site_id="382" xmltv_id="FOX Comedy">FOX Comedy</channel>
+    <channel update="i" site="tv.wp.pl" site_id="370" xmltv_id="Comedy Central">Comedy Central</channel>
+    <channel update="i" site="tv.wp.pl" site_id="359" xmltv_id="Comedy Central Family">Comedy Central Family</channel>
+    <channel update="i" site="tv.wp.pl" site_id="36" xmltv_id="Cinemax">Cinemax</channel>
+    <channel update="i" site="tv.wp.pl" site_id="386" xmltv_id="Cartoon Network">Cartoon Network</channel>
+    <channel update="i" site="tv.wp.pl" site_id="81" xmltv_id="MiniMini+">MiniMini+</channel>
+    <channel update="i" site="tv.wp.pl" site_id="495" xmltv_id="FOX">FOX</channel>
+    <channel update="i" site="tv.wp.pl" site_id="528" xmltv_id="AXN Spin">AXN Spin</channel>
+    <channel update="i" site="tv.wp.pl" site_id="367" xmltv_id="AXN Black">AXN Black</channel>
+    <channel update="i" site="tv.wp.pl" site_id="366" xmltv_id="AXN White">AXN White</channel>
+    <channel update="i" site="tv.wp.pl" site_id="294" xmltv_id="FilmBox Action">FilmBox Action</channel>
+    <channel update="i" site="tv.wp.pl" site_id="406" xmltv_id="FilmBox Extra HD">FilmBox Extra HD</channel>
+    <channel update="i" site="tv.wp.pl" site_id="438" xmltv_id="FilmBox Family">FilmBox Family</channel>
+    <channel update="i" site="tv.wp.pl" site_id="405" xmltv_id="FilmBox Premium HD">FilmBox Premium HD</channel>
+    <channel update="i" site="tv.wp.pl" site_id="14" xmltv_id="HBO">HBO</channel>
+    <channel update="i" site="tv.wp.pl" site_id="12" xmltv_id="HBO2">HBO2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="385" xmltv_id="HBO3">HBO3</channel>
+    <channel update="i" site="tv.wp.pl" site_id="13" xmltv_id="CANAL+">CANAL+</channel>
+    <channel update="i" site="tv.wp.pl" site_id="559" xmltv_id="CANAL+ Seriale">CANAL+ Seriale</channel>
+    <channel update="i" site="tv.wp.pl" site_id="561" xmltv_id="CANAL+ 1">CANAL+ 1</channel>
+    <channel update="i" site="tv.wp.pl" site_id="86" xmltv_id="CANAL+ Film">CANAL+ Film</channel>
+    <channel update="i" site="tv.wp.pl" site_id="560" xmltv_id="CANAL+ Family">CANAL+ Family</channel>
+    <channel update="i" site="tv.wp.pl" site_id="679" xmltv_id="CANAL+ Discovery">CANAL+ Discovery</channel>
+    <channel update="i" site="tv.wp.pl" site_id="374" xmltv_id="TVP Sport">TVP Sport</channel>
+    <channel update="i" site="tv.wp.pl" site_id="39" xmltv_id="Eurosport 2">Eurosport 2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="87" xmltv_id="CANAL+ Sport">CANAL+ Sport</channel>
+    <channel update="i" site="tv.wp.pl" site_id="678" xmltv_id="CANAL+ Sport 2">CANAL+ Sport 2</channel>
+    <channel update="i" site="tv.wp.pl" site_id="464" xmltv_id="Eska TV">Eska TV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="782" xmltv_id="Eska TV Extra">Eska TV Extra</channel>
+    <channel update="i" site="tv.wp.pl" site_id="337" xmltv_id="4FUN.TV">4FUN.TV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="480" xmltv_id="4FUN GOLD HITS">4FUN GOLD HITS</channel>
+    <channel update="i" site="tv.wp.pl" site_id="139" xmltv_id="4FUN DANCE">4FUN DANCE</channel>
+    <channel update="i" site="tv.wp.pl" site_id="732" xmltv_id="Eska Rock TV">Eska Rock TV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="759" xmltv_id="Music Box">Music Box</channel>
+    <channel update="i" site="tv.wp.pl" site_id="657" xmltv_id="Adventure">Adventure</channel>
+    <channel update="i" site="tv.wp.pl" site_id="112" xmltv_id="AMC">AMC</channel>
+    <channel update="i" site="tv.wp.pl" site_id="410" xmltv_id="BBC Lifestyle">BBC Lifestyle</channel>
+    <channel update="i" site="tv.wp.pl" site_id="160" xmltv_id="BBC World News">BBC World News</channel>
+    <channel update="i" site="tv.wp.pl" site_id="263" xmltv_id="Kino Polska Muzyka">Kino Polska Muzyka</channel>
+    <channel update="i" site="tv.wp.pl" site_id="236" xmltv_id="BBC First">BBC First</channel>
+    <channel update="i" site="tv.wp.pl" site_id="407" xmltv_id="BBC Brit">BBC Brit</channel>
+    <channel update="i" site="tv.wp.pl" site_id="408" xmltv_id="BBC CBeebies">BBC CBeebies</channel>
+    <channel update="i" site="tv.wp.pl" site_id="409" xmltv_id="BBC Earth">BBC Earth</channel>
+    <channel update="i" site="tv.wp.pl" site_id="400" xmltv_id="Da Vinci">Da Vinci</channel>
+    <channel update="i" site="tv.wp.pl" site_id="472" xmltv_id="Animal Planet HD">Animal Planet HD</channel>
+    <channel update="i" site="tv.wp.pl" site_id="533" xmltv_id="English Club TV">English Club TV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="461" xmltv_id="BabyFirstTV">BabyFirstTV</channel>
+    <channel update="i" site="tv.wp.pl" site_id="591" xmltv_id="DocuBox">DocuBox</channel>
+    <channel update="i" site="tv.wp.pl" site_id="136" xmltv_id="CNBC">CNBC</channel>
+    <channel update="i" site="tv.wp.pl" site_id="177" xmltv_id="CNN">CNN</channel>
+    <channel update="i" site="tv.wp.pl" site_id="67" xmltv_id="Discovery Channel">Discovery Channel</channel>
+    <channel update="i" site="tv.wp.pl" site_id="376" xmltv_id="Discovery Historia">Discovery Historia</channel>
+    <channel update="i" site="tv.wp.pl" site_id="717" xmltv_id="POLSAT Viasat History">POLSAT Viasat History</channel>
+    <channel update="i" site="tv.wp.pl" site_id="63" xmltv_id="Discovery Life">Discovery Life</channel>
+    <channel update="i" site="tv.wp.pl" site_id="763" xmltv_id="Discovery Life HD">Discovery Life HD</channel>
+    <channel update="i" site="tv.wp.pl" site_id="96" xmltv_id="Discovery Science">Discovery Science</channel>
+    <channel update="i" site="tv.wp.pl" site_id="414" xmltv_id="POLSAT JimJam">POLSAT JimJam</channel>
+    <channel update="i" site="tv.wp.pl" site_id="33" xmltv_id="Disney Junior">Disney Junior</channel>
+    <channel update="i" site="tv.wp.pl" site_id="346" xmltv_id="Disney Channel">Disney Channel</channel>
+    <channel update="i" site="tv.wp.pl" site_id="300" xmltv_id="Disney Cinemagic">Disney Cinemagic</channel>
+    <channel update="i" site="tv.wp.pl" site_id="658" xmltv_id="Adventure HD">Adventure HD</channel>
+    <channel update="i" site="tv.wp.pl" site_id="74" xmltv_id="Disney XD">Disney XD</channel>
 
 
 
