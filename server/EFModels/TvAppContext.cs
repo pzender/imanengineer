@@ -31,8 +31,7 @@ namespace TV_App.EFModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("Server=db;Database=tv_db;Uid=tv_app;Pwd=tv_app;");
+                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password"); //FIXME!
                 optionsBuilder.EnableSensitiveDataLogging();
             }
         }
@@ -273,32 +272,32 @@ namespace TV_App.EFModels
 
                 entity.Property(e => e.WeightActor)
                     .HasColumnName("weight_actor")
-                    .HasColumnType("DOUBLE")
+                    .HasColumnType("float")
                     .HasDefaultValueSql("0.1");
 
                 entity.Property(e => e.WeightCategory)
                     .HasColumnName("weight_category")
-                    .HasColumnType("DOUBLE")
+                    .HasColumnType("float")
                     .HasDefaultValueSql("0.3");
 
                 entity.Property(e => e.WeightCountry)
                     .HasColumnName("weight_country")
-                    .HasColumnType("DOUBLE")
+                    .HasColumnType("float")
                     .HasDefaultValueSql("0.1");
 
                 entity.Property(e => e.WeightDirector)
                     .HasColumnName("weight_director")
-                    .HasColumnType("DOUBLE")
+                    .HasColumnType("float")
                     .HasDefaultValueSql("0.1");
 
                 entity.Property(e => e.WeightKeyword)
                     .HasColumnName("weight_keyword")
-                    .HasColumnType("DOUBLE")
+                    .HasColumnType("float")
                     .HasDefaultValueSql("0.3");
 
                 entity.Property(e => e.WeightYear)
                     .HasColumnName("weight_year")
-                    .HasColumnType("DOUBLE")
+                    .HasColumnType("float")
                     .HasDefaultValueSql("0.1");
             });
         }

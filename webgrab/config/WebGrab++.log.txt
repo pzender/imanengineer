@@ -7,7 +7,7 @@
 [        ]             thanks to Paul Weterings and all the contributing users             
 [        ] --------------------------------------------------------------------------------
 [        ] 
-[        ] Job started at 12/06/2019 20:00:01
+[        ] Job started at 21/07/2019 15:30:01
 [  Debug ] 
 [  Debug ] Running  on: Unix 4.9.125.0
 [  Debug ] Environment: 4.0.30319.42000
@@ -17,110 +17,637 @@
 [  Debug ] Embedded timezones source: timezone.timezonesdata.txt
 [  Debug ] Reading config file: /config/WebGrab++.config.xml
 [  Debug ] 
-[  Info  ] found: /config/siteini.pack/Poland/filmweb.pl.ini -- Revision 00
+[  Info  ] found: /config/siteini.pack/Poland/tv.wp.pl.ini -- Revision 08
 [  Debug ] xmltv input file - /data/guide.xml - found
 [  Debug ] 0 superfluous shows removed
+[  Info  ] Found existing channel (xmltv_id=TVP 1) in the config file
 [  Info  ] Found existing channel (xmltv_id=TVP 2) in the config file
-[  Info  ] Found existing channel (xmltv_id=Polsat) in the config file
+[  Info  ] Found existing channel (xmltv_id=POLSAT) in the config file
 [  Info  ] Found existing channel (xmltv_id=TVN) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN 7) in the config file
+[  Info  ] Found existing channel (xmltv_id=TV 4) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Polonia) in the config file
+[  Info  ] Found existing channel (xmltv_id=TV 6) in the config file
 [  Info  ] Found existing channel (xmltv_id=TV Puls) in the config file
-[  Info  ] Found existing channel (xmltv_id=TV4) in the config file
-[  Info  ] Found existing channel (xmltv_id=TVN Siedem) in the config file
-[  Info  ] Found existing channel (xmltv_id=Puls 2) in the config file
-[  Info  ] Found existing channel (xmltv_id=TV6) in the config file
-[  Info  ] Found existing channel (xmltv_id=TVP HD) in the config file
-[  Info  ] Found existing channel (xmltv_id=TVP Info) in the config file
-[  Info  ] Found existing channel (xmltv_id=TV Polonia) in the config file
-[  Info  ] Found existing channel (xmltv_id=TVP Seriale) in the config file
-[  Info  ] Found existing channel (xmltv_id=TVP Rozrywka) in the config file
 [  Info  ] Found existing channel (xmltv_id=TVP Kultura) in the config file
+[  Info  ] Found existing channel (xmltv_id=PULS 2) in the config file
+[  Info  ] Found existing channel (xmltv_id=POLSAT 2) in the config file
 [  Info  ] Found existing channel (xmltv_id=TVP Historia) in the config file
+[  Info  ] Found existing channel (xmltv_id=HISTORY2) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Info) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN 24) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN 24 Biznes i Świat) in the config file
+[  Info  ] Found existing channel (xmltv_id=POLSAT News) in the config file
+[  Info  ] Found existing channel (xmltv_id=POLSAT News 2) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN Style) in the config file
+[  Info  ] Found existing channel (xmltv_id=Ale kino+) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVP Seriale) in the config file
+[  Info  ] Found existing channel (xmltv_id=TVN Fabuła) in the config file
+[  Info  ] Found existing channel (xmltv_id=Kino Polska) in the config file
+[  Info  ] Found existing channel (xmltv_id=AXN) in the config file
+[  Info  ] Found existing channel (xmltv_id=Fokus TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=TLC) in the config file
+[  Info  ] Found existing channel (xmltv_id=National Geographic) in the config file
+[  Info  ] Found existing channel (xmltv_id=National Geographic Wild) in the config file
+[  Info  ] Found existing channel (xmltv_id=Paramount Channel HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=Kino TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=TNT) in the config file
+[  Info  ] Found existing channel (xmltv_id=FOX Comedy) in the config file
+[  Info  ] Found existing channel (xmltv_id=Comedy Central) in the config file
+[  Info  ] Found existing channel (xmltv_id=Comedy Central Family) in the config file
+[  Info  ] Found existing channel (xmltv_id=Cinemax) in the config file
+[  Info  ] Found existing channel (xmltv_id=Cartoon Network) in the config file
+[  Info  ] Found existing channel (xmltv_id=MiniMini+) in the config file
+[  Info  ] Found existing channel (xmltv_id=FOX) in the config file
+[  Info  ] Found existing channel (xmltv_id=AXN Spin) in the config file
+[  Info  ] Found existing channel (xmltv_id=AXN Black) in the config file
+[  Info  ] Found existing channel (xmltv_id=AXN White) in the config file
+[  Info  ] Found existing channel (xmltv_id=FilmBox Action) in the config file
+[  Info  ] Found existing channel (xmltv_id=FilmBox Extra HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=FilmBox Family) in the config file
+[  Info  ] Found existing channel (xmltv_id=FilmBox Premium HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=HBO) in the config file
+[  Info  ] Found existing channel (xmltv_id=HBO2) in the config file
+[  Info  ] Found existing channel (xmltv_id=HBO3) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ Seriale) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ 1) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ Film) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ Family) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ Discovery) in the config file
 [  Info  ] Found existing channel (xmltv_id=TVP Sport) in the config file
+[  Info  ] Found existing channel (xmltv_id=Eurosport 2) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ Sport) in the config file
+[  Info  ] Found existing channel (xmltv_id=CANAL+ Sport 2) in the config file
+[  Info  ] Found existing channel (xmltv_id=Eska TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=Eska TV Extra) in the config file
+[  Info  ] Found existing channel (xmltv_id=4FUN.TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=4FUN GOLD HITS) in the config file
+[  Info  ] Found existing channel (xmltv_id=4FUN DANCE) in the config file
+[  Info  ] Found existing channel (xmltv_id=Eska Rock TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=Music Box) in the config file
+[  Info  ] Found existing channel (xmltv_id=Adventure) in the config file
+[  Info  ] Found existing channel (xmltv_id=AMC) in the config file
+[  Info  ] Found existing channel (xmltv_id=BBC Lifestyle) in the config file
+[  Info  ] Found existing channel (xmltv_id=BBC World News) in the config file
+[  Info  ] Found existing channel (xmltv_id=Kino Polska Muzyka) in the config file
+[  Info  ] Found existing channel (xmltv_id=BBC First) in the config file
+[  Info  ] Found existing channel (xmltv_id=BBC Brit) in the config file
+[  Info  ] Found existing channel (xmltv_id=BBC CBeebies) in the config file
+[  Info  ] Found existing channel (xmltv_id=BBC Earth) in the config file
+[  Info  ] Found existing channel (xmltv_id=Da Vinci) in the config file
+[  Info  ] Found existing channel (xmltv_id=Animal Planet HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=English Club TV) in the config file
+[  Info  ] Found existing channel (xmltv_id=BabyFirstTV) in the config file
+[  Info  ] Found existing channel (xmltv_id=DocuBox) in the config file
+[  Info  ] Found existing channel (xmltv_id=CNBC) in the config file
+[  Info  ] Found existing channel (xmltv_id=CNN) in the config file
 [  Info  ] Found existing channel (xmltv_id=Discovery Channel) in the config file
 [  Info  ] Found existing channel (xmltv_id=Discovery Historia) in the config file
+[  Info  ] Found existing channel (xmltv_id=POLSAT Viasat History) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery Life) in the config file
+[  Info  ] Found existing channel (xmltv_id=Discovery Life HD) in the config file
 [  Info  ] Found existing channel (xmltv_id=Discovery Science) in the config file
-[  Info  ] Found existing channel (xmltv_id=Investigation Discovery) in the config file
-[  Info  ] Found existing channel (xmltv_id=Discovery Turbo Xtra) in the config file
-[  Info  ] Found existing channel (xmltv_id=Discovery LIFE) in the config file
-[  Info  ] Found existing channel (xmltv_id=Animal Planet HD) in the config file
-[  Info  ] Found existing channel (xmltv_id=National Geographic) in the config file
-[  Info  ] Found existing channel (xmltv_id=Nat Geo Wild) in the config file
-[  Info  ] Found existing channel (xmltv_id=Nat Geo People) in the config file
-[  Info  ] Found existing channel (xmltv_id=Fokus TV) in the config file
-[  Info  ] Found existing channel (xmltv_id=Da Vinci Learning) in the config file
-[  Info  ] Found existing channel (xmltv_id=Polsat JimJam) in the config file
-[  Info  ] Found existing channel (xmltv_id=Cartoon Network) in the config file
-[  Info  ] Found existing channel (xmltv_id=Disney Channel) in the config file
-[  Info  ] Found existing channel (xmltv_id=Disney XD) in the config file
+[  Info  ] Found existing channel (xmltv_id=POLSAT JimJam) in the config file
 [  Info  ] Found existing channel (xmltv_id=Disney Junior) in the config file
-[  Info  ] Found existing channel (xmltv_id=Boomerang) in the config file
-[  Info  ] Found existing channel (xmltv_id=Nickelodeon) in the config file
-[  Info  ] Found existing channel (xmltv_id=Nickelodeon HD) in the config file
-[  Info  ] Found existing channel (xmltv_id=Nick Jr.) in the config file
-[  Info  ] Found existing channel (xmltv_id=MiniMini+) in the config file
-[  Info  ] Found existing channel (xmltv_id=Eska TV) in the config file
-[  Info  ] Found existing channel (xmltv_id=4fun.tv) in the config file
-[  Info  ] Found existing channel (xmltv_id=4fun Hits) in the config file
+[  Info  ] Found existing channel (xmltv_id=Disney Channel) in the config file
+[  Info  ] Found existing channel (xmltv_id=Disney Cinemagic) in the config file
+[  Info  ] Found existing channel (xmltv_id=Adventure HD) in the config file
+[  Info  ] Found existing channel (xmltv_id=Disney XD) in the config file
 [  Info  ] 
 [  Info  ] 
 [  Info  ]       i=index  .=same  c=change  g=gab  r=replace  n=new
 [  Info  ] 
 [  Info  ] 
 [  Info  ] Group (0) :
-[  Info  ] update requested for - 41 - out of - 41 - channels for 4 day(s)
+[  Info  ] update requested for - 94 - out of - 94 - channels for 2 day(s)
 [  Debug ] 
-[  Info  ] (   1/41  ) FILMWEB.PL -- chan. (xmltv_id=TVP 2) -- mode Incremental
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 02:00:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 14/06/2019 03:00:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 15/06/2019 02:25:00
+[  Info  ] (   1/94  ) TV.WP.PL -- chan. (xmltv_id=TVP 1) -- mode Incremental
+[Warning ] no robots data found
+[Warning ] skipped robots check
+[Warning ] error downloading page: Error getting response stream (ReadDoneAsync4): ServerProtocolViolation Input string was not in a correct format.
+[Warning ] pausing 1 of 4 times for 5 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
-[  Info  ] (   2/41  ) FILMWEB.PL -- chan. (xmltv_id=Polsat) -- mode Incremental
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 00:50:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 20:10:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 15/06/2019 00:15:00
+[  Info  ] (   2/94  ) TV.WP.PL -- chan. (xmltv_id=TVP 2) -- mode Incremental
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 05:00:00 stop = 21/07/2019 05:55:00 title = M jak miłość
+[  Info  ]       Replaces ----- start = 21/07/2019 05:20:00 stop = 21/07/2019 05:30:00 title = Słowo na niedzielę
+[  Info  ]       Replaces ----- start = 21/07/2019 05:30:00 stop = 21/07/2019 06:05:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 05:55:00 stop = 21/07/2019 08:40:00 title = Pytanie na śniadanie
+[  Info  ]       Replaces ----- start = 21/07/2019 05:30:00 stop = 21/07/2019 06:05:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 21/07/2019 06:05:00 stop = 21/07/2019 07:00:00 title = Doktor z alpejskiej wioski - nowy rozdział
+[  Info  ]       Replaces ----- start = 21/07/2019 07:00:00 stop = 21/07/2019 07:55:00 title = M jak miłość
+[  Info  ]       Replaces ----- start = 21/07/2019 07:55:00 stop = 21/07/2019 10:40:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 08:40:00 stop = 21/07/2019 08:45:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 21/07/2019 07:55:00 stop = 21/07/2019 10:40:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 08:45:00 stop = 21/07/2019 09:50:00 title = Najmłodsi wśród zwierząt
+[  Info  ]       Replaces ----- start = 21/07/2019 07:55:00 stop = 21/07/2019 10:40:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 09:50:00 stop = 21/07/2019 12:00:00 title = Tragedia \"Posejdona\
+[  Info  ]       Replaces ----- start = 21/07/2019 07:55:00 stop = 21/07/2019 10:40:00 title = Pytanie na śniadanie
+[  Info  ]       Replaces ----- start = 21/07/2019 10:40:00 stop = 21/07/2019 10:45:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 21/07/2019 10:45:00 stop = 21/07/2019 11:50:00 title = Najmłodsi wśród zwierząt
+[  Info  ]       Replaces ----- start = 21/07/2019 11:50:00 stop = 21/07/2019 14:00:00 title = Tragedia "Posejdona"
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 12:00:00 stop = 21/07/2019 12:35:00 title = Familiada
+[  Info  ]       Replaces ----- start = 21/07/2019 11:50:00 stop = 21/07/2019 14:00:00 title = Tragedia "Posejdona"
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 12:35:00 stop = 21/07/2019 13:15:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 21/07/2019 11:50:00 stop = 21/07/2019 14:00:00 title = Tragedia "Posejdona"
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 13:15:00 stop = 21/07/2019 14:20:00 title = Szansa na sukces. Opole 2019
+[  Info  ]       Replaces ----- start = 21/07/2019 11:50:00 stop = 21/07/2019 14:00:00 title = Tragedia "Posejdona"
+[  Info  ]       Replaces ----- start = 21/07/2019 14:00:00 stop = 21/07/2019 14:35:00 title = Familiada
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 14:20:00 stop = 21/07/2019 16:00:00 title = Kocham Cię, Polsko
+[  Info  ]       Replaces ----- start = 21/07/2019 14:00:00 stop = 21/07/2019 14:35:00 title = Familiada
+[  Info  ]       Replaces ----- start = 21/07/2019 14:35:00 stop = 21/07/2019 15:15:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 21/07/2019 15:15:00 stop = 21/07/2019 16:20:00 title = Szansa na sukces. Opole 2019
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 16:00:00 stop = 21/07/2019 16:20:00 title = Panorama
+[  Info  ]       Replaces ----- start = 21/07/2019 15:15:00 stop = 21/07/2019 16:20:00 title = Szansa na sukces. Opole 2019
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 16:20:00 stop = 21/07/2019 16:30:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 21/07/2019 16:20:00 stop = 21/07/2019 18:00:00 title = Kocham Cię, Polsko!
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 16:30:00 stop = 21/07/2019 16:35:00 title = Sport telegram
+[  Info  ]       Replaces ----- start = 21/07/2019 16:20:00 stop = 21/07/2019 18:00:00 title = Kocham Cię, Polsko!
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 16:35:00 stop = 21/07/2019 17:30:00 title = Postaw na milion
+[  Info  ]       Replaces ----- start = 21/07/2019 16:20:00 stop = 21/07/2019 18:00:00 title = Kocham Cię, Polsko!
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 17:30:00 stop = 21/07/2019 18:00:00 title = Na sygnale
+[  Info  ]       Replaces ----- start = 21/07/2019 16:20:00 stop = 21/07/2019 18:00:00 title = Kocham Cię, Polsko!
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 18:00:00 stop = 21/07/2019 18:30:00 title = Lato, muzyka, zabawa. Wakacyjna trasa Dwójki - 2019
+[  Info  ]       Replaces ----- start = 21/07/2019 18:00:00 stop = 21/07/2019 18:20:00 title = Panorama
+[  Info  ]       Replaces ----- start = 21/07/2019 18:20:00 stop = 21/07/2019 18:30:00 title = Pogoda
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 18:30:00 stop = 21/07/2019 19:25:00 title = Lato, muzyka, zabawa. Wakacyjna trasa Dwójki - 2019
+[  Info  ]       Replaces ----- start = 21/07/2019 18:30:00 stop = 21/07/2019 18:35:00 title = Sport telegram
+[  Info  ]       Replaces ----- start = 21/07/2019 18:35:00 stop = 21/07/2019 19:30:00 title = Postaw na milion
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 19:25:00 stop = 21/07/2019 20:30:00 title = Lato, muzyka, zabawa. Wakacyjna trasa Dwójki - 2019
+[  Info  ]       Replaces ----- start = 21/07/2019 18:35:00 stop = 21/07/2019 19:30:00 title = Postaw na milion
+[  Info  ]       Replaces ----- start = 21/07/2019 19:30:00 stop = 21/07/2019 20:00:00 title = Na sygnale
+[  Info  ]       Replaces ----- start = 21/07/2019 20:00:00 stop = 21/07/2019 20:30:00 title = Lato, muzyka, zabawa. Wakacyjna trasa Dwójki - 2019
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 20:30:00 stop = 21/07/2019 22:35:00 title = Elizabeth
+[  Info  ]       Replaces ----- start = 21/07/2019 20:30:00 stop = 21/07/2019 21:25:00 title = Lato, muzyka, zabawa. Wakacyjna trasa Dwójki - 2019
+[  Info  ]       Replaces ----- start = 21/07/2019 21:25:00 stop = 21/07/2019 22:30:00 title = Lato, muzyka, zabawa. Wakacyjna trasa Dwójki - 2019
+[  Info  ]       Replaces ----- start = 21/07/2019 22:30:00 stop = 22/07/2019 00:35:00 title = Elizabeth
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 22:35:00 stop = 21/07/2019 23:30:00 title = Zawód: Amerykanin
+[  Info  ]       Replaces ----- start = 21/07/2019 22:30:00 stop = 22/07/2019 00:35:00 title = Elizabeth
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 21/07/2019 23:30:00 stop = 22/07/2019 00:25:00 title = Zawód: Amerykanin 2
+[  Info  ]       Replaces ----- start = 21/07/2019 22:30:00 stop = 22/07/2019 00:35:00 title = Elizabeth
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 00:25:00 stop = 22/07/2019 02:00:00 title = Eve i Alex
+[  Info  ]       Replaces ----- start = 21/07/2019 22:30:00 stop = 22/07/2019 00:35:00 title = Elizabeth
+[  Info  ]       Replaces ----- start = 22/07/2019 00:35:00 stop = 22/07/2019 01:30:00 title = Zawód: Amerykanin
+[  Info  ]       Replaces ----- start = 22/07/2019 01:30:00 stop = 22/07/2019 02:25:00 title = Zawód: Amerykanin
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 02:00:00 stop = 22/07/2019 03:20:00 title = Zakończenie programu
+[  Info  ]       Replaces ----- start = 22/07/2019 01:30:00 stop = 22/07/2019 02:25:00 title = Zawód: Amerykanin
+[  Info  ]    epg correction : 
+[  Info  ]  MISSING show added,
+[  Info  ]       show with ---- start = 22/07/2019 03:20:00 stop = 22/07/2019 04:00:00 title = Koło fortuny
+[  Info  ]       Added before - start = 22/07/2019 05:20:00 stop = 22/07/2019 06:00:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  MISSING show added,
+[  Info  ]       show with ---- start = 22/07/2019 04:00:00 stop = 22/07/2019 04:50:00 title = Doktor z alpejskiej wioski - nowy rozdział
+[  Info  ]       Added before - start = 22/07/2019 05:20:00 stop = 22/07/2019 06:00:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  MISSING show added,
+[  Info  ]       show with ---- start = 22/07/2019 04:50:00 stop = 22/07/2019 05:20:00 title = Coś dla ciebie
+[  Info  ]       Added before - start = 22/07/2019 05:20:00 stop = 22/07/2019 06:00:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 05:20:00 stop = 22/07/2019 05:55:00 title = Familiada
+[  Info  ]       Replaces ----- start = 22/07/2019 05:20:00 stop = 22/07/2019 06:00:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 05:55:00 stop = 22/07/2019 09:00:00 title = Pytanie na śniadanie
+[  Info  ]       Replaces ----- start = 22/07/2019 05:20:00 stop = 22/07/2019 06:00:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 22/07/2019 06:00:00 stop = 22/07/2019 06:50:00 title = Doktor z alpejskiej wioski - nowy rozdział
+[  Info  ]       Replaces ----- start = 22/07/2019 06:50:00 stop = 22/07/2019 07:20:00 title = Coś dla ciebie
+[  Info  ]       Replaces ----- start = 22/07/2019 07:20:00 stop = 22/07/2019 07:55:00 title = Familiada
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 09:00:00 stop = 22/07/2019 09:05:00 title = Panorama
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 09:05:00 stop = 22/07/2019 09:10:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 09:10:00 stop = 22/07/2019 09:25:00 title = Pytanie na śniadanie
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 09:25:00 stop = 22/07/2019 09:55:00 title = Rodzinka.pl
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 09:55:00 stop = 22/07/2019 10:30:00 title = Barwy szczęścia
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 10:30:00 stop = 22/07/2019 11:15:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 22/07/2019 07:55:00 stop = 22/07/2019 11:00:00 title = Pytanie na śniadanie
+[  Info  ]       Replaces ----- start = 22/07/2019 11:00:00 stop = 22/07/2019 11:05:00 title = Panorama
+[  Info  ]       Replaces ----- start = 22/07/2019 11:05:00 stop = 22/07/2019 11:10:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 22/07/2019 11:10:00 stop = 22/07/2019 11:25:00 title = Pytanie na śniadanie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 11:15:00 stop = 22/07/2019 12:10:00 title = Marzę o Tobie
+[  Info  ]       Replaces ----- start = 22/07/2019 11:10:00 stop = 22/07/2019 11:25:00 title = Pytanie na śniadanie
+[  Info  ]       Replaces ----- start = 22/07/2019 11:25:00 stop = 22/07/2019 11:55:00 title = Rodzinka.pl
+[  Info  ]       Replaces ----- start = 22/07/2019 11:55:00 stop = 22/07/2019 12:30:00 title = Barwy szczęścia
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 12:10:00 stop = 22/07/2019 13:10:00 title = Postaw na milion
+[  Info  ]       Replaces ----- start = 22/07/2019 11:55:00 stop = 22/07/2019 12:30:00 title = Barwy szczęścia
+[  Info  ]       Replaces ----- start = 22/07/2019 12:30:00 stop = 22/07/2019 13:15:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 13:10:00 stop = 22/07/2019 14:00:00 title = Doktor z alpejskiej wioski - nowy rozdział
+[  Info  ]       Replaces ----- start = 22/07/2019 12:30:00 stop = 22/07/2019 13:15:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 22/07/2019 13:15:00 stop = 22/07/2019 14:10:00 title = Marzę o Tobie
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 14:00:00 stop = 22/07/2019 14:35:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 22/07/2019 13:15:00 stop = 22/07/2019 14:10:00 title = Marzę o Tobie
+[  Info  ]       Replaces ----- start = 22/07/2019 14:10:00 stop = 22/07/2019 15:10:00 title = Postaw na milion
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 14:35:00 stop = 22/07/2019 15:10:00 title = Familiada
+[  Info  ]       Replaces ----- start = 22/07/2019 14:10:00 stop = 22/07/2019 15:10:00 title = Postaw na milion
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 15:10:00 stop = 22/07/2019 16:00:00 title = Więzień miłości
+[  Info  ]       Replaces ----- start = 22/07/2019 15:10:00 stop = 22/07/2019 16:00:00 title = Doktor z alpejskiej wioski - nowy rozdział
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 16:00:00 stop = 22/07/2019 16:20:00 title = Panorama
+[  Info  ]       Replaces ----- start = 22/07/2019 16:00:00 stop = 22/07/2019 16:35:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 16:20:00 stop = 22/07/2019 16:30:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 22/07/2019 16:00:00 stop = 22/07/2019 16:35:00 title = Koło fortuny
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 16:30:00 stop = 22/07/2019 16:40:00 title = Sport telegram
+[  Info  ]       Replaces ----- start = 22/07/2019 16:00:00 stop = 22/07/2019 16:35:00 title = Koło fortuny
+[  Info  ]       Replaces ----- start = 22/07/2019 16:35:00 stop = 22/07/2019 17:10:00 title = Familiada
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 16:40:00 stop = 22/07/2019 17:35:00 title = Na dobre i na złe
+[  Info  ]       Replaces ----- start = 22/07/2019 16:35:00 stop = 22/07/2019 17:10:00 title = Familiada
+[  Info  ]       Replaces ----- start = 22/07/2019 17:10:00 stop = 22/07/2019 18:00:00 title = Więzień miłości
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 17:35:00 stop = 22/07/2019 18:10:00 title = Rodzinka.pl
+[  Info  ]       Replaces ----- start = 22/07/2019 17:10:00 stop = 22/07/2019 18:00:00 title = Więzień miłości
+[  Info  ]       Replaces ----- start = 22/07/2019 18:00:00 stop = 22/07/2019 18:20:00 title = Panorama
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 18:10:00 stop = 22/07/2019 20:00:00 title = Zemsta o jasnych oczach 2
+[  Info  ]       Replaces ----- start = 22/07/2019 18:00:00 stop = 22/07/2019 18:20:00 title = Panorama
+[  Info  ]       Replaces ----- start = 22/07/2019 18:20:00 stop = 22/07/2019 18:30:00 title = Pogoda
+[  Info  ]       Replaces ----- start = 22/07/2019 18:30:00 stop = 22/07/2019 18:40:00 title = Sport telegram
+[  Info  ]       Replaces ----- start = 22/07/2019 18:40:00 stop = 22/07/2019 19:35:00 title = Na dobre i na złe
+[  Info  ]       Replaces ----- start = 22/07/2019 19:35:00 stop = 22/07/2019 20:10:00 title = Rodzinka.pl
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 20:00:00 stop = 22/07/2019 21:50:00 title = Stacja
+[  Info  ]       Replaces ----- start = 22/07/2019 19:35:00 stop = 22/07/2019 20:10:00 title = Rodzinka.pl
+[  Info  ]       Replaces ----- start = 22/07/2019 20:10:00 stop = 22/07/2019 22:00:00 title = Zemsta o jasnych oczach
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 21:50:00 stop = 22/07/2019 23:30:00 title = Dobry czas na miłość
+[  Info  ]       Replaces ----- start = 22/07/2019 20:10:00 stop = 22/07/2019 22:00:00 title = Zemsta o jasnych oczach
+[  Info  ]       Replaces ----- start = 22/07/2019 22:00:00 stop = 22/07/2019 23:50:00 title = Stacja
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 22/07/2019 23:30:00 stop = 23/07/2019 00:40:00 title = Glina
+[  Info  ]       Replaces ----- start = 22/07/2019 22:00:00 stop = 22/07/2019 23:50:00 title = Stacja
+[  Info  ]       Replaces ----- start = 22/07/2019 23:50:00 stop = 23/07/2019 01:30:00 title = Dobry czas na miłość
+[  Info  ]    epg correction : 
+[  Info  ]  CHANGED show corrected,
+[  Info  ]       show with ---- start = 23/07/2019 00:40:00 stop = 23/07/2019 02:40:00 title = Elizabeth
+[  Info  ]       Replaces ----- start = 22/07/2019 23:50:00 stop = 23/07/2019 01:30:00 title = Dobry czas na miłość
 [  Info  ] 
 [  Debug ] 
-[  Info  ] (   3/41  ) FILMWEB.PL -- chan. (xmltv_id=TVN) -- mode Incremental
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 02:55:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 14/06/2019 02:10:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 15/06/2019 02:55:00
+[  Info  ] (   3/94  ) TV.WP.PL -- chan. (xmltv_id=POLSAT) -- mode Incremental
 [  Info  ] 
 [  Debug ] 
-[  Info  ] (   4/41  ) FILMWEB.PL -- chan. (xmltv_id=TV Puls) -- mode Incremental
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 04:10:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 14/06/2019 04:10:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 15/06/2019 05:00:00
+[  Info  ] (   4/94  ) TV.WP.PL -- chan. (xmltv_id=TVN) -- mode Incremental
 [  Info  ] 
 [  Debug ] 
-[  Info  ] (   5/41  ) FILMWEB.PL -- chan. (xmltv_id=TV4) -- mode Incremental
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 04:40:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 14/06/2019 00:00:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 15/06/2019 04:40:00
+[  Info  ] (   5/94  ) TV.WP.PL -- chan. (xmltv_id=TVN 7) -- mode Incremental
 [  Info  ] 
 [  Debug ] 
-[  Info  ] (   6/41  ) FILMWEB.PL -- chan. (xmltv_id=TVN Siedem) -- mode Incremental
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 02:25:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 13/06/2019 23:40:00
-[  Debug ]    skipped : no value for next starttime
-[  Debug ]    skipped show without a title at 15/06/2019 02:55:00
+[  Info  ] (   6/94  ) TV.WP.PL -- chan. (xmltv_id=TV 4) -- mode Incremental
 [  Info  ] 
 [  Debug ] 
-[  Info  ] (   7/41  ) FILMWEB.PL -- chan. (xmltv_id=Puls 2) -- mode Incremental
+[  Info  ] (   7/94  ) TV.WP.PL -- chan. (xmltv_id=TVP Polonia) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   8/94  ) TV.WP.PL -- chan. (xmltv_id=TV 6) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (   9/94  ) TV.WP.PL -- chan. (xmltv_id=TV Puls) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  10/94  ) TV.WP.PL -- chan. (xmltv_id=TVP Kultura) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  11/94  ) TV.WP.PL -- chan. (xmltv_id=PULS 2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  12/94  ) TV.WP.PL -- chan. (xmltv_id=POLSAT 2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  13/94  ) TV.WP.PL -- chan. (xmltv_id=TVP Historia) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  14/94  ) TV.WP.PL -- chan. (xmltv_id=HISTORY2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  15/94  ) TV.WP.PL -- chan. (xmltv_id=TVP Info) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  16/94  ) TV.WP.PL -- chan. (xmltv_id=TVN 24) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  17/94  ) TV.WP.PL -- chan. (xmltv_id=TVN 24 Biznes i Świat) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  18/94  ) TV.WP.PL -- chan. (xmltv_id=POLSAT News) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  19/94  ) TV.WP.PL -- chan. (xmltv_id=POLSAT News 2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  20/94  ) TV.WP.PL -- chan. (xmltv_id=TVN Style) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  21/94  ) TV.WP.PL -- chan. (xmltv_id=Ale kino+) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  22/94  ) TV.WP.PL -- chan. (xmltv_id=TVP Seriale) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  23/94  ) TV.WP.PL -- chan. (xmltv_id=TVN Fabuła) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  24/94  ) TV.WP.PL -- chan. (xmltv_id=Kino Polska) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  25/94  ) TV.WP.PL -- chan. (xmltv_id=AXN) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  26/94  ) TV.WP.PL -- chan. (xmltv_id=Fokus TV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  27/94  ) TV.WP.PL -- chan. (xmltv_id=TLC) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  28/94  ) TV.WP.PL -- chan. (xmltv_id=National Geographic) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  29/94  ) TV.WP.PL -- chan. (xmltv_id=National Geographic Wild) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  30/94  ) TV.WP.PL -- chan. (xmltv_id=Paramount Channel HD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  31/94  ) TV.WP.PL -- chan. (xmltv_id=Kino TV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  32/94  ) TV.WP.PL -- chan. (xmltv_id=TNT) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  33/94  ) TV.WP.PL -- chan. (xmltv_id=FOX Comedy) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  34/94  ) TV.WP.PL -- chan. (xmltv_id=Comedy Central) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  35/94  ) TV.WP.PL -- chan. (xmltv_id=Comedy Central Family) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  36/94  ) TV.WP.PL -- chan. (xmltv_id=Cinemax) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  37/94  ) TV.WP.PL -- chan. (xmltv_id=Cartoon Network) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  38/94  ) TV.WP.PL -- chan. (xmltv_id=MiniMini+) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  39/94  ) TV.WP.PL -- chan. (xmltv_id=FOX) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  40/94  ) TV.WP.PL -- chan. (xmltv_id=AXN Spin) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  41/94  ) TV.WP.PL -- chan. (xmltv_id=AXN Black) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  42/94  ) TV.WP.PL -- chan. (xmltv_id=AXN White) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  43/94  ) TV.WP.PL -- chan. (xmltv_id=FilmBox Action) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  44/94  ) TV.WP.PL -- chan. (xmltv_id=FilmBox Extra HD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  45/94  ) TV.WP.PL -- chan. (xmltv_id=FilmBox Family) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  46/94  ) TV.WP.PL -- chan. (xmltv_id=FilmBox Premium HD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  47/94  ) TV.WP.PL -- chan. (xmltv_id=HBO) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  48/94  ) TV.WP.PL -- chan. (xmltv_id=HBO2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  49/94  ) TV.WP.PL -- chan. (xmltv_id=HBO3) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  50/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  51/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ Seriale) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  52/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ 1) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  53/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ Film) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  54/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ Family) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  55/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ Discovery) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  56/94  ) TV.WP.PL -- chan. (xmltv_id=TVP Sport) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  57/94  ) TV.WP.PL -- chan. (xmltv_id=Eurosport 2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  58/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ Sport) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  59/94  ) TV.WP.PL -- chan. (xmltv_id=CANAL+ Sport 2) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  60/94  ) TV.WP.PL -- chan. (xmltv_id=Eska TV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  61/94  ) TV.WP.PL -- chan. (xmltv_id=Eska TV Extra) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  62/94  ) TV.WP.PL -- chan. (xmltv_id=4FUN.TV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  63/94  ) TV.WP.PL -- chan. (xmltv_id=4FUN GOLD HITS) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  64/94  ) TV.WP.PL -- chan. (xmltv_id=4FUN DANCE) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  65/94  ) TV.WP.PL -- chan. (xmltv_id=Eska Rock TV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  66/94  ) TV.WP.PL -- chan. (xmltv_id=Music Box) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  67/94  ) TV.WP.PL -- chan. (xmltv_id=Adventure) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  68/94  ) TV.WP.PL -- chan. (xmltv_id=AMC) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  69/94  ) TV.WP.PL -- chan. (xmltv_id=BBC Lifestyle) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  70/94  ) TV.WP.PL -- chan. (xmltv_id=BBC World News) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  71/94  ) TV.WP.PL -- chan. (xmltv_id=Kino Polska Muzyka) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  72/94  ) TV.WP.PL -- chan. (xmltv_id=BBC First) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  73/94  ) TV.WP.PL -- chan. (xmltv_id=BBC Brit) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  74/94  ) TV.WP.PL -- chan. (xmltv_id=BBC CBeebies) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  75/94  ) TV.WP.PL -- chan. (xmltv_id=BBC Earth) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  76/94  ) TV.WP.PL -- chan. (xmltv_id=Da Vinci) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  77/94  ) TV.WP.PL -- chan. (xmltv_id=Animal Planet HD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  78/94  ) TV.WP.PL -- chan. (xmltv_id=English Club TV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  79/94  ) TV.WP.PL -- chan. (xmltv_id=BabyFirstTV) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  80/94  ) TV.WP.PL -- chan. (xmltv_id=DocuBox) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  81/94  ) TV.WP.PL -- chan. (xmltv_id=CNBC) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  82/94  ) TV.WP.PL -- chan. (xmltv_id=CNN) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  83/94  ) TV.WP.PL -- chan. (xmltv_id=Discovery Channel) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  84/94  ) TV.WP.PL -- chan. (xmltv_id=Discovery Historia) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  85/94  ) TV.WP.PL -- chan. (xmltv_id=POLSAT Viasat History) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  86/94  ) TV.WP.PL -- chan. (xmltv_id=Discovery Life) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  87/94  ) TV.WP.PL -- chan. (xmltv_id=Discovery Life HD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  88/94  ) TV.WP.PL -- chan. (xmltv_id=Discovery Science) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  89/94  ) TV.WP.PL -- chan. (xmltv_id=POLSAT JimJam) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  90/94  ) TV.WP.PL -- chan. (xmltv_id=Disney Junior) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  91/94  ) TV.WP.PL -- chan. (xmltv_id=Disney Channel) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  92/94  ) TV.WP.PL -- chan. (xmltv_id=Disney Cinemagic) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  93/94  ) TV.WP.PL -- chan. (xmltv_id=Adventure HD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  94/94  ) TV.WP.PL -- chan. (xmltv_id=Disney XD) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Debug ] 8200 shows in 94 channels
+[  Debug ] 49 updated shows
+[  Debug ] 8151 new shows added
+[  Info  ] 
+[  Info  ] 
+[        ] Job finished at 21/07/2019 15:40:24 done in 10m 23s
+[  Debug ] statistics upload error: The remote server returned an error: (404) Not Found.

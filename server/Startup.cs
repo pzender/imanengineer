@@ -26,7 +26,7 @@ namespace TV_App
             services.AddControllers();
             services.AddSignalR().AddJsonProtocol();
 
-            services.AddSingleton<IScheduledTask, SendNotificationTask>();
+            //services.AddSingleton<IScheduledTask, SendNotificationTask>();
             services.AddSingleton<IScheduledTask, ParseNewGuideTask>();
 
             services.AddScheduler((sender, args) =>

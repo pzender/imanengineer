@@ -18,20 +18,29 @@ namespace TV_App.Services
         private readonly ILoggerFactory loggerFactory;
         private readonly TvAppContext DbContext = new TvAppContext();
 
-        public string Schedule => "35 17 * * *";
+        public string Schedule => "* * * * *";
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            var logger = loggerFactory.CreateLogger("GuideUpdatePOST");
+            var logger = loggerFactory.CreateLogger("ParseNewGuideTask");
             logger.LogInformation("ParseNewGuide task started!");
 
             string filepath = "/data/guide.xml";
             string data = string.Join(" ", File.ReadAllLines(filepath));
-            await Task.Run(() => { Import(logger, data); });
+            DbContext.GuideUpdate.Add(new GuideUpdate()
+            {
+                Description = null,
+                Id = DbContext.GuideUpdate.Select(update => update.Id).Max() + 1,
+                Posted = DateTime.Now,
+                Source = "TEST!"
+            }) ;
+            await DbContext.SaveChangesAsync();
+
+            // await Task.Run(() => { Import(logger, data); });
             // Import(logger, data);
         }
 
-        private void Import(ILogger logger, string body)
+        private async void Import(ILogger logger, string body)
         {
             logger.LogInformation("Request body found. Parsing.");
             XMLParser parser = new XMLParser(logger);
@@ -89,3 +98,4 @@ namespace TV_App.Services
         }
     }
 }
+
