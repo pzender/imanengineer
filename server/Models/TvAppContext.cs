@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace TV_App.EFModels
+namespace TV_App.Models
 {
     public partial class TvAppContext : DbContext
     {
@@ -31,15 +31,12 @@ namespace TV_App.EFModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password"); //FIXME!
-                optionsBuilder.EnableSensitiveDataLogging();
+                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.0-rtm-35687");
-
             modelBuilder.Entity<Channel>(entity =>
             {
                 entity.HasIndex(e => e.Name)
@@ -51,18 +48,24 @@ namespace TV_App.EFModels
 
                 entity.Property(e => e.IconUrl)
                     .HasColumnName("icon_url")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Description>(entity =>
             {
                 entity.HasIndex(e => e.Content)
                     .IsUnique();
+
+                entity.HasIndex(e => e.GuideUpdateId);
+
+                entity.HasIndex(e => e.IdProgramme);
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -74,6 +77,10 @@ namespace TV_App.EFModels
 
                 entity.Property(e => e.IdProgramme).HasColumnName("id_programme");
 
+                entity.HasOne(d => d.GuideUpdate)
+                    .WithMany(p => p.Description)
+                    .HasForeignKey(d => d.GuideUpdateId);
+
                 entity.HasOne(d => d.IdProgrammeNavigation)
                     .WithMany(p => p.Description)
                     .HasForeignKey(d => d.IdProgramme)
@@ -82,6 +89,10 @@ namespace TV_App.EFModels
 
             modelBuilder.Entity<Emission>(entity =>
             {
+                entity.HasIndex(e => e.ChannelId);
+
+                entity.HasIndex(e => e.ProgrammeId);
+
                 entity.HasIndex(e => new { e.Start, e.Stop, e.ProgrammeId, e.ChannelId })
                     .IsUnique();
 
@@ -94,14 +105,12 @@ namespace TV_App.EFModels
                 entity.Property(e => e.ProgrammeId).HasColumnName("programme_id");
 
                 entity.Property(e => e.Start)
-                    .IsRequired()
                     .HasColumnName("start")
-                    .HasColumnType("DATETIME");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Stop)
-                    .IsRequired()
                     .HasColumnName("stop")
-                    .HasColumnType("DATETIME");
+                    .HasColumnType("datetime");
 
                 entity.HasOne(d => d.Channel)
                     .WithMany(p => p.Emission)
@@ -132,7 +141,8 @@ namespace TV_App.EFModels
                 entity.Property(e => e.Value)
                     .IsRequired()
                     .HasColumnName("value")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TypeNavigation)
                     .WithMany(p => p.Feature)
@@ -143,6 +153,8 @@ namespace TV_App.EFModels
             modelBuilder.Entity<FeatureExample>(entity =>
             {
                 entity.HasKey(e => new { e.FeatureId, e.ProgrammeId });
+
+                entity.HasIndex(e => e.ProgrammeId);
 
                 entity.Property(e => e.FeatureId).HasColumnName("feature_id");
 
@@ -168,7 +180,8 @@ namespace TV_App.EFModels
                 entity.Property(e => e.TypeName)
                     .IsRequired()
                     .HasColumnName("type_name")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<GuideUpdate>(entity =>
@@ -181,14 +194,14 @@ namespace TV_App.EFModels
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Posted)
-                    .IsRequired()
                     .HasColumnName("posted")
-                    .HasColumnType("DATETIME");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Source)
                     .IsRequired()
                     .HasColumnName("source")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Programme>(entity =>
@@ -196,6 +209,8 @@ namespace TV_App.EFModels
                 entity.HasIndex(e => e.Id)
                     .HasName("IND_programme_id")
                     .IsUnique();
+
+                entity.HasIndex(e => e.SeriesId);
 
                 entity.HasIndex(e => e.Title)
                     .IsUnique();
@@ -206,18 +221,21 @@ namespace TV_App.EFModels
 
                 entity.Property(e => e.IconUrl)
                     .HasColumnName("icon_url")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SeqNumber)
                     .HasColumnName("seq_number")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SeriesId).HasColumnName("series_id");
 
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Series)
                     .WithMany(p => p.Programme)
@@ -228,9 +246,12 @@ namespace TV_App.EFModels
             {
                 entity.HasKey(e => new { e.UserLogin, e.ProgrammeId });
 
+                entity.HasIndex(e => e.ProgrammeId);
+
                 entity.Property(e => e.UserLogin)
                     .HasColumnName("user_login")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ProgrammeId).HasColumnName("programme_id");
 
@@ -258,7 +279,8 @@ namespace TV_App.EFModels
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
-                    .HasColumnType("VARCHAR(200)");
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -267,39 +289,37 @@ namespace TV_App.EFModels
 
                 entity.Property(e => e.Login)
                     .HasColumnName("login")
-                    .HasColumnType("VARCHAR(200)")
-                    .ValueGeneratedNever();
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.WeightActor)
                     .HasColumnName("weight_actor")
-                    .HasColumnType("float")
-                    .HasDefaultValueSql("0.1");
+                    .HasDefaultValueSql("((0.1))");
 
                 entity.Property(e => e.WeightCategory)
                     .HasColumnName("weight_category")
-                    .HasColumnType("float")
-                    .HasDefaultValueSql("0.3");
+                    .HasDefaultValueSql("((0.3))");
 
                 entity.Property(e => e.WeightCountry)
                     .HasColumnName("weight_country")
-                    .HasColumnType("float")
-                    .HasDefaultValueSql("0.1");
+                    .HasDefaultValueSql("((0.1))");
 
                 entity.Property(e => e.WeightDirector)
                     .HasColumnName("weight_director")
-                    .HasColumnType("float")
-                    .HasDefaultValueSql("0.1");
+                    .HasDefaultValueSql("((0.1))");
 
                 entity.Property(e => e.WeightKeyword)
                     .HasColumnName("weight_keyword")
-                    .HasColumnType("float")
-                    .HasDefaultValueSql("0.3");
+                    .HasDefaultValueSql("((0.3))");
 
                 entity.Property(e => e.WeightYear)
                     .HasColumnName("weight_year")
-                    .HasColumnType("float")
-                    .HasDefaultValueSql("0.1");
+                    .HasDefaultValueSql("((0.1))");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

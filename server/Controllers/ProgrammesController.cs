@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TV_App.EFModels;
+using TV_App.Models;
 using Microsoft.EntityFrameworkCore;
 using TV_App.Responses;
 

@@ -2,8 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TV_App.EFModels;
+using TV_App.Models;
 
 namespace TV_App.Migrations
 {
@@ -14,22 +15,25 @@ namespace TV_App.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "3.0.0-preview7.19362.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TV_App.EFModels.Channel", b =>
+            modelBuilder.Entity("TV_App.Models.Channel", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
 
                     b.Property<string>("IconUrl")
                         .HasColumnName("icon_url")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
@@ -39,7 +43,7 @@ namespace TV_App.Migrations
                     b.ToTable("Channel");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Description", b =>
+            modelBuilder.Entity("TV_App.Models.Description", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
@@ -65,7 +69,7 @@ namespace TV_App.Migrations
                     b.ToTable("Description");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Emission", b =>
+            modelBuilder.Entity("TV_App.Models.Emission", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
@@ -76,15 +80,13 @@ namespace TV_App.Migrations
                     b.Property<long>("ProgrammeId")
                         .HasColumnName("programme_id");
 
-                    b.Property<string>("Start")
-                        .IsRequired()
+                    b.Property<DateTime>("Start")
                         .HasColumnName("start")
-                        .HasColumnType("DATETIME");
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("Stop")
-                        .IsRequired()
+                    b.Property<DateTime>("Stop")
                         .HasColumnName("stop")
-                        .HasColumnType("DATETIME");
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -98,7 +100,7 @@ namespace TV_App.Migrations
                     b.ToTable("Emission");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Feature", b =>
+            modelBuilder.Entity("TV_App.Models.Feature", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
@@ -109,7 +111,8 @@ namespace TV_App.Migrations
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnName("value")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
@@ -123,7 +126,7 @@ namespace TV_App.Migrations
                     b.ToTable("Feature");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.FeatureExample", b =>
+            modelBuilder.Entity("TV_App.Models.FeatureExample", b =>
                 {
                     b.Property<long>("FeatureId")
                         .HasColumnName("feature_id");
@@ -138,7 +141,7 @@ namespace TV_App.Migrations
                     b.ToTable("FeatureExample");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.FeatureTypes", b =>
+            modelBuilder.Entity("TV_App.Models.FeatureTypes", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
@@ -146,27 +149,28 @@ namespace TV_App.Migrations
                     b.Property<string>("TypeName")
                         .IsRequired()
                         .HasColumnName("type_name")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
                     b.ToTable("FeatureTypes");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.GuideUpdate", b =>
+            modelBuilder.Entity("TV_App.Models.GuideUpdate", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
 
-                    b.Property<string>("Posted")
-                        .IsRequired()
+                    b.Property<DateTime>("Posted")
                         .HasColumnName("posted")
-                        .HasColumnType("DATETIME");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnName("source")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
@@ -176,18 +180,20 @@ namespace TV_App.Migrations
                     b.ToTable("GuideUpdate");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Programme", b =>
+            modelBuilder.Entity("TV_App.Models.Programme", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
 
                     b.Property<string>("IconUrl")
                         .HasColumnName("icon_url")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.Property<string>("SeqNumber")
                         .HasColumnName("seq_number")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.Property<long?>("SeriesId")
                         .HasColumnName("series_id");
@@ -195,7 +201,8 @@ namespace TV_App.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnName("title")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
@@ -211,11 +218,12 @@ namespace TV_App.Migrations
                     b.ToTable("Programme");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Rating", b =>
+            modelBuilder.Entity("TV_App.Models.Rating", b =>
                 {
                     b.Property<string>("UserLogin")
                         .HasColumnName("user_login")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.Property<long>("ProgrammeId")
                         .HasColumnName("programme_id");
@@ -230,7 +238,7 @@ namespace TV_App.Migrations
                     b.ToTable("Rating");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Series", b =>
+            modelBuilder.Entity("TV_App.Models.Series", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnName("id");
@@ -238,7 +246,8 @@ namespace TV_App.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnName("title")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.HasKey("Id");
 
@@ -248,110 +257,113 @@ namespace TV_App.Migrations
                     b.ToTable("Series");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.User", b =>
+            modelBuilder.Entity("TV_App.Models.User", b =>
                 {
                     b.Property<string>("Login")
                         .HasColumnName("login")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
 
                     b.Property<double>("WeightActor")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("weight_actor")
-                        .HasColumnType("DOUBLE")
-                        .HasDefaultValueSql("0.1");
+                        .HasDefaultValueSql("((0.1))");
 
                     b.Property<double>("WeightCategory")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("weight_category")
-                        .HasColumnType("DOUBLE")
-                        .HasDefaultValueSql("0.3");
+                        .HasDefaultValueSql("((0.3))");
 
                     b.Property<double>("WeightCountry")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("weight_country")
-                        .HasColumnType("DOUBLE")
-                        .HasDefaultValueSql("0.1");
+                        .HasDefaultValueSql("((0.1))");
 
                     b.Property<double>("WeightDirector")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("weight_director")
-                        .HasColumnType("DOUBLE")
-                        .HasDefaultValueSql("0.1");
+                        .HasDefaultValueSql("((0.1))");
 
                     b.Property<double>("WeightKeyword")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("weight_keyword")
-                        .HasColumnType("DOUBLE")
-                        .HasDefaultValueSql("0.3");
+                        .HasDefaultValueSql("((0.3))");
 
                     b.Property<double>("WeightYear")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("weight_year")
-                        .HasColumnType("DOUBLE")
-                        .HasDefaultValueSql("0.1");
+                        .HasDefaultValueSql("((0.1))");
 
                     b.HasKey("Login");
 
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Description", b =>
+            modelBuilder.Entity("TV_App.Models.Description", b =>
                 {
-                    b.HasOne("TV_App.EFModels.GuideUpdate")
+                    b.HasOne("TV_App.Models.GuideUpdate", "GuideUpdate")
                         .WithMany("Description")
                         .HasForeignKey("GuideUpdateId");
 
-                    b.HasOne("TV_App.EFModels.Programme", "IdProgrammeNavigation")
+                    b.HasOne("TV_App.Models.Programme", "IdProgrammeNavigation")
                         .WithMany("Description")
-                        .HasForeignKey("IdProgramme");
+                        .HasForeignKey("IdProgramme")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Emission", b =>
+            modelBuilder.Entity("TV_App.Models.Emission", b =>
                 {
-                    b.HasOne("TV_App.EFModels.Channel", "Channel")
+                    b.HasOne("TV_App.Models.Channel", "Channel")
                         .WithMany("Emission")
-                        .HasForeignKey("ChannelId");
+                        .HasForeignKey("ChannelId")
+                        .IsRequired();
 
-                    b.HasOne("TV_App.EFModels.Programme", "Programme")
+                    b.HasOne("TV_App.Models.Programme", "Programme")
                         .WithMany("Emission")
-                        .HasForeignKey("ProgrammeId");
+                        .HasForeignKey("ProgrammeId")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Feature", b =>
+            modelBuilder.Entity("TV_App.Models.Feature", b =>
                 {
-                    b.HasOne("TV_App.EFModels.FeatureTypes", "TypeNavigation")
+                    b.HasOne("TV_App.Models.FeatureTypes", "TypeNavigation")
                         .WithMany("Feature")
-                        .HasForeignKey("Type");
+                        .HasForeignKey("Type")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.FeatureExample", b =>
+            modelBuilder.Entity("TV_App.Models.FeatureExample", b =>
                 {
-                    b.HasOne("TV_App.EFModels.Feature", "Feature")
+                    b.HasOne("TV_App.Models.Feature", "Feature")
                         .WithMany("FeatureExample")
-                        .HasForeignKey("FeatureId");
+                        .HasForeignKey("FeatureId")
+                        .IsRequired();
 
-                    b.HasOne("TV_App.EFModels.Programme", "Programme")
+                    b.HasOne("TV_App.Models.Programme", "Programme")
                         .WithMany("FeatureExample")
-                        .HasForeignKey("ProgrammeId");
+                        .HasForeignKey("ProgrammeId")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Programme", b =>
+            modelBuilder.Entity("TV_App.Models.Programme", b =>
                 {
-                    b.HasOne("TV_App.EFModels.Series", "Series")
+                    b.HasOne("TV_App.Models.Series", "Series")
                         .WithMany("Programme")
                         .HasForeignKey("SeriesId");
                 });
 
-            modelBuilder.Entity("TV_App.EFModels.Rating", b =>
+            modelBuilder.Entity("TV_App.Models.Rating", b =>
                 {
-                    b.HasOne("TV_App.EFModels.Programme", "Programme")
+                    b.HasOne("TV_App.Models.Programme", "Programme")
                         .WithMany("Rating")
-                        .HasForeignKey("ProgrammeId");
+                        .HasForeignKey("ProgrammeId")
+                        .IsRequired();
 
-                    b.HasOne("TV_App.EFModels.User", "UserLoginNavigation")
+                    b.HasOne("TV_App.Models.User", "UserLoginNavigation")
                         .WithMany("Rating")
                         .HasForeignKey("UserLogin")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

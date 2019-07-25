@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataLayer;
 using System.Xml.Linq;
 using System.IO;
-using TV_App.EFModels;
+using TV_App.Models;
 using TV_App.Responses;
 using Microsoft.EntityFrameworkCore;
 

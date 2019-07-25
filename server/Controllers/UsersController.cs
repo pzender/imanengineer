@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using TV_App.EFModels;
+using TV_App.Models;
 using TV_App.Responses;
 
 namespace TV_App.Controllers
@@ -42,9 +42,9 @@ namespace TV_App.Controllers
 
         // POST: api/Users/Przemek/Ratings
         [HttpPost("{name}/Ratings")]
-        public EFModels.Rating PostRating(string name, [FromBody] Rating body)
+        public Models.Rating PostRating(string name, [FromBody] Rating body)
         {
-            EFModels.Rating rating = new EFModels.Rating()
+            Models.Rating rating = new Models.Rating()
             {
                 ProgrammeId = body.programme_id,
                 RatingValue = body.rating_value,

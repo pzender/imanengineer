@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TV_App.EFModels;
+using TV_App.Models;
 using TV_App.Responses;
 
 namespace TV_App.Controllers

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TV_App.Controllers;
-using TV_App.EFModels;
+using TV_App.Models;
 
 namespace TV_App.Responses
 {

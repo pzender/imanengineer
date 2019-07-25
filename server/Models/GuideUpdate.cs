@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TV_App.EFModels
+namespace TV_App.Models
 {
     public partial class GuideUpdate
     {

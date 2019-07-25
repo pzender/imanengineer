@@ -22,16 +22,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0-preview5-19264-04" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Migrations\20190611224849_mysql.cs" />
-    <Compile Remove="Migrations\20190611224849_mysql.Designer.cs" />
-    <Compile Remove="Migrations\testContextModelSnapshot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Migrations\testContextModelSnapshot.cs" />
-  </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" />
   </ItemGroup>

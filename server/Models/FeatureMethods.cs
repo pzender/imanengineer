@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TV_App.EFModels
+namespace TV_App.Models
 {
     public partial class Feature
     {

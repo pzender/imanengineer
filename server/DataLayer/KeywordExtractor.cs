@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TV_App.EFModels;
+using TV_App.Models;
 using LemmaSharp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

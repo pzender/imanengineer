@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TV_App.EFModels;
+using TV_App.Models;
 using LemmaSharp;
 using TV_App.DataLayer;
 using System.Diagnostics;

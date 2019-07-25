@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TV_App.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +12,8 @@ namespace TV_App.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    name = table.Column<string>(type: "VARCHAR(200)", nullable: false),
-                    icon_url = table.Column<string>(type: "VARCHAR(200)", nullable: true)
+                    name = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    icon_url = table.Column<string>(unicode: false, maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -24,7 +25,7 @@ namespace TV_App.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    type_name = table.Column<string>(type: "VARCHAR(200)", nullable: false)
+                    type_name = table.Column<string>(unicode: false, maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,8 +37,8 @@ namespace TV_App.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    source = table.Column<string>(type: "VARCHAR(200)", nullable: false),
-                    posted = table.Column<string>(type: "DATETIME", nullable: false)
+                    source = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    posted = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,7 +50,7 @@ namespace TV_App.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    title = table.Column<string>(type: "VARCHAR(200)", nullable: false)
+                    title = table.Column<string>(unicode: false, maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,13 +61,13 @@ namespace TV_App.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    login = table.Column<string>(type: "VARCHAR(200)", nullable: false),
-                    weight_actor = table.Column<double>(type: "DOUBLE", nullable: false, defaultValueSql: "0.1"),
-                    weight_category = table.Column<double>(type: "DOUBLE", nullable: false, defaultValueSql: "0.3"),
-                    weight_country = table.Column<double>(type: "DOUBLE", nullable: false, defaultValueSql: "0.1"),
-                    weight_year = table.Column<double>(type: "DOUBLE", nullable: false, defaultValueSql: "0.1"),
-                    weight_keyword = table.Column<double>(type: "DOUBLE", nullable: false, defaultValueSql: "0.3"),
-                    weight_director = table.Column<double>(type: "DOUBLE", nullable: false, defaultValueSql: "0.1")
+                    login = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    weight_actor = table.Column<double>(nullable: false, defaultValueSql: "((0.1))"),
+                    weight_category = table.Column<double>(nullable: false, defaultValueSql: "((0.3))"),
+                    weight_country = table.Column<double>(nullable: false, defaultValueSql: "((0.1))"),
+                    weight_year = table.Column<double>(nullable: false, defaultValueSql: "((0.1))"),
+                    weight_keyword = table.Column<double>(nullable: false, defaultValueSql: "((0.3))"),
+                    weight_director = table.Column<double>(nullable: false, defaultValueSql: "((0.1))")
                 },
                 constraints: table =>
                 {
@@ -79,7 +80,7 @@ namespace TV_App.Migrations
                 {
                     id = table.Column<long>(nullable: false),
                     type = table.Column<long>(nullable: false),
-                    value = table.Column<string>(type: "VARCHAR(200)", nullable: false)
+                    value = table.Column<string>(unicode: false, maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,9 +98,9 @@ namespace TV_App.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    title = table.Column<string>(type: "VARCHAR(200)", nullable: false),
-                    icon_url = table.Column<string>(type: "VARCHAR(200)", nullable: true),
-                    seq_number = table.Column<string>(type: "VARCHAR(200)", nullable: true),
+                    title = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    icon_url = table.Column<string>(unicode: false, maxLength: 200, nullable: true),
+                    seq_number = table.Column<string>(unicode: false, maxLength: 200, nullable: true),
                     series_id = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
@@ -144,8 +145,8 @@ namespace TV_App.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    start = table.Column<string>(type: "DATETIME", nullable: false),
-                    stop = table.Column<string>(type: "DATETIME", nullable: false),
+                    start = table.Column<DateTime>(type: "datetime", nullable: false),
+                    stop = table.Column<DateTime>(type: "datetime", nullable: false),
                     programme_id = table.Column<long>(nullable: false),
                     channel_id = table.Column<long>(nullable: false)
                 },
@@ -194,7 +195,7 @@ namespace TV_App.Migrations
                 name: "Rating",
                 columns: table => new
                 {
-                    user_login = table.Column<string>(type: "VARCHAR(200)", nullable: false),
+                    user_login = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
                     programme_id = table.Column<long>(nullable: false),
                     rating_value = table.Column<long>(nullable: false)
                 },

@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TV_App.DataLayer;
-using TV_App.EFModels;
+using TV_App.Models;
 using TV_App.Scheduler;
 
 namespace TV_App.Services

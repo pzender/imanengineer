@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TV_App.DataLayer;
-using TV_App.EFModels;
+using TV_App.Models;
 
 namespace TV_App.Controllers
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TV_App.EFModels;
+using TV_App.Models;
 
 namespace TV_App.Responses
 {

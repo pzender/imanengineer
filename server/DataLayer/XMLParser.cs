@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TV_App.EFModels;
+using TV_App.Models;
 using Microsoft.EntityFrameworkCore;
 using LemmaSharp;
 using Microsoft.Extensions.Logging;

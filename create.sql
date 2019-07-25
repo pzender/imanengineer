@@ -11,8 +11,8 @@ GO
 
 CREATE TABLE [Channel] (
     [id] bigint NOT NULL,
-    [name] VARCHAR(200) NOT NULL,
-    [icon_url] VARCHAR(200) NULL,
+    [name] varchar(200) NOT NULL,
+    [icon_url] varchar(200) NULL,
     CONSTRAINT [PK_Channel] PRIMARY KEY ([id])
 );
 
@@ -20,7 +20,7 @@ GO
 
 CREATE TABLE [FeatureTypes] (
     [id] bigint NOT NULL,
-    [type_name] VARCHAR(200) NOT NULL,
+    [type_name] varchar(200) NOT NULL,
     CONSTRAINT [PK_FeatureTypes] PRIMARY KEY ([id])
 );
 
@@ -28,8 +28,8 @@ GO
 
 CREATE TABLE [GuideUpdate] (
     [id] bigint NOT NULL,
-    [source] VARCHAR(200) NOT NULL,
-    [posted] DATETIME NOT NULL,
+    [source] varchar(200) NOT NULL,
+    [posted] datetime NOT NULL,
     CONSTRAINT [PK_GuideUpdate] PRIMARY KEY ([id])
 );
 
@@ -37,20 +37,20 @@ GO
 
 CREATE TABLE [Series] (
     [id] bigint NOT NULL,
-    [title] VARCHAR(200) NOT NULL,
+    [title] varchar(200) NOT NULL,
     CONSTRAINT [PK_Series] PRIMARY KEY ([id])
 );
 
 GO
 
 CREATE TABLE [User] (
-    [login] VARCHAR(200) NOT NULL,
-    [weight_actor] float NOT NULL DEFAULT (0.1),
-    [weight_category] float NOT NULL DEFAULT (0.3),
-    [weight_country] float NOT NULL DEFAULT (0.1),
-    [weight_year] float NOT NULL DEFAULT (0.1),
-    [weight_keyword] float NOT NULL DEFAULT (0.3),
-    [weight_director] float NOT NULL DEFAULT (0.1),
+    [login] varchar(200) NOT NULL,
+    [weight_actor] float NOT NULL DEFAULT (((0.1))),
+    [weight_category] float NOT NULL DEFAULT (((0.3))),
+    [weight_country] float NOT NULL DEFAULT (((0.1))),
+    [weight_year] float NOT NULL DEFAULT (((0.1))),
+    [weight_keyword] float NOT NULL DEFAULT (((0.3))),
+    [weight_director] float NOT NULL DEFAULT (((0.1))),
     CONSTRAINT [PK_User] PRIMARY KEY ([login])
 );
 
@@ -59,7 +59,7 @@ GO
 CREATE TABLE [Feature] (
     [id] bigint NOT NULL,
     [type] bigint NOT NULL,
-    [value] VARCHAR(200) NOT NULL,
+    [value] varchar(200) NOT NULL,
     CONSTRAINT [PK_Feature] PRIMARY KEY ([id]),
     CONSTRAINT [FK_Feature_FeatureTypes_type] FOREIGN KEY ([type]) REFERENCES [FeatureTypes] ([id]) ON DELETE NO ACTION
 );
@@ -68,9 +68,9 @@ GO
 
 CREATE TABLE [Programme] (
     [id] bigint NOT NULL,
-    [title] VARCHAR(200) NOT NULL,
-    [icon_url] VARCHAR(200) NULL,
-    [seq_number] VARCHAR(200) NULL,
+    [title] varchar(200) NOT NULL,
+    [icon_url] varchar(200) NULL,
+    [seq_number] varchar(200) NULL,
     [series_id] bigint NULL,
     CONSTRAINT [PK_Programme] PRIMARY KEY ([id]),
     CONSTRAINT [FK_Programme_Series_series_id] FOREIGN KEY ([series_id]) REFERENCES [Series] ([id]) ON DELETE NO ACTION
@@ -92,8 +92,8 @@ GO
 
 CREATE TABLE [Emission] (
     [id] bigint NOT NULL,
-    [start] DATETIME NOT NULL,
-    [stop] DATETIME NOT NULL,
+    [start] datetime NOT NULL,
+    [stop] datetime NOT NULL,
     [programme_id] bigint NOT NULL,
     [channel_id] bigint NOT NULL,
     CONSTRAINT [PK_Emission] PRIMARY KEY ([id]),
@@ -114,7 +114,7 @@ CREATE TABLE [FeatureExample] (
 GO
 
 CREATE TABLE [Rating] (
-    [user_login] VARCHAR(200) NOT NULL,
+    [user_login] varchar(200) NOT NULL,
     [programme_id] bigint NOT NULL,
     [rating_value] bigint NOT NULL,
     CONSTRAINT [PK_Rating] PRIMARY KEY ([user_login], [programme_id]),
@@ -189,7 +189,7 @@ CREATE UNIQUE INDEX [IX_Series_title] ON [Series] ([title]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190612005924_Initial', N'3.0.0-preview7.19362.6');
+VALUES (N'20190725200304_InitialCreate', N'3.0.0-preview7.19362.6');
 
 GO
 
