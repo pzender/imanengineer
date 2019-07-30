@@ -81,7 +81,7 @@ GO
 CREATE TABLE [Description] (
     [id] bigint NOT NULL,
     [id_programme] bigint NOT NULL,
-    [content] nvarchar(450) NOT NULL,
+    [content] text NOT NULL,
     [GuideUpdateId] bigint NULL,
     CONSTRAINT [PK_Description] PRIMARY KEY ([id]),
     CONSTRAINT [FK_Description_GuideUpdate_GuideUpdateId] FOREIGN KEY ([GuideUpdateId]) REFERENCES [GuideUpdate] ([id]) ON DELETE NO ACTION,
@@ -125,10 +125,6 @@ CREATE TABLE [Rating] (
 GO
 
 CREATE UNIQUE INDEX [IX_Channel_name] ON [Channel] ([name]);
-
-GO
-
-CREATE UNIQUE INDEX [IX_Description_content] ON [Description] ([content]);
 
 GO
 

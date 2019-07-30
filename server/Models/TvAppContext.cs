@@ -31,6 +31,7 @@ namespace TV_App.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password");
             }
         }
@@ -60,9 +61,6 @@ namespace TV_App.Models
 
             modelBuilder.Entity<Description>(entity =>
             {
-                entity.HasIndex(e => e.Content)
-                    .IsUnique();
-
                 entity.HasIndex(e => e.GuideUpdateId);
 
                 entity.HasIndex(e => e.IdProgramme);
@@ -73,7 +71,8 @@ namespace TV_App.Models
 
                 entity.Property(e => e.Content)
                     .IsRequired()
-                    .HasColumnName("content");
+                    .HasColumnName("content")
+                    .HasColumnType("text");
 
                 entity.Property(e => e.IdProgramme).HasColumnName("id_programme");
 
