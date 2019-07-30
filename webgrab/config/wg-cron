@@ -1,1 +1,2 @@
-30 17 * * * s6-setuidgid abc /bin/bash /defaults/update.sh
+0 5 * * * s6-setuidgid abc /bin/bash /defaults/update.sh
+0 7 * * * curl --insecure --silent --data '@/data/guide.xml' -XPOST 'http://server:5000/api/GuideUpdate'

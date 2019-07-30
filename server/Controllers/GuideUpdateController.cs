@@ -44,14 +44,14 @@ namespace TV_App.Controllers
 
         // POST: api/GuideUpdate
         [HttpPost]
-        public void Post()
+        public async Task PostAsync()
         {
             var logger = loggerFactory.CreateLogger("GuideUpdatePOST");
             logger.LogInformation("GuideUpdateController.Post() called");
             string body = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                body = sr.ReadToEnd();
+                body = await sr.ReadToEndAsync();
             }
 
             if(body != "")
@@ -63,7 +63,7 @@ namespace TV_App.Controllers
                 logger.LogInformation("Parsing done. ");
                 KeywordExtractor keywordExtractor = new KeywordExtractor(logger);
 
-                IEnumerable<Programme> list = DbContext.Programme.Include(prog => prog.Description);
+                IEnumerable<Programme> list = DbContext.Programme.Include(prog => prog.Description).ToList();
                 int count = list.Count(), i = 0;
 
                 foreach (Programme p in list)

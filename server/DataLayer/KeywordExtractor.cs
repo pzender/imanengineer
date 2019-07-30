@@ -29,14 +29,16 @@ namespace TV_App.DataLayer
                 var featnames = DbContext.FeatureExample
                     .Include(fe => fe.Feature)
                     .Where(fe => fe.ProgrammeId == p.Id && fe.Feature.Type != 8)
-                    .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()));
+                    .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()))
+                    .ToList();
                 var keywords = ExtractKeywords(description);
 
-                var keywords_pruned = keywords.Where(keyword => !featnames.Any(feat => feat.Contains(keyword)));
-
-                return keywords_pruned
+                var keywords_pruned = keywords
+                    .Where(keyword => !featnames.Any(feat => feat.Contains(keyword)))
                     .Take(10)
                     .ToList();
+
+                return keywords_pruned;
             }
         }
 

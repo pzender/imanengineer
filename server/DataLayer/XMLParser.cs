@@ -23,6 +23,13 @@ namespace TV_App.DataLayer
 
         public void ParseAll(XDocument doc)
         {
+            if (DbContext.FeatureTypes.Count() == 0)
+            {
+                FillFeatureTypes();
+                logger.LogInformation($"Filled feat-types!");
+
+            }
+
             IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
             logger.LogInformation($"{channels_in_xml.Count()} channels found. Parsing channels.");
             //guideupdate
@@ -130,7 +137,7 @@ namespace TV_App.DataLayer
 
                 Description new_desc = DbContext.Description
                     .Include(desc => desc.IdProgrammeNavigation)
-                    .SingleOrDefault(desc => desc.IdProgrammeNavigation == new_prog);
+                    .FirstOrDefault(desc => desc.IdProgramme == new_prog.Id);
 
                 if(new_desc == null)
                 {
@@ -199,6 +206,22 @@ namespace TV_App.DataLayer
             DbContext.SaveChanges();
         }
 
+        private void FillFeatureTypes()
+        {
+            DbContext.FeatureTypes.AddRange(new List<FeatureTypes>
+            {
+                new FeatureTypes() { Id = 1, TypeName = "country" },
+                new FeatureTypes() { Id = 2, TypeName = "date" },
+                new FeatureTypes() { Id = 3, TypeName = "writer" },
+                new FeatureTypes() { Id = 4, TypeName = "actor" },
+                new FeatureTypes() { Id = 5, TypeName = "director" },
+                new FeatureTypes() { Id = 6, TypeName = "presenter" },
+                new FeatureTypes() { Id = 7, TypeName = "category" },
+                new FeatureTypes() { Id = 8, TypeName = "keyword" },
+
+            });
+            DbContext.SaveChanges();
+        }
 
         //01234567 89
         //20181017 03 25 00 +0200

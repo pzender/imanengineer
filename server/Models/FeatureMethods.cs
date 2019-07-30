@@ -21,9 +21,6 @@ namespace TV_App.Models
                 }
             }
             int or = one.Count() + other.Count() - and;
-
-            //int diff = or.Count() - and.Count();
-
             if (or == 0) return 0;
             else
             {
@@ -38,7 +35,7 @@ namespace TV_App.Models
             else if (one != null && other != null)
             {
                 double n_one = double.Parse(one.Value), n_other = double.Parse(other.Value);
-                return 1 / ((1 / Feature.DATE_SIMILARITY_HALF) * Math.Abs(n_one - n_other) + 1);
+                return 1 / ((1 / DATE_SIMILARITY_HALF) * Math.Abs(n_one - n_other) + 1);
             }
             else return 0;
         }
