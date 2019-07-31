@@ -19,101 +19,48 @@
             For the latest version,
             see http://webgrabplus.com/epg-channels for the available sites/channels
   -->
-  
-    <channel update="i" site="tv.wp.pl" site_id="1" xmltv_id="TVP 1">TVP 1</channel>
-    <channel update="i" site="tv.wp.pl" site_id="2" xmltv_id="TVP 2">TVP 2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="5" xmltv_id="POLSAT">POLSAT</channel>
-    <channel update="i" site="tv.wp.pl" site_id="17" xmltv_id="TVN">TVN</channel>
-    <channel update="i" site="tv.wp.pl" site_id="7" xmltv_id="TVN 7">TVN 7</channel>
-    <channel update="i" site="tv.wp.pl" site_id="18" xmltv_id="TV 4">TV 4</channel>
-    <channel update="i" site="tv.wp.pl" site_id="3" xmltv_id="TVP Polonia">TVP Polonia</channel>
-    <channel update="i" site="tv.wp.pl" site_id="268" xmltv_id="TV 6">TV 6</channel>
-    <channel update="i" site="tv.wp.pl" site_id="11" xmltv_id="TV Puls">TV Puls</channel>
-    <channel update="i" site="tv.wp.pl" site_id="343" xmltv_id="TVP Kultura">TVP Kultura</channel>
-    <channel update="i" site="tv.wp.pl" site_id="280" xmltv_id="PULS 2">PULS 2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="6" xmltv_id="POLSAT 2">POLSAT 2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="390" xmltv_id="TVP Historia">TVP Historia</channel>
-    <channel update="i" site="tv.wp.pl" site_id="663" xmltv_id="HISTORY2">HISTORY2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="31" xmltv_id="TVP Info">TVP Info</channel>
-    <channel update="i" site="tv.wp.pl" site_id="151" xmltv_id="TVN 24">TVN 24</channel>
-    <channel update="i" site="tv.wp.pl" site_id="397" xmltv_id="TVN 24 Biznes i Świat">TVN 24 Biznes i Świat</channel>
-    <channel update="i" site="tv.wp.pl" site_id="431" xmltv_id="POLSAT News">POLSAT News</channel>
-    <channel update="i" site="tv.wp.pl" site_id="334" xmltv_id="POLSAT News 2">POLSAT News 2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="333" xmltv_id="TVN Style">TVN Style</channel>
-    <channel update="i" site="tv.wp.pl" site_id="85" xmltv_id="Ale kino+">Ale kino+</channel>
-    <channel update="i" site="tv.wp.pl" site_id="497" xmltv_id="TVP Seriale">TVP Seriale</channel>
-    <channel update="i" site="tv.wp.pl" site_id="240" xmltv_id="TVN Fabuła">TVN Fabuła</channel>
-    <channel update="i" site="tv.wp.pl" site_id="4" xmltv_id="Kino Polska">Kino Polska</channel>
-    <channel update="i" site="tv.wp.pl" site_id="147" xmltv_id="AXN">AXN</channel>
-    <channel update="i" site="tv.wp.pl" site_id="640" xmltv_id="Fokus TV">Fokus TV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="95" xmltv_id="TLC">TLC</channel>
-    <channel update="i" site="tv.wp.pl" site_id="76" xmltv_id="National Geographic">National Geographic</channel>
-    <channel update="i" site="tv.wp.pl" site_id="392" xmltv_id="National Geographic Wild">National Geographic Wild</channel>
-    <channel update="i" site="tv.wp.pl" site_id="513" xmltv_id="Paramount Channel HD">Paramount Channel HD</channel>
-    <channel update="i" site="tv.wp.pl" site_id="403" xmltv_id="Kino TV">Kino TV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="387" xmltv_id="TNT">TNT</channel>
-    <channel update="i" site="tv.wp.pl" site_id="382" xmltv_id="FOX Comedy">FOX Comedy</channel>
-    <channel update="i" site="tv.wp.pl" site_id="370" xmltv_id="Comedy Central">Comedy Central</channel>
-    <channel update="i" site="tv.wp.pl" site_id="359" xmltv_id="Comedy Central Family">Comedy Central Family</channel>
-    <channel update="i" site="tv.wp.pl" site_id="36" xmltv_id="Cinemax">Cinemax</channel>
-    <channel update="i" site="tv.wp.pl" site_id="386" xmltv_id="Cartoon Network">Cartoon Network</channel>
-    <channel update="i" site="tv.wp.pl" site_id="81" xmltv_id="MiniMini+">MiniMini+</channel>
-    <channel update="i" site="tv.wp.pl" site_id="495" xmltv_id="FOX">FOX</channel>
-    <channel update="i" site="tv.wp.pl" site_id="528" xmltv_id="AXN Spin">AXN Spin</channel>
-    <channel update="i" site="tv.wp.pl" site_id="367" xmltv_id="AXN Black">AXN Black</channel>
-    <channel update="i" site="tv.wp.pl" site_id="366" xmltv_id="AXN White">AXN White</channel>
-    <channel update="i" site="tv.wp.pl" site_id="294" xmltv_id="FilmBox Action">FilmBox Action</channel>
-    <channel update="i" site="tv.wp.pl" site_id="406" xmltv_id="FilmBox Extra HD">FilmBox Extra HD</channel>
-    <channel update="i" site="tv.wp.pl" site_id="438" xmltv_id="FilmBox Family">FilmBox Family</channel>
-    <channel update="i" site="tv.wp.pl" site_id="405" xmltv_id="FilmBox Premium HD">FilmBox Premium HD</channel>
-    <channel update="i" site="tv.wp.pl" site_id="14" xmltv_id="HBO">HBO</channel>
-    <channel update="i" site="tv.wp.pl" site_id="12" xmltv_id="HBO2">HBO2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="385" xmltv_id="HBO3">HBO3</channel>
-    <channel update="i" site="tv.wp.pl" site_id="13" xmltv_id="CANAL+">CANAL+</channel>
-    <channel update="i" site="tv.wp.pl" site_id="559" xmltv_id="CANAL+ Seriale">CANAL+ Seriale</channel>
-    <channel update="i" site="tv.wp.pl" site_id="561" xmltv_id="CANAL+ 1">CANAL+ 1</channel>
-    <channel update="i" site="tv.wp.pl" site_id="86" xmltv_id="CANAL+ Film">CANAL+ Film</channel>
-    <channel update="i" site="tv.wp.pl" site_id="560" xmltv_id="CANAL+ Family">CANAL+ Family</channel>
-    <channel update="i" site="tv.wp.pl" site_id="679" xmltv_id="CANAL+ Discovery">CANAL+ Discovery</channel>
-    <channel update="i" site="tv.wp.pl" site_id="374" xmltv_id="TVP Sport">TVP Sport</channel>
-    <channel update="i" site="tv.wp.pl" site_id="39" xmltv_id="Eurosport 2">Eurosport 2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="87" xmltv_id="CANAL+ Sport">CANAL+ Sport</channel>
-    <channel update="i" site="tv.wp.pl" site_id="678" xmltv_id="CANAL+ Sport 2">CANAL+ Sport 2</channel>
-    <channel update="i" site="tv.wp.pl" site_id="464" xmltv_id="Eska TV">Eska TV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="782" xmltv_id="Eska TV Extra">Eska TV Extra</channel>
-    <channel update="i" site="tv.wp.pl" site_id="337" xmltv_id="4FUN.TV">4FUN.TV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="480" xmltv_id="4FUN GOLD HITS">4FUN GOLD HITS</channel>
-    <channel update="i" site="tv.wp.pl" site_id="139" xmltv_id="4FUN DANCE">4FUN DANCE</channel>
-    <channel update="i" site="tv.wp.pl" site_id="732" xmltv_id="Eska Rock TV">Eska Rock TV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="759" xmltv_id="Music Box">Music Box</channel>
-    <channel update="i" site="tv.wp.pl" site_id="657" xmltv_id="Adventure">Adventure</channel>
-    <channel update="i" site="tv.wp.pl" site_id="112" xmltv_id="AMC">AMC</channel>
-    <channel update="i" site="tv.wp.pl" site_id="410" xmltv_id="BBC Lifestyle">BBC Lifestyle</channel>
-    <channel update="i" site="tv.wp.pl" site_id="160" xmltv_id="BBC World News">BBC World News</channel>
-    <channel update="i" site="tv.wp.pl" site_id="263" xmltv_id="Kino Polska Muzyka">Kino Polska Muzyka</channel>
-    <channel update="i" site="tv.wp.pl" site_id="236" xmltv_id="BBC First">BBC First</channel>
-    <channel update="i" site="tv.wp.pl" site_id="407" xmltv_id="BBC Brit">BBC Brit</channel>
-    <channel update="i" site="tv.wp.pl" site_id="408" xmltv_id="BBC CBeebies">BBC CBeebies</channel>
-    <channel update="i" site="tv.wp.pl" site_id="409" xmltv_id="BBC Earth">BBC Earth</channel>
-    <channel update="i" site="tv.wp.pl" site_id="400" xmltv_id="Da Vinci">Da Vinci</channel>
-    <channel update="i" site="tv.wp.pl" site_id="472" xmltv_id="Animal Planet HD">Animal Planet HD</channel>
-    <channel update="i" site="tv.wp.pl" site_id="533" xmltv_id="English Club TV">English Club TV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="461" xmltv_id="BabyFirstTV">BabyFirstTV</channel>
-    <channel update="i" site="tv.wp.pl" site_id="591" xmltv_id="DocuBox">DocuBox</channel>
-    <channel update="i" site="tv.wp.pl" site_id="136" xmltv_id="CNBC">CNBC</channel>
-    <channel update="i" site="tv.wp.pl" site_id="177" xmltv_id="CNN">CNN</channel>
-    <channel update="i" site="tv.wp.pl" site_id="67" xmltv_id="Discovery Channel">Discovery Channel</channel>
-    <channel update="i" site="tv.wp.pl" site_id="376" xmltv_id="Discovery Historia">Discovery Historia</channel>
-    <channel update="i" site="tv.wp.pl" site_id="717" xmltv_id="POLSAT Viasat History">POLSAT Viasat History</channel>
-    <channel update="i" site="tv.wp.pl" site_id="63" xmltv_id="Discovery Life">Discovery Life</channel>
-    <channel update="i" site="tv.wp.pl" site_id="763" xmltv_id="Discovery Life HD">Discovery Life HD</channel>
-    <channel update="i" site="tv.wp.pl" site_id="96" xmltv_id="Discovery Science">Discovery Science</channel>
-    <channel update="i" site="tv.wp.pl" site_id="414" xmltv_id="POLSAT JimJam">POLSAT JimJam</channel>
-    <channel update="i" site="tv.wp.pl" site_id="33" xmltv_id="Disney Junior">Disney Junior</channel>
-    <channel update="i" site="tv.wp.pl" site_id="346" xmltv_id="Disney Channel">Disney Channel</channel>
-    <channel update="i" site="tv.wp.pl" site_id="300" xmltv_id="Disney Cinemagic">Disney Cinemagic</channel>
-    <channel update="i" site="tv.wp.pl" site_id="658" xmltv_id="Adventure HD">Adventure HD</channel>
-    <channel update="i" site="tv.wp.pl" site_id="74" xmltv_id="Disney XD">Disney XD</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/stopklatka-tv-185" xmltv_id="Stopklatka TV">Stopklatka TV</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/eska-tv-114" xmltv_id="Eska TV">Eska TV</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/ttv-33" xmltv_id="TTV">TTV</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/polo-tv-135" xmltv_id="Polo TV">Polo TV</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/atm-rozrywka-287" xmltv_id="ATM Rozrywka">ATM Rozrywka</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tv-trwam-108" xmltv_id="TV Trwam">TV Trwam</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-abc-182" xmltv_id="TVP ABC">TVP ABC</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/fokus-tv-46" xmltv_id="Fokus TV">Fokus TV</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/polsat-38" xmltv_id="POLSAT">POLSAT</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvn-357" xmltv_id="TVN">TVN</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tv-4-360" xmltv_id="TV 4">TV 4</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tv-6-429" xmltv_id="TV 6">TV 6</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tv-puls-332" xmltv_id="TV Puls">TV Puls</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/puls-2-439" xmltv_id="PULS 2">PULS 2</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvn-7-326" xmltv_id="TVN 7">TVN 7</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-1-hd-380" xmltv_id="TVP 1 HD">TVP 1 HD</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-2-hd-145" xmltv_id="TVP 2 HD">TVP 2 HD</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-172" xmltv_id="TVP 3">TVP 3</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-bialystok-5" xmltv_id="TVP 3 Białystok">TVP 3 Białystok</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-bydgoszcz-378" xmltv_id="TVP 3 Bydgoszcz">TVP 3 Bydgoszcz</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-gdansk-386" xmltv_id="TVP 3 Gdańsk">TVP 3 Gdańsk</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-gorzow-wielkopolski-342" xmltv_id="TVP 3 Gorzów Wielkopolski">TVP 3 Gorzów Wielkopolski</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-katowice-394" xmltv_id="TVP 3 Katowice">TVP 3 Katowice</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-kielce-475" xmltv_id="TVP 3 Kielce">TVP 3 Kielce</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-krakow-403" xmltv_id="TVP 3 Kraków">TVP 3 Kraków</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-lublin-409" xmltv_id="TVP 3 Lublin">TVP 3 Lublin</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-lodz-416" xmltv_id="TVP 3 Łódź">TVP 3 Łódź</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-olsztyn-339" xmltv_id="TVP 3 Olsztyn">TVP 3 Olsztyn</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-opole-335" xmltv_id="TVP 3 Opole">TVP 3 Opole</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-poznan-425" xmltv_id="TVP 3 Poznań">TVP 3 Poznań</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-rzeszow-433" xmltv_id="TVP 3 Rzeszów">TVP 3 Rzeszów</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-szczecin-440" xmltv_id="TVP 3 Szczecin">TVP 3 Szczecin</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-warszawa-446" xmltv_id="TVP 3 Warszawa">TVP 3 Warszawa</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-3-wroclaw-454" xmltv_id="TVP 3 Wrocław">TVP 3 Wrocław</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-info-462" xmltv_id="TVP Info">TVP Info</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-kultura-477" xmltv_id="TVP Kultura">TVP Kultura</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-sport-40" xmltv_id="TVP Sport">TVP Sport</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-historia-74" xmltv_id="TVP Historia">TVP Historia</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvp-rozrywka-159" xmltv_id="TVP Rozrywka">TVP Rozrywka</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tv-republika-18" xmltv_id="TV Republika">TV Republika</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvs-90" xmltv_id="TVS">TVS</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/stars-tv-149" xmltv_id="STARS.TV">STARS.TV</channel>
 
 
 
