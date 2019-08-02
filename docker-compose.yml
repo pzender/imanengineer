@@ -24,7 +24,7 @@ services:
   client:
     image: pzender/eng-client
     build: ./client
-    container_name: web-client
+    container_name: client
     ports:
       - 80:80
     environment:
@@ -43,7 +43,7 @@ services:
   #   volumes:
   #     - ./.database:/var/lib/mysql
   #   restart: unless-stopped
-  database:
+  db:
     image: mcr.microsoft.com/mssql/server
     container_name: db
     ports:
@@ -52,5 +52,5 @@ services:
       -  ./.mssql:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=yourStrong(!)Password
+      - SA_PASSWORD=P@ssw0rd
       - MSSQL_PID=Express
