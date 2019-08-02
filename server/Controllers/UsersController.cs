@@ -35,9 +35,10 @@ namespace TV_App.Controllers
 
         // GET: api/Users/Przemek
         [HttpGet("{name}", Name = "Get")]
-        public User Get(string name)
+        public ObjectResult Get(string name)
         {
-            return DbContext.User.Where(u => u.Login == name).SingleOrDefault();
+            User user = DbContext.User.Where(u => u.Login == name).SingleOrDefault();
+            return user != null ? StatusCode(200, user) : StatusCode(404, "No such user!");
         }
 
         // POST: api/Users/Przemek/Ratings
@@ -134,12 +135,12 @@ namespace TV_App.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public User Post()
+        public async Task<ObjectResult> PostAsync()
         {
             string name = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                name = sr.ReadToEnd();
+                name = await sr.ReadToEndAsync();
             }
             
             User user = DbContext.User.Where(u => u.Login == name).SingleOrDefault();
@@ -150,9 +151,11 @@ namespace TV_App.Controllers
                     Login = name
                 };
                 DbContext.User.Add(user);
-                DbContext.SaveChanges();
+                await DbContext.SaveChangesAsync();
+                return StatusCode(200, user);
             }
-            return user;
+            else return StatusCode(409, "Username exists!");
+            
         }
 
 

@@ -48,7 +48,7 @@ namespace TV_App
                 app.UseHsts();
             }
             app.UseCors(builder => builder
-                .WithOrigins("web-client")
+                .WithOrigins("client")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()

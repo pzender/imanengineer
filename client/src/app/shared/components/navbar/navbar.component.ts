@@ -20,24 +20,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  public getUser(): string {
-    return this.service.getUser();
-  }
-
-  public setUser(value: string) {
-    this.service.setUser(value);
-  }
-
-  public userEmpty(): boolean {
-    return this.getUser() === '';
-  }
-
-  public logout(): void {
-    this.setUser(undefined);
-  }
-
-  public login(): void {
-    this.setUser(this.new_name)
+  public isLoggedIn(): boolean {
+    return !this.service.isAnonymous()
   }
 
   public search() {

@@ -20,6 +20,7 @@ import { FeatureComponent } from './containers/feature/feature.component';
 import { AllChannelsComponent } from './containers/all-channels/all-channels.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { LoginComponent } from './shared/components/login/login.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { environment } from '../environments/environment';
     ProfileComponent,
     DetailsComponent,
     FeatureComponent,
-    AllChannelsComponent
+    AllChannelsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

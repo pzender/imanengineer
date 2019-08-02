@@ -31,8 +31,8 @@ namespace TV_App.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password");
+                optionsBuilder.UseSqlServer("Data Source=db;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password");
+                optionsBuilder.EnableSensitiveDataLogging();
             }
         }
 

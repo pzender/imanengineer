@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,26 @@ export class UserService {
     return localStorage.getItem(UserService.USER);
   }
 
-  setUser(value: string): void{
-    this._http.post(`${environment.api}Users`, value)
-      .subscribe(result => {
-        localStorage.setItem(UserService.USER, result['login']);
-      });
+  login(username: string) {
+    return this._http.get(`${environment.api}Users/${username}`).pipe(
+      tap(resp => { 
+        localStorage.setItem(UserService.USER, resp['login']);
+      }))
+  }
+
+  logout() {
+    localStorage.removeItem(UserService.USER)
+  }
+
+  register(username: string) {
+    return this._http.post(`${environment.api}Users`, username).pipe(
+      tap(resp => { 
+        localStorage.setItem(UserService.USER, resp['login']); 
+    }))
   }
 
   isAnonymous(): boolean{
-    return localStorage.getItem(UserService.USER) === "";
+    return localStorage.getItem(UserService.USER) == null
   }
   constructor(private _http: HttpClient) { }
 }

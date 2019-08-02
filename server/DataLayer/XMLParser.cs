@@ -89,20 +89,24 @@ namespace TV_App.DataLayer
             List<FeatureExample> new_feature_examples = new List<FeatureExample>();
             foreach (XElement programme in programmes_in_xml)
             {
+                string new_title = programme.Elements("title").First().Value;
+
                 Programme new_prog = DbContext.Programme
                     .Include(prog => prog.Description)
                     .Include(prog => prog.Emission)
                     .Include(prog => prog.FeatureExample)
                     .ThenInclude(fe => fe.Feature)
-                    .SingleOrDefault(prog => prog.Title == programme.Elements("title").First().Value);
+                    .SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
                 if (new_prog == null)
-                    new_prog = new_programmes.SingleOrDefault(prog => prog.Title == programme.Elements("title").First().Value);
+                    new_prog = new_programmes
+                        .SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
+
                 if (new_prog == null)
                 {
                     new_prog = new Programme()
                     {
                         Id = new_id,
-                        Title = programme.Elements("title").First().Value,
+                        Title = new_title,
                         IconUrl = programme.Element("icon")?.Attribute("src").Value
                     };
                     new_programmes.Add(new_prog);
@@ -199,6 +203,17 @@ namespace TV_App.DataLayer
                         });
                     }                    
                 }
+
+                if(new_prog.Title.Length > 350)
+                {
+                    logger.LogInformation($"Long title: {new_prog.Title.Length} chars - {new_prog.Title}");
+                }
+
+                if (new_prog.Description.FirstOrDefault()?.Content.Length > 1500)
+                {
+                    logger.LogInformation($"Long description: {new_prog.Description.FirstOrDefault()?.Content.Length} chars - {new_prog.Title}");
+                }
+
 
             }
 
