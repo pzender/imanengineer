@@ -25,7 +25,8 @@ namespace TV_App.Models
             return FeatureExample.Select(fe => fe.Feature.Value);
         }
 
-        public IEnumerable<Programme> GetSimilar(double w_actor, double w_category, double w_keyword, double w_director, double w_country, double w_year)
+        public IEnumerable<Programme> GetSimilar(double w_actor, double w_category, 
+            double w_keyword, double w_director, double w_country, double w_year)
         {
             IDictionary<Programme, double> similar = DbContext.Programme
                 .Include(prog => prog.Emission)
@@ -43,16 +44,29 @@ namespace TV_App.Models
             return list;
         }
 
-        public double TotalSimilarity(Programme other, double w_actor, double w_category, double w_keyword, double w_director, double w_country, double w_year)
+        public double TotalSimilarity(Programme other, double w_actor, double w_category, 
+            double w_keyword, double w_director, double w_country, double w_year)
         {
             IEnumerable<Feature> features = FeatureExample.Select(fe => fe.Feature),
                 other_features = other.FeatureExample.Select(fe => fe.Feature);
-            double sim_act = Feature.SetSimilarity(features.Where(f => f.Type == Feature.ACT_TYPE), other_features.Where(f => f.Type == Feature.ACT_TYPE));
-            double sim_cat = Feature.SetSimilarity(features.Where(f => f.Type == Feature.CAT_TYPE), other_features.Where(f => f.Type == Feature.CAT_TYPE));
-            double sim_keyw = Feature.SetSimilarity(features.Where(f => f.Type == Feature.KEYW_TYPE), other_features.Where(f => f.Type == Feature.KEYW_TYPE));
-            double sim_dir = Feature.SetSimilarity(features.Where(f => f.Type == Feature.DIRECTOR_TYPE), other_features.Where(f => f.Type == Feature.DIRECTOR_TYPE));
-            double sim_year = Feature.DateSimilarity(features.LastOrDefault(f => f.Type == Feature.DATE_TYPE), other_features.LastOrDefault(f => f.Type == Feature.DATE_TYPE));
-            double sim_country = Feature.SetSimilarity(features.Where(f => f.Type == Feature.COUNTRY_TYPE), other_features.Where(f => f.Type == Feature.COUNTRY_TYPE));
+            double sim_act = Feature.SetSimilarity(
+                features.Where(f => f.Type == Feature.ACT_TYPE), 
+                other_features.Where(f => f.Type == Feature.ACT_TYPE));
+            double sim_cat = Feature.SetSimilarity(
+                features.Where(f => f.Type == Feature.CAT_TYPE), 
+                other_features.Where(f => f.Type == Feature.CAT_TYPE));
+            double sim_keyw = Feature.SetSimilarity(
+                features.Where(f => f.Type == Feature.KEYW_TYPE), 
+                other_features.Where(f => f.Type == Feature.KEYW_TYPE));
+            double sim_dir = Feature.SetSimilarity(
+                features.Where(f => f.Type == Feature.DIRECTOR_TYPE), 
+                other_features.Where(f => f.Type == Feature.DIRECTOR_TYPE));
+            double sim_year = Feature.DateSimilarity(
+                features.LastOrDefault(f => f.Type == Feature.DATE_TYPE), 
+                other_features.LastOrDefault(f => f.Type == Feature.DATE_TYPE));
+            double sim_country = Feature.SetSimilarity(
+                features.Where(f => f.Type == Feature.COUNTRY_TYPE), 
+                other_features.Where(f => f.Type == Feature.COUNTRY_TYPE));
 
             return w_actor * sim_act
                 + w_category * sim_cat

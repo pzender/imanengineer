@@ -11,7 +11,8 @@ namespace TV_App.Models
 
         public IEnumerable<Programme> GetRecommendations(IEnumerable<Programme> available_programmes)
         {
-            Dictionary<Programme, double> recom_supports = available_programmes.ToDictionary(p => p, p => RecommendationSupport(p));
+            Dictionary<Programme, double> recom_supports = available_programmes
+                .ToDictionary(p => p, p => RecommendationSupport(p));
             recom_supports = recom_supports
                 .Where(rs => rs.Value > 0.1)
                 .OrderByDescending(rs => rs.Value)
@@ -40,7 +41,12 @@ namespace TV_App.Models
 
         public double RecommendationSupport(Programme p)
         {
-            return GetPositivelyRated().Select(pos => pos.TotalSimilarity(p, WeightActor, WeightCategory, WeightKeyword, WeightDirector, WeightCountry, WeightYear)).Average();
+            return GetPositivelyRated()
+                .Select(pos => pos.TotalSimilarity(p, 
+                    WeightActor, WeightCategory, WeightKeyword, 
+                    WeightDirector, WeightCountry, WeightYear)
+                )
+                .Average();
         }
 
     }
