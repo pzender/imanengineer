@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ngSubmit } from "@angular/forms";
 import { UserService } from '../../services/user.service';
 
 @Component({
