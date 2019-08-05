@@ -57,10 +57,10 @@ namespace TV_App.Controllers
                     .ThenInclude(f => f.TypeNavigation)
                     .Single(u => u.Login == username);
 
-                IEnumerable<Programme> reco = user.GetRecommendations(list);
-                if(reco.Count() > 0) 
+                if (user.GetPositivelyRated().Count() > 0)
+                {
                     list = user.GetRecommendations(list);
-
+                }
             }
 
             if (from != to)

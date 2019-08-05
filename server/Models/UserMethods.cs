@@ -41,12 +41,8 @@ namespace TV_App.Models
 
         public double RecommendationSupport(Programme p)
         {
-            return GetPositivelyRated()
-                .Select(pos => pos.TotalSimilarity(p, 
-                    WeightActor, WeightCategory, WeightKeyword, 
-                    WeightDirector, WeightCountry, WeightYear)
-                )
-                .Average();
+            var positive = GetPositivelyRated();
+            return (positive.Count() > 0) ? positive.Select(pos => pos.TotalSimilarity(p, WeightActor, WeightCategory, WeightKeyword, WeightDirector, WeightCountry, WeightYear)).Average() : 0;
         }
 
     }
