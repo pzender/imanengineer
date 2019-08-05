@@ -14,7 +14,9 @@ export class FilterSidebarComponent implements OnInit {
   timeFrom: string;
   timeTo: string;
   currentDate: number = Date.now();
-  ngOnInit() {  }
+  ngOnInit() { 
+    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+  }
   onFromInput($event) {
     this.timeFrom = ($event.target.value);
     console.log($event.target.value)
