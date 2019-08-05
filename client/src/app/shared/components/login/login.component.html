@@ -22,3 +22,11 @@
     <button class="btn btn-primary" (click)="this.create(name.value)">Utwórz konto</button>
   </div>
 </div>
+
+<div class="alert alert-dismissible fade show fixed-top m-5" *ngIf="actionResult" 
+[ngClass]="{'alert-danger': !this.actionResult['success'], 'alert-success': this.actionResult['success']}">
+  {{actionResult.message}}
+  <button type="button" class="close" (click)="closeWarning()">
+    &times;
+  </button>
+</div>

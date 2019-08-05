@@ -9,7 +9,8 @@ import { UserService } from '../../services/user.service';
 export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService) { }
-  public showLogin :boolean = false;
+  public showLogin: boolean = false;
+  public actionResult: {success: boolean, message: string};
 
   public toggleLogin(){
     this.showLogin = !this.showLogin;
@@ -19,8 +20,8 @@ export class LoginComponent implements OnInit {
   login(username: string) {
     if(username !== '') {
       this.userService.login(username).subscribe(
-        resp => { console.log(resp) },
-        err => { console.log(err) }
+        resp => { this.actionResult = { success: true, message: 'Zalogowano' } },
+        err => { this.actionResult = { success: false, message: 'Użytkownik nie istnieje' } }
       )
       this.showLogin = false;
     }
@@ -29,8 +30,8 @@ export class LoginComponent implements OnInit {
   create(username: string) {
     if(username !== '') {
       this.userService.register(username).subscribe(
-        resp => { console.log(resp) },
-        err => { console.log(err) }
+        resp => { this.actionResult = { success: true, message: 'Zalogowano' } },
+        err => { this.actionResult = { success: false, message: 'Użytkownik już istnieje' } }
       )
       this.showLogin = false;
     }
@@ -43,6 +44,10 @@ export class LoginComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return !this.userService.isAnonymous()
+  }
+
+  closeWarning(){
+    this.actionResult = undefined;
   }
 
   ngOnInit() {
