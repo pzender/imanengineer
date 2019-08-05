@@ -43,17 +43,30 @@ namespace TV_App.Controllers
 
         // POST: api/Users/Przemek/Ratings
         [HttpPost("{name}/Ratings")]
-        public Models.Rating PostRating(string name, [FromBody] Rating body)
+        public async Task<ObjectResult> PostRating(string name, [FromBody] RatingJson body)
         {
-            Models.Rating rating = new Models.Rating()
+            Programme ratedProgramme = DbContext.Programme.SingleOrDefault(prog => prog.Id == body.ProgrammeId);
+            if (ratedProgramme != null)
             {
-                ProgrammeId = body.programme_id,
-                RatingValue = body.rating_value,
-                UserLogin = name
-            };
-            DbContext.Rating.Add(rating);
-            DbContext.SaveChanges();
-            return rating;
+                Rating existing_rating = DbContext.Rating.SingleOrDefault(r => r.ProgrammeId == body.ProgrammeId && r.UserLogin == name);
+                Rating new_rating = new Rating()
+                {
+                    ProgrammeId = body.ProgrammeId,
+                    Programme = ratedProgramme,
+                    RatingValue = body.RatingValue,
+                    UserLogin = name
+
+                };
+                if (existing_rating == null)
+                    DbContext.Rating.Add(new_rating);
+                else
+                    existing_rating.RatingValue = body.RatingValue;
+                await DbContext.SaveChangesAsync();
+                return StatusCode(200, new RatingJson() { ProgrammeId = new_rating.ProgrammeId, RatingValue = new_rating.RatingValue });
+            }
+
+            return StatusCode(404, "Program nie istnieje?");
+            
         }
 
         // GET: api/Users/Przemek/Ratings
@@ -173,10 +186,10 @@ namespace TV_App.Controllers
         {
         }
 
-        public struct Rating
+        public class RatingJson
         {
-            public int programme_id;
-            public int rating_value;
+            public long ProgrammeId { get; set; }
+            public long RatingValue { get; set; }
         }
     }
 }
