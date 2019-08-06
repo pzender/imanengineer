@@ -110,6 +110,17 @@ namespace TV_App.Controllers
                     }
                 }
             }
+
+            DbContext.Emission
+                .RemoveRange(DbContext.Emission.Where(em => em.Stop < DateTime.Today));
+            List<long> emptyProgrammeIds = DbContext.Programme
+                .Include(prog => prog.Emission)
+                .Include(prog => prog.Rating)
+                .Where(prog => prog.Emission.Count == 0 && prog.Rating.Count == 0)
+                .Select(prog => prog.Id)
+                .ToList();
+            DbContext.Programme
+                .RemoveRange(DbContext.Programme.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
         }
     }
 }
