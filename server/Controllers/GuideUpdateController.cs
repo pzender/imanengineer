@@ -121,6 +121,7 @@ namespace TV_App.Controllers
                 .ToList();
             DbContext.Programme
                 .RemoveRange(DbContext.Programme.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
+            DbContext.SaveChanges();
         }
     }
 }
