@@ -37,7 +37,7 @@ namespace TV_App.Models
                 .ToDictionary(prog => prog, prog => TotalSimilarity(prog, w_actor, w_category, w_keyword, w_director, w_country, w_year));
 
             IEnumerable<Programme> list = similar
-                .Where(prog => prog.Value > 0.5 && prog.Key.Id != this.Id)
+                .Where(prog => prog.Value > 0.25 && prog.Key.Id != this.Id)
                 .OrderByDescending(prog => prog.Value)
                 .Select(prog => prog.Key);
 

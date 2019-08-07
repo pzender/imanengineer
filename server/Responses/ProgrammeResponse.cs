@@ -34,7 +34,6 @@ namespace TV_App.Responses
         public virtual SeriesResponse Series { get; set; }
         public virtual IEnumerable<EmissionResponse> Emissions { get; set; }
         public virtual IEnumerable<FeatureResponse> Features { get; set; }
-        //public IEnumerable<ShortProgrammeLink> Similar { get; set; }
     }
 
     public class ShortProgrammeLink

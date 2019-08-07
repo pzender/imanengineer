@@ -47,22 +47,6 @@ namespace TV_App.Controllers
 
             list = list.OrderBy(prog => prog.Emission.First().Start);
 
-            if (username != null)
-            {
-                User user = DbContext.User
-                    .Include(u => u.Rating)
-                    .ThenInclude(r => r.Programme)
-                    .ThenInclude(p => p.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                    .ThenInclude(f => f.TypeNavigation)
-                    .Single(u => u.Login == username);
-
-                if (user.GetPositivelyRated().Count() > 0)
-                {
-                    list = user.GetRecommendations(list);
-                }
-            }
-
             if (from != to)
             {
                 TimeSpan from_ts = new TimeSpan(
@@ -85,6 +69,22 @@ namespace TV_App.Controllers
             //    DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
             //    list = list.Where(prog => prog.EmittedOn(desiredDate));
             //}
+
+            if (username != null)
+            {
+                User user = DbContext.User
+                    .Include(u => u.Rating)
+                    .ThenInclude(r => r.Programme)
+                    .ThenInclude(p => p.FeatureExample)
+                    .ThenInclude(fe => fe.Feature)
+                    .ThenInclude(f => f.TypeNavigation)
+                    .Single(u => u.Login == username);
+
+                if (user.GetPositivelyRated().Count() > 0)
+                {
+                    list = user.GetRecommendations(list);
+                }
+            }
 
             Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list

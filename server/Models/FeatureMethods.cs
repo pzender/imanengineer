@@ -7,6 +7,7 @@ namespace TV_App.Models
     public partial class Feature
     {
         public const int DATE_SIMILARITY_HALF = 20;
+        public const double SET_SIMILARITY_COEFF = 4;
         public const int COUNTRY_TYPE = 1, DATE_TYPE = 2, ACT_TYPE = 4, DIRECTOR_TYPE = 5, CAT_TYPE = 7, KEYW_TYPE = 8;
 
         public static double SetSimilarity(IEnumerable<Feature> one, IEnumerable<Feature> other)
@@ -24,7 +25,7 @@ namespace TV_App.Models
             if (or == 0) return 0;
             else
             {
-                return (2.0 * and) / (and + or);
+                return (SET_SIMILARITY_COEFF * and) / ((SET_SIMILARITY_COEFF - 1) * and + or);
             }
         }
 
