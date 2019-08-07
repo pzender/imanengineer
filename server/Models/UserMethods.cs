@@ -14,7 +14,7 @@ namespace TV_App.Models
             Dictionary<Programme, double> recom_supports = available_programmes
                 .ToDictionary(p => p, p => RecommendationSupport(p));
             recom_supports = recom_supports
-                .Where(rs => rs.Value > 0.1)
+                .Where(rs => rs.Value > 0.5)
                 .OrderByDescending(rs => rs.Value)
                 .ToDictionary(kv => kv.Key, kv => kv.Value);
 

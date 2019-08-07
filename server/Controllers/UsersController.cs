@@ -110,8 +110,6 @@ namespace TV_App.Controllers
                 .ThenInclude(fe => fe.Feature)
                 .ThenInclude(f => f.TypeNavigation);
 
-            logger.LogInformation($"{programmes.Count()} programmes initially");
-
             if (from != to)
             {
                 TimeSpan from_ts = new TimeSpan(
@@ -134,12 +132,10 @@ namespace TV_App.Controllers
                 DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
                 programmes = programmes.Where(prog => prog.EmittedOn(desiredDate));
             }
-
-            logger.LogInformation($"date&time: down to {programmes.Count()}");
+            programmes = programmes.Except(user.GetRated());
 
             var list = user.GetRecommendations(programmes);
 
-            logger.LogInformation($"recommendations: down to {list.Count()}");
             Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(reco => new ProgrammeResponse(reco));
         }
