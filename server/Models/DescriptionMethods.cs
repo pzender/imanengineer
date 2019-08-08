@@ -39,13 +39,8 @@ namespace TV_App.Models
 
             return LemmatizedWords
                 .Distinct()
-                //.Except(IdProgrammeNavigation
-                //    .FeatureExample
-                //    .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value))
-                //)
                 .OrderByDescending(lw => TermFrequency[lw] * InverseDocumentFrequency[lw])
                 .Select(lw => $"{lw} : {TermFrequency[lw] * InverseDocumentFrequency[lw]}");
-            //throw new NotImplementedException();
         }
 
         private IEnumerable<string> LemmatizeContent()

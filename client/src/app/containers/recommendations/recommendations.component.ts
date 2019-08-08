@@ -36,7 +36,5 @@ export class RecommendationsComponent implements OnInit {
     )
   }
 
-  ngOnInit() {
-    this.fetch()
-  }
+  ngOnInit() {}
 }
