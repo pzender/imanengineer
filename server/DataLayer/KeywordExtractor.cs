@@ -19,17 +19,17 @@ namespace TV_App.DataLayer
 
         public List<string> ProcessKeywords(Programme p)
         {
-            string description = p.Description.FirstOrDefault(d => d.Content != "")?.Content;
+            string description = p.Descriptions.FirstOrDefault(d => d.Content != "")?.Content;
             if (description == null)
             {
                 return new List<string>();
             }
             else
             {
-                var featnames = DbContext.FeatureExample
-                    .Include(fe => fe.Feature)
-                    .Where(fe => fe.ProgrammeId == p.Id && fe.Feature.Type != 8)
-                    .Select(fe => lemmatizer.Lemmatize(fe.Feature.Value.ToLower()))
+                var featnames = DbContext.ProgrammesFeatures
+                    .Include(fe => fe.RelFeature)
+                    .Where(fe => fe.ProgrammeId == p.Id && fe.RelFeature.Type != 8)
+                    .Select(fe => lemmatizer.Lemmatize(fe.RelFeature.Value.ToLower()))
                     .ToList();
                 var keywords = ExtractKeywords(description);
 
@@ -44,30 +44,31 @@ namespace TV_App.DataLayer
 
         private IEnumerable<string> ExtractKeywords(string description)
         {
-            List<string> LemmatizedDescription = Corpus.LemmatizeDescription(description);
-            List<List<string>> corpus = new List<List<string>>(Corpus.GetInstance().GetLemmatizedContent());
-            corpus.Add(LemmatizedDescription);
+            //List<string> LemmatizedDescription = Corpus.LemmatizeDescription(description);
+            //List<List<string>> corpus = new List<List<string>>(Corpus.GetInstance().GetLemmatizedContent());
+            //corpus.Add(LemmatizedDescription);
 
-            IDictionary<string, double> TermFrequency = LemmatizedDescription
-                .Distinct()
-                .ToDictionary(
-                    word => word,
-                    word => LemmatizedDescription.Count(w => w == word) / (double)LemmatizedDescription.Count()
-                );
+            //IDictionary<string, double> TermFrequency = LemmatizedDescription
+            //    .Distinct()
+            //    .ToDictionary(
+            //        word => word,
+            //        word => LemmatizedDescription.Count(w => w == word) / (double)LemmatizedDescription.Count()
+            //    );
 
-            IDictionary<string, double> InverseDocumentFrequency = LemmatizedDescription
-                .Distinct()
-                .ToDictionary(
-                    word => word,
-                    word => Math.Log(corpus.Count() / (double)
-                        corpus.Count(doc => doc.Contains(word))
-                    )
-                );
+            //IDictionary<string, double> InverseDocumentFrequency = LemmatizedDescription
+            //    .Distinct()
+            //    .ToDictionary(
+            //        word => word,
+            //        word => Math.Log(corpus.Count() / (double)
+            //            corpus.Count(doc => doc.Contains(word))
+            //        )
+            //    );
 
 
-            return LemmatizedDescription
-                .Distinct()
-                .OrderByDescending(lw => TermFrequency[lw] * InverseDocumentFrequency[lw]);
+            //return LemmatizedDescription
+            //    .Distinct()
+            //    .OrderByDescending(lw => TermFrequency[lw] * InverseDocumentFrequency[lw]);
+            return null;
         }
 
 

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TV_App.NewModels
+namespace TV_App.Models
 {
-    [Table("Channels")]
-    public partial class Channel
+    public partial class Offer
     {
-        public Channel()
+        public Offer()
         {
-            Emissions = new HashSet<Emission>();
             OfferedChannels = new HashSet<OfferedChannel>();
         }
 
@@ -20,17 +18,14 @@ namespace TV_App.NewModels
 
         [Column("name")]
         [Required]
-        [StringLength(200)]
+        [StringLength(30)]
         public string Name { get; set; }
 
         [Column("icon_url")]
-        [StringLength(200)]
+        [StringLength(150)]
         public string IconUrl { get; set; }
 
-        [InverseProperty(nameof(Emission.ChannelEmitted))]
-        public virtual ICollection<Emission> Emissions { get; set; }
-
-        [InverseProperty(nameof(OfferedChannel.RelChannel))]
+        [InverseProperty(nameof(OfferedChannel.RelOffer))]
         public virtual ICollection<OfferedChannel> OfferedChannels { get; set; }
     }
 }

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tv generator-info-name="WebGrab+Plus/w MDB &amp; REX Postprocess -- version V2.1.9 -- Jan van Straaten" generator-info-url="http://www.webgrabplus.com">
+  <channel id="POLSAT">
+    <display-name lang="pl">POLSAT</display-name>
+    <icon src="http://ocdn.eu/program-tv-transforms/1/i6TktkpTURBXy8zNDYzMmJmMGI2Y2JiMjM1NjgyNmZmNzE4YWQ1ZDdkNC5wbmeSlQJkAMLDlQIAKMLD" />
+    <url>http://www.programtv.onet.pl</url>
+  </channel>
+  <programme start="20190802200500 +0200" stop="20190802231000 +0200" channel="POLSAT">
+    <title lang="pl">X-Men: Apocalypse</title>
+    <desc lang="pl">
+      Film "X-Men: Apocalypse" jest kolejną odsłoną słynnej serii inspirowanej kultowymi komiksami. Twórcą obrazu jest Bryan Singer, reżyser "Podejrzanych", "Walkirii", ale także trzech wcześniejszych produkcji z serii "X-Men". Artysta zadbał o to, by widzów seans nie znudził, tak dużo jest tu dynamicznych, krwawych i oszałamiających efektami specjalnymi scen. Polskich kinomanów zainteresuje zaś z pewnością rodzimy akcent. Choć brzmi to jak żart, słynny Magneto zamieszkuje w Pruszkowie i stara się mówić po polsku.
+      Tytuł filmu "X-Men: Apocalypse" pochodzi od imienia pierwszego i zarazem najpotężniejszego mutanta wszech czasów, Apocalypse'a (Oscar Isaac), zwanego też En Sabah Nur. Dotąd był on uśpiony. Teraz jednak powraca do życia w Egipcie, gdzie przez wieki czczono go niczym boga. Apocalypse potrafi absorbować moce innych mutantów, dzięki czemu zyskał nieśmiertelność i stał się niepokonany.
+      Niestety, po przebudzeniu potężny mutant czuje się zawiedziony nową rzeczywistością. Postanawia więc wykorzystać swą moc do zniszczenia rodzaju ludzkiego. Kolejnym krokiem ma być przejęcie władzy nad Ziemią. Wkrótce Apocalypse werbuje trzech innych niezwykle silnych mutantów: Storm (Alexandra Shipp), Angela (Ben Hardy) i Psylock (Olivia Munn). Dociera również do Magneto (Michael Fassbender), który - rozczarowany i pozbawiony złudzeń - znalazł schronienie w Polsce, gdzie założył rodzinę. Gdy traci bliskich, dołącza do En Sabah Nura. Los Błękitnej Planety wydaje się przesądzony. Mimo to Charles Xavier (James McAvoy), Raven (Jennifer Lawrence) i młode pokolenie mutantów z akademii Profesora X postanawiają powstrzymać potężnego wroga.(n)
+    </desc>
+    <credits>
+      <director>Bryan Singer</director>
+      <actor>James McAvoy</actor>
+      <actor>Michael Fassbender</actor>
+      <actor>Jennifer Lawrence</actor>
+      <actor>Nicholas Hoult</actor>
+      <actor>Oscar Isaac</actor>
+      <actor>Rose Byrne</actor>
+      <actor>Evan Peters</actor>
+      <actor>Josh Helman</actor>
+      <actor>Sophie Turner</actor>
+      <actor>Tye Sheridan</actor>
+      <writer>Simon Kinberg</writer>
+      <writer>Bryan Singer</writer>
+    </credits>
+    <date>2016</date>
+    <category lang="pl">Film</category>
+    <category lang="pl">Sf</category>
+    <icon src="https://ocdn.eu/program-tv/new-upload-images/images-84f3b3e1-2d88-4494-b1c0-14c08035f07d" />
+    <country lang="pl">USA</country>
+    <rating>
+      <value>12</value>
+    </rating>
+    <star-rating>
+      <value>3</value>
+    </star-rating>
+  </programme>
+</tv>

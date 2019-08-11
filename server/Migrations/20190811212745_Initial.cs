@@ -1,14 +1,15 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TV_App.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Channel",
+                name: "Channels",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
@@ -17,7 +18,7 @@ namespace TV_App.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Channel", x => x.id);
+                    table.PrimaryKey("PK_Channels", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,7 +34,7 @@ namespace TV_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GuideUpdate",
+                name: "GuideUpdates",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
@@ -42,7 +43,20 @@ namespace TV_App.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GuideUpdate", x => x.id);
+                    table.PrimaryKey("PK_GuideUpdates", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Offers",
+                columns: table => new
+                {
+                    id = table.Column<long>(nullable: false),
+                    name = table.Column<string>(unicode: false, maxLength: 30, nullable: false),
+                    icon_url = table.Column<string>(unicode: false, maxLength: 150, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offers", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,10 +72,10 @@ namespace TV_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
-                    login = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    login = table.Column<string>(unicode: false, maxLength: 20, nullable: false),
                     weight_actor = table.Column<double>(nullable: false, defaultValueSql: "((0.1))"),
                     weight_category = table.Column<double>(nullable: false, defaultValueSql: "((0.3))"),
                     weight_country = table.Column<double>(nullable: false, defaultValueSql: "((0.1))"),
@@ -75,18 +89,18 @@ namespace TV_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feature",
+                name: "Features",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
                     type = table.Column<long>(nullable: false),
-                    value = table.Column<string>(unicode: false, maxLength: 200, nullable: false)
+                    value = table.Column<string>(unicode: false, maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Feature", x => x.id);
+                    table.PrimaryKey("PK_Features", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Feature_FeatureTypes_type",
+                        name: "FK_Features_FeatureTypes_type",
                         column: x => x.type,
                         principalTable: "FeatureTypes",
                         principalColumn: "id",
@@ -94,20 +108,45 @@ namespace TV_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Programme",
+                name: "OfferedChannels",
+                columns: table => new
+                {
+                    offer_id = table.Column<long>(nullable: false),
+                    channel_id = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OfferedChannels", x => new { x.offer_id, x.channel_id });
+                    table.UniqueConstraint("AK_OfferedChannels_channel_id_offer_id", x => new { x.channel_id, x.offer_id });
+                    table.ForeignKey(
+                        name: "FK_OfferedChannels_Channels_channel_id",
+                        column: x => x.channel_id,
+                        principalTable: "Channels",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OfferedChannels_Offers_offer_id",
+                        column: x => x.offer_id,
+                        principalTable: "Offers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Programmes",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    title = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    title = table.Column<string>(unicode: false, maxLength: 400, nullable: false),
                     icon_url = table.Column<string>(unicode: false, maxLength: 200, nullable: true),
-                    seq_number = table.Column<string>(unicode: false, maxLength: 200, nullable: true),
+                    seq_number = table.Column<string>(unicode: false, maxLength: 20, nullable: true),
                     series_id = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Programme", x => x.id);
+                    table.PrimaryKey("PK_Programmes", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Programme_Series_series_id",
+                        name: "FK_Programmes_Series_series_id",
                         column: x => x.series_id,
                         principalTable: "Series",
                         principalColumn: "id",
@@ -115,36 +154,37 @@ namespace TV_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Description",
+                name: "Descriptions",
                 columns: table => new
                 {
                     id = table.Column<long>(nullable: false),
-                    id_programme = table.Column<long>(nullable: false),
-                    content = table.Column<string>(nullable: false),
-                    GuideUpdateId = table.Column<long>(nullable: true)
+                    programme_id = table.Column<long>(nullable: false),
+                    content = table.Column<string>(type: "text", nullable: false),
+                    guide_update_id = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Description", x => x.id);
+                    table.PrimaryKey("PK_Descriptions", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Description_GuideUpdate_GuideUpdateId",
-                        column: x => x.GuideUpdateId,
-                        principalTable: "GuideUpdate",
+                        name: "FK_Descriptions_GuideUpdates_guide_update_id",
+                        column: x => x.guide_update_id,
+                        principalTable: "GuideUpdates",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Description_Programme_id_programme",
-                        column: x => x.id_programme,
-                        principalTable: "Programme",
+                        name: "FK_Descriptions_Programmes_programme_id",
+                        column: x => x.programme_id,
+                        principalTable: "Programmes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Emission",
+                name: "Emissions",
                 columns: table => new
                 {
-                    id = table.Column<long>(nullable: false),
+                    id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     start = table.Column<DateTime>(type: "datetime", nullable: false),
                     stop = table.Column<DateTime>(type: "datetime", nullable: false),
                     programme_id = table.Column<long>(nullable: false),
@@ -152,23 +192,23 @@ namespace TV_App.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Emission", x => x.id);
+                    table.PrimaryKey("PK_Emissions", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Emission_Channel_channel_id",
+                        name: "FK_Emissions_Channels_channel_id",
                         column: x => x.channel_id,
-                        principalTable: "Channel",
+                        principalTable: "Channels",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Emission_Programme_programme_id",
+                        name: "FK_Emissions_Programmes_programme_id",
                         column: x => x.programme_id,
-                        principalTable: "Programme",
+                        principalTable: "Programmes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FeatureExample",
+                name: "ProgrammesFeatures",
                 columns: table => new
                 {
                     feature_id = table.Column<long>(nullable: false),
@@ -178,24 +218,24 @@ namespace TV_App.Migrations
                 {
                     table.PrimaryKey("PK_FeatureExample", x => new { x.feature_id, x.programme_id });
                     table.ForeignKey(
-                        name: "FK_FeatureExample_Feature_feature_id",
+                        name: "FK_ProgrammesFeatures_Features_feature_id",
                         column: x => x.feature_id,
-                        principalTable: "Feature",
+                        principalTable: "Features",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FeatureExample_Programme_programme_id",
+                        name: "FK_ProgrammesFeatures_Programmes_programme_id",
                         column: x => x.programme_id,
-                        principalTable: "Programme",
+                        principalTable: "Programmes",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rating",
+                name: "Ratings",
                 columns: table => new
                 {
-                    user_login = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
+                    user_login = table.Column<string>(unicode: false, maxLength: 20, nullable: false),
                     programme_id = table.Column<long>(nullable: false),
                     rating_value = table.Column<long>(nullable: false)
                 },
@@ -203,100 +243,94 @@ namespace TV_App.Migrations
                 {
                     table.PrimaryKey("PK_Rating", x => new { x.user_login, x.programme_id });
                     table.ForeignKey(
-                        name: "FK_Rating_Programme_programme_id",
+                        name: "FK_Ratings_Programmes_programme_id",
                         column: x => x.programme_id,
-                        principalTable: "Programme",
+                        principalTable: "Programmes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Rating_User_user_login",
+                        name: "FK_Ratings_Users_user_login",
                         column: x => x.user_login,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "login",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Channel_name",
-                table: "Channel",
+                table: "Channels",
                 column: "name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Description_content",
-                table: "Description",
-                column: "content",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Description_GuideUpdateId",
-                table: "Description",
-                column: "GuideUpdateId");
+                table: "Descriptions",
+                column: "guide_update_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Description_id_programme",
-                table: "Description",
-                column: "id_programme");
+                table: "Descriptions",
+                column: "programme_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Emission_channel_id",
-                table: "Emission",
+                table: "Emissions",
                 column: "channel_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Emission_programme_id",
-                table: "Emission",
+                table: "Emissions",
                 column: "programme_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Emission_start_stop_programme_id_channel_id",
-                table: "Emission",
+                table: "Emissions",
                 columns: new[] { "start", "stop", "programme_id", "channel_id" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IND_feature_id",
-                table: "Feature",
+                table: "Features",
                 column: "id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feature_type_value",
-                table: "Feature",
+                table: "Features",
                 columns: new[] { "type", "value" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_FeatureExample_programme_id",
-                table: "FeatureExample",
-                column: "programme_id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GuideUpdate_posted",
-                table: "GuideUpdate",
+                table: "GuideUpdates",
                 column: "posted",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IND_programme_id",
-                table: "Programme",
+                table: "Programmes",
                 column: "id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Programme_series_id",
-                table: "Programme",
+                table: "Programmes",
                 column: "series_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Programme_title",
-                table: "Programme",
+                table: "Programmes",
                 column: "title",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_FeatureExample_programme_id",
+                table: "ProgrammesFeatures",
+                column: "programme_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rating_programme_id",
-                table: "Rating",
+                table: "Ratings",
                 column: "programme_id");
 
             migrationBuilder.CreateIndex(
@@ -309,31 +343,37 @@ namespace TV_App.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Description");
+                name: "Descriptions");
 
             migrationBuilder.DropTable(
-                name: "Emission");
+                name: "Emissions");
 
             migrationBuilder.DropTable(
-                name: "FeatureExample");
+                name: "OfferedChannels");
 
             migrationBuilder.DropTable(
-                name: "Rating");
+                name: "ProgrammesFeatures");
 
             migrationBuilder.DropTable(
-                name: "GuideUpdate");
+                name: "Ratings");
 
             migrationBuilder.DropTable(
-                name: "Channel");
+                name: "GuideUpdates");
 
             migrationBuilder.DropTable(
-                name: "Feature");
+                name: "Channels");
 
             migrationBuilder.DropTable(
-                name: "Programme");
+                name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Features");
+
+            migrationBuilder.DropTable(
+                name: "Programmes");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "FeatureTypes");

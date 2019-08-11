@@ -31,18 +31,19 @@ namespace TV_App.Controllers
         [HttpGet]
         public IEnumerable<ProgrammeResponse> Get()
         {
-            Channel channel = DbContext.Channel
-                .Include(ch => ch.Emission)
-                .ThenInclude(em => em.Programme)
-                .ThenInclude(pr => pr.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(ft => ft.TypeNavigation)
-                .Single(ch => ch.Id == 1);
+            //Channel channel = DbContext.Channel
+            //    .Include(ch => ch.Emission)
+            //    .ThenInclude(em => em.Programme)
+            //    .ThenInclude(pr => pr.FeatureExample)
+            //    .ThenInclude(fe => fe.Feature)
+            //    .ThenInclude(ft => ft.TypeNavigation)
+            //    .Single(ch => ch.Id == 1);
 
-            IEnumerable<Emission> emissions = 
-                channel.Emission.OrderBy(em => em.Start);
+            //IEnumerable<Emission> emissions = 
+            //    channel.Emission.OrderBy(em => em.Start);
 
-            return emissions.Select(em => new ProgrammeResponse(em.Programme));
+            //return emissions.Select(em => new ProgrammeResponse(em.Programme));
+            return null;
         }
 
         [HttpPost]

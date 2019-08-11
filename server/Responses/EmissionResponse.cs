@@ -15,8 +15,8 @@ namespace TV_App.Responses
         {
             Start = e.Start;
             Stop = e.Stop;
-            Channel = new ChannelResponse(e.Channel);
-            Title = e.Programme?.Title;
+            Channel = new ChannelResponse(e.ChannelEmitted);
+            Title = e.RelProgramme?.Title;
         }
     }
 }

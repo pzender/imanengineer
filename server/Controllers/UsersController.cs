@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TV_App.Models;
 using TV_App.Responses;
+using TV_App.Services;
 
 namespace TV_App.Controllers
 {
@@ -18,13 +19,8 @@ namespace TV_App.Controllers
     public class UsersController : ControllerBase
     {
         private readonly TvAppContext DbContext = new TvAppContext();
-        private readonly ILoggerFactory loggerFactory;
-
-        public UsersController(ILoggerFactory loggerFactory)
-        {
-            this.loggerFactory = loggerFactory;
-
-        }
+        private readonly RecommendationService recommendations = new RecommendationService();
+        private readonly ProgrammeService programmes = new ProgrammeService();
 
         // GET: api/Users
         [HttpGet]
@@ -37,7 +33,7 @@ namespace TV_App.Controllers
         [HttpGet("{name}", Name = "Get")]
         public ObjectResult Get(string name)
         {
-            User user = DbContext.User.Where(u => u.Login == name).SingleOrDefault();
+            User user = DbContext.Users.Where(u => u.Login == name).SingleOrDefault();
             return user != null ? StatusCode(200, user) : StatusCode(404, "No such user!");
         }
 
@@ -45,27 +41,27 @@ namespace TV_App.Controllers
         [HttpPost("{name}/Ratings")]
         public async Task<ObjectResult> PostRating(string name, [FromBody] RatingJson body)
         {
-            Programme ratedProgramme = DbContext.Programme.SingleOrDefault(prog => prog.Id == body.ProgrammeId);
+            Programme ratedProgramme = DbContext.Programmes.SingleOrDefault(prog => prog.Id == body.ProgrammeId);
             if (ratedProgramme != null)
             {
-                Rating existing_rating = DbContext.Rating.SingleOrDefault(r => r.ProgrammeId == body.ProgrammeId && r.UserLogin == name);
+                Rating existing_rating = DbContext.Ratings.SingleOrDefault(r => r.ProgrammeId == body.ProgrammeId && r.UserLogin == name);
                 Rating new_rating = new Rating()
                 {
                     ProgrammeId = body.ProgrammeId,
-                    Programme = ratedProgramme,
+                    RelProgramme = ratedProgramme,
                     RatingValue = body.RatingValue,
                     UserLogin = name
 
                 };
                 if (existing_rating == null)
-                    DbContext.Rating.Add(new_rating);
+                    DbContext.Ratings.Add(new_rating);
                 else
                     existing_rating.RatingValue = body.RatingValue;
                 await DbContext.SaveChangesAsync();
                 return StatusCode(200, new RatingJson() { ProgrammeId = new_rating.ProgrammeId, RatingValue = new_rating.RatingValue });
             }
 
-            return StatusCode(404, "Program nie istnieje?");
+            return StatusCode(404, "Program nie istnieje");
             
         }
 
@@ -73,68 +69,36 @@ namespace TV_App.Controllers
         [HttpGet("{name}/Ratings")]
         public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            User user = DbContext.User
-                .Include(u => u.Rating)
-                .ThenInclude(r => r.Programme)
-                .ThenInclude(p => p.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(f => f.TypeNavigation)
+            User user = DbContext.Users
+                .Include(u => u.Ratings)
+                .ThenInclude(r => r.RelProgramme)
+                .ThenInclude(p => p.ProgrammesFeatures)
+                .ThenInclude(fe => fe.RelFeature)
+                .ThenInclude(f => f.RelType)
                 .Single(u => u.Login == name);
 
-            var list = user.GetRated();
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
-            return list.Select(reco => new ProgrammeResponse(reco));
+            var rated = recommendations.GetRated(user);
+
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", rated.Count().ToString());
+            return rated.Select(reco => new ProgrammeResponse(reco));
         }
 
         [HttpGet("{name}/Recommended")]
         public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            var logger = loggerFactory.CreateLogger("UsersControllerGET");
-            logger.LogInformation("UsersController.GetRecommendations() called");
-
-            User user = DbContext.User
-                .Include(u => u.Rating)
-                .ThenInclude(r => r.Programme)
-                .ThenInclude(p => p.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(f => f.TypeNavigation)
+            User user = DbContext.Users
+                .Include(u => u.Ratings)
+                .ThenInclude(r => r.RelProgramme)
+                .ThenInclude(p => p.ProgrammesFeatures)
+                .ThenInclude(fe => fe.RelFeature)
+                .ThenInclude(f => f.Type)
                 .Single(u => u.Login == name);
+            if (recommendations.GetPositivelyRated(user).Count() == 0) return new List<ProgrammeResponse>();
 
-            if (user.GetPositivelyRated().Count() == 0) return new List<ProgrammeResponse>();
-
-            IEnumerable<Programme> programmes = DbContext.Programme
-                .Include(prog => prog.Emission)
-                .ThenInclude(em => em.Channel)
-                .Include(prog => prog.Description)
-                .Include(prog => prog.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(f => f.TypeNavigation);
-
-            if (from != to)
-            {
-                TimeSpan from_ts = new TimeSpan(
-                    int.Parse(from.Split(':')[0]),
-                    int.Parse(from.Split(':')[1]),
-                    0
-                );
-                TimeSpan to_ts = new TimeSpan(
-                    int.Parse(to.Split(':')[0]),
-                    int.Parse(to.Split(':')[1]),
-                    0
-                );
-
-                programmes = programmes
-                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-            }
-
-            if (date != 0)
-            {
-                DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-                programmes = programmes.Where(prog => prog.EmittedOn(desiredDate));
-            }
-            programmes = programmes.Except(user.GetRated());
-
-            var list = user.GetRecommendations(programmes);
+            Filter filter = Filter.Create(from, to, date, 0);
+            IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
+            programmes = programmes.Except(recommendations.GetRated(user));
+            var list = recommendations.GetRecommendations(user, programmes);
 
             Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list.Select(reco => new ProgrammeResponse(reco));
@@ -152,14 +116,14 @@ namespace TV_App.Controllers
                 name = await sr.ReadToEndAsync();
             }
             
-            User user = DbContext.User.Where(u => u.Login == name).SingleOrDefault();
+            User user = DbContext.Users.Where(u => u.Login == name).SingleOrDefault();
             if (user == null)
             {
                 user = new User()
                 {
                     Login = name
                 };
-                DbContext.User.Add(user);
+                DbContext.Users.Add(user);
                 await DbContext.SaveChangesAsync();
                 return StatusCode(200, user);
             }

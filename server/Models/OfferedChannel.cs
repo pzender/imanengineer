@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TV_App.NewModels
+namespace TV_App.Models
 {
     public partial class OfferedChannel
     {

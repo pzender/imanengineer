@@ -9,18 +9,18 @@ namespace TV_App.Responses
         public string Value { get; set; }
         public string Type { get; set; }
 
-        public FeatureResponse(FeatureExample fe)
+        public FeatureResponse(ProgrammesFeature fe)
         {
-            Id = (int)fe.Feature.Id;
-            Value = fe.Feature.Value;
-            Type = fe.Feature.TypeNavigation.TypeName;
+            Id = (int)fe.RelFeature.Id;
+            Value = fe.RelFeature.Value;
+            Type = fe.RelFeature.RelType.TypeName;
         }
 
         public FeatureResponse(Feature f)
         {
             Id = (int)f.Id;
             Value = f.Value;
-            Type = f.TypeNavigation.TypeName;
+            Type = f.RelType.TypeName;
         }
     }
 }

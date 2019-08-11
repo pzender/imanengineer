@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TV_App.Models;
 using TV_App.Responses;
+using TV_App.Services;
 
 namespace TV_App.Controllers
 {
@@ -14,7 +15,9 @@ namespace TV_App.Controllers
     [ApiController]
     public class FeaturesController : ControllerBase
     {
-        readonly TvAppContext DbContext = new TvAppContext();
+        private readonly TvAppContext DbContext = new TvAppContext();
+        private readonly RecommendationService recommendations = new RecommendationService();
+        private readonly ProgrammeService programmes = new ProgrammeService();
 
         // GET: api/Feature
         [HttpGet]
@@ -27,8 +30,8 @@ namespace TV_App.Controllers
         [HttpGet("{id}")]
         public FeatureResponse Get(int id)
         {
-            Feature feat = DbContext.Feature
-                .Include(f => f.TypeNavigation)
+            Feature feat = DbContext.Features
+                .Include(f => f.RelType)
                 .SingleOrDefault(f => f.Id == id);
 
             return new FeatureResponse(feat);
@@ -38,57 +41,28 @@ namespace TV_App.Controllers
         [HttpGet("{id}/Programmes")]
         public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            IEnumerable<Programme> list = DbContext.Programme
-                .Include(prog => prog.Emission)
-                .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(f => f.TypeNavigation);
-
-            list = list.OrderBy(prog => prog.Emission.First().Start);
-
-            if (from != to)
-            {
-                TimeSpan from_ts = new TimeSpan(
-                    int.Parse(from.Split(':')[0]),
-                    int.Parse(from.Split(':')[1]),
-                    0
-                );
-                TimeSpan to_ts = new TimeSpan(
-                    int.Parse(to.Split(':')[0]),
-                    int.Parse(to.Split(':')[1]),
-                    0
-                );
-
-                list = list
-                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-            }
-
-            //if (date != 0)
-            //{
-            //    DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-            //    list = list.Where(prog => prog.EmittedOn(desiredDate));
-            //}
-
+            Filter filter = Filter.Create(from, to, date, 0);
+            IEnumerable<Programme> list = programmes.GetFilteredProgrammes(filter);
+            list = list.OrderBy(prog => prog.Emissions.First().Start);
             if (username != null)
             {
-                User user = DbContext.User
-                    .Include(u => u.Rating)
-                    .ThenInclude(r => r.Programme)
-                    .ThenInclude(p => p.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                    .ThenInclude(f => f.TypeNavigation)
+                User user = DbContext.Users
+                    .Include(u => u.Ratings)
+                    .ThenInclude(r => r.RelProgramme)
+                    .ThenInclude(p => p.ProgrammesFeatures)
+                    .ThenInclude(fe => fe.RelFeature)
+                    .ThenInclude(f => f.Type)
                     .Single(u => u.Login == username);
 
-                if (user.GetPositivelyRated().Count() > 0)
+                if (recommendations.GetPositivelyRated(user).Count() > 0)
                 {
-                    list = user.GetRecommendations(list);
+                    list = recommendations.GetRecommendations(user, list);
                 }
             }
 
             Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
             return list
-                .Where(prog => prog.FeatureExample.Any(fe => fe.FeatureId == id))
+                .Where(prog => prog.ProgrammesFeatures.Any(fe => fe.FeatureId == id))
                 .Select(prog => new ProgrammeResponse(prog));
 
         }

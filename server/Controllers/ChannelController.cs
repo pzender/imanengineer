@@ -10,18 +10,20 @@ using System.IO;
 using TV_App.Models;
 using TV_App.Responses;
 using Microsoft.EntityFrameworkCore;
+using TV_App.Services;
 
 namespace Controllers
 {
     [Route("api/[controller]")]
     public class ChannelsController : Controller
     {
-        readonly TvAppContext DbContext = new TvAppContext();
+        private readonly TvAppContext DbContext = new TvAppContext();
+        private readonly ProgrammeService programmes = new ProgrammeService();
 
         [HttpGet]
         public IEnumerable<ChannelResponse> Get()
         {
-            return DbContext.Channel.Select(ch => new ChannelResponse(ch));
+            return DbContext.Channels.Select(ch => new ChannelResponse(ch));
         }
 
         // GET: api/Channel/5
@@ -29,64 +31,38 @@ namespace Controllers
         public ChannelResponse Get(int id)
         {
 
-            return new ChannelResponse(DbContext.Channel.Where(ch => ch.Id == id).Single());
+            return new ChannelResponse(DbContext.Channels.Where(ch => ch.Id == id).Single());
         }
 
         // GET: api/Channel/5/Programmes
         [HttpGet("{id}/Programmes")]
         public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            Channel channel = DbContext.Channel
-                .Include(ch => ch.Emission)
-                .ThenInclude(em => em.Programme)
-                .ThenInclude(pr => pr.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(ft => ft.TypeNavigation)
-                .Single(ch => ch.Id == id);
+            Filter filter = Filter.Create(from, to, date, 0);
+            IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
 
-            IEnumerable<Emission> list =
-                channel.Emission.OrderBy(em => em.Start);
+            programmes = programmes
+                .Where(prog => prog.Emissions.Any(em => em.ChannelId == id))
+                .OrderBy(prog => prog.Emissions.First().Start);
 
-            if (from != to)
-            {
-                TimeSpan from_ts = new TimeSpan(
-                    int.Parse(from.Split(':')[0]),
-                    int.Parse(from.Split(':')[1]),
-                    0
-                );
-                TimeSpan to_ts = new TimeSpan(
-                    int.Parse(to.Split(':')[0]),
-                    int.Parse(to.Split(':')[1]),
-                    0
-                );
-
-                list = list
-                    .Where(em => em.Between(from_ts, to_ts));
-            }
-
-            if(date != 0)
-            {
-                DateTime desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
-                list = list.Where(em => em.Start.Date == desiredDate);
-            }
-            Response.Headers.Add("X-Total-Count", list.Count().ToString());
-            return list.Select(em => new ProgrammeResponse(em.Programme));
+            Response.Headers.Add("X-Total-Count", programmes.Count().ToString());
+            return programmes.Select(prog => new ProgrammeResponse(prog));
 
         }
 
         [HttpGet("{id}/Emissions")]
         public IEnumerable<EmissionResponse> GetEmissions(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            Channel channel = DbContext.Channel
-                .Include(ch => ch.Emission)
-                .ThenInclude(em => em.Programme)
-                .ThenInclude(pr => pr.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(ft => ft.TypeNavigation)
+            Channel channel = DbContext.Channels
+                .Include(ch => ch.Emissions)
+                .ThenInclude(em => em.RelProgramme)
+                .ThenInclude(pr => pr.ProgrammesFeatures)
+                .ThenInclude(fe => fe.RelFeature)
+                .ThenInclude(ft => ft.Type)
                 .Single(ch => ch.Id == id);
 
             IEnumerable<Emission> list =
-                channel.Emission.OrderBy(em => em.Start);
+                channel.Emissions.OrderBy(em => em.Start);
 
             if (from != to)
             {
@@ -102,7 +78,7 @@ namespace Controllers
                 );
 
                 list = list
-                    .Where(em => em.Between(from_ts, to_ts));
+                    .Where(em => programmes.EmissionBetween(em, from_ts, to_ts));
             }
 
             if (date != 0)

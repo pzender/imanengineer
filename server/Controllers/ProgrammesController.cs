@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TV_App.Models;
 using Microsoft.EntityFrameworkCore;
 using TV_App.Responses;
+using TV_App.Services;
 
 namespace TV_App.Controllers
 {
@@ -14,12 +15,15 @@ namespace TV_App.Controllers
     [ApiController]
     public class ProgrammesController : ControllerBase
     {
-        readonly TvAppContext DbContext = new TvAppContext();
+        private readonly TvAppContext DbContext = new TvAppContext();
+        private readonly ProgrammeService programmes = new ProgrammeService();
+        private readonly RecommendationService recommendations = new RecommendationService();
+        private readonly SimilarityCalculator similarity = new SimilarityCalculator();
 
         private int TermMatches(Programme prog, IEnumerable<string> search_terms)
         {
             IEnumerable<string> prog_terms = prog
-                .FeatureExample.Select(fe => fe.Feature.Value)
+                .ProgrammesFeatures.Select(fe => fe.RelFeature.Value)
                 .Concat(prog.Title.Split(' '));
 
             int count = prog_terms
@@ -32,44 +36,25 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes
         [HttpGet]
-        public IEnumerable<ProgrammeResponse> Get([FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0")
+        public IEnumerable<ProgrammeResponse> Get([FromQuery] string username = "", [FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            var list = DbContext.Programme
-                .Include(prog => prog.Description)
-                .Include(prog => prog.Emission)
-                .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(f => f.TypeNavigation)
-                .AsEnumerable();
+            Filter filter = Filter.Create(from, to, date, 0);
+            IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
 
-            if(search != "")
+
+            if (search != "")
             {
                 IEnumerable<string> search_terms = search.Split(' ');
-                IDictionary<Programme, int> list_matches = list
+                IDictionary<Programme, int> list_matches = programmes
                     .ToDictionary(prog => prog, prog => TermMatches(prog, search_terms))
                     .OrderByDescending(prog_match => prog_match.Value)
                     .Where(prog_match => prog_match.Value > 0)
                     .ToDictionary(kv => kv.Key, kv => kv.Value);
-                list = list_matches
+                programmes = list_matches
                     .Select(prog_match => prog_match.Key);
             }
 
-            TimeSpan from_ts = new TimeSpan(
-                int.Parse(from.Split(':')[0]),
-                int.Parse(from.Split(':')[1]),
-                0
-            );
-            TimeSpan to_ts = new TimeSpan(
-                int.Parse(to.Split(':')[0]),
-                int.Parse(to.Split(':')[1]),
-                0
-            );
-
-            list = list
-                .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-
-            IEnumerable<ProgrammeResponse> preparedResponse = list.Select(prog => new ProgrammeResponse(prog));
+            IEnumerable<ProgrammeResponse> preparedResponse = programmes.Select(prog => new ProgrammeResponse(prog));
             Request.HttpContext.Response.Headers.Add("X-Total-Count", preparedResponse.Count().ToString());
             return preparedResponse;
         }
@@ -79,42 +64,23 @@ namespace TV_App.Controllers
         [HttpGet("{id}/Similar")]
         public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            Programme programme = DbContext.Programme
-                .Include(prog => prog.Emission)
-                .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                .ThenInclude(fe => fe.Feature)
-                .ThenInclude(f => f.TypeNavigation)
+            User user = DbContext.Users.Single(user => user.Login == username);
+
+            Programme programme = DbContext.Programmes
+                .Include(prog => prog.Emissions)
+                .ThenInclude(em => em.ChannelEmitted)
+                .Include(prog => prog.ProgrammesFeatures)
+                .ThenInclude(fe => fe.RelFeature)
+                .ThenInclude(f => f.Type)
                 .Single(prog => prog.Id == id);
 
-            double avg_w_act = DbContext.User.Average(u => u.WeightActor);
-            double avg_w_cat = DbContext.User.Average(u => u.WeightCategory);
-            double avg_w_keyw = DbContext.User.Average(u => u.WeightKeyword);
-            double avg_w_dir = DbContext.User.Average(u => u.WeightDirector);
-            double avg_w_country = DbContext.User.Average(u => u.WeightCountry);
-            double avg_w_year = DbContext.User.Average(u => u.WeightYear);
+            Filter filter = Filter.Create(from, to, date, 0);
+            IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
+            programmes = programmes.OrderBy(prog => similarity.TotalSimilarity(user, prog, programme));
 
-            IEnumerable<Programme> list = programme.GetSimilar(avg_w_act, avg_w_cat, avg_w_keyw, avg_w_dir, avg_w_country, avg_w_year);
+            Request.HttpContext.Response.Headers.Add("X-Total-Count", programmes.Count().ToString());
 
-            if (from != to)
-            {
-                TimeSpan from_ts = new TimeSpan(
-                    int.Parse(from.Split(':')[0]),
-                    int.Parse(from.Split(':')[1]),
-                    0
-                );
-                TimeSpan to_ts = new TimeSpan(
-                    int.Parse(to.Split(':')[0]),
-                    int.Parse(to.Split(':')[1]),
-                    0
-                );
-
-                list = list
-                    .Where(prog => prog.EmissionsBetween(from_ts, to_ts).Count() > 0);
-            }
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
-
-            return list
+            return programmes
                 .Select(prog => new ProgrammeResponse(prog));
         }
 
@@ -123,13 +89,13 @@ namespace TV_App.Controllers
         [HttpGet("{id}")]
         public ProgrammeResponse Get(int id)
         {
-            Programme programme = DbContext.Programme
-                .Include(prog => prog.Description)
-                .Include(prog => prog.Emission)
-                    .ThenInclude(em => em.Channel)
-                .Include(prog => prog.FeatureExample)
-                    .ThenInclude(fe => fe.Feature)
-                        .ThenInclude(f => f.TypeNavigation)
+            Programme programme = DbContext.Programmes
+                .Include(prog => prog.Descriptions)
+                .Include(prog => prog.Emissions)
+                    .ThenInclude(em => em.ChannelEmitted)
+                .Include(prog => prog.ProgrammesFeatures)
+                    .ThenInclude(fe => fe.RelFeature)
+                        .ThenInclude(f => f.Type)
                 .SingleOrDefault(prog => prog.Id == id);
             return new ProgrammeResponse(programme);
         }
