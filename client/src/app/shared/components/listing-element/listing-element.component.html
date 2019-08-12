@@ -13,7 +13,7 @@
         <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie podobał mi się</button>
         <button type="button" class="btn btn-secondary" (click)=this.rateButton(2)>Chcę obejrzeć</button>
       </div>
-      <div *ngIf="!this.user.isAnonymous() && this.ratingAvailable()">
+      <div class="badge badge-secondary my-1" *ngIf="!this.user.isAnonymous() && this.ratingAvailable()">
         {{ratingText(this.programme.rating)}}
       </div>
   </div>
