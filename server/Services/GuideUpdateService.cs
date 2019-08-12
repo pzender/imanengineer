@@ -189,12 +189,10 @@ namespace TV_App.Services
                         feat_id++;
                     }
 
-                    if (new_prog.ProgrammesFeatures.SingleOrDefault(fe => fe.RelFeature == new_feat) == null)
+                    if (context.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id) == null)
                     {
                         new_prog.ProgrammesFeatures.Add(new ProgrammesFeature()
                         {
-                            ProgrammeId = new_prog.Id,
-                            FeatureId = new_feat.Id,
                             RelProgramme = new_prog,
                             RelFeature = new_feat
                         });

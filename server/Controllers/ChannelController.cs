@@ -18,7 +18,7 @@ namespace Controllers
     public class ChannelsController : Controller
     {
         private readonly TvAppContext DbContext = new TvAppContext();
-        private readonly ProgrammeService programmes = new ProgrammeService();
+        private readonly ProgrammeService programmeService = new ProgrammeService();
 
         [HttpGet]
         public IEnumerable<ChannelResponse> Get()
@@ -39,13 +39,14 @@ namespace Controllers
         public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
             Filter filter = Filter.Create(from, to, date, 0);
-            IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
+            IEnumerable<Programme> programmes = programmeService.GetFilteredProgrammes(filter);
 
             programmes = programmes
                 .Where(prog => prog.Emissions.Any(em => em.ChannelId == id))
                 .OrderBy(prog => prog.Emissions.First().Start);
 
-            Response.Headers.Add("X-Total-Count", programmes.Count().ToString());
+            int count = programmes.Count();
+            Response.Headers.Add("X-Total-Count", count.ToString());
             return programmes.Select(prog => new ProgrammeResponse(prog));
 
         }
@@ -78,7 +79,7 @@ namespace Controllers
                 );
 
                 list = list
-                    .Where(em => programmes.EmissionBetween(em, from_ts, to_ts));
+                    .Where(em => programmeService.EmissionBetween(em, from_ts, to_ts));
             }
 
             if (date != 0)

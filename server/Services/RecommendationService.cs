@@ -13,6 +13,7 @@ namespace TV_App.Services
         {
             Dictionary<Programme, double> recom_supports = available_programmes
                 .ToDictionary(p => p, p => RecommendationSupport(p, user));
+                
             recom_supports = recom_supports
                 .Where(rs => rs.Value > 0.5)
                 .OrderByDescending(rs => rs.Value)

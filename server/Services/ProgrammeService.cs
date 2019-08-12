@@ -14,11 +14,11 @@ namespace TV_App.Services
         {
             IEnumerable<Programme> programmes = db.Programmes
                 .Include(prog => prog.Emissions)
-                .ThenInclude(em => em.ChannelEmitted)
+                    .ThenInclude(em => em.ChannelEmitted)
                 .Include(prog => prog.Descriptions)
                 .Include(prog => prog.ProgrammesFeatures)
-                .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(f => f.Type);
+                    .ThenInclude(fe => fe.RelFeature)
+                        .ThenInclude(f => f.RelType);
 
             if(filter.From.HasValue && filter.To.HasValue)
                 programmes = programmes.Where(prog => EmissionsBetween(prog, filter.From.Value, filter.To.Value).Any());
