@@ -64,19 +64,21 @@ namespace TV_App.Controllers
         [HttpGet("{id}/Similar")]
         public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            User user = DbContext.Users.Single(user => user.Login == username);
+            User user = DbContext.Users.SingleOrDefault(user => user.Login == username) ?? dummy;
 
             Programme programme = DbContext.Programmes
                 .Include(prog => prog.Emissions)
                 .ThenInclude(em => em.ChannelEmitted)
                 .Include(prog => prog.ProgrammesFeatures)
                 .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(f => f.Type)
-                .Single(prog => prog.Id == id);
+                .ThenInclude(f => f.RelType)
+                .First(prog => prog.Id == id);
 
             Filter filter = Filter.Create(from, to, date, 0);
             IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
-            programmes = programmes.OrderBy(prog => similarity.TotalSimilarity(user, prog, programme));
+            programmes = programmes
+                .OrderByDescending(prog => similarity.TotalSimilarity(user, prog, programme))
+                .Take(12);
 
             Request.HttpContext.Response.Headers.Add("X-Total-Count", programmes.Count().ToString());
 
@@ -95,8 +97,8 @@ namespace TV_App.Controllers
                     .ThenInclude(em => em.ChannelEmitted)
                 .Include(prog => prog.ProgrammesFeatures)
                     .ThenInclude(fe => fe.RelFeature)
-                        .ThenInclude(f => f.Type)
-                .SingleOrDefault(prog => prog.Id == id);
+                        .ThenInclude(f => f.RelType)
+                .FirstOrDefault(prog => prog.Id == id);
             return new ProgrammeResponse(programme);
         }
 
@@ -117,5 +119,7 @@ namespace TV_App.Controllers
         public void Delete(int id)
         {
         }
+
+        private readonly User dummy = new User() { Login = "DUMMY", WeightActor = 0.3, WeightCategory = 0.3, WeightCountry = 0.1, WeightDirector = 0.1, WeightKeyword = 0.1, WeightYear = 0.1 };
     }
 }

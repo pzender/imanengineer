@@ -33,7 +33,7 @@ namespace TV_App.Controllers
         [HttpGet("{name}", Name = "Get")]
         public ObjectResult Get(string name)
         {
-            User user = DbContext.Users.Where(u => u.Login == name).SingleOrDefault();
+            User user = DbContext.Users.Where(u => u.Login == name).FirstOrDefault();
             return user != null ? StatusCode(200, user) : StatusCode(404, "No such user!");
         }
 
@@ -41,7 +41,7 @@ namespace TV_App.Controllers
         [HttpPost("{name}/Ratings")]
         public async Task<ObjectResult> PostRating(string name, [FromBody] RatingJson body)
         {
-            Programme ratedProgramme = DbContext.Programmes.SingleOrDefault(prog => prog.Id == body.ProgrammeId);
+            Programme ratedProgramme = DbContext.Programmes.FirstOrDefault(prog => prog.Id == body.ProgrammeId);
             if (ratedProgramme != null)
             {
                 Rating existing_rating = DbContext.Ratings.SingleOrDefault(r => r.ProgrammeId == body.ProgrammeId && r.UserLogin == name);
@@ -75,7 +75,7 @@ namespace TV_App.Controllers
                 .ThenInclude(p => p.ProgrammesFeatures)
                 .ThenInclude(fe => fe.RelFeature)
                 .ThenInclude(f => f.RelType)
-                .Single(u => u.Login == name);
+                .First(u => u.Login == name);
 
             var rated = recommendations.GetRated(user);
 
@@ -91,8 +91,8 @@ namespace TV_App.Controllers
                 .ThenInclude(r => r.RelProgramme)
                 .ThenInclude(p => p.ProgrammesFeatures)
                 .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(f => f.Type)
-                .Single(u => u.Login == name);
+                .ThenInclude(f => f.RelType)
+                .First(u => u.Login == name);
             if (recommendations.GetPositivelyRated(user).Count() == 0) return new List<ProgrammeResponse>();
 
             Filter filter = Filter.Create(from, to, date, 0);
@@ -116,7 +116,7 @@ namespace TV_App.Controllers
                 name = await sr.ReadToEndAsync();
             }
             
-            User user = DbContext.Users.Where(u => u.Login == name).SingleOrDefault();
+            User user = DbContext.Users.Where(u => u.Login == name).FirstOrDefault();
             if (user == null)
             {
                 user = new User()

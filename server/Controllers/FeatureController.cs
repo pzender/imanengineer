@@ -32,7 +32,7 @@ namespace TV_App.Controllers
         {
             Feature feat = DbContext.Features
                 .Include(f => f.RelType)
-                .SingleOrDefault(f => f.Id == id);
+                .FirstOrDefault(f => f.Id == id);
 
             return new FeatureResponse(feat);
         }
@@ -51,8 +51,8 @@ namespace TV_App.Controllers
                     .ThenInclude(r => r.RelProgramme)
                     .ThenInclude(p => p.ProgrammesFeatures)
                     .ThenInclude(fe => fe.RelFeature)
-                    .ThenInclude(f => f.Type)
-                    .Single(u => u.Login == username);
+                    .ThenInclude(f => f.RelType)
+                    .First(u => u.Login == username);
 
                 if (recommendations.GetPositivelyRated(user).Count() > 0)
                 {

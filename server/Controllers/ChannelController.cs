@@ -60,7 +60,7 @@ namespace Controllers
                 .ThenInclude(pr => pr.ProgrammesFeatures)
                 .ThenInclude(fe => fe.RelFeature)
                 .ThenInclude(ft => ft.Type)
-                .Single(ch => ch.Id == id);
+                .First(ch => ch.Id == id);
 
             IEnumerable<Emission> list =
                 channel.Emissions.OrderBy(em => em.Start);
