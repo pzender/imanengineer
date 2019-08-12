@@ -47,8 +47,7 @@ namespace TV_App.Controllers
         [HttpPost]
         public async Task PostAsync()
         {
-            var logger = loggerFactory.CreateLogger("GuideUpdatePOST");
-            logger.LogInformation("GuideUpdateController.Post() called");
+            Console.WriteLine("GuideUpdateController.Post() called");
             string body = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {
@@ -119,8 +118,8 @@ namespace TV_App.Controllers
                 .Where(prog => prog.Emissions.Count == 0 && prog.Ratings.Count == 0)
                 .Select(prog => prog.Id)
                 .ToList();
-            DbContext.Programmes
-                .RemoveRange(DbContext.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
+            //DbContext.Programmes
+            //    .RemoveRange(DbContext.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
             DbContext.SaveChanges();
         }
     }

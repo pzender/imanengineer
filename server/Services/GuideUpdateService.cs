@@ -26,9 +26,7 @@ namespace TV_App.Services
 
             IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
             //guideupdate
-            bool gu_exists = context.GuideUpdates.Any();
-            long new_id = gu_exists ? context.GuideUpdates.Select(gu => gu.Id).Max() + 1 : 0;
-            //ILemmatizer lemmatizer = new LemmatizerPrebuiltCompact(LanguagePrebuilt.Polish);
+            long new_id = context.GuideUpdates.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
 
             GuideUpdate new_gu = new GuideUpdate()
             {
@@ -41,7 +39,7 @@ namespace TV_App.Services
             context.SaveChanges();
 
             //kanały
-            new_id = context.Channels.Any() ? context.Channels.Select(gu => gu.Id).Max() + 1 : 0;
+            new_id = context.Channels.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
 
             foreach (XElement channel in channels_in_xml)
             {
@@ -67,19 +65,26 @@ namespace TV_App.Services
 
 
             List<Programme> new_programmes = new List<Programme>();
-            new_id = context.Programmes.Any() ? context.Programmes.Select(gu => gu.Id).Max() + 1 : 0;
+            new_id = context.Programmes.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
             List<Emission> new_emissions = new List<Emission>();
-            long em_id = context.Emissions.Any() ? context.Emissions.Select(gu => gu.Id).Max() + 1 : 0;
+            long em_id = context.Emissions.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
 
             List<Description> new_descriptions = new List<Description>();
-            long desc_id = context.Descriptions.Any() ? context.Descriptions.Select(gu => gu.Id).Max() + 1 : 0;
+            long desc_id = context.Descriptions.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
             List<Feature> new_features = new List<Feature>();
-            long feat_id = context.Features.Any() ? context.Features.Select(gu => gu.Id).Max() + 1 : 0;
+            long feat_id = context.Features.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
 
             List<ProgrammesFeature> new_feature_examples = new List<ProgrammesFeature>();
             foreach (XElement programme in programmes_in_xml)
             {
                 string new_title = programme.Elements("title").First().Value;
+                if (new_title.Length > 180)
+                {
+                    new_title = new_title.Substring(0, 180);
+                    int last_space = new_title.LastIndexOf(' ');
+                    new_title = new_title.Substring(0, last_space);
+                    new_title += "...";
+                }
                 Programme new_prog = null;
                 if (context.Programmes.Any())
                 {

@@ -22,7 +22,7 @@ namespace TV_App.Models
 
         [Column("value")]
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Value { get; set; }
 
         [ForeignKey(nameof(Type))]

@@ -21,7 +21,7 @@ namespace TV_App.Models
         
         [Column("title")]
         [Required]
-        [StringLength(400)]
+        [StringLength(200)]
         public string Title { get; set; }
 
         [Column("icon_url")]
