@@ -16,4 +16,5 @@ export interface IProgrammeListElement {
         value: string
     } [];
     description: string;
+    rating: number;
 }

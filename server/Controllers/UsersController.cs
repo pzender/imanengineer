@@ -80,7 +80,7 @@ namespace TV_App.Controllers
             var rated = recommendations.GetRated(user);
 
             Request.HttpContext.Response.Headers.Add("X-Total-Count", rated.Count().ToString());
-            return rated.Select(reco => new ProgrammeResponse(reco));
+            return rated.Select(reco => new ProgrammeResponse(reco, user));
         }
 
         [HttpGet("{name}/Recommended")]
@@ -101,7 +101,7 @@ namespace TV_App.Controllers
             var list = recommendations.GetRecommendations(user, programmes);
 
             Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
-            return list.Select(reco => new ProgrammeResponse(reco));
+            return list.Select(reco => new ProgrammeResponse(reco, user));
         }
 
 

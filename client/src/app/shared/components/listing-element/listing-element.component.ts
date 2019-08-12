@@ -44,6 +44,14 @@ export class ListingElementComponent implements OnInit {
     .subscribe(result => this.buttonClicked.emit(result.toString()));
   }
 
+  ratingAvailable(): boolean{
+    return this.programme.rating && this.programme.rating != -1
+  }
+
+  ratingText(value: number): string {
+    return this.ratingTexts[value];
+  }
+
   ngOnInit() {
   }
 
@@ -74,5 +82,6 @@ export class ListingElementComponent implements OnInit {
       .replace('Dec', 'Gru');
   }
 
+  private ratingTexts = ['Nie podobał mi się', 'Podobał mi się', 'Chcę obejrzeć'];
 
 }
