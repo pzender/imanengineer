@@ -33,7 +33,9 @@ namespace TV_App.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=192.168.1.29;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password");
+                optionsBuilder.UseSqlServer("Data Source=db;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password");
+                optionsBuilder.EnableSensitiveDataLogging();
+                optionsBuilder.EnableDetailedErrors();
             }
         }
 
