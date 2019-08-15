@@ -26,7 +26,7 @@ namespace TV_App.Services
 
             IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
             //guideupdate
-            long new_id = context.GuideUpdates.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
+            long new_id = GetNewId(context.GuideUpdates);
 
             GuideUpdate new_gu = new GuideUpdate()
             {
@@ -39,7 +39,7 @@ namespace TV_App.Services
             context.SaveChanges();
 
             //kanały
-            new_id = context.Channels.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
+            new_id = GetNewId(context.Channels);
 
             foreach (XElement channel in channels_in_xml)
             {
@@ -65,14 +65,14 @@ namespace TV_App.Services
 
 
             List<Programme> new_programmes = new List<Programme>();
-            new_id = context.Programmes.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
+            new_id = GetNewId(context.Programmes);
             List<Emission> new_emissions = new List<Emission>();
-            long em_id = context.Emissions.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
+            long em_id = GetNewId(context.Emissions);
 
             List<Description> new_descriptions = new List<Description>();
-            long desc_id = context.Descriptions.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
+            long desc_id = GetNewId(context.Descriptions);
             List<Feature> new_features = new List<Feature>();
-            long feat_id = context.Features.OrderBy(gu => gu.Id).LastOrDefault()?.Id + 1 ?? 0;
+            long feat_id = GetNewId(context.Features);
 
             List<ProgrammesFeature> new_feature_examples = new List<ProgrammesFeature>();
             foreach (XElement programme in programmes_in_xml)
@@ -189,10 +189,20 @@ namespace TV_App.Services
                         feat_id++;
                     }
 
-                    if (context.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id) == null)
+                    bool pf_exists = new_prog.ProgrammesFeatures != null;
+                    bool pf_not_empty = new_prog.ProgrammesFeatures.Count() > 0;
+                    ProgrammesFeature pf_value_found = null;
+
+                    if (pf_exists && pf_not_empty)
+                    {
+                        pf_value_found = new_prog.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id);
+                    }
+                    if (pf_value_found == null)
                     {
                         new_prog.ProgrammesFeatures.Add(new ProgrammesFeature()
                         {
+                            FeatureId = new_feat.Id,
+                            ProgrammeId = new_prog.Id,
                             RelProgramme = new_prog,
                             RelFeature = new_feat
                         });
@@ -238,6 +248,13 @@ namespace TV_App.Services
             context.SaveChanges();
         }
 
+        private long GetNewId<T> (DbSet<T> dbset) where T : class, IEntityWithID
+        {
+            long id = 0;
+            if (dbset != null && dbset.Count() > 0)
+                id = dbset.Select(entity => entity.Id).Max() +1;
+            return id;
+        }
 
 
     }

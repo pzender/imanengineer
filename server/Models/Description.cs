@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TV_App.Models
 {
     [Table("Descriptions")]
-    public partial class Description
+    public partial class Description : IEntityWithID
     {
         [Column("id")]
         [Key]

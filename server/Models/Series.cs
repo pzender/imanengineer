@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TV_App.Models
 {
-    public partial class Series
+    public partial class Series : IEntityWithID
     {
         public Series()
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Xml.Linq;
 using TV_App.Models;
@@ -9,12 +10,13 @@ namespace TV_AppTests
 {
     public class GuideUpdateServiceTests
     {
-        TvAppContext context = new MockContext();
+        
         
         [Fact]
         public void ParseAllShouldAddChannelsOnce()
         {
             // arrange
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestChannels.xml");
             // act
@@ -31,6 +33,7 @@ namespace TV_AppTests
         public void ParseAllShouldAddProgrammeOnce()
         {
             // arrange
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
             // act
@@ -46,6 +49,7 @@ namespace TV_AppTests
         public void ParseAllShouldAddEmission()
         {
             // arrange
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
             // act
@@ -61,6 +65,7 @@ namespace TV_AppTests
         public void ParseAllShouldThrowExceptionIfNoEmission()
         {
             // arrange
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestProgrammesMissingEmission.xml");
             // act
@@ -72,6 +77,7 @@ namespace TV_AppTests
         public void ParseAllShouldAddSeparateEmissions()
         {
             // arrange
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestProgrammesSeparateEmissions.xml");
             // act
@@ -88,6 +94,7 @@ namespace TV_AppTests
         public void ParseAllShouldAddFeatures()
         {
             // arrange
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
             // act
@@ -118,18 +125,56 @@ namespace TV_AppTests
         [Fact]
         public void ParseAllShouldConnectNewFeaturesToProgrammes()
         {
-            Assert.True(false);
+            // arrange
+            TvAppContext context = new MockContext();
+            GuideUpdateService service = new GuideUpdateService(context);
+            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            // act
+            service.ParseAll(mockData);
+            service.ParseAll(mockData);
+            // assert
+            Assert.Collection(context.ProgrammesFeatures,
+                el => { },
+                el => { },
+                el => { },
+                el => { }
+            );
+
         }
 
         [Fact]
         public void ParseAllShouldConnectExistingFeaturesToProgrammes()
         {
-            Assert.True(false);
+            // arrange
+            TvAppContext context = new MockContext();
+            GuideUpdateService service = new GuideUpdateService(context);
+            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+
+            context.Features.AddRange(new List<Feature>()
+            {
+                new Feature() { Id = 0, Type = 4, Value = "Jennifer Lawrence" },
+                new Feature() { Id = 1, Type = 1, Value = "USA" },
+                new Feature() { Id = 2, Type = 7, Value = "Film" },
+                new Feature() { Id = 3, Type = 2, Value = "2016" },
+            });
+            // act
+            service.ParseAll(mockData);
+            service.ParseAll(mockData);
+            // assert
+            Assert.Collection(context.ProgrammesFeatures,
+                el => { Assert.Equal(0, el.RelFeature.Id); },
+                el => { Assert.Equal(1, el.RelFeature.Id); },
+                el => { Assert.Equal(2, el.RelFeature.Id); },
+                el => { Assert.Equal(3, el.RelFeature.Id); }
+            );
+
         }
 
         [Fact]
         public void ParseAllShouldAddDescriptionOnce()
         {
+            // arrange 
+            TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
             XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
             // act

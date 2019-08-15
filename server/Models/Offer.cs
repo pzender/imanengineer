@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TV_App.Models
 {
-    public partial class Offer
+    public partial class Offer : IEntityWithID
     {
         public Offer()
         {

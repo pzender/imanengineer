@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TV_App.Models
 {
     [Table("Features")]
-    public partial class Feature
+    public partial class Feature : IEntityWithID
     {
         public Feature()
         {
