@@ -87,12 +87,9 @@ namespace TV_App.Services
                 }
                 Programme new_prog = null;
                 if (context.Programmes.Any())
-                {
                     new_prog = context.Programmes.SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
-                }
                 if (new_prog == null)
-                    new_prog = new_programmes
-                        .SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
+                    new_prog = new_programmes.SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
 
                 if (new_prog == null)
                 {
@@ -169,13 +166,13 @@ namespace TV_App.Services
                     string value = feat.Value;
                     //if (type == "category")
                     //    value = lemmatizer.Lemmatize(value);
-
-                    Feature new_feat = context.Features.Any() ?
-                        context.Features.FirstOrDefault(f => f.Type == type_id && f.Value == value)
-                        : null;
-
+                    bool feats_exist = context.Features != null;
+                    bool feats_not_empty = context.Features.Count() > 0;
+                    Feature new_feat = null;
+                    if (feats_exist && feats_not_empty)
+                        new_feat = context.Features.SingleOrDefault(f => f.Type == type_id && f.Value == value);
                     if (new_feat == null)
-                        new_feat = new_features.SingleOrDefault(f => f.RelType.TypeName == type && f.Value == value);
+                        new_feat = new_features.SingleOrDefault(f => f.Type == type_id && f.Value == value);
                     if (new_feat == null)
                     {
                         new_feat = new Feature()
@@ -189,14 +186,12 @@ namespace TV_App.Services
                         feat_id++;
                     }
 
-                    bool pf_exists = new_prog.ProgrammesFeatures != null;
-                    bool pf_not_empty = new_prog.ProgrammesFeatures.Count() > 0;
                     ProgrammesFeature pf_value_found = null;
 
-                    if (pf_exists && pf_not_empty)
-                    {
+                    if (context.ProgrammesFeatures != null && context.ProgrammesFeatures.Any())
+                        pf_value_found = context.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id);
+                    if (new_prog.ProgrammesFeatures != null && new_prog.ProgrammesFeatures.Any())
                         pf_value_found = new_prog.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id);
-                    }
                     if (pf_value_found == null)
                     {
                         new_prog.ProgrammesFeatures.Add(new ProgrammesFeature()
@@ -212,11 +207,6 @@ namespace TV_App.Services
 
             context.AddRange(new_programmes);
             context.SaveChanges();
-
-        }
-
-        public void ClearOldProgrammes(DateTime olderThan)
-        {
 
         }
 

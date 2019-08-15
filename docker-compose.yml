@@ -30,19 +30,6 @@ services:
     environment:
       - TZ=Europe/Warsaw 
     restart: unless-stopped
-  # database:
-  #   image: mysql
-  #   container_name: db
-  #   environment:
-  #     - MYSQL_DATABASE=tv_db
-  #     - MYSQL_ROOT_PASSWORD=test
-  #     - MYSQL_USER=tv_app
-  #     - MYSQL_PASSWORD=tv_app
-  #   ports:
-  #     - 3306:3306
-  #   volumes:
-  #     - ./.database:/var/lib/mysql
-  #   restart: unless-stopped
   db:
     image: mcr.microsoft.com/mssql/server
     container_name: db

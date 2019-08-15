@@ -7,7 +7,7 @@
 [        ]             thanks to Paul Weterings and all the contributing users             
 [        ] --------------------------------------------------------------------------------
 [        ] 
-[        ] Job started at 01/08/2019 18:15:01
+[        ] Job started at 15/08/2019 15:47:48
 [  Debug ] 
 [  Debug ] Running  on: Unix 4.9.125.0
 [  Debug ] Environment: 4.0.30319.42000
@@ -71,27 +71,15 @@
 [  Info  ] update requested for - 42 - out of - 42 - channels for 5 day(s)
 [  Debug ] 
 [  Info  ] (   1/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=Stopklatka TV) -- mode Incremental
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Allo, Allo: Wspaniała nie-ucieczka"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Allo, Allo: Wspaniała nie-ucieczka. 'Allo 'Allo!, s03e20"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Allo, Allo: Wspaniała nie-ucieczka"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Allo, Allo: Wspaniała nie-ucieczka. 'Allo 'Allo!, s03e20"
 [  Debug ]    skipped  : last show, no next startime to use as stop
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (   2/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=Eska TV) -- mode Incremental
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 1 of 4 times for 5 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (   3/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TTV) -- mode Incremental
+[Warning ] error downloading page: The operation has timed out. (5sec)
+[Warning ] Retry 1 of 4 times
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (   4/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=Polo TV) -- mode Incremental
@@ -111,122 +99,83 @@
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... manekina"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... Księżyc"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... manekina. The Day Henry Met 3, s03e76"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... Księżyc. The Day Henry Met..., s01e26"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... manekina"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... skarpetkę"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... manekina. The Day Henry Met 3, s03e56"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... skarpetkę. The Day Henry Met... 2, s02e27"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... szczotkę"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... komiks"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... szczotkę. The Day Henry Met 3, s03e77"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... komiks. The Day Henry Met... 2, s02e28"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... dzwonek"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... holownik"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... dzwonek. The Day Henry Met 3, s03e78"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... holownik. The Day Henry Met... 2, s02e32"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... piłkę"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... teleskop"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... piłkę. The Day Henry Met..., s01e57"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... teleskop. The Day Henry Met... 2, s02e33"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... piłkę"
+[  Debug ]                        "Marta mówi: Marta nie mówi po małpiemu/Marta i Truman się gubią"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... piłkę. The Day Henry Met..., s01e01"
+[  Debug ]                        "Marta mówi: Marta nie mówi po małpiemu/Marta i Truman się gubią. Martha Speaks, s01e17"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... tarczę"
+[  Debug ]                        "Marta mówi: Marta nie mówi po małpiemu/Marta i Truman się gubią"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... tarczę. The Day Henry Met..., s01e02"
+[  Debug ]                        "Marta mówi: Marta nie mówi po małpiemu/Marta i Truman się gubią. Martha Speaks, s01e17"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... papugę"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... deskorolkę"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... papugę. The Day Henry Met..., s01e58"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... papugę"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... papugę. The Day Henry Met..., s01e03"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... gitarę"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... gitarę. The Day Henry Met..., s01e04"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... gitarę"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... gitarę. The Day Henry Met..., s01e60"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... mikroskop"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... mikroskop. The Day Henry Met..., s01e05"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... samolot"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... samolot. The Day Henry Met..., s01e06"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... kaktusa"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... kaktusa. The Day Henry Met 3, s03e61"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... posąg"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... posąg. The Day Henry Met..., s01e07"
+[  Debug ]                        "Dzień, w którym Heniś poznał...: Dzień, w którym Heniś poznał... deskorolkę. The Day Henry Met... 2, s02e35"
 [  Debug ]    skipped  : last show, no next startime to use as stop
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (   8/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=Fokus TV) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Wielkie konstrukcje III Rzeszy: Włochy - forteca Hitlera"
+[  Debug ]                        "Wielkie konstrukcje III Rzeszy: V1 - pocisk odwetowy Hitlera"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Wielkie konstrukcje III Rzeszy: Włochy - forteca Hitlera. Nazi Megastructures, s04e03"
+[  Debug ]                        "Wielkie konstrukcje III Rzeszy: V1 - pocisk odwetowy Hitlera. Nazi Megastructures, s02e01"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Wielkie konstrukcje III Rzeszy: Luftwaffe"
+[  Debug ]                        "Supersamoloty bojowe: U-2 Dragon Lady"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Wielkie konstrukcje III Rzeszy: Luftwaffe. Nazi Megastructures, s04e04"
+[  Debug ]                        "Supersamoloty bojowe: U-2 Dragon Lady. Air Warriors 5, s05e01"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Supersamoloty bojowe: P-51 Mustang"
+[  Debug ]                        "Wielkie konstrukcje III Rzeszy: Linia Zygfryda"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Supersamoloty bojowe: P-51 Mustang. Air Warriors 4, s04e01"
+[  Debug ]                        "Wielkie konstrukcje III Rzeszy: Linia Zygfryda. Nazi Megastructures, s02e02"
+[  Debug ]    suspicious      title in index page
+[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
+[  Debug ]        index title(s):
+[  Debug ]                        "Supersamoloty bojowe: AV-8B Harrier II"
+[  Debug ]  (sub)detail title(s):
+[  Debug ]                        "Supersamoloty bojowe: AV-8B Harrier II. Air Warriors 5, s05e02"
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (   9/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=POLSAT) -- mode Incremental
+[  Debug ]    skipped  : last show, no next startime to use as stop
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  10/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVN) -- mode Incremental
@@ -241,118 +190,90 @@
 [  Debug ]        index title(s):
 [  Debug ]                        "Hawaje 5-"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Hawaje 5-. Hawaii 5.0, s06e07"
+[  Debug ]                        "Hawaje 5-. Hawaii 5.0, s06e11"
+[  Debug ]    suspicious      title in index page
+[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
+[  Debug ]        index title(s):
+[  Debug ]                        "Włatcy móch: Kompu-kompu"
+[  Debug ]  (sub)detail title(s):
+[  Debug ]                        "Włatcy móch: Kompu-kompu. s03e37"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
 [  Debug ]                        "Hawaje 5-"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Hawaje 5-. Hawaii 5.0, s06e08"
+[  Debug ]                        "Hawaje 5-. Hawaii 5.0, s06e12"
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  13/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TV Puls) -- mode Incremental
+[  Debug ]    suspicious      title in index page
+[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
+[  Debug ]        index title(s):
+[  Debug ]                        "JAG - Wojskowe Biuro Śledcze : Pan Rabb jedzie do Washingtonu"
+[  Debug ]  (sub)detail title(s):
+[  Debug ]                        "JAG - Wojskowe Biuro Śledcze : Pan Rabb jedzie do Washingtonu. JAG, s04e08"
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  14/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=PULS 2) -- mode Incremental
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują latające jedzenie/ Pieski ratują diabelski młyn"
+[  Debug ]                        "Psi Patrol : Pieski ratują uciekające żółwie/ Pieski ratują zmarznięte owieczki"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują latające jedzenie/ Pieski ratują diabelski młyn. Paw Patrol, s04e08"
+[  Debug ]                        "Psi Patrol : Pieski ratują uciekające żółwie/ Pieski ratują zmarznięte owieczki. Paw Patrol, s04e421"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Sylwester i Tweety na tropie : Ktoś do Wenecji?/ Pięciokaratowy futrzak"
+[  Debug ]                        "Psi Patrol : Pieski ratują uciekające żółwie/ Pieski ratują zmarznięte owieczki"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Sylwester i Tweety na tropie : Ktoś do Wenecji?/ Pięciokaratowy futrzak. The Sylwester & Tweety Mysteries 4, s04e07"
+[  Debug ]                        "Psi Patrol : Pieski ratują uciekające żółwie/ Pieski ratują zmarznięte owieczki. Paw Patrol, s04e421"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują misia lunatyka/ Pieski ratują kowboja Danny'ego"
+[  Debug ]                        "Timon i Pumba: Z Bruce'em przygoda na Antypodach/Polowanie na gamonie w Gibonie"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują misia lunatyka/ Pieski ratują kowboja Danny'ego. Paw Patrol, s04e09"
+[  Debug ]                        "Timon i Pumba: Z Bruce'em przygoda na Antypodach/Polowanie na gamonie w Gibonie. Lion King's Timon & Pumbaa, s01e09"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują misia lunatyka/ Pieski ratują kowboja Danny'ego"
+[  Debug ]                        "Psi Patrol : Pieski ratują Luke'a Starsa/ Pieski ratują Dzień Kurczaka"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują misia lunatyka/ Pieski ratują kowboja Danny'ego. Paw Patrol, s04e09"
+[  Debug ]                        "Psi Patrol : Pieski ratują Luke'a Starsa/ Pieski ratują Dzień Kurczaka. Paw Patrol, s04e23"
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Sylwester i Tweety na tropie : Ktoś do Wenecji?/ Pięciokaratowy futrzak"
+[  Debug ]                        "Psi Patrol : Pieski ratują Francois pingwina/ Pieski ratują hipopotama Danny'ego"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Sylwester i Tweety na tropie : Ktoś do Wenecji?/ Pięciokaratowy futrzak. The Sylwester & Tweety Mysteries 4, s04e07"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Sylwester i Tweety na tropie : Pierzaste święta/ Za garść sztokfiszy"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Sylwester i Tweety na tropie : Pierzaste święta/ Za garść sztokfiszy. The Sylwester & Tweety Mysteries 4, s04e08"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Krudowie: U zarania dziejów : Ballada o Mandy/ Kwiaty dla Munka"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Krudowie: U zarania dziejów : Ballada o Mandy/ Kwiaty dla Munka. Dawn of the Croods, s02e16"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Pingwiny z Madagaskaru: Wszystko albo nic/ Dwie stopy nad ziemią i wyżej"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Pingwiny z Madagaskaru: Wszystko albo nic/ Dwie stopy nad ziemią i wyżej. The Penguins of Madagascar, s01e06"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują Wielkiego Harry'ego/ Pieski ratują Latającego Kociaka"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Psi Patrol : Pieski ratują Wielkiego Harry'ego/ Pieski ratują Latającego Kociaka. Paw Patrol, s04e11"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Pingwiny z Madagaskaru: Lodzio-miodzio"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Pingwiny z Madagaskaru: Lodzio-miodzio. The Penguins of Madagascar, s01e09"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Krudowie: U zarania dziejów : Tunel strachu/ Potwór z Laguny Krudów"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Krudowie: U zarania dziejów : Tunel strachu/ Potwór z Laguny Krudów. Dawn of the Croods, s02e19"
+[  Debug ]                        "Psi Patrol : Pieski ratują Francois pingwina/ Pieski ratują hipopotama Danny'ego. Paw Patrol, s04e24"
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  15/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVN 7) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  16/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 1 HD) -- mode Incremental
+[  Debug ]    suspicious      title in index page
+[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
+[  Debug ]        index title(s):
+[  Debug ]                        "Między ziemią a niebem"
+[  Debug ]  (sub)detail title(s):
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  17/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 2 HD) -- mode Incremental
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Doktor z alpejskiej wioski - nowy rozdział: Ciemne chmury"
+[  Debug ]                        "Pogoda"
 [  Debug ]  (sub)detail title(s):
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  18/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  19/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Białystok) -- mode Incremental
 [Warning ] error downloading page: The operation has timed out. (5sec)
 [Warning ] Retry 1 of 4 times
 [Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
 [Warning ] pausing 2 of 4 times for 10 seconds before re-try.
-[  Info  ] 
-[  Debug ] 
-[  Info  ] (  19/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Białystok) -- mode Incremental
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Operacja zdrowie!: Miażdżyca rozsiana"
-[  Debug ]  (sub)detail title(s):
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  20/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Bydgoszcz) -- mode Incremental
@@ -365,10 +286,6 @@
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  23/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Katowice) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  24/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Kielce) -- mode Incremental
@@ -380,30 +297,12 @@
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  26/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Lublin) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 1 of 4 times for 5 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  27/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Łódź) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 1 of 4 times for 5 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  28/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Olsztyn) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  29/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Opole) -- mode Incremental
@@ -414,71 +313,54 @@
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Kryminalna siódemka"
+[  Debug ]                        "1200 muzeów: Militaria"
 [  Debug ]  (sub)detail title(s):
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  31/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Rzeszów) -- mode Incremental
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Weterynarze z sercem"
-[  Debug ]  (sub)detail title(s):
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  32/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Szczecin) -- mode Incremental
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Słodka kuchnia Pszczółek"
-[  Debug ]  (sub)detail title(s):
-[  Info  ] 
-[  Debug ] 
-[  Info  ] (  33/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Warszawa) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[  Info  ] 
-[  Debug ] 
-[  Info  ] (  34/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Wrocław) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
 [Warning ] error downloading page: The operation has timed out. (5sec)
 [Warning ] Retry 1 of 4 times
 [Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
 [Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
+[  Info  ] (  33/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Warszawa) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
+[  Info  ] (  34/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP 3 Wrocław) -- mode Incremental
+[  Info  ] 
+[  Debug ] 
 [  Info  ] (  35/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP Info) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  36/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP Kultura) -- mode Incremental
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  37/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP Sport) -- mode Incremental
+[  Debug ]    suspicious      title in index page
+[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
+[  Debug ]        index title(s):
+[  Debug ]                        "Ring TVP Sport"
+[  Debug ]  (sub)detail title(s):
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  38/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP Historia) -- mode Incremental
 [  Debug ]    suspicious      title in index page
 [  Debug ] Can't match any (sub)detail title(s) with any index title(s):
 [  Debug ]        index title(s):
-[  Debug ]                        "Encyklopedia II wojny światowej: Spalić Londyn"
+[  Debug ]                        "Encyklopedia II wojny światowej: Podwodna wojna"
 [  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Encyklopedia II wojny światowej: Spalić Londyn. s01e02"
-[  Debug ]    suspicious      title in index page
-[  Debug ] Can't match any (sub)detail title(s) with any index title(s):
-[  Debug ]        index title(s):
-[  Debug ]                        "Encyklopedia II wojny światowej: Spalić Londyn"
-[  Debug ]  (sub)detail title(s):
-[  Debug ]                        "Encyklopedia II wojny światowej: Spalić Londyn. s01e03"
+[  Debug ]                        "Encyklopedia II wojny światowej: Podwodna wojna. s01e02"
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  39/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TVP Rozrywka) -- mode Incremental
+[Warning ] error downloading page: The operation has timed out. (5sec)
+[Warning ] Retry 1 of 4 times
+[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
+[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  40/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=TV Republika) -- mode Incremental
@@ -489,16 +371,12 @@
 [  Info  ] 
 [  Debug ] 
 [  Info  ] (  42/42  ) PROGRAMTV.ONET.PL -- chan. (xmltv_id=STARS.TV) -- mode Incremental
-[Warning ] error downloading page: The operation has timed out. (5sec)
-[Warning ] Retry 1 of 4 times
-[Warning ] error downloading page: Error getting response stream (ReadDoneAsync2): ReceiveFailure
-[Warning ] pausing 2 of 4 times for 10 seconds before re-try.
 [  Info  ] 
 [  Debug ] 
-[  Debug ] 9455 shows in 42 channels
+[  Debug ] 9204 shows in 42 channels
 [  Debug ] 0 updated shows
-[  Debug ] 9455 new shows added
+[  Debug ] 9204 new shows added
 [  Info  ] 
 [  Info  ] 
-[        ] Job finished at 01/08/2019 22:17:58 done in 4h 2m 57s
+[        ] Job finished at 15/08/2019 19:23:06 done in 3h 35m 17s
 [  Debug ] statistics upload error: The remote server returned an error: (404) Not Found.

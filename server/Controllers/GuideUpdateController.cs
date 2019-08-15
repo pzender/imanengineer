@@ -59,7 +59,7 @@ namespace TV_App.Controllers
                 GuideUpdateService service = new GuideUpdateService(DbContext);
                 service.ParseAll(XDocument.Parse(body));
             }
-                //long feat_id = DbContext.Feature.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
+            //long feat_id = DbContext.Feature.OrderByDescending(gu => gu.Id).Select(gu => gu.Id).FirstOrDefault() + 1;
             //    KeywordExtractor keywordExtractor = new KeywordExtractor(logger);
 
             //    IEnumerable<Programme> list = DbContext.Programme.Include(prog => prog.Description).ToList();
@@ -110,16 +110,16 @@ namespace TV_App.Controllers
             //    }
             //}
 
-            //DbContext.Emissions
-            //    .RemoveRange(DbContext.Emissions.Where(em => em.Stop < DateTime.Today));
+            DbContext.Emissions
+                .RemoveRange(DbContext.Emissions.Where(em => em.Stop < DateTime.Today));
             List<long> emptyProgrammeIds = DbContext.Programmes
                 .Include(prog => prog.Emissions)
                 .Include(prog => prog.Ratings)
                 .Where(prog => prog.Emissions.Count == 0 && prog.Ratings.Count == 0)
                 .Select(prog => prog.Id)
                 .ToList();
-            //DbContext.Programmes
-            //    .RemoveRange(DbContext.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
+            DbContext.Programmes
+                .RemoveRange(DbContext.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
             DbContext.SaveChanges();
         }
     }
