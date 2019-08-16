@@ -103,22 +103,27 @@ namespace TV_App.Services
                     new_id++;
                 }
 
-                Emission new_em = new_prog.Emissions
-                    .SingleOrDefault(e => e.Start == ParseDateTime(programme.Attribute("start").Value)
-                                       && e.Stop == ParseDateTime(programme.Attribute("stop").Value));
+                Emission new_em = null;
+                DateTime em_start = ParseDateTime(programme.Attribute("start").Value);
+                DateTime em_stop = ParseDateTime(programme.Attribute("stop").Value);
+                Channel em_channel = context.Channels.Where(ch => ch.Name == programme.Attribute("channel").Value).Single();
+
+                if (context.Emissions.Any())
+                    new_em = context.Emissions.FirstOrDefault(e => e.Start == em_start && e.Stop == em_stop && e.ChannelId == em_channel.Id);
+                if (new_em == null)
+                    new_em = new_prog.Emissions.FirstOrDefault(e => e.Start == em_start && e.Stop == em_stop && e.ChannelId == em_channel.Id);
+
                 if (new_em == null)
                 {
                     if (programme.Attribute("start") == null || programme.Attribute("stop") == null)
                         throw new DataException($"Missing emission hours ({new_prog.Title})");
-                    DateTime start = ParseDateTime(programme.Attribute("start").Value);
-                    DateTime stop = ParseDateTime(programme.Attribute("stop").Value);
-                    Channel channel = context.Channels.Where(ch => ch.Name == programme.Attribute("channel").Value).Single();
+                    
                     new_em = new Emission()
                     {
-                        ChannelEmitted = channel,
-                        ChannelId = channel.Id,
-                        Start = start,
-                        Stop = stop,
+                        ChannelEmitted = em_channel,
+                        ChannelId = em_channel.Id,
+                        Start = em_start,
+                        Stop = em_stop,
                         RelProgramme = new_prog,
                         ProgrammeId = new_prog.Id
                     };

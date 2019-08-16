@@ -47,7 +47,7 @@ namespace TV_App.Controllers
         [HttpPost]
         public async Task PostAsync()
         {
-            Console.WriteLine("GuideUpdateController.Post() called");
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdateController.Post() called");
             string body = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {
