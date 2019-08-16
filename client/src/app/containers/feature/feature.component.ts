@@ -41,7 +41,6 @@ export class FeatureComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.fetch()
   }
 
 }

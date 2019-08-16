@@ -47,7 +47,7 @@ namespace TV_App.Controllers
         [HttpPost]
         public async Task PostAsync()
         {
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdateController.Post() called");
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - start");
             string body = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {
@@ -125,6 +125,8 @@ namespace TV_App.Controllers
             DbContext.Programmes
                 .RemoveRange(DbContext.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
             DbContext.SaveChanges();
+
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - finish");
         }
     }
 }
