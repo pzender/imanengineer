@@ -118,6 +118,10 @@ namespace TV_App.Controllers
                 .Where(prog => prog.Emissions.Count == 0 && prog.Ratings.Count == 0)
                 .Select(prog => prog.Id)
                 .ToList();
+            DbContext.Descriptions
+                .RemoveRange(DbContext.Descriptions.Where(desc => emptyProgrammeIds.Contains(desc.ProgrammeId)));
+            DbContext.ProgrammesFeatures
+                .RemoveRange(DbContext.ProgrammesFeatures.Where(pf => emptyProgrammeIds.Contains(pf.ProgrammeId)));
             DbContext.Programmes
                 .RemoveRange(DbContext.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
             DbContext.SaveChanges();
