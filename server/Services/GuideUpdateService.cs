@@ -201,10 +201,16 @@ namespace TV_App.Services
                 }
             }
             var thompsons_new_feats = new_features.Where(f => f.Value == "Andrea Del Boca");
+            var thompsons_old_feats = context.Features.Where(f => f.Value == "Andrea Del Boca");
 
-            Console.WriteLine($"Thompsons - new_feats:  {thompsons_new_feats.Count()}");
+            Console.WriteLine($"DelBocas - old_feats:  {thompsons_new_feats.Count()}");
             foreach (Feature f in thompsons_new_feats)
                 Console.WriteLine($"[{f.Id}\t{f.Type}\t{f.Value}]");
+
+            Console.WriteLine($"DelBocas - old_feats:  {thompsons_old_feats.Count()}");
+            foreach (Feature f in thompsons_old_feats)
+                Console.WriteLine($"[{f.Id}\t{f.Type}\t{f.Value}]");
+
 
             context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
