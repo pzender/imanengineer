@@ -104,6 +104,9 @@ namespace TV_App.Services
                 }
 
                 Emission new_em = null;
+                if (programme.Attribute("start") == null || programme.Attribute("stop") == null)
+                    throw new DataException($"Missing emission hours ({new_prog.Title})");
+
                 DateTime em_start = ParseDateTime(programme.Attribute("start").Value);
                 DateTime em_stop = ParseDateTime(programme.Attribute("stop").Value);
                 Channel em_channel = context.Channels.Where(ch => ch.Name == programme.Attribute("channel").Value).Single();
@@ -115,8 +118,6 @@ namespace TV_App.Services
 
                 if (new_em == null)
                 {
-                    if (programme.Attribute("start") == null || programme.Attribute("stop") == null)
-                        throw new DataException($"Missing emission hours ({new_prog.Title})");
                     
                     new_em = new Emission()
                     {
@@ -169,12 +170,9 @@ namespace TV_App.Services
                         .Id;
 
                     string value = feat.Value;
-                    //if (type == "category")
-                    //    value = lemmatizer.Lemmatize(value);
-                    bool feats_exist = context.Features != null;
-                    bool feats_not_empty = context.Features.Count() > 0;
+
                     Feature new_feat = null;
-                    if (feats_exist && feats_not_empty)
+                    if (context.Features != null && context.Features.Count() > 0)
                         new_feat = context.Features.SingleOrDefault(f => f.Type == type_id && f.Value == value);
                     if (new_feat == null)
                         new_feat = new_features.SingleOrDefault(f => f.Type == type_id && f.Value == value);
@@ -187,7 +185,6 @@ namespace TV_App.Services
                             Value = value
                         };
                         new_features.Add(new_feat);
-                        context.Features.Add(new_feat);
                         feat_id++;
                     }
 
@@ -209,7 +206,6 @@ namespace TV_App.Services
                     }
                 }
             }
-
             context.AddRange(new_programmes);
             context.SaveChanges();
 

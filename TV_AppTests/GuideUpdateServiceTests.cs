@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Xml.Linq;
 using TV_App.Models;
 using TV_App.Services;
@@ -100,23 +101,23 @@ namespace TV_AppTests
             // act
             service.ParseAll(mockData);
             // assert
-            Assert.Collection(context.Features,
-                el => {
-                    Assert.Equal("Jennifer Lawrence", el.Value);
-                    Assert.Equal(4, el.Type);
-                },
+            Assert.Collection(context.Features.OrderBy(f => f.Type),
                 el => {
                     Assert.Equal("USA", el.Value);
                     Assert.Equal(1, el.Type);
+                },
+                el => {
+                    Assert.Equal("2016", el.Value);
+                    Assert.Equal(2, el.Type);
+                },
+                el => {
+                    Assert.Equal("Jennifer Lawrence", el.Value);
+                    Assert.Equal(4, el.Type);
                 },
 
                 el => {
                     Assert.Equal("Film", el.Value);
                     Assert.Equal(7, el.Type);
-                },
-                el => {
-                    Assert.Equal("2016", el.Value);
-                    Assert.Equal(2, el.Type);
                 }
             );
 
