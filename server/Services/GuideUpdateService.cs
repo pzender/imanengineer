@@ -53,16 +53,12 @@ namespace TV_App.Services
                     };
                     context.Channels.Add(new_channel);
                     new_id++;
-
                 }
             }
             context.SaveChanges();
 
             //programy
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme").ToList();
-
-            int count = programmes_in_xml.Count();
-
 
             List<Programme> new_programmes = new List<Programme>();
             new_id = GetNewId(context.Programmes);
@@ -203,8 +199,8 @@ namespace TV_App.Services
                     }
                 }
             }
-            context.AddRange(new_features.Distinct());
-            context.AddRange(new_programmes);
+            context.Features.AddRange(new_features.Distinct());
+            context.Programmes.AddRange(new_programmes);
             context.SaveChanges();
 
         }
