@@ -200,7 +200,7 @@ namespace TV_App.Services
                     }
                 }
             }
-            var thompsons_new_feats = new_features.Where(f => f.Value == "Severn Thompson");
+            var thompsons_new_feats = new_features.Where(f => f.Value == "Andrea Del Boca");
 
             Console.WriteLine($"Thompsons - new_feats:  {thompsons_new_feats.Count()}");
             foreach (Feature f in thompsons_new_feats)
