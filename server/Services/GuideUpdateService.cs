@@ -199,7 +199,12 @@ namespace TV_App.Services
                     }
                 }
             }
-            context.Features.AddRange(new_features.Distinct());
+
+            Console.WriteLine($"Thompsons - new_feats:  {new_features.Where(f => f.Value == "Severn Thompson")}");
+            Console.WriteLine($"Thompsons - context:    {context.Features.Where(f => f.Value == "Severn Thompson")}");
+            Console.WriteLine($"Thompsons - programmes: {new_programmes.Select(prog => prog.ProgrammesFeatures.SelectMany(pf => pf.RelFeature.Value)).Where(v => (string)v == "Severn Thompson").Count()}");
+
+            context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
             context.SaveChanges();
 
