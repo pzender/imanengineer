@@ -177,6 +177,7 @@ namespace TV_App.Services
                         {
                             Id = feat_id,
                             RelType = context.FeatureTypes.Single(ft => ft.TypeName == type),
+                            Type = type_id,
                             Value = value
                         };
                         new_features.Add(new_feat);
