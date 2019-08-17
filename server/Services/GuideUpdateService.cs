@@ -206,6 +206,7 @@ namespace TV_App.Services
             foreach (Feature f in thompsons_new_feats)
                 Console.WriteLine($"[{f.Id}\t{f.Type}\t{f.Value}]");
 
+            context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
             context.SaveChanges();
 
