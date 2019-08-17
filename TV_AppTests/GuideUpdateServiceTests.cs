@@ -189,5 +189,42 @@ namespace TV_AppTests
 
         }
 
+        [Fact]
+        public void ParseAllShouldAddDuplicateFeaturesFromSeparateProgrammes()
+        {
+            // arrange
+            TvAppContext context = new MockContext();
+            GuideUpdateService service = new GuideUpdateService(context);
+            XDocument mockData = XDocument.Load("TestData/TestSeparateProgrammes.xml");
+            // act
+            service.ParseAll(mockData);
+
+            // assert
+            Assert.Collection(context.Features.OrderBy(f => f.Type),
+                el => {
+                    Assert.Equal("USA", el.Value);
+                    Assert.Equal(1, el.Type);
+                },
+                el => {
+                    Assert.Equal("2016", el.Value);
+                    Assert.Equal(2, el.Type);
+                },
+                el => {
+                    Assert.Equal("Test Actor", el.Value);
+                    Assert.Equal(4, el.Type);
+                },
+                el => {
+                    Assert.Equal("Jennifer Lawrence", el.Value);
+                    Assert.Equal(4, el.Type);
+                },
+                el => {
+                    Assert.Equal("Film", el.Value);
+                    Assert.Equal(7, el.Type);
+                }
+            );
+        }
+
+
+
     }
 }

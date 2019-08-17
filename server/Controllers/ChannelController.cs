@@ -17,13 +17,31 @@ namespace Controllers
     [Route("api/[controller]")]
     public class ChannelsController : Controller
     {
+
+
         private readonly TvAppContext DbContext = new TvAppContext();
         private readonly ProgrammeService programmeService = new ProgrammeService();
 
-        [HttpGet]
-        public IEnumerable<ChannelResponse> Get()
+        [HttpGet("Offers")]
+        public ObjectResult GetOffers()
         {
-            return DbContext.Channels.Select(ch => new ChannelResponse(ch));
+            var offers = DbContext.Offers.Select(o => new
+            {
+                id = o.Id,
+                name = o.Name
+            });
+
+            return StatusCode(200, offers);
+        }
+
+        [HttpGet]
+        public IEnumerable<ChannelResponse> Get([FromQuery] long offer_id = 0)
+        {
+            IEnumerable<Channel> channels = DbContext.Channels
+                .Include(ch => ch.OfferedChannels);
+            if (offer_id != 0)
+                channels = channels.Where(ch => ch.OfferedChannels.Any(oc => oc.OfferId == offer_id));
+            return channels.Select(ch => new ChannelResponse(ch));
         }
 
         // GET: api/Channel/5
