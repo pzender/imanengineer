@@ -159,11 +159,10 @@ namespace TV_App.Services
                 if (programme.Element("credits") != null)
                     features.AddRange(programme.Element("credits").Elements());
                 if (features.Where(el => el.Name.LocalName == "date").Count() == 0)
-                    features.Add(new XElement("date", $"{DateTime.Now.Year - 1}"));
+                    features.Add(new XElement("date", $"{DateTime.Now.Year}"));
 
                 foreach (XElement feat in features)
                 {
-
                     string type = feat.Name.LocalName;
                     long type_id = context.FeatureTypes
                         .FirstOrDefault(ft => ft.TypeName == type)
@@ -200,12 +199,11 @@ namespace TV_App.Services
                         {
                             FeatureId = new_feat.Id,
                             ProgrammeId = new_prog.Id,
-                            RelProgramme = new_prog,
-                            RelFeature = new_feat
                         });
                     }
                 }
             }
+            context.AddRange(new_features.Distinct());
             context.AddRange(new_programmes);
             context.SaveChanges();
 
