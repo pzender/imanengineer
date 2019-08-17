@@ -199,10 +199,11 @@ namespace TV_App.Services
                     }
                 }
             }
+            var thompsons_new_feats = new_features.Where(f => f.Value == "Severn Thompson");
 
-            Console.WriteLine($"Thompsons - new_feats:  {new_features.Where(f => f.Value == "Severn Thompson").Count()}");
-            Console.WriteLine($"Thompsons - context:    {context.Features.Where(f => f.Value == "Severn Thompson").Count()}");
-            Console.WriteLine($"Thompsons - programmes: {new_programmes.SelectMany(prog => prog.ProgrammesFeatures.Select(pf => pf.RelFeature)).Where(f => f.Value == "Severn Thompson").Count()}");
+            Console.WriteLine($"Thompsons - new_feats:  {thompsons_new_feats.Count()}");
+            foreach (Feature f in thompsons_new_feats)
+                Console.WriteLine($"[{f.Id}\t{f.Type}\t{f.Value}]");
 
             context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
