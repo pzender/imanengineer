@@ -224,7 +224,20 @@ namespace TV_AppTests
             );
         }
 
+        [Fact]
+        public void ParseAllShouldNotInsertDuplicateFeatures()
+        {
+            // arrange
+            TvAppContext context = new MockContext();
+            GuideUpdateService service = new GuideUpdateService(context);
+            XDocument mockData = XDocument.Load("TestData/Problem_DelBoca.xml");
+            // act
+            service.ParseAll(mockData);
+            // assert
+            var DelBoca = context.Features.Single(f => f.Value.ToLower() == "andrea del boca" && f.Type == 4);
+            Assert.NotNull(DelBoca);
 
+        }
 
     }
 }

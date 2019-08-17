@@ -12,6 +12,7 @@ namespace TV_App.Services
     public class GuideUpdateService
     {
         private TvAppContext context;
+        private int counter = 0;
         public GuideUpdateService(TvAppContext context)
         {
             this.context = context;
@@ -160,17 +161,17 @@ namespace TV_App.Services
                 foreach (XElement feat in features)
                 {
                     string type = feat.Name.LocalName;
+                   
                     long type_id = context.FeatureTypes
                         .FirstOrDefault(ft => ft.TypeName == type)
                         .Id;
 
                     string value = feat.Value;
-
                     Feature new_feat = null;
                     if (context.Features != null && context.Features.Count() > 0)
-                        new_feat = context.Features.SingleOrDefault(f => f.Type == type_id && f.Value == value);
+                        new_feat = context.Features.SingleOrDefault(f => f.Type == type_id && f.Value.ToLower() == value.ToLower());
                     if (new_feat == null)
-                        new_feat = new_features.SingleOrDefault(f => f.Type == type_id && f.Value == value);
+                        new_feat = new_features.SingleOrDefault(f => f.Type == type_id && f.Value.ToLower() == value.ToLower());
                     if (new_feat == null)
                     {
                         new_feat = new Feature()
@@ -200,20 +201,10 @@ namespace TV_App.Services
                     }
                 }
             }
-            var thompsons_new_feats = new_features.Where(f => f.Value == "Andrea Del Boca");
-            var thompsons_old_feats = context.Features.Where(f => f.Value == "Andrea Del Boca");
-
-            Console.WriteLine($"DelBocas - old_feats:  {thompsons_new_feats.Count()}");
-            foreach (Feature f in thompsons_new_feats)
-                Console.WriteLine($"[{f.Id}\t{f.Type}\t{f.Value}]");
-
-            Console.WriteLine($"DelBocas - old_feats:  {thompsons_old_feats.Count()}");
-            foreach (Feature f in thompsons_old_feats)
-                Console.WriteLine($"[{f.Id}\t{f.Type}\t{f.Value}]");
-
 
             context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
+
             context.SaveChanges();
 
         }

@@ -67,7 +67,7 @@ namespace TV_App.Controllers
 
         // GET: api/Users/Przemek/Ratings
         [HttpGet("{name}/Ratings")]
-        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
+        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             User user = DbContext.Users
                 .Include(u => u.Ratings)
@@ -84,7 +84,7 @@ namespace TV_App.Controllers
         }
 
         [HttpGet("{name}/Recommended")]
-        public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
+        public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             User user = DbContext.Users
                 .Include(u => u.Ratings)
@@ -95,7 +95,7 @@ namespace TV_App.Controllers
                 .First(u => u.Login == name);
             if (recommendations.GetPositivelyRated(user).Count() == 0) return new List<ProgrammeResponse>();
 
-            Filter filter = Filter.Create(from, to, date, 0);
+            Filter filter = Filter.Create(from, to, date, offer_id);
             IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
             programmes = programmes.Except(recommendations.GetRated(user));
             var list = recommendations.GetRecommendations(user, programmes);

@@ -39,7 +39,7 @@ namespace TV_App.Controllers
 
         // GET: api/Feature/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
+        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             Filter filter = Filter.Create(from, to, date, 0);
             IEnumerable<Programme> list = programmes.GetFilteredProgrammes(filter);

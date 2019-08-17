@@ -36,9 +36,9 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes
         [HttpGet]
-        public IEnumerable<ProgrammeResponse> Get([FromQuery] string username = "", [FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
+        public IEnumerable<ProgrammeResponse> Get([FromQuery] string username = "", [FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
-            Filter filter = Filter.Create(from, to, date, 0);
+            Filter filter = Filter.Create(from, to, date, offer_id);
             IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
 
 
@@ -62,7 +62,7 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes/5/Similar
         [HttpGet("{id}/Similar")]
-        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
+        public IEnumerable<ProgrammeResponse> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             User user = DbContext.Users.SingleOrDefault(user => user.Login == username) ?? dummy;
 
@@ -74,7 +74,7 @@ namespace TV_App.Controllers
                 .ThenInclude(f => f.RelType)
                 .First(prog => prog.Id == id);
 
-            Filter filter = Filter.Create(from, to, date, 0);
+            Filter filter = Filter.Create(from, to, date, offer_id);
             IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
             programmes = programmes
                 .OrderByDescending(prog => similarity.TotalSimilarity(user, prog, programme))

@@ -25,7 +25,14 @@ namespace TV_App.Services
 
             if (filter.Date.HasValue)
                 programmes = programmes.Where(prog => EmittedOn(prog, filter.Date.Value));
-            
+            if (filter.OfferId != 0)
+            {
+                var channel_ids = db.OfferedChannels
+                    .Where(oc => oc.OfferId == filter.OfferId)
+                    .Select(oc => oc.ChannelId)
+                    .ToList();
+                programmes = programmes.Where(prog => prog.Emissions.Any(em => channel_ids.Contains(em.ChannelId)));
+            }
 
             return programmes;
         }
