@@ -72,11 +72,6 @@ namespace Controllers
         public IEnumerable<EmissionResponse> GetEmissions(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
             Channel channel = DbContext.Channels
-                .Include(ch => ch.Emissions)
-                .ThenInclude(em => em.RelProgramme)
-                .ThenInclude(pr => pr.ProgrammesFeatures)
-                .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(ft => ft.Type)
                 .First(ch => ch.Id == id);
 
             IEnumerable<Emission> list =

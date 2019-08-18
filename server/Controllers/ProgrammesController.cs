@@ -67,11 +67,6 @@ namespace TV_App.Controllers
             User user = DbContext.Users.SingleOrDefault(user => user.Login == username) ?? dummy;
 
             Programme programme = DbContext.Programmes
-                .Include(prog => prog.Emissions)
-                .ThenInclude(em => em.ChannelEmitted)
-                .Include(prog => prog.ProgrammesFeatures)
-                .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(f => f.RelType)
                 .First(prog => prog.Id == id);
 
             Filter filter = Filter.Create(from, to, date, offer_id);
@@ -92,12 +87,6 @@ namespace TV_App.Controllers
         public ProgrammeResponse Get(int id)
         {
             Programme programme = DbContext.Programmes
-                .Include(prog => prog.Descriptions)
-                .Include(prog => prog.Emissions)
-                    .ThenInclude(em => em.ChannelEmitted)
-                .Include(prog => prog.ProgrammesFeatures)
-                    .ThenInclude(fe => fe.RelFeature)
-                        .ThenInclude(f => f.RelType)
                 .FirstOrDefault(prog => prog.Id == id);
             return new ProgrammeResponse(programme);
         }

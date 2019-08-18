@@ -44,14 +44,9 @@ namespace TV_App.Controllers
             Filter filter = Filter.Create(from, to, date, 0);
             IEnumerable<Programme> list = programmes.GetFilteredProgrammes(filter);
             list = list.OrderBy(prog => prog.Emissions.First().Start);
-            if (username != null)
+            if (username != null && username != "null")
             {
                 User user = DbContext.Users
-                    .Include(u => u.Ratings)
-                    .ThenInclude(r => r.RelProgramme)
-                    .ThenInclude(p => p.ProgrammesFeatures)
-                    .ThenInclude(fe => fe.RelFeature)
-                    .ThenInclude(f => f.RelType)
                     .First(u => u.Login == username);
 
                 if (recommendations.GetPositivelyRated(user).Count() > 0)
