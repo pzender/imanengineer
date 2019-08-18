@@ -9,22 +9,25 @@ namespace TV_App.Services
 {
     public class ProgrammeService
     {
+        readonly string[] IGNORED_TITLES = { "Zakonczenie programu" };
         private readonly TvAppContext db = new TvAppContext();
         public IEnumerable<Programme> GetFilteredProgrammes(Filter filter)
         {
             IEnumerable<Programme> programmes = db.Programmes
-                .Include(prog => prog.Emissions)
-                    .ThenInclude(em => em.ChannelEmitted)
-                .Include(prog => prog.Descriptions)
-                .Include(prog => prog.ProgrammesFeatures)
-                    .ThenInclude(fe => fe.RelFeature)
-                        .ThenInclude(f => f.RelType);
+                //.Include(prog => prog.Emissions)
+                //    .ThenInclude(em => em.ChannelEmitted)
+                //.Include(prog => prog.Descriptions)
+                //.Include(prog => prog.ProgrammesFeatures)
+                //    .ThenInclude(fe => fe.RelFeature)
+                //        .ThenInclude(f => f.RelType);
 
             if(filter.From.HasValue && filter.To.HasValue)
                 programmes = programmes.Where(prog => EmissionsBetween(prog, filter.From.Value, filter.To.Value).Any());
-
             if (filter.Date.HasValue)
                 programmes = programmes.Where(prog => EmittedOn(prog, filter.Date.Value));
+            if (filter.ChannelId.HasValue)
+                programmes = programmes.Where(prog => prog.Emissions.Any(em => em.ChannelId == filter.ChannelId));
+
             if (filter.OfferId != 0)
             {
                 var channel_ids = db.OfferedChannels
@@ -34,7 +37,7 @@ namespace TV_App.Services
                 programmes = programmes.Where(prog => prog.Emissions.Any(em => channel_ids.Contains(em.ChannelId)));
             }
 
-            return programmes;
+            return programmes.Where(prog => !IGNORED_TITLES.Any(title => title == prog.Title));
         }
 
         private IEnumerable<Emission> EmissionsBetween(Programme prog, TimeSpan from, TimeSpan to)

@@ -53,7 +53,7 @@ export class ListingElementComponent implements OnInit {
   }
 
   ratingAvailable(): boolean{
-    return this.programme.rating != undefined && this.programme.rating != -1
+    return this.programme.rating != undefined && this.programme.rating != 10000
   }
 
   ratingText(value: number): string {

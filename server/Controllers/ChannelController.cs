@@ -56,11 +56,10 @@ namespace Controllers
         [HttpGet("{id}/Programmes")]
         public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
         {
-            Filter filter = Filter.Create(from, to, date, 0);
+            Filter filter = Filter.Create(from, to, date, 0, id);
             IEnumerable<Programme> programmes = programmeService.GetFilteredProgrammes(filter);
 
             programmes = programmes
-                .Where(prog => prog.Emissions.Any(em => em.ChannelId == id))
                 .OrderBy(prog => prog.Emissions.First().Start);
 
             int count = programmes.Count();

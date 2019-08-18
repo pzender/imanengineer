@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using TV_App.Models;
 
 namespace TV_App.Services
 {
@@ -13,8 +14,9 @@ namespace TV_App.Services
         public TimeSpan? To { get; set; }
         public DateTime? Date { get; set; }
         public long? OfferId { get; set; }
+        public long? ChannelId { get; set; }
 
-        public static Filter Create(string from, string to, long date, long offer_id)
+        public static Filter Create(string from, string to, long date, long offer_id, long? channel_id = null)
         {
             TimeSpan? from_ts = null;
             if (from != "0:0" && from != "undefined")
@@ -31,7 +33,8 @@ namespace TV_App.Services
                 OfferId = offer_id,
                 From = from_ts,
                 To = to_ts,
-                Date = desiredDate
+                Date = desiredDate,
+                ChannelId = channel_id
             };
         }
     }

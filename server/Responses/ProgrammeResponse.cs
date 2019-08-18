@@ -12,18 +12,15 @@ namespace TV_App.Responses
     {
         public ProgrammeResponse(Programme src, User user)
         {
-            Rating = user == null ? -1 : (int)user.Ratings.Single(rating => rating.ProgrammeId == src.Id).RatingValue;
+            Rating = user != null ? (int)user.Ratings.Single(rating => rating.ProgrammeId == src.Id).RatingValue : 10000;
             Id = src.Id;
             Title = src.Title;
             IconUrl = src.IconUrl;
             SeqNumber = src.SeqNumber;
             Description = src.Descriptions.FirstOrDefault()?.Content;
-
             Series = null;
-
             Emissions = src.Emissions.Select(e => new EmissionResponse(e));
             Features = src.ProgrammesFeatures.Select(fe => new FeatureResponse(fe));
-
         }
 
         public ProgrammeResponse(Programme src) : this(src, null) { }
