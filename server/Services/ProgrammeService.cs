@@ -13,7 +13,7 @@ namespace TV_App.Services
         private readonly TvAppContext db = new TvAppContext();
         public IEnumerable<Programme> GetFilteredProgrammes(Filter filter)
         {
-            IEnumerable<Programme> programmes = db.Programmes
+            IEnumerable<Programme> programmes = db.Programmes;
                 //.Include(prog => prog.Emissions)
                 //    .ThenInclude(em => em.ChannelEmitted)
                 //.Include(prog => prog.Descriptions)
