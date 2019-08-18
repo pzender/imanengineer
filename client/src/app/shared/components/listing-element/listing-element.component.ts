@@ -44,12 +44,20 @@ export class ListingElementComponent implements OnInit {
     .subscribe(result => this.buttonClicked.emit(result.toString()));
   }
 
+  remindme() {
+    this._http.post(
+      `${environment.api}Users/${this.user.getUser()}/Ratings`,
+      {ProgrammeId: this.programme.id, RatingValue: 1},
+      {responseType: 'json'}
+    ).subscribe(result => this.buttonClicked.emit(result.toString()));
+  }
+
   ratingAvailable(): boolean{
     return this.programme.rating != undefined && this.programme.rating != -1
   }
 
   ratingText(value: number): string {
-    return this.ratingTexts[value];
+    return this.ratingTexts[value+1];
   }
 
   ngOnInit() {
@@ -82,6 +90,6 @@ export class ListingElementComponent implements OnInit {
       .replace('Dec', 'Gru');
   }
 
-  private ratingTexts = ['Nie podobał mi się', 'Podobał mi się', 'Chcę obejrzeć'];
+  private ratingTexts = ['Nie podobał mi się', 'Nie interesuje mnie', 'Podobał mi się'];
 
 }

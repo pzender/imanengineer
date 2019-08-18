@@ -48,6 +48,14 @@ export class ProgrammedetailsComponent implements OnInit {
     ).subscribe(result => this.buttonClicked.emit(result.toString()));
   }
 
+  remindme() {
+    this._http.post(
+      `${environment.api}Users/${this.user.getUser()}/Ratings`,
+      {ProgrammeId: this.programme.id, RatingValue: 1},
+      {responseType: 'json'}
+    ).subscribe(result => this.buttonClicked.emit(result.toString()));
+  }
+
   onlyUnique(value: any, index: number, self: any[]) {
     return self.indexOf(value) === index;
   }

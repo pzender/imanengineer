@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
 
   public toggleLogin(){
     this.showLogin = !this.showLogin;
-    console.log(this.showLogin)
   }
 
   login(username: string) {

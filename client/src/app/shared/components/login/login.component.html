@@ -11,15 +11,15 @@
 </span>
 
 <div *ngIf="showLogin"
-    class="border rounded border-dark p-3 mt-2 bg-secondary position-fixed w-25" 
+    class="border rounded border-dark p-3 mt-2 bg-dark position-fixed w-25" 
     style="right: 0;">
   <div class="form-group mb-2">
     <label for="usernameField">Nazwa użytkownika: </label>
     <input type="text" class="form-control" id="usernameField" #name>
   </div>
   <div class="btn-group w-100">
-    <button class="btn btn-primary" (click)="this.login(name.value)">Zaloguj</button>
-    <button class="btn btn-primary" (click)="this.create(name.value)">Utwórz konto</button>
+    <button class="btn btn-secondary" (click)="this.login(name.value)">Zaloguj</button>
+    <button class="btn btn-secondary" (click)="this.create(name.value)">Utwórz konto</button>
   </div>
 </div>
 

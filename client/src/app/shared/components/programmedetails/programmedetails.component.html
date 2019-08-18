@@ -10,10 +10,12 @@
   <div *ngFor="let ft of feat_types()">{{ft}}: 
     <span *ngFor="let f of feat_array(ft)"><a href="/Feature/{{f.id}}">{{f.name}}</a>, </span> 
   </div>  
+  <button *ngIf="!this.user.isAnonymous()" type="button" class="btn btn-secondary mt-3 mx-2" (click)=this.remindme()>Chcę obejrzeć</button>
   <div class="btn-group mt-3" role="group" aria-label="Rating buttons" *ngIf="!this.user.isAnonymous()">
     <button type="button" class="btn btn-secondary" (click)=this.rateButton(1)>Podobał mi się</button>
-    <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie podobał mi się</button>
-    <button type="button" class="btn btn-secondary" (click)=this.rateButton(2)>Chcę obejrzeć</button>
+    <button type="button" class="btn btn-secondary" (click)=this.rateButton(0)>Nie interesuje mnie</button>
+    <button type="button" class="btn btn-secondary" (click)=this.rateButton(-1)>Nie podobał mi się</button>
   </div>
+
 </div>
   

@@ -1,3 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+$primary:       #8E9EC2;
+$secondary:     #510070;
+$success:       #497a54;
+$info:          #181818;
+$warning:       #c76a1c;
+$danger:        #f44336;
+$light:         #FBFBFB;
+$dark:          #343434;
 
 @import '~bootstrap/scss/bootstrap';
+
+body{
+  background-color: #181818 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  color: $light !important;
+  min-width: 300px !important;
+} 
+
