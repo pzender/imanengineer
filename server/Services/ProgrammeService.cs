@@ -34,7 +34,9 @@ namespace TV_App.Services
                 programmes = programmes.Where(prog => prog.Emissions.Any(em => channel_ids.Contains(em.ChannelId)));
             }
 
-            return programmes.Where(prog => !IGNORED_TITLES.Any(title => title == prog.Title));
+            return programmes
+                .Where(prog => !IGNORED_TITLES.Any(title => title == prog.Title))
+                .ToList();
         }
 
         private IEnumerable<Emission> EmissionsBetween(Programme prog, TimeSpan from, TimeSpan to)
