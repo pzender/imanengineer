@@ -70,11 +70,6 @@ namespace TV_App.Controllers
         public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             User user = DbContext.Users
-                .Include(u => u.Ratings)
-                .ThenInclude(r => r.RelProgramme)
-                .ThenInclude(p => p.ProgrammesFeatures)
-                .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(f => f.RelType)
                 .First(u => u.Login == name);
 
             var rated = recommendations.GetRated(user);
@@ -87,11 +82,6 @@ namespace TV_App.Controllers
         public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             User user = DbContext.Users
-                .Include(u => u.Ratings)
-                .ThenInclude(r => r.RelProgramme)
-                .ThenInclude(p => p.ProgrammesFeatures)
-                .ThenInclude(fe => fe.RelFeature)
-                .ThenInclude(f => f.RelType)
                 .First(u => u.Login == name);
             if (recommendations.GetPositivelyRated(user).Count() == 0) return new List<ProgrammeResponse>();
 
