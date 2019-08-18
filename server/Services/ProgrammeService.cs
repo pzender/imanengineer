@@ -14,7 +14,7 @@ namespace TV_App.Services
         public IEnumerable<Programme> GetFilteredProgrammes(Filter filter)
         {
             IEnumerable<Programme> programmes = db.Programmes
-                .Include("Emissions.EmittedChannel")
+                .Include("Emissions.ChannelEmitted")
                 .Include("ProgrammesFeatures.RelFeature.RelType")
                 ;
 
