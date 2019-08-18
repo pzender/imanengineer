@@ -10,7 +10,6 @@ export class UserKnownGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {  }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.userService.isAnonymous()){
-      console.log(this.userService.isAnonymous())
       this.router.navigate(['Channel']);
       return false;
     }

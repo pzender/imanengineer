@@ -21,6 +21,7 @@ import { AllChannelsComponent } from './containers/all-channels/all-channels.com
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './shared/components/login/login.component';
+import { OfferPickerComponent } from './shared/components/offer-picker/offer-picker.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { LoginComponent } from './shared/components/login/login.component';
     DetailsComponent,
     FeatureComponent,
     AllChannelsComponent,
-    LoginComponent
+    LoginComponent,
+    OfferPickerComponent
   ],
   imports: [
     BrowserModule,

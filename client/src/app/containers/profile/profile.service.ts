@@ -12,13 +12,10 @@ export class ProfileService {
   constructor(private _http: HttpClient, private user: UserService) { }
   
   fetch(filters): Observable<any[]> {
-    console.log(filters)
     let p = {
       ...filters,
       ...{username: this.user.getUser()}
     }
-    console.log(p)
-
     return this._http.get<any[]>(`${environment.api}Users/${this.user.getUser()}/Ratings`, { params: p });
   }
 

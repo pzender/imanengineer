@@ -9,13 +9,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RecommendationsService {
   public fetch(filters): Observable<any[]> {
-    console.log(filters)
     let p = {
       ...filters,
       ...{username: this.user.getUser()}
     }
-    console.log(p)
-
     return this._http.get<any[]>(`${environment.api}Users/${this.user.getUser()}/Recommended`, { params: p });
   }
 

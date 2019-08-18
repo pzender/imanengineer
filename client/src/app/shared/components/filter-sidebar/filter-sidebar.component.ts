@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Time } from '@angular/common';
 
 @Component({
@@ -8,37 +8,68 @@ import { Time } from '@angular/common';
 })
 export class FilterSidebarComponent implements OnInit {
 
-  @Output() filtersChanged = new EventEmitter<{from: string, to: string, date: number}>();
+  @Output() filtersChanged = new EventEmitter<any>();
+  @Input() showTime: boolean = true;
+  @Input() showOffer: boolean = true;
 
   constructor() { }
+  ONE_DAY: number = 1000 * 60 * 60 * 24;
+  
   timeFrom: string;
   timeTo: string;
   currentDate: number = Date.now();
+  currentOffer: number = 0;
+  
+
+
+
   ngOnInit() { 
-    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+    this.filtersChanged.emit(this.buildFilter())
   }
   onFromInput($event) {
     this.timeFrom = ($event.target.value);
-    console.log($event.target.value)
-    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+    this.filtersChanged.emit(this.buildFilter())
   }
 
   onToInput($event) {
     this.timeTo = ($event.target.value);
-    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+    this.filtersChanged.emit(this.buildFilter())
 
   }
 
   public nextDay() {
-    this.currentDate += (1000 * 60 * 60 * 24);
-    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate});
+    this.currentDate += this.ONE_DAY;
+    this.filtersChanged.emit(this.buildFilter());
 
   }
 
   public prevDay() {
-    this.currentDate -= (1000 * 60 * 60 * 24);
-    this.filtersChanged.emit({'from': this.timeFrom, 'to': this.timeTo, 'date': this.currentDate})
+    this.currentDate -= this.ONE_DAY;
+    this.filtersChanged.emit(this.buildFilter())
+  }
 
+  public offerPicked(value: number) {
+    this.currentOffer = value;
+    this.filtersChanged.emit(this.buildFilter())
+  }
+
+  private buildFilter() {
+    let filter = {};
+    if (this.showTime) {
+      filter = {
+        ...filter,
+        'from': this.timeFrom, 
+        'to': this.timeTo, 
+        'date': this.currentDate
+      };
+    }
+    if (this.showOffer) {
+      filter = {
+        ...filter,
+        'offer_id': this.currentOffer
+      };
+    }
+    return filter;
   }
 
   private parseTime(input: string): Time {

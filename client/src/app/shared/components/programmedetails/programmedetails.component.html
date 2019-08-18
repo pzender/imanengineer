@@ -1,4 +1,4 @@
-<div class="border my-3 p-3">
+<div *ngIf="programme" class="border my-3 p-3">
   <h1>{{programme.title}}</h1>
   <div *ngFor="let e of programme.emissions">
     <a href="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(this.e.start | date:'EE, d MMM, H:mm')}} - {{this.translateDate(e.stop | date:'EE, d MMM, H:mm')}}

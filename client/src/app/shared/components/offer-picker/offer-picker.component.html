@@ -1,0 +1,7 @@
+<p>
+  <label for="selectOffer">Kanały z oferty:</label>
+  <select class="form-control" id="selectOffer" (change)="select($event.target.value)">
+    <option value="0">Wszystkie</option>
+    <option *ngFor="let o of offers" [value]="o.id">{{o.name}}</option>
+  </select>
+</p>
