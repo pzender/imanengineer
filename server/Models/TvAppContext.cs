@@ -34,7 +34,7 @@ namespace TV_App.Models
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseLazyLoadingProxies();
-                optionsBuilder.UseSqlServer("Data Source=192.168.1.29;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password;MultipleActiveResultSets=true;");
+                optionsBuilder.UseSqlServer("Data Source=db;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=P@ssw0rd;MultipleActiveResultSets=true;");
                 optionsBuilder.EnableSensitiveDataLogging();
                 optionsBuilder.EnableDetailedErrors();
             }

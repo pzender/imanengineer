@@ -12,7 +12,8 @@ namespace TV_App.Responses
     {
         public ProgrammeResponse(Programme src, User user)
         {
-            Rating = user != null ? (int)user.Ratings.Single(rating => rating.ProgrammeId == src.Id).RatingValue : 10000;
+            long? rating = user?.Ratings.SingleOrDefault(rating => rating.ProgrammeId == src.Id)?.RatingValue;
+            Rating = user != null && rating.HasValue ? (int)user.Ratings.Single(rating => rating.ProgrammeId == src.Id).RatingValue : 10000;
             Id = src.Id;
             Title = src.Title;
             IconUrl = src.IconUrl;

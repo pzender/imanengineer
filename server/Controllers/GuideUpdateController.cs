@@ -29,11 +29,18 @@ namespace TV_App.Controllers
             
         }
 
-        // GET: api/GuideUpdate
-        [HttpGet]
-        public IEnumerable<string> Get()
+        // GET: api/GuideUpdate/Last
+        [HttpGet("Last")]
+        public GuideUpdateJson Get()
         {
-            return new string[] { "value1", "value2" };
+            var last = DbContext.GuideUpdates.Last();
+            return new GuideUpdateJson()
+            {
+                Id = last.Id,
+                Posted = last.Posted,
+                Source = last.Source
+            };
+             
         }
 
         // GET: api/GuideUpdate/5
@@ -78,5 +85,12 @@ namespace TV_App.Controllers
 
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - finish");
         }
+        public class GuideUpdateJson
+        {
+            public long Id { get; set; }
+            public DateTime Posted { get; set; }
+            public string Source { get; set; }
+        }
+
     }
 }

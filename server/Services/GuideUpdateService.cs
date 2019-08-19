@@ -241,7 +241,10 @@ namespace TV_App.Services
         {
             long id = 0;
             if (dbset != null && dbset.Count() > 0)
-                id = dbset.Select(entity => entity.Id).Max() +1;
+            {
+                var ids = dbset.Select(entity => entity.Id).ToList();
+                id = ids.Max() + 1;
+            }
             return id;
         }
 
