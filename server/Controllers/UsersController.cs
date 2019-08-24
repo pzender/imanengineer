@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TV_App.Models;
-using TV_App.Responses;
+using TV_App.DataTransferObjects;
 using TV_App.Services;
 
 namespace TV_App.Controllers
@@ -20,7 +20,8 @@ namespace TV_App.Controllers
     {
         private readonly TvAppContext DbContext = new TvAppContext();
         private readonly RecommendationService recommendations = new RecommendationService();
-        private readonly ProgrammeService programmes = new ProgrammeService();
+        private readonly ProgrammeService programmeService = new ProgrammeService();
+        private readonly ChannelService channelService = new ChannelService();
 
         // GET: api/Users
         [HttpGet]
@@ -67,31 +68,27 @@ namespace TV_App.Controllers
 
         // GET: api/Users/Przemek/Ratings
         [HttpGet("{name}/Ratings")]
-        public IEnumerable<ProgrammeResponse> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        public IEnumerable<ProgrammeDTO> GetRatings(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
-            User user = DbContext.Users
-                .First(u => u.Login == name);
-
-            var rated = recommendations.GetRated(user);
-
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", rated.Count().ToString());
-            return rated.Select(reco => new ProgrammeResponse(reco, user));
+            var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
+            Filter filter = Filter.Create(from, to, date, channels);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, name);
+            programmes = programmes.Where(prog => prog.Rating.HasValue).OrderBy(prog => prog.Rating).ToList();
+            int count = programmes.Count();
+            Response.Headers.Add("X-Total-Count", count.ToString());
+            return programmes;
         }
 
         [HttpGet("{name}/Recommended")]
-        public IEnumerable<ProgrammeResponse> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        public IEnumerable<ProgrammeDTO> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, [FromQuery] long offer_id = 0)
         {
-            User user = DbContext.Users
-                .First(u => u.Login == name);
-            if (recommendations.GetPositivelyRated(user).Count() == 0) return new List<ProgrammeResponse>();
-
-            Filter filter = Filter.Create(from, to, date, offer_id);
-            IEnumerable<Programme> programmes = this.programmes.GetFilteredProgrammes(filter);
-            programmes = programmes.Except(recommendations.GetRated(user));
-            var list = recommendations.GetRecommendations(user, programmes);
-
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
-            return list.Select(reco => new ProgrammeResponse(reco, user));
+            var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
+            Filter filter = Filter.Create(from, to, date, channels);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, name);
+            programmes = recommendations.GetRecommendations(name, programmes);
+            int count = programmes.Count();
+            Response.Headers.Add("X-Total-Count", count.ToString());
+            return programmes;
         }
 
 
@@ -119,21 +116,6 @@ namespace TV_App.Controllers
             }
             else return StatusCode(409, "Username exists!");
             
-        }
-
-
-
-        // PUT: api/Users/Przemek
-        [HttpPut("{username}")]
-        public void Put(int id, [FromBody] string value)
-        {
-            
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
 
         public class RatingJson

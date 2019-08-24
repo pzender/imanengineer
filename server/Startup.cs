@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TV_App.Controllers;
-using TV_App.Scheduler;
 using TV_App.Services;
 
 namespace TV_App
@@ -25,14 +24,6 @@ namespace TV_App
             services.AddRouting();
             services.AddControllers();
             services.AddSignalR().AddJsonProtocol();
-
-            //services.AddSingleton<IScheduledTask, SendNotificationTask>();
-            services.AddSingleton<IScheduledTask, SendNotificationTask>();
-
-            services.AddScheduler((sender, args) =>
-            {
-                args.SetObserved();
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

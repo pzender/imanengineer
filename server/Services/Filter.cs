@@ -10,13 +10,12 @@ namespace TV_App.Services
     [NotMapped]
     public class Filter
     {
-        public TimeSpan? From { get; set; }
-        public TimeSpan? To { get; set; }
-        public DateTime? Date { get; set; }
-        public long? OfferId { get; set; }
-        public long? ChannelId { get; set; }
-
-        public static Filter Create(string from, string to, long date, long offer_id, long? channel_id = null)
+        
+        private TimeSpan? From { get; set; }
+        private TimeSpan? To { get; set; }
+        private DateTime? Date { get; set; }
+        private IEnumerable<long> ChannelIds { get; set; }
+        public static Filter Create(string from, string to, long date, IEnumerable<long> channel_ids)
         {
             TimeSpan? from_ts = null;
             if (from != "0:0" && from != "undefined")
@@ -30,12 +29,21 @@ namespace TV_App.Services
 
             return new Filter()
             {
-                OfferId = offer_id,
                 From = from_ts,
                 To = to_ts,
                 Date = desiredDate,
-                ChannelId = channel_id
+                ChannelIds = channel_ids
             };
+        }
+
+        public bool Apply(Emission em)
+        {
+            bool from_fits = !From.HasValue || em.Start.TimeOfDay > From.Value;
+            bool to_fits = !To.HasValue || em.Stop.TimeOfDay < To.Value;
+            bool date_fits = !Date.HasValue || em.Start.Date == Date.Value.Date;
+            bool channels_fits = !ChannelIds.Any() || ChannelIds.Contains(em.ChannelId);
+
+            return from_fits && to_fits && date_fits && channels_fits;
         }
     }
 }

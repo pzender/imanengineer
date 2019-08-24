@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using TV_App.Models;
 
-namespace TV_App.Responses
+namespace TV_App.DataTransferObjects
 {
-    public class FeatureResponse
+    public class FeatureDTO
     {
         public int Id { get; set; }
         public string Value { get; set; }
         public string Type { get; set; }
 
-        public FeatureResponse(ProgrammesFeature fe)
+        public FeatureDTO(ProgrammesFeature fe)
         {
             Id = (int)fe.RelFeature.Id;
             Value = fe.RelFeature.Value;
             Type = fe.RelFeature.RelType.TypeName;
         }
 
-        public FeatureResponse(Feature f)
+        public FeatureDTO(Feature f)
         {
             Id = (int)f.Id;
             Value = f.Value;

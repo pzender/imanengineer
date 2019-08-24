@@ -11,8 +11,7 @@ namespace TV_App.Services
 {
     public class GuideUpdateService
     {
-        private TvAppContext context;
-        private int counter = 0;
+        private readonly TvAppContext context;
         public GuideUpdateService(TvAppContext context)
         {
             this.context = context;

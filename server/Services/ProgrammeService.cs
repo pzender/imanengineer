@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TV_App.Models;
+using TV_App.DataTransferObjects;
 
 namespace TV_App.Services
 {
@@ -11,57 +12,83 @@ namespace TV_App.Services
     {
         readonly string[] IGNORED_TITLES = { "Zakonczenie programu" };
         private readonly TvAppContext db = new TvAppContext();
-        public IEnumerable<Programme> GetFilteredProgrammes(Filter filter)
+        public IEnumerable<ProgrammeDTO> GetFilteredProgrammes(Filter filter = null, string user = null)
         {
-            IEnumerable<Programme> programmes = db.Programmes
-                .Include("Emissions.ChannelEmitted")
-                .Include("ProgrammesFeatures.RelFeature.RelType")
-                ;
-
-            if(filter.From.HasValue && filter.To.HasValue)
-                programmes = programmes.Where(prog => EmissionsBetween(prog, filter.From.Value, filter.To.Value).Any());
-            if (filter.Date.HasValue)
-                programmes = programmes.Where(prog => EmittedOn(prog, filter.Date.Value));
-            if (filter.ChannelId.HasValue)
-                programmes = programmes.Where(prog => prog.Emissions.Any(em => em.ChannelId == filter.ChannelId));
-
-            if (filter.OfferId != 0)
-            {
-                var channel_ids = db.OfferedChannels
-                    .Where(oc => oc.OfferId == filter.OfferId)
-                    .Select(oc => oc.ChannelId)
-                    .ToList();
-                programmes = programmes.Where(prog => prog.Emissions.Any(em => channel_ids.Contains(em.ChannelId)));
-            }
-
-            return programmes
-                .Where(prog => !IGNORED_TITLES.Any(title => title == prog.Title))
+            var programmes = db.Programmes
+                .Include(prog => prog.ProgrammesFeatures)
+                .AsNoTracking()
                 .ToList();
+            var emissions = db.Emissions
+                .Include(em => em.ChannelEmitted)
+                .AsNoTracking()
+                .ToList();
+            var features = db.Features
+                .Include(f => f.RelType)
+                .AsNoTracking()
+                .ToList();
+            var ratings = db.Ratings
+                .Where(r => r.UserLogin == user)
+                .AsNoTracking()
+                .ToList();
+
+            
+            var filtered_emissions = emissions.Where(em => filter.Apply(em)).ToList();
+
+            var result = from programme in programmes
+                         join emission in filtered_emissions on programme.Id equals emission.ProgrammeId into prog_emissions
+                         where prog_emissions.Any() && !IGNORED_TITLES.Contains(programme.Title)
+                         select new ProgrammeDTO()
+                         {
+                             Id = programme.Id,
+                             Title = programme.Title,
+                             IconUrl = programme.IconUrl,
+                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
+                             Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
+                             Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
+                         };
+
+            return result;
         }
 
-        private IEnumerable<Emission> EmissionsBetween(Programme prog, TimeSpan from, TimeSpan to)
+        public ProgrammeDTO GetById(long id)
         {
-            return prog.Emissions.Where(e => EmissionBetween(e, from, to));
+            Programme target = db.Programmes
+                .Include(prog => prog.Descriptions)
+                .Include(prog => prog.Emissions)
+                .ThenInclude(em => em.ChannelEmitted)
+                .Include(prog => prog.ProgrammesFeatures)
+                .ThenInclude(pf => pf.RelFeature)
+                .ThenInclude(f => f.RelType)
+                .Single(prog => prog.Id == id);
+            return (from prog in db.Programmes where prog.Id == id select new ProgrammeDTO(prog)).Single();
         }
 
-        private bool EmittedOn(Programme prog, DateTime date)
+        public IEnumerable<ProgrammeDTO> GetRatedBy(string username)
         {
-            return prog.Emissions.Any(em => em.Start.ToShortDateString() == date.ToShortDateString());
+            var programmes = db.Programmes
+                .Include(prog => prog.ProgrammesFeatures)
+                .AsNoTracking()
+                .ToList();
+            var features = db.Features
+                .Include(f => f.RelType)
+                .AsNoTracking()
+                .ToList();
+            var ratings = db.Ratings
+                .Where(r => r.UserLogin == username)
+                .AsNoTracking()
+                .ToList();
+
+            var result = from programme in programmes
+                         select new ProgrammeDTO()
+                         {
+                             Id = programme.Id,
+                             Title = programme.Title,
+                             IconUrl = programme.IconUrl,
+                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
+                             Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
+                         };
+
+            return result;
         }
-
-        public bool EmissionBetween(Emission e, TimeSpan from, TimeSpan to)
-        {
-            int hours = e.Start.Hour;
-            int minutes = e.Start.Minute;
-            TimeSpan start_ts = new TimeSpan(hours, minutes, 0);
-
-            if (from.TotalMinutes > 0 && start_ts.TotalMinutes < from.TotalMinutes)
-                return false;
-            else if (to.TotalMinutes > 0 && start_ts.TotalMinutes > to.TotalMinutes)
-                return false;
-            else return true;
-
-        }
-
     }
 }

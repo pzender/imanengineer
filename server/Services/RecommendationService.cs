@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TV_App.Models;
+using TV_App.DataTransferObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace TV_App.Services
 {
     public class RecommendationService
     {
-        private SimilarityCalculator similarityCalculator = new SimilarityCalculator();
-        public IEnumerable<Programme> GetRecommendations(User user, IEnumerable<Programme> available_programmes)
+        private readonly SimilarityCalculator similarityCalculator = new SimilarityCalculator();
+        private readonly ProgrammeService programmeService = new ProgrammeService();
+        private readonly TvAppContext db = new TvAppContext();
+        public IEnumerable<ProgrammeDTO> GetRecommendations(string username, IEnumerable<ProgrammeDTO> available_programmes)
         {
-            Dictionary<Programme, double> recom_supports = available_programmes
-                .ToDictionary(p => p, p => RecommendationSupport(p, user));
+            User user = db.Users
+                .Include(u => u.Ratings)
+                .AsNoTracking().Single(u => u.Login == username);
+
+            IEnumerable<ProgrammeDTO> rated_programmes = programmeService.GetRatedBy(username);
+
+            Dictionary<ProgrammeDTO, double> recom_supports = available_programmes
+                .ToDictionary(p => p, p => RecommendationSupport(user, p, rated_programmes));
                 
             recom_supports = recom_supports
                 .Where(rs => rs.Value > 0.5)
@@ -21,7 +31,7 @@ namespace TV_App.Services
 
             return recom_supports
                 .Keys
-                .Except(GetRated(user))
+                .Except(rated_programmes)
                 .Take(20);
         }
 
@@ -35,19 +45,17 @@ namespace TV_App.Services
 
         public IEnumerable<Programme> GetRated(User user)
         {
-            return user.Ratings
-                .Select(rat => rat.RelProgramme);
+            return user.Ratings.Select(rat => rat.RelProgramme);
 
         }
 
-        public double RecommendationSupport(Programme programme, User user)
+        public double RecommendationSupport(User user, ProgrammeDTO programme, IEnumerable<ProgrammeDTO> rated_programmes)
         {
-            IEnumerable<Programme> positivelyRated = GetPositivelyRated(user);
-            if (!positivelyRated.Any())
+            if (!rated_programmes.Any())
                 return 0;
             else
             {
-                return positivelyRated
+                return rated_programmes
                     .Select(rate => similarityCalculator.TotalSimilarity(user, rate, programme))
                     .Average();
             }

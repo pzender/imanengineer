@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TV_App.Models;
-using TV_App.Responses;
+using TV_App.DataTransferObjects;
 using TV_App.Services;
 
 namespace TV_App.Controllers
@@ -16,8 +16,8 @@ namespace TV_App.Controllers
     public class FeaturesController : ControllerBase
     {
         private readonly TvAppContext DbContext = new TvAppContext();
-        private readonly RecommendationService recommendations = new RecommendationService();
-        private readonly ProgrammeService programmes = new ProgrammeService();
+        private readonly ProgrammeService programmeService = new ProgrammeService();
+        private readonly ChannelService channelService = new ChannelService();
 
         // GET: api/Feature
         [HttpGet]
@@ -28,57 +28,27 @@ namespace TV_App.Controllers
 
         // GET: api/Feature/5
         [HttpGet("{id}")]
-        public FeatureResponse Get(int id)
+        public FeatureDTO Get(int id)
         {
             Feature feat = DbContext.Features
                 .Include(f => f.RelType)
                 .FirstOrDefault(f => f.Id == id);
 
-            return new FeatureResponse(feat);
+            return new FeatureDTO(feat);
         }
 
         // GET: api/Feature/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeResponse> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        public IEnumerable<ProgrammeDTO> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
-            Filter filter = Filter.Create(from, to, date, offer_id);
-            IEnumerable<Programme> list = programmes.GetFilteredProgrammes(filter);
-            list = list.OrderBy(prog => prog.Emissions.First().Start);
-            if (username != null && username != "null")
-            {
-                User user = DbContext.Users
-                    .First(u => u.Login == username);
-
-                if (recommendations.GetPositivelyRated(user).Count() > 0)
-                {
-                    list = recommendations.GetRecommendations(user, list);
-                }
-            }
-
-            Request.HttpContext.Response.Headers.Add("X-Total-Count", list.Count().ToString());
-            return list
-                .Where(prog => prog.ProgrammesFeatures.Any(fe => fe.FeatureId == id))
-                .Select(prog => new ProgrammeResponse(prog));
-
-        }
-
-
-        // POST: api/Feature
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Feature/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
+            Filter filter = Filter.Create(from, to, date, channels);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, username);
+            programmes = programmes.Where(prog => prog.Features.Any(f => f.Id == id)).OrderBy(prog => prog.Emissions.First().Start);
+            programmes = programmes.ToList();
+            int count = programmes.Count();
+            Response.Headers.Add("X-Total-Count", count.ToString());
+            return programmes;
         }
     }
 }

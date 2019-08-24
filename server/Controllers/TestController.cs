@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TV_App.Models;
 using LemmaSharp;
-using TV_App.DataLayer;
 using System.Diagnostics;
-using TV_App.Responses;
+using TV_App.DataTransferObjects;
 using Microsoft.AspNetCore.SignalR;
 using TV_App.Services;
 
@@ -29,7 +28,7 @@ namespace TV_App.Controllers
 
         // GET: api/Test
         [HttpGet]
-        public IEnumerable<ProgrammeResponse> Get()
+        public IEnumerable<ProgrammeDTO> Get()
         {
             //Channel channel = DbContext.Channel
             //    .Include(ch => ch.Emission)
@@ -42,7 +41,7 @@ namespace TV_App.Controllers
             //IEnumerable<Emission> emissions = 
             //    channel.Emission.OrderBy(em => em.Start);
 
-            //return emissions.Select(em => new ProgrammeResponse(em.Programme));
+            //return emissions.Select(em => new ProgrammeDTO(em.Programme));
             return null;
         }
 
