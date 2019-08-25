@@ -38,10 +38,13 @@ export class ListingElementComponent implements OnInit {
   rateButton(value: number) {
     this._http.post(
       `${environment.api}Users/${this.user.getUser()}/Ratings`,
-      {ProgrammeId: this.programme.id, RatingValue: value},
-      {responseType: 'json'}
+      { ProgrammeId: this.programme.id, RatingValue: value },
+      { responseType: 'json' }
     )
-    .subscribe(result => this.buttonClicked.emit(result.toString()));
+    .subscribe(result => {
+      this.buttonClicked.emit(result.toString());
+      this.programme.rating = result['RatingValue']
+    });
   }
 
   remindme() {

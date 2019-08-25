@@ -41,3 +41,6 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=P@ssw0rd
       - MSSQL_PID=Express
+    restart: unless-stopped
+
+# yourStrong(!)Password
