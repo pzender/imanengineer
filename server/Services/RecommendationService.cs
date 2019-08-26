@@ -16,7 +16,6 @@ namespace TV_App.Services
         public IEnumerable<ProgrammeDTO> GetRecommendations(string username, IEnumerable<ProgrammeDTO> available_programmes)
         {
             User user = db.Users
-                .Include(u => u.Ratings)
                 .AsNoTracking().Single(u => u.Login == username);
 
             IEnumerable<ProgrammeDTO> rated_programmes = programmeService.GetRatedBy(username);

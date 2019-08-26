@@ -72,7 +72,7 @@ namespace TV_App.Controllers
         {
             var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
             Filter filter = Filter.Create(from, to, date, channels);
-            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, name);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetRatedBy(name);
             programmes = programmes.Where(prog => prog.Rating.HasValue).OrderBy(prog => prog.Rating).ToList();
             int count = programmes.Count();
             Response.Headers.Add("X-Total-Count", count.ToString());

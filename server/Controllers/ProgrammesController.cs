@@ -17,7 +17,6 @@ namespace TV_App.Controllers
     {
         private readonly ProgrammeService programmeService = new ProgrammeService();
         private readonly ChannelService channelService = new ChannelService();
-        private readonly RecommendationService recommendations = new RecommendationService();
         private readonly SimilarityCalculator similarity = new SimilarityCalculator();
 
         // GET: api/Programmes
@@ -35,7 +34,7 @@ namespace TV_App.Controllers
             var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
             var target = programmeService.GetById(id);
             Filter filter = Filter.Create(from, to, date, channels);
-            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter,  username);
             IDictionary<ProgrammeDTO, double> similarityRanking = programmes.ToDictionary(prog => prog, prog => similarity.TotalSimilarity(null, prog, target));
 
             var results = similarityRanking.OrderByDescending(item => item.Value).Select(item => item.Key).Where(prog => prog.Id != target.Id).Take(8);
