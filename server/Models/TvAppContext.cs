@@ -27,13 +27,14 @@ namespace TV_App.Models
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Series> Series { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseLazyLoadingProxies();
-                optionsBuilder.UseSqlServer("Data Source=oldzombie;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=yourStrong(!)Password;MultipleActiveResultSets=true;");
+                optionsBuilder.UseSqlServer("Data Source=db;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=P@ssw0rd;MultipleActiveResultSets=true;");
                 optionsBuilder.EnableSensitiveDataLogging();
                 optionsBuilder.EnableDetailedErrors();
             }
@@ -48,11 +49,8 @@ namespace TV_App.Models
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.IconUrl).IsUnicode(false);
-
                 entity.Property(e => e.Name).IsUnicode(false);
-                
             });
 
             modelBuilder.Entity<Description>(entity =>
@@ -63,7 +61,6 @@ namespace TV_App.Models
                 entity.HasIndex(e => e.ProgrammeId)
                     .HasName("IX_Description_id_programme");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.HasOne(d => d.RelGuideUpdate)
                     .WithMany(p => p.Descriptions)
                     .HasForeignKey(d => d.GuideUpdateId);
@@ -73,6 +70,7 @@ namespace TV_App.Models
                     .HasForeignKey(d => d.ProgrammeId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Emission>(entity =>
@@ -102,7 +100,6 @@ namespace TV_App.Models
             modelBuilder.Entity<FeatureType>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.TypeName).IsUnicode(false);
             });
 
@@ -116,15 +113,13 @@ namespace TV_App.Models
                     .HasName("IX_Feature_type_value")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Value).IsUnicode(false);
-
                 entity.HasOne(d => d.RelType)
                     .WithMany(p => p.Features)
                     .HasForeignKey(d => d.Type)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Value).IsUnicode(false);
             });
 
             modelBuilder.Entity<GuideUpdate>(entity =>
@@ -134,23 +129,18 @@ namespace TV_App.Models
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Source).IsUnicode(false);
             });
 
             modelBuilder.Entity<OfferedChannel>(entity =>
             {
                 entity.HasKey(e => new { e.OfferId, e.ChannelId });
-
-                
             });
 
             modelBuilder.Entity<Offer>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.IconUrl).IsUnicode(false);
-
                 entity.Property(e => e.Name).IsUnicode(false);
             });
 
@@ -167,17 +157,14 @@ namespace TV_App.Models
                     .HasName("IX_Programme_title")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.IconUrl).IsUnicode(false);
-
-                entity.Property(e => e.SeqNumber).IsUnicode(false);
-
-                entity.Property(e => e.Title).IsUnicode(false);
                 entity.HasOne(d => d.RelSeries)
                     .WithMany(p => p.Programmes)
                     .HasForeignKey(d => d.SeriesId);
 
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.IconUrl).IsUnicode(false);
+                entity.Property(e => e.SeqNumber).IsUnicode(false);
+                entity.Property(e => e.Title).IsUnicode(false);
             });
 
             modelBuilder.Entity<ProgrammesFeature>(entity =>
@@ -210,13 +197,34 @@ namespace TV_App.Models
 
             });
 
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.HasKey(e => new { e.UserLogin, e.EmissionId })
+                    .HasName("PK_Notification");
+
+                entity.HasIndex(e => e.EmissionId)
+                    .HasName("IX_Notification_Emission_id");
+
+                entity.Property(e => e.UserLogin).IsUnicode(false);
+
+                entity.HasOne(d => d.RelEmission)
+                    .WithMany(p => p.Notifications)
+                    .HasForeignKey(d => d.EmissionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.RelUser)
+                    .WithMany(p => p.Notifications)
+                    .HasForeignKey(d => d.UserLogin);
+
+            });
+
+
             modelBuilder.Entity<Series>(entity =>
             {
                 entity.HasIndex(e => e.Title)
                     .IsUnique();
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Title).IsUnicode(false);
             });
 
@@ -226,17 +234,11 @@ namespace TV_App.Models
                     .HasName("PK_User");
 
                 entity.Property(e => e.Login).IsUnicode(false);
-
                 entity.Property(e => e.WeightActor).HasDefaultValueSql("((0.1))");
-
                 entity.Property(e => e.WeightCategory).HasDefaultValueSql("((0.3))");
-
                 entity.Property(e => e.WeightCountry).HasDefaultValueSql("((0.1))");
-
                 entity.Property(e => e.WeightDirector).HasDefaultValueSql("((0.1))");
-
                 entity.Property(e => e.WeightKeyword).HasDefaultValueSql("((0.3))");
-
                 entity.Property(e => e.WeightYear).HasDefaultValueSql("((0.1))");
             });
 

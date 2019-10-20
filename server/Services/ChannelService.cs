@@ -13,7 +13,13 @@ namespace TV_App.Services
         private readonly TvAppContext db = new TvAppContext();
         public ChannelDTO GetSingle(int id)
         {
-            throw new NotImplementedException();
+            var channel = db.Channels
+                .Include(ch => ch.OfferedChannels)
+                .Where(ch => ch.Id == id)
+                .AsNoTracking()
+                .SingleOrDefault();
+
+            return new ChannelDTO(channel);
         }
 
         public IEnumerable<ChannelDTO> GetOffer(long offer_id)
@@ -24,7 +30,7 @@ namespace TV_App.Services
                 .ToList();
 
             return from channel in channels
-                   where channel.OfferedChannels.Any(oc => oc.OfferId == offer_id)
+                   where channel.OfferedChannels.Any(oc => oc.OfferId == offer_id || offer_id == 0)
                    select new ChannelDTO(channel);
         }
 

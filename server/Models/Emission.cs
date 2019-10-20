@@ -31,5 +31,9 @@ namespace TV_App.Models
         [ForeignKey(nameof(ProgrammeId))]
         [InverseProperty(nameof(Programme.Emissions))]
         public virtual Programme RelProgramme { get; set; }
+
+        [InverseProperty(nameof(Notification.RelEmission))]
+        public virtual ICollection<Notification> Notifications { get; set; }
+
     }
 }

@@ -90,5 +90,40 @@ namespace TV_App.Services
 
             return result;
         }
+
+        // TODO: jak zwracać powiadomienia?
+        public IEnumerable<ProgrammeDTO> GetNotificationsFor(string username)
+        {
+            var programmes = db.Programmes
+                .Include(prog => prog.ProgrammesFeatures)
+                .AsNoTracking()
+                .ToList();
+            var features = db.Features
+                .Include(f => f.RelType)
+                .AsNoTracking()
+                .ToList();
+            var notifications = db.Notifications
+                .Include(n => n.RelEmission)
+                .Where(r => r.UserLogin == username)
+                .AsNoTracking()
+                .ToList();
+
+            var result = from notification in notifications
+                         join programme in programmes on notification.RelEmission.ProgrammeId equals programme.Id
+                         select new ProgrammeDTO()
+                         {
+                             Id = programme.Id,
+                             Title = programme.Title,
+                             IconUrl = programme.IconUrl,
+                             Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f)),
+                             Emissions = new List<EmissionDTO>()
+                             {
+                                 new EmissionDTO(notification.RelEmission)
+                             }
+                         };
+
+            return null;
+
+        }
     }
 }

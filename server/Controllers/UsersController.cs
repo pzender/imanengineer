@@ -79,6 +79,20 @@ namespace TV_App.Controllers
             return programmes;
         }
 
+        // GET: api/Users/Przemek/Ratings
+        [HttpGet("{name}/Notifications")]
+        public IEnumerable<ProgrammeDTO> GetNotifications(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        {
+            var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
+            Filter filter = Filter.Create(from, to, date, channels);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetRatedBy(name);
+            programmes = programmes.Where(prog => prog.Rating.HasValue).OrderBy(prog => prog.Rating).ToList();
+            int count = programmes.Count();
+            Response.Headers.Add("X-Total-Count", count.ToString());
+            return programmes;
+        }
+
+
         [HttpGet("{name}/Recommended")]
         public IEnumerable<ProgrammeDTO> GetRecommendations(string name, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, [FromQuery] long offer_id = 0)
         {

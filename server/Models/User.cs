@@ -30,5 +30,9 @@ namespace TV_App.Models
 
         [InverseProperty(nameof(Rating.RelUser))]
         public virtual ICollection<Rating> Ratings { get; set; }
+
+        [InverseProperty(nameof(Notification.RelUser))]
+        public virtual ICollection<Notification> Notifications { get; set; }
+
     }
 }
