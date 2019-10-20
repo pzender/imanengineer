@@ -14,6 +14,7 @@ export class AllChannelsComponent implements OnInit {
   public channels: ChannelLink[] = [];
 
   ngOnInit() {
+    this.requestStatus = "waiting";
     this.channelService.fetch().subscribe(
       response => { 
         this.channels = response; 
