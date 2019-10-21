@@ -22,6 +22,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './shared/components/login/login.component';
 import { OfferPickerComponent } from './shared/components/offer-picker/offer-picker.component';
+import { NotificationsComponent } from './containers/notifications/notifications.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { OfferPickerComponent } from './shared/components/offer-picker/offer-pic
     FeatureComponent,
     AllChannelsComponent,
     LoginComponent,
-    OfferPickerComponent
+    OfferPickerComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

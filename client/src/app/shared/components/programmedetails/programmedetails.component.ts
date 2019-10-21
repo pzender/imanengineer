@@ -12,14 +12,10 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class ProgrammedetailsComponent implements OnInit {
 
   constructor(private _http: HttpClient, public user: UserService) { }
-  @Input('prog_id') prog_id: number;
   @Output() buttonClicked = new EventEmitter<string>();
-  public programme: IProgrammeListElement = null;
+  @Input() programme: IProgrammeListElement = null;
 
-  ngOnInit() {
-    this._http.get<IProgrammeListElement>(`${environment.api}Programmes/${this.prog_id}`)
-      .subscribe(result => this.programme = result);
-  }
+  ngOnInit() {}
   feat_types(): string[] {
     return this.programme.features
       .map(function(f: {type: string, value: string}) { return f.type; })

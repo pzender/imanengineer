@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { DetailsService } from './details.service';
+import { NotificationsService } from './notifications.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user.service';
 import { Time } from '@angular/common';
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  selector: 'app-notifications',
+  templateUrl: './notifications.component.html',
+  styleUrls: ['./notifications.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class NotificationsComponent implements OnInit {
 
-  constructor(private service: DetailsService, private route: ActivatedRoute) { }
+  constructor(private service: NotificationsService, private route: ActivatedRoute, public user: UserService) { }
 
   listing: any[];
   requestStatus: string;
   title: string
-  id: number;
-  info: any;
   filters: {from: Time, to: Time, date: number};
 
   updateFilters($event){
@@ -26,11 +25,9 @@ export class DetailsComponent implements OnInit {
 
   fetch(){
     this.requestStatus = "waiting";
-    this.service.info(this.id).subscribe(
-      response => { this.info = response; }
-    )
-    this.service.fetch(this.id, this.filters).subscribe(
+    this.service.fetch(this.filters).subscribe(
       response => { 
+        console.log(response)
         this.listing = response; 
         this.requestStatus = response.length > 0 ? "success" : "empty";
       },
@@ -39,9 +36,6 @@ export class DetailsComponent implements OnInit {
       }
     )
   }
-
-  ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-  }
+  ngOnInit() {  }
 
 }

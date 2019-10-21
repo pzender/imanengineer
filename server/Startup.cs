@@ -22,7 +22,7 @@ namespace TV_App
         {
             services.AddCors();
             services.AddRouting();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
             services.AddSignalR().AddJsonProtocol();
         }
 
