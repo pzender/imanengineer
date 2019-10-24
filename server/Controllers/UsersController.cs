@@ -98,8 +98,15 @@ namespace TV_App.Controllers
         {
             var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
             Filter filter = Filter.Create(from, to, date, channels);
-            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, name);
-            programmes = recommendations.GetRecommendations(name, programmes);
+            // IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, name);
+            User user = DbContext.Users
+                .Include(u => u.Ratings)
+                    .ThenInclude(r => r.RelProgramme)
+                        .ThenInclude(prog => prog.ProgrammesFeatures)
+                            .ThenInclude(pf => pf.RelFeature)
+                .AsNoTracking()
+                .Single(u => u.Login == name);
+            var programmes = recommendations.GetRecommendations(user).Select(prog => new ProgrammeDTO(prog));
             int count = programmes.Count();
             Response.Headers.Add("X-Total-Count", count.ToString());
             return programmes;

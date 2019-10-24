@@ -11,14 +11,12 @@ namespace TV_App.Services
     {
         public const int DATE_SIMILARITY_HALF = 20;
         public const double SET_SIMILARITY_COEFF = 4;
-        public const string COUNTRY_TYPE = "country", DATE_TYPE = "date", ACT_TYPE = "actor", DIRECTOR_TYPE = "director", CAT_TYPE = "category", KEYW_TYPE = "keyword";
+        public const int COUNTRY_TYPE = 1, DATE_TYPE = 2, ACT_TYPE = 4, DIRECTOR_TYPE = 5, CAT_TYPE = 7, KEYW_TYPE = 8;
 
-        public double TotalSimilarity(User user, ProgrammeDTO p1, ProgrammeDTO p2)
+        public double TotalSimilarity(User user, Programme p1, Programme p2)
         {
-            IEnumerable<FeatureDTO> p1_features = p1.Features;
-            IEnumerable<FeatureDTO> p2_features = p2.Features;
-            user ??= DUMMY_USER;
-
+            IEnumerable<Feature> p1_features = p1.ProgrammesFeatures.Select(fe => fe.RelFeature);
+            IEnumerable<Feature> p2_features = p2.ProgrammesFeatures.Select(fe => fe.RelFeature);
             double sim_act = SetSimilarity(
                 p1_features.Where(f => f.Type == ACT_TYPE),
                 p2_features.Where(f => f.Type == ACT_TYPE));
@@ -47,13 +45,13 @@ namespace TV_App.Services
 
         }
 
-        private double SetSimilarity(IEnumerable<FeatureDTO> one, IEnumerable<FeatureDTO> other)
+        private double SetSimilarity(IEnumerable<Feature> one, IEnumerable<Feature> other)
         {
-            
+
             int and = 0;
-            foreach (FeatureDTO f_one in one)
+            foreach (Feature f_one in one)
             {
-                foreach (FeatureDTO f_oth in other)
+                foreach (Feature f_oth in other)
                 {
                     if (f_one.Value == f_oth.Value && f_one.Type == f_oth.Type)
                         and++;
@@ -67,7 +65,7 @@ namespace TV_App.Services
             }
         }
 
-        private double DateSimilarity(FeatureDTO one, FeatureDTO other)
+        private double DateSimilarity(Feature one, Feature other)
         {
             if (one == null && other == null)
                 return 1;
@@ -79,7 +77,7 @@ namespace TV_App.Services
             else return 0;
         }
 
-        private double SingleSimilarity(FeatureDTO one, FeatureDTO other)
+        private double SingleSimilarity(Feature one, Feature other)
         {
             if (one == null && other == null)
                 return 1;
@@ -87,8 +85,6 @@ namespace TV_App.Services
                 return one.Value == other.Value ? 1 : 0;
             else return 0;
         }
-
-        private static readonly User DUMMY_USER = new User() { Login = "DUMMY", WeightActor = 0.3, WeightCategory = 0.3, WeightCountry = 0.1, WeightDirector = 0.1, WeightKeyword = 0.1, WeightYear = 0.1 };
 
     }
 }

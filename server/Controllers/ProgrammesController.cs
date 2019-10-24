@@ -35,7 +35,7 @@ namespace TV_App.Controllers
             var target = programmeService.GetById(id);
             Filter filter = Filter.Create(from, to, date, channels);
             IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter,  username);
-            IDictionary<ProgrammeDTO, double> similarityRanking = programmes.ToDictionary(prog => prog, prog => similarity.TotalSimilarity(null, prog, target));
+            IDictionary<ProgrammeDTO, double> similarityRanking = new Dictionary<ProgrammeDTO, double>();//programmes.ToDictionary(prog => prog, prog => similarity.TotalSimilarity(null, prog, target));
 
             var results = similarityRanking.OrderByDescending(item => item.Value).Select(item => item.Key).Where(prog => prog.Id != target.Id).Take(8);
             int count = results.Count();

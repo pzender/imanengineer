@@ -12,25 +12,33 @@ namespace TV_App.Services
     {
         readonly string[] IGNORED_TITLES = { "Zakonczenie programu" };
         private readonly TvAppContext db = new TvAppContext();
+
+        public IEnumerable<ProgrammeDTO> GetProgrammes()
+        {
+            var programmes = db.Programmes
+                .Include(prog => prog.Emissions)
+                    .ThenInclude(em => em.ChannelEmitted)
+                .Include(prog => prog.ProgrammesFeatures)
+                    .ThenInclude(pf => pf.RelFeature)
+                    .ThenInclude(feat => feat.RelType);
+
+            return programmes.Select(prog => new ProgrammeDTO(prog));
+        }
+
         public IEnumerable<ProgrammeDTO> GetFilteredProgrammes(Filter filter = null, string user = null)
         {
             var programmes = db.Programmes
                 .Include(prog => prog.ProgrammesFeatures)
-                .AsNoTracking()
-                .ToList();
+                .AsNoTracking();
             var emissions = db.Emissions
                 .Include(em => em.ChannelEmitted)
-                .AsNoTracking()
-                .ToList();
+                .AsNoTracking();
             var features = db.Features
                 .Include(f => f.RelType)
-                .AsNoTracking()
-                .ToList();
+                .AsNoTracking();
             var ratings = db.Ratings
                 .Where(r => r.UserLogin == user)
-                .AsNoTracking()
-                .ToList();
-
+                .AsNoTracking();
             
             var filtered_emissions = emissions.Where(em => filter.Apply(em)).ToList();
 
@@ -42,7 +50,7 @@ namespace TV_App.Services
                              Id = programme.Id,
                              Title = programme.Title,
                              IconUrl = programme.IconUrl,
-                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
+                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id) == null ? 0 : (ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id).RatingValue),
                              Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
                              Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
                          };
