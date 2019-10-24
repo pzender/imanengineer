@@ -12,33 +12,24 @@ namespace TV_App.Services
     {
         readonly string[] IGNORED_TITLES = { "Zakonczenie programu" };
         private readonly TvAppContext db = new TvAppContext();
-
-        public IEnumerable<ProgrammeDTO> GetProgrammes()
-        {
-            var programmes = db.Programmes
-                .Include(prog => prog.Emissions)
-                    .ThenInclude(em => em.ChannelEmitted)
-                .Include(prog => prog.ProgrammesFeatures)
-                    .ThenInclude(pf => pf.RelFeature)
-                    .ThenInclude(feat => feat.RelType);
-
-            return programmes.Select(prog => new ProgrammeDTO(prog));
-        }
-
         public IEnumerable<ProgrammeDTO> GetFilteredProgrammes(Filter filter = null, string user = null)
         {
             var programmes = db.Programmes
                 .Include(prog => prog.ProgrammesFeatures)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToList();
             var emissions = db.Emissions
                 .Include(em => em.ChannelEmitted)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToList();
             var features = db.Features
                 .Include(f => f.RelType)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToList();
             var ratings = db.Ratings
                 .Where(r => r.UserLogin == user)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToList();
             
             var filtered_emissions = emissions.Where(em => filter.Apply(em)).ToList();
 

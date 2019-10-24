@@ -31,7 +31,7 @@ namespace TV_App.Controllers
         [HttpGet]
         public IEnumerable<ProgrammeDTO> Get()
         {
-            return service.GetProgrammes();
+            return null;
         }
 
         [HttpPost]

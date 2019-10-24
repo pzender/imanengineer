@@ -144,5 +144,6 @@ namespace TV_App.Controllers
             public long ProgrammeId { get; set; }
             public long RatingValue { get; set; }
         }
+
     }
 }

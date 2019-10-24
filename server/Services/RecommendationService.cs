@@ -12,6 +12,31 @@ namespace TV_App.Services
     {
         private SimilarityCalculator similarityCalculator = new SimilarityCalculator();
         private readonly TvAppContext db = new TvAppContext();
+
+        public IEnumerable<Programme> GetSimilar(Programme prog, User user)
+        {
+            var available_programmes = db.Programmes
+                .Include(prog => prog.ProgrammesFeatures)
+                    .ThenInclude(pf => pf.RelFeature)
+                    .ThenInclude(feat => feat.RelType)
+                .Include(prog => prog.Ratings)
+                    .ThenInclude(r => r.RelUser)
+                .Include(prog => prog.Emissions)
+                    .ThenInclude(em => em.ChannelEmitted)
+                .AsNoTracking();
+
+            var recom_supports = available_programmes
+                .ToDictionary(p => p, p => similarityCalculator.TotalSimilarity(user, p, prog))
+                .OrderByDescending(rs => rs.Value)
+                .Skip(1)
+                .Take(5)
+                .ToDictionary(kv => kv.Key, kv => kv.Value)
+                .Keys
+                .Where(prog => prog.Emissions.Any());
+
+            return recom_supports;
+        }
+
         public IEnumerable<Programme> GetRecommendations(User user)
         {
             var available_programmes = db.Programmes
@@ -29,7 +54,6 @@ namespace TV_App.Services
                 .ToDictionary(p => p, p => RecommendationSupport(p, user));
 
             recom_supports = recom_supports
-                //.Where(rs => rs.Value > 0.5)
                 .OrderByDescending(rs => rs.Value)
                 .Take(20)
                 .ToDictionary(kv => kv.Key, kv => kv.Value);
