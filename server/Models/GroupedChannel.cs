@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TV_App.Models
 {
-    public partial class OfferedChannel
+    public partial class GroupedChannel
     {
         [Column("offer_id")]
         [Key]
@@ -19,7 +19,7 @@ namespace TV_App.Models
         public virtual Channel RelChannel { get; set; }
 
         [ForeignKey(nameof(OfferId))]
-        [InverseProperty(nameof(Offer.OfferedChannels))]
-        public virtual Offer RelOffer { get; set; }
+        [InverseProperty(nameof(ChannelGroup.OfferedChannels))]
+        public virtual ChannelGroup RelOffer { get; set; }
     }
 }

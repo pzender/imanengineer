@@ -19,6 +19,7 @@ export class FilterSidebarComponent implements OnInit {
   timeTo: string;
   currentDate: number = Date.now();
   currentOffer: number = 0;
+  currentTheme: number = 0;
   
 
 
@@ -26,6 +27,7 @@ export class FilterSidebarComponent implements OnInit {
   ngOnInit() { 
     this.filtersChanged.emit(this.buildFilter())
   }
+
   onFromInput($event) {
     this.timeFrom = ($event.target.value);
     this.filtersChanged.emit(this.buildFilter())
@@ -34,13 +36,11 @@ export class FilterSidebarComponent implements OnInit {
   onToInput($event) {
     this.timeTo = ($event.target.value);
     this.filtersChanged.emit(this.buildFilter())
-
   }
 
   public nextDay() {
     this.currentDate += this.ONE_DAY;
     this.filtersChanged.emit(this.buildFilter());
-
   }
 
   public prevDay() {
@@ -50,6 +50,11 @@ export class FilterSidebarComponent implements OnInit {
 
   public offerPicked(value: number) {
     this.currentOffer = value;
+    this.filtersChanged.emit(this.buildFilter())
+  }
+
+  public themePicked(value: number) {
+    this.currentTheme = value;
     this.filtersChanged.emit(this.buildFilter())
   }
 
@@ -66,7 +71,8 @@ export class FilterSidebarComponent implements OnInit {
     if (this.showOffer) {
       filter = {
         ...filter,
-        'offer_id': this.currentOffer
+        'offer_id': this.currentOffer,
+        'theme_id': this.currentTheme
       };
     }
     return filter;

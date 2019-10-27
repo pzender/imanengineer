@@ -13,9 +13,16 @@ export class AllChannelsComponent implements OnInit {
   public requestStatus = "none";
   public channels: ChannelLink[] = [];
 
+  updateFilters(filter: any) {
+    this.fetch(filter);
+  }
+
   ngOnInit() {
+  }
+
+  fetch(filter: any){
     this.requestStatus = "waiting";
-    this.channelService.fetch().subscribe(
+    this.channelService.fetch(filter).subscribe(
       response => { 
         this.channels = response; 
         this.requestStatus = response.length > 0 ? "success" : "empty";
@@ -25,5 +32,4 @@ export class AllChannelsComponent implements OnInit {
       }
     )
   }
-
 }

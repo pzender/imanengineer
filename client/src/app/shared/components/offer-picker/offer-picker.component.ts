@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -10,11 +10,13 @@ import { environment } from 'src/environments/environment';
 export class OfferPickerComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
+  @Input() endpoint: string;
+  @Input() title: string;
   @Output() offerPicked = new EventEmitter<any>();
   offers: {id: number, name: string}[]
 
   ngOnInit() {
-    this.http.get<{id: number, name: string}[]>(`${environment.api}Channels/Offers`).subscribe(
+    this.http.get<{id: number, name: string}[]>(`${environment.api}${this.endpoint}`).subscribe(
       response => {this.offers = response}
     )
   }

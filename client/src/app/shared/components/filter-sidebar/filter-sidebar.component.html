@@ -13,6 +13,8 @@
   </div>
   <div class="form-group" *ngIf="this.showOffer">
     <h5>Gdzie?</h5>
-    <app-offer-picker (offerPicked)="offerPicked($event)"></app-offer-picker>
+    <app-offer-picker (offerPicked)="offerPicked($event)" [endpoint]="'Channels/Offers'" [title]="'Kanały z oferty'"></app-offer-picker>
+    <h5>Co?</h5>
+    <app-offer-picker (offerPicked)="themePicked($event)" [endpoint]="'Channels/Themes'" [title]="'Kanały o tematyce'"></app-offer-picker>
   </div>
 </form>

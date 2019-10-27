@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TV_App.Models;
 
 namespace TV_App.Migrations
 {
     [DbContext(typeof(TvAppContext))]
-    partial class TvAppContextModelSnapshot : ModelSnapshot
+    [Migration("20191027183833_ChannelGrouping")]
+    partial class ChannelGrouping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

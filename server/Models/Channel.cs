@@ -11,7 +11,7 @@ namespace TV_App.Models
         public Channel()
         {
             Emissions = new HashSet<Emission>();
-            OfferedChannels = new HashSet<OfferedChannel>();
+            OfferedChannels = new HashSet<GroupedChannel>();
         }
 
         [Column("id")]
@@ -30,7 +30,7 @@ namespace TV_App.Models
         [InverseProperty(nameof(Emission.ChannelEmitted))]
         public virtual ICollection<Emission> Emissions { get; set; }
 
-        [InverseProperty(nameof(OfferedChannel.RelChannel))]
-        public virtual ICollection<OfferedChannel> OfferedChannels { get; set; }
+        [InverseProperty(nameof(GroupedChannel.RelChannel))]
+        public virtual ICollection<GroupedChannel> OfferedChannels { get; set; }
     }
 }

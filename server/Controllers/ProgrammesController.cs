@@ -34,7 +34,7 @@ namespace TV_App.Controllers
         public IEnumerable<ProgrammeDTO> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             
-            var channels = channelService.GetOffer(offer_id).Select(ch => ch.Id);
+            var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
             var target = db.Programmes
                 .Include(prog => prog.ProgrammesFeatures)
                     .ThenInclude(pf => pf.RelFeature)

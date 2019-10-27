@@ -10,7 +10,10 @@ import { Observable } from 'rxjs';
 export class AllChannelsService {
 
   constructor(private http: HttpClient) { }
-  public fetch(): Observable<ChannelLink[]> {
-    return this.http.get<ChannelLink[]>(`${environment.api}Channels`);
+  public fetch(filters: any): Observable<ChannelLink[]> {
+    return this.http.get<ChannelLink[]>(
+      `${environment.api}Channels`, 
+      { params: filters }
+    );
   }
 }

@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TV_App.Models
 {
-    public partial class Offer : IEntityWithID
+    public partial class ChannelGroup : IEntityWithID
     {
-        public Offer()
+        public ChannelGroup()
         {
-            OfferedChannels = new HashSet<OfferedChannel>();
+            OfferedChannels = new HashSet<GroupedChannel>();
         }
 
         [Column("id")]
@@ -25,7 +25,14 @@ namespace TV_App.Models
         [StringLength(150)]
         public string IconUrl { get; set; }
 
-        [InverseProperty(nameof(OfferedChannel.RelOffer))]
-        public virtual ICollection<OfferedChannel> OfferedChannels { get; set; }
+        [Column("type")]
+        [StringLength(10)]
+        public string GroupType { get; set; }
+
+        [InverseProperty(nameof(GroupedChannel.RelOffer))]
+        public virtual ICollection<GroupedChannel> OfferedChannels { get; set; }
+
+        public const string TYPE_OFFER = "OFFER";
+        public const string TYPE_THEME = "THEME";
     }
 }

@@ -24,22 +24,36 @@ namespace Controllers
         [HttpGet("Offers")]
         public ObjectResult GetOffers()
         {
-            var offers = DbContext.Offers.Select(o => new
-            {
-                id = o.Id,
-                name = o.Name
-            });
-
+            var offers = DbContext.Offers
+                .Where(o => o.GroupType == ChannelGroup.TYPE_OFFER)
+                .Select(o => new {
+                    id = o.Id,
+                    name = o.Name
+                });
             return StatusCode(200, offers);
         }
 
-        [HttpGet]
-        public IEnumerable<ChannelDTO> Get([FromQuery] long offer_id = 0)
+        [HttpGet("Themes")]
+        public ObjectResult GetThemes()
         {
-            IEnumerable<Channel> channels = DbContext.Channels
-                .Include(ch => ch.OfferedChannels);
+            var themes = DbContext.Offers
+                .Where(o => o.GroupType == ChannelGroup.TYPE_THEME)
+                .Select(o => new {
+                    id = o.Id,
+                    name = o.Name
+                });
+            return StatusCode(200, themes);
+        }
+
+
+        [HttpGet]
+        public IEnumerable<ChannelDTO> Get([FromQuery] long offer_id = 0, [FromQuery] long theme_id = 0)
+        {
+            IEnumerable<Channel> channels = DbContext.Channels.Include(ch => ch.OfferedChannels);
             if (offer_id != 0)
                 channels = channels.Where(ch => ch.OfferedChannels.Any(oc => oc.OfferId == offer_id));
+            if (theme_id != 0)
+                channels = channels.Where(ch => ch.OfferedChannels.Any(oc => oc.OfferId == theme_id));
             return channels.Select(ch => new ChannelDTO(ch));
         }
 

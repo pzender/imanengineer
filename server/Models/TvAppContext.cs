@@ -5,6 +5,9 @@ namespace TV_App.Models
 {
     public partial class TvAppContext : DbContext
     {
+        private const string DB_HOST = "167.71.51.30";
+        private const string DB_DOCKER = "db";
+
         public TvAppContext()
         {
         }
@@ -20,8 +23,8 @@ namespace TV_App.Models
         public virtual DbSet<FeatureType> FeatureTypes { get; set; }
         public virtual DbSet<Feature> Features { get; set; }
         public virtual DbSet<GuideUpdate> GuideUpdates { get; set; }
-        public virtual DbSet<OfferedChannel> OfferedChannels { get; set; }
-        public virtual DbSet<Offer> Offers { get; set; }
+        public virtual DbSet<GroupedChannel> OfferedChannels { get; set; }
+        public virtual DbSet<ChannelGroup> Offers { get; set; }
         public virtual DbSet<Programme> Programmes { get; set; }
         public virtual DbSet<ProgrammesFeature> ProgrammesFeatures { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
@@ -34,7 +37,7 @@ namespace TV_App.Models
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseLazyLoadingProxies();
-                optionsBuilder.UseSqlServer("Data Source=db;Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=P@ssw0rd;MultipleActiveResultSets=true;");
+                optionsBuilder.UseSqlServer($"Data Source={DB_DOCKER};Initial Catalog=tv_db;Persist Security Info=True;User ID=SA;Password=P@ssw0rd;MultipleActiveResultSets=true;");
                 optionsBuilder.EnableSensitiveDataLogging();
                 optionsBuilder.EnableDetailedErrors();
             }
@@ -132,12 +135,12 @@ namespace TV_App.Models
                 entity.Property(e => e.Source).IsUnicode(false);
             });
 
-            modelBuilder.Entity<OfferedChannel>(entity =>
+            modelBuilder.Entity<GroupedChannel>(entity =>
             {
                 entity.HasKey(e => new { e.OfferId, e.ChannelId });
             });
 
-            modelBuilder.Entity<Offer>(entity =>
+            modelBuilder.Entity<ChannelGroup>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.IconUrl).IsUnicode(false);

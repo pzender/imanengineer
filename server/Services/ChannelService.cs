@@ -22,7 +22,7 @@ namespace TV_App.Services
             return new ChannelDTO(channel);
         }
 
-        public IEnumerable<ChannelDTO> GetOffer(long offer_id)
+        public IEnumerable<ChannelDTO> GetGroup(long offer_id)
         {
             var channels = db.Channels
                 .Include(ch => ch.OfferedChannels)

@@ -1,10 +1,10 @@
 INSERT INTO Offers VALUES
-(1, 'DVB-T', NULL),
-(2, 'Cyfrowy Polsat', NULL),
-(3, 'Multimedia', NULL),
-(4, 'nc+', NULL),
-(5, 'UPC', NULL),
-(6, 'Vectra', NULL)
+(1, 'DVB-T', NULL, 'OFFER'),
+(2, 'Cyfrowy Polsat', NULL, 'OFFER'),
+(3, 'Multimedia', NULL, 'OFFER'),
+(4, 'nc+', NULL, 'OFFER'),
+(5, 'UPC', NULL, 'OFFER'),
+(6, 'Vectra', NULL, 'OFFER')
 ;
 
 INSERT INTO OfferedChannels VALUES
