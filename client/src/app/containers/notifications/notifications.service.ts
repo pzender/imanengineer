@@ -3,19 +3,15 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/shared/services/user.service';
 import { HttpClient } from '@angular/common/http';
+import { ProgrammesApiService } from 'src/app/shared/services/programmes-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationsService {
-
-  constructor(private _http: HttpClient, private user: UserService) { }
+export class NotificationsService { 
+  constructor(private api: ProgrammesApiService, private user: UserService) { }
   
-  fetch(filters): Observable<any[]> {
-    let p = {
-      ...filters,
-      ...{username: this.user.getUser()}
-    }
-    return this._http.get<any[]>(`${environment.api}Users/${this.user.getUser()}/Notifications`, { params: p });
+  public fetch(filters): Observable<any[]> {
+    return this.api.fetch(`${environment.api}Users/${this.user.getUser()}/Notifications`, filters, this.user.getUser());
   }
 }

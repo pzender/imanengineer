@@ -3,6 +3,7 @@ export interface IProgrammeListElement {
     title: string;
     iconUrl: string;
     emissions: {
+        id: number;
         channel: {
             id: number,
             name: string

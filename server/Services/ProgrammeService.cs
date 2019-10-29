@@ -103,6 +103,7 @@ namespace TV_App.Services
                 .ToList();
             var notifications = db.Notifications
                 .Include(n => n.RelEmission)
+                    .ThenInclude(em => em.ChannelEmitted)
                 .Where(r => r.UserLogin == username)
                 .AsNoTracking()
                 .ToList();
@@ -121,7 +122,7 @@ namespace TV_App.Services
                              }
                          };
 
-            return null;
+            return result;
 
         }
     }

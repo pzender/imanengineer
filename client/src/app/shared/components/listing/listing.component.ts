@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ListingComponent implements OnInit {
   title: string;
-  @Input('listing') listing: IProgrammeListElement[];
+  @Input() listing: IProgrammeListElement[];
 
   constructor(private _httpClient: HttpClient) {  }
 

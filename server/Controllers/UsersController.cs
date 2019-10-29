@@ -42,13 +42,13 @@ namespace TV_App.Controllers
         [HttpPost("{name}/Ratings")]
         public async Task<ObjectResult> PostRating(string name, [FromBody] RatingJson body)
         {
-            Programme ratedProgramme = DbContext.Programmes.FirstOrDefault(prog => prog.Id == body.ProgrammeId);
+            Programme ratedProgramme = DbContext.Programmes.FirstOrDefault(prog => prog.Id == body.Id);
             if (ratedProgramme != null)
             {
-                Rating existing_rating = DbContext.Ratings.SingleOrDefault(r => r.ProgrammeId == body.ProgrammeId && r.UserLogin == name);
+                Rating existing_rating = DbContext.Ratings.SingleOrDefault(r => r.ProgrammeId == body.Id && r.UserLogin == name);
                 Rating new_rating = new Rating()
                 {
-                    ProgrammeId = body.ProgrammeId,
+                    ProgrammeId = body.Id,
                     RelProgramme = ratedProgramme,
                     RatingValue = body.RatingValue,
                     UserLogin = name
@@ -58,13 +58,35 @@ namespace TV_App.Controllers
                     DbContext.Ratings.Add(new_rating);
                 else
                     existing_rating.RatingValue = body.RatingValue;
-                await DbContext.SaveChangesAsync();
-                return StatusCode(200, new RatingJson() { ProgrammeId = new_rating.ProgrammeId, RatingValue = new_rating.RatingValue });
+                DbContext.SaveChanges();
+                return StatusCode(200, new RatingJson() { Id = new_rating.ProgrammeId, RatingValue = new_rating.RatingValue });
             }
 
             return StatusCode(404, "Program nie istnieje");
-            
         }
+
+        // POST: api/Users/Przemek/Notifications
+        [HttpPost("{name}/Notifications")]
+        public async Task<ObjectResult> PostNotification(string name, [FromBody] RatingJson body)
+        {
+            Emission remindMeOf = DbContext.Emissions.FirstOrDefault(em => em.Id == body.Id);
+            if (remindMeOf != null)
+            {
+                Notification new_reminder = new Notification()
+                {
+                    EmissionId = body.Id,
+                    RelEmission = remindMeOf,
+                    UserLogin = name
+                };
+                DbContext.Notifications.Add(new_reminder);
+                DbContext.SaveChanges();
+                return StatusCode(200, new RatingJson() { Id = new_reminder.EmissionId, RatingValue = 1 });
+            }
+
+            return StatusCode(404, "Program nie istnieje");
+        }
+
+
 
         // GET: api/Users/Przemek/Ratings
         [HttpGet("{name}/Ratings")]
@@ -85,8 +107,8 @@ namespace TV_App.Controllers
         {
             var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
             Filter filter = Filter.Create(from, to, date, channels);
-            IEnumerable<ProgrammeDTO> programmes = programmeService.GetRatedBy(name);
-            programmes = programmes.Where(prog => prog.Rating.HasValue).OrderBy(prog => prog.Rating).ToList();
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetNotificationsFor(name);
+            //programmes = programmes.Where(prog => prog.Rating.HasValue).OrderBy(prog => prog.Rating).ToList();
             int count = programmes.Count();
             Response.Headers.Add("X-Total-Count", count.ToString());
             return programmes;
@@ -141,9 +163,11 @@ namespace TV_App.Controllers
 
         public class RatingJson
         {
-            public long ProgrammeId { get; set; }
+            public long Id { get; set; }
             public long RatingValue { get; set; }
         }
+
+
 
     }
 }

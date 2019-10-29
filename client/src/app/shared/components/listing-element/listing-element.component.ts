@@ -38,7 +38,7 @@ export class ListingElementComponent implements OnInit {
   rateButton(value: number) {
     this._http.post(
       `${environment.api}Users/${this.user.getUser()}/Ratings`,
-      { ProgrammeId: this.programme.id, RatingValue: value },
+      { Id: this.programme.id, RatingValue: value },
       { responseType: 'json' }
     )
     .subscribe(result => {
@@ -49,10 +49,16 @@ export class ListingElementComponent implements OnInit {
 
   remindme() {
     this._http.post(
-      `${environment.api}Users/${this.user.getUser()}/Ratings`,
-      {ProgrammeId: this.programme.id, RatingValue: 1},
-      {responseType: 'json'}
-    ).subscribe(result => this.buttonClicked.emit(result.toString()));
+      `${environment.api}Users/${this.user.getUser()}/Notifications`,
+      { Id: this.programme.emissions[0].id, RatingValue: 1 },
+      { responseType: 'json' }
+    )
+    .subscribe(result => {
+      this.buttonClicked.emit(result.toString());
+      this.programme.rating = result['RatingValue']
+    });
+    this.rateButton(1);
+
   }
 
   ratingAvailable(): boolean{
