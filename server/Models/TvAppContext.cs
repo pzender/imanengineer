@@ -127,9 +127,14 @@ namespace TV_App.Models
 
             modelBuilder.Entity<GuideUpdate>(entity =>
             {
-                entity.HasIndex(e => e.Posted)
-                    .HasName("IX_GuideUpdate_posted")
+                entity.HasIndex(e => e.Started)
+                    .HasName("IX_GuideUpdate_started")
                     .IsUnique();
+
+                entity.HasIndex(e => e.Finished)
+                    .HasName("IX_GuideUpdate_finished")
+                    .IsUnique();
+
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.Source).IsUnicode(false);
@@ -213,7 +218,7 @@ namespace TV_App.Models
                 entity.HasOne(d => d.RelEmission)
                     .WithMany(p => p.Notifications)
                     .HasForeignKey(d => d.EmissionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.RelUser)
                     .WithMany(p => p.Notifications)

@@ -121,7 +121,7 @@ namespace TV_App.Services
                                  new EmissionDTO(notification.RelEmission)
                              }
                          };
-
+            Console.WriteLine($"[{DateTime.Now}] Standard - {result.Count()} programmes after filter");
             return result;
 
         }

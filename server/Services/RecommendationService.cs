@@ -48,7 +48,7 @@ namespace TV_App.Services
                 .Include(prog => prog.Emissions)
                     .ThenInclude(em => em.ChannelEmitted)
                 .AsNoTracking();
-            Console.WriteLine($"{available_programmes.Count()} programmes");
+            Console.WriteLine($"[{DateTime.Now}] Recommendations - {available_programmes.Count()} programmes");
 
             Dictionary<Programme, double> recom_supports = available_programmes
                 .ToDictionary(p => p, p => RecommendationSupport(p, user));

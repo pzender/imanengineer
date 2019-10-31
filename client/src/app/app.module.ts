@@ -23,7 +23,11 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './shared/components/login/login.component';
 import { OfferPickerComponent } from './shared/components/offer-picker/offer-picker.component';
 import { NotificationsComponent } from './containers/notifications/notifications.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { registerLocaleData } from '@angular/common';
+import localePl from "@angular/common/locales/pl";
 
+registerLocaleData(localePl)
 
 @NgModule({
   declarations: [
@@ -42,7 +46,8 @@ import { NotificationsComponent } from './containers/notifications/notifications
     AllChannelsComponent,
     LoginComponent,
     OfferPickerComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +56,9 @@ import { NotificationsComponent } from './containers/notifications/notifications
     FormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [/*{provide: LOCALE_ID, useValue: 'pl'}*/],
+  providers: [
+    { provide: LOCALE_ID, useValue: "pl-PL" } 
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {  }

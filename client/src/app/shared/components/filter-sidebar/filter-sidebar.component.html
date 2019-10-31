@@ -4,7 +4,7 @@
     <label for="day">Data:  </label>
     <div id="day" class="p-1 border rounded w-100">
       <a (click)="prevDay()" class="btn btn-sm btn-dark">&lt;</a> 
-      <span class="mx-2 w-75">{{translateDate(currentDate | date:'EE, d MMM')}}</span>
+      <span class="mx-2 w-75">{{currentDate | date:'EE d MMM'}}</span>
       <a (click)="nextDay()" class="btn btn-sm btn-dark">&gt;</a></div>
     <label for="time_from">Od godziny: </label>
     <input type="time" id="time_from" class="form-control" value = "00:00" (keyup)="onFromInput($event)" >

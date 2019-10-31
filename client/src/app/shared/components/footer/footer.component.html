@@ -1,0 +1,3 @@
+<div *ngIf="this.lastUpdate$ | async as lastUpdate" class="row bg-dark p-1 rounded">
+  <span class="mx-auto">Ostatnia aktualizacja: {{lastUpdate.finished | date:'medium'}}</span>
+</div>

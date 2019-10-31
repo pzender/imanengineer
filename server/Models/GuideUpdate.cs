@@ -21,8 +21,12 @@ namespace TV_App.Models
         [StringLength(200)]
         public string Source { get; set; }
 
-        [Column("posted", TypeName = "datetime")]
-        public DateTime Posted { get; set; }
+        [Column("started", TypeName = "datetime")]
+        public DateTime Started { get; set; }
+
+        [Column("finished", TypeName = "datetime")]
+        public DateTime? Finished { get; set; }
+
 
         [InverseProperty(nameof(Description.RelGuideUpdate))]
         public virtual ICollection<Description> Descriptions { get; set; }

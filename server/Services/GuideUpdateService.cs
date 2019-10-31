@@ -31,14 +31,15 @@ namespace TV_App.Services
             GuideUpdate new_gu = new GuideUpdate()
             {
                 Id = new_id,
-                Posted = DateTime.Now,
+                Started = DateTime.Now,
                 Source = channels_in_xml.First().Element("url").Value
             };
             context.GuideUpdates.Add(new_gu);
-
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - entry added");
             context.SaveChanges();
-
+            
             //kanały
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing channels");
             new_id = GetNewId(context.Channels);
 
             foreach (XElement channel in channels_in_xml)
@@ -55,11 +56,14 @@ namespace TV_App.Services
                     new_id++;
                 }
             }
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - saving channels");
             context.SaveChanges();
 
             //programy
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing programmes");
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme").ToList();
-
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - {programmes_in_xml.Count()} found");
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - first at {programmes_in_xml.First().Attribute("start")}");
             List<Programme> new_programmes = new List<Programme>();
             new_id = GetNewId(context.Programmes);
             List<Emission> new_emissions = new List<Emission>();
@@ -203,9 +207,9 @@ namespace TV_App.Services
 
             context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
-
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - saving programmes");
             context.SaveChanges();
-
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - programmes done");
         }
 
         private DateTime ParseDateTime(string inp)
