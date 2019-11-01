@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr'
+import { HubConnection, HubConnectionBuilder, JsonHubProtocol } from '@aspnet/signalr'
 import { from } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -15,9 +15,11 @@ export class NotificationsService {
   public initConnection() {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(`${environment.api}notificationHub`)
+      .withHubProtocol(new JsonHubProtocol)
       .build();
+
     this.hubConnection.start()
-      .then(() => console.log('Connection started!'))
+      .then(() => this.notify('Powiadomienia działają!'))
       .catch(error => console.log('Coś nie poszło :( ' + error));
   }
 

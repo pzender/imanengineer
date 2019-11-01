@@ -23,7 +23,9 @@ namespace TV_App
             services.AddCors();
             services.AddRouting();
             services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
-            services.AddSignalR().AddJsonProtocol();
+            services.AddSignalR()
+                .AddJsonProtocol()
+                .AddHubOptions<NotificationHub>(options => { options.EnableDetailedErrors = true; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

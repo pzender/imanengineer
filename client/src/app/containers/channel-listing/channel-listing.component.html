@@ -1,10 +1,10 @@
 <div class="row">
-  <div class="col-2 bg-dark py-3">
+  <div class="col-12 col-md-4 col-lg-2 bg-dark py-3">
     <app-filter-sidebar
       (filtersChanged)="updateFilters($event)"
     ></app-filter-sidebar>
   </div>
-  <div class="col-10">
+  <div class="col-12 col-md-8 col-lg-10">
     <h1>{{title}}</h1>
     <app-listing *ngIf="this.requestStatus === 'success'; else messageSpot"
       [listing]="listing"

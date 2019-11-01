@@ -29,9 +29,9 @@ namespace TV_App.Controllers
 
         // GET: api/Test
         [HttpGet]
-        public IEnumerable<ProgrammeDTO> Get()
+        public IHubClients Get()
         {
-            return null;
+            return hubContext.Clients;
         }
 
         [HttpPost]
