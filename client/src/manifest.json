@@ -1,6 +1,6 @@
 {
-  "name": "TV Guide",
-  "short_name": "TV Guide",
+  "name": "Looking Glass",
+  "short_name": "Looking Glass",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

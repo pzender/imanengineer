@@ -9,7 +9,7 @@
     </h5>
       <div *ngIf="programme.emissions">
         <div *ngFor="let e of programme.emissions">
-            <a href="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{e.start | date:'medium'}} - {{e.stop | date:'medium'}}
+            <a href="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{e.start | date:'EEE d MMM, H:mm'}} - {{e.stop | date:'EEE d MMM, H:mm'}}
         </div>
       </div>
       <div *ngFor="let ft of feat_types()">{{ft}}: 

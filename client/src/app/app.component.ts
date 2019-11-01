@@ -8,10 +8,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'TV Guide';
+  title = 'Looking Glass';
 
-  constructor(private notificationService: NotificationsService, 
-    private http: HttpClient) {  }
+  constructor(private notificationService: NotificationsService) {  }
 
   ngOnInit(): void {
     Notification.requestPermission().then(result => {
