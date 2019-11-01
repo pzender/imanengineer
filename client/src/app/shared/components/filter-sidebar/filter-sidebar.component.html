@@ -7,9 +7,9 @@
       <span class="mx-2 w-75">{{currentDate | date:'EE d MMM'}}</span>
       <a (click)="nextDay()" class="btn btn-sm btn-dark">&gt;</a></div>
     <label for="time_from">Od godziny: </label>
-    <input type="time" id="time_from" class="form-control" value = "00:00" (keyup)="onFromInput($event)" >
+    <input type="time" id="time_from" class="form-control" value = "00:00" (change)="onFromInput($event)" >
     <label for="time_from">Do godziny: </label>
-    <input type="time" id="time_to" class="form-control" value = "00:00" (keyup)="onToInput($event)" >
+    <input type="time" id="time_to" class="form-control" value = "00:00" (change)="onToInput($event)" >
   </div>
   <div class="form-group" *ngIf="this.showOffer">
     <h5>Gdzie?</h5>

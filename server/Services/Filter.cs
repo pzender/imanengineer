@@ -22,7 +22,7 @@ namespace TV_App.Services
                 from_ts = new TimeSpan(int.Parse(from.Split(':')[0]), int.Parse(from.Split(':')[1]), 0);
             TimeSpan? to_ts = null;
             if (to != "0:0" && to != "undefined")
-                to_ts = new TimeSpan(int.Parse(from.Split(':')[0]), int.Parse(from.Split(':')[1]), 0);
+                to_ts = new TimeSpan(int.Parse(to.Split(':')[0]), int.Parse(to.Split(':')[1]), 0);
             DateTime? desiredDate = null;
             if (date != 0)
                 desiredDate = DateTime.UnixEpoch.AddMilliseconds(date).Date;
