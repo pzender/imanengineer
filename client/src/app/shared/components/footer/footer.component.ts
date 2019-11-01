@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
+import { switchMapTo, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-footer',
@@ -10,12 +12,14 @@ import { environment } from 'src/environments/environment';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
   lastUpdate$: Observable<any>
   
 
   ngOnInit() {
-    this.lastUpdate$ = this.http.get<any>(`${environment.api}GuideUpdate/Last`)
+    this.lastUpdate$ = this.route.params.pipe(
+      switchMapTo(this.http.get<any>(`${environment.api}GuideUpdate/Last`))
+    )
   }
 
 }

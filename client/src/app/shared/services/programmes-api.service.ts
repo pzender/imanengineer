@@ -21,7 +21,6 @@ export class ProgrammesApiService {
         ...element,
         ...{ emissions: element.emissions || [] }
       }))),
-      tap(console.log),
     );
   }
 }

@@ -27,7 +27,6 @@ export class NotificationsService {
   }
 
   public notify(message: string) {
-    console.log(message);
     if (!("Notification" in window)) {
       console.log("This browser does not support system notifications");
     }

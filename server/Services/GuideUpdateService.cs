@@ -12,35 +12,31 @@ namespace TV_App.Services
     public class GuideUpdateService
     {
         private readonly TvAppContext context;
+        private long lastGuideUpdateId;
         public GuideUpdateService(TvAppContext context)
         {
             this.context = context;
         }
-
-        public void ParseAll(XDocument doc)
+        private void InitGuideUpdate(string src)
         {
-            if (!context.FeatureTypes.Any())
-            {
-                FillFeatureTypes();
-            }
-
-            IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
-            //guideupdate
-            long new_id = GetNewId(context.GuideUpdates);
+            lastGuideUpdateId = GetNewId(context.GuideUpdates);
 
             GuideUpdate new_gu = new GuideUpdate()
             {
-                Id = new_id,
+                Id = lastGuideUpdateId,
                 Started = DateTime.Now,
-                Source = channels_in_xml.First().Element("url").Value
+                Source = src
             };
             context.GuideUpdates.Add(new_gu);
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - entry added");
             context.SaveChanges();
-            
-            //kanały
+
+        }
+
+        public void ParseChannels(IEnumerable<XElement> channels_in_xml)
+        {
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing channels");
-            new_id = GetNewId(context.Channels);
+            long new_id = GetNewId(context.Channels);
 
             foreach (XElement channel in channels_in_xml)
             {
@@ -58,6 +54,20 @@ namespace TV_App.Services
             }
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - saving channels");
             context.SaveChanges();
+        }
+
+        public void ParseAll(XDocument doc)
+        {
+            
+            if (!context.FeatureTypes.Any())
+            {
+                FillFeatureTypes();
+            }
+
+            IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
+
+            ParseChannels(channels_in_xml);
+            InitGuideUpdate(channels_in_xml.First().Element("url").Value); 
 
             //programy
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing programmes");
@@ -65,7 +75,7 @@ namespace TV_App.Services
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - {programmes_in_xml.Count()} found");
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - first at {programmes_in_xml.First().Attribute("start")}");
             List<Programme> new_programmes = new List<Programme>();
-            new_id = GetNewId(context.Programmes);
+            long new_id = GetNewId(context.Programmes);
             List<Emission> new_emissions = new List<Emission>();
             long em_id = GetNewId(context.Emissions);
 
@@ -204,12 +214,60 @@ namespace TV_App.Services
                     }
                 }
             }
-
             context.Features.AddRange(new_features);
             context.Programmes.AddRange(new_programmes);
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - saving programmes");
             context.SaveChanges();
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - programmes done");
+
+            Cleanup();
+            FinishGuideUpdate();
+        }
+
+        private void Cleanup()
+        {
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - notifications");
+            var old_notifications = context.Notifications
+                .Include(n => n.RelEmission)
+                .Where(n => n.RelEmission.Stop < DateTime.Today);
+            context.Notifications.RemoveRange(old_notifications);
+            context.SaveChanges();
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - emissions");
+            context.Emissions.RemoveRange(
+                context.Emissions.Where(em => em.Stop < DateTime.Today)
+            );
+            context.SaveChanges();
+
+            List<long> emptyProgrammeIds = context.Programmes
+                .Include(prog => prog.Emissions)
+                .Include(prog => prog.Ratings)
+                .Where(prog => prog.Emissions.Count == 0 && prog.Ratings.Count == 0)
+                .Select(prog => prog.Id)
+                .ToList();
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - {emptyProgrammeIds.Count} empty");
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - descriptions");
+            context.Descriptions
+                .RemoveRange(context.Descriptions.Where(desc => emptyProgrammeIds.Contains(desc.ProgrammeId)));
+            context.SaveChanges();
+
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - programme-featues");
+            context.ProgrammesFeatures
+                .RemoveRange(context.ProgrammesFeatures.Where(pf => emptyProgrammeIds.Contains(pf.ProgrammeId)));
+            context.SaveChanges();
+
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - programmes");
+            context.Programmes
+                .RemoveRange(context.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
+            context.SaveChanges();
+        }
+
+        private void FinishGuideUpdate()
+        {
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - finished");
+            GuideUpdate last = context.GuideUpdates.Single(gu => gu.Id == lastGuideUpdateId);
+            last.Finished = DateTime.Now;
+            context.SaveChanges();
+            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - finish");
         }
 
         private DateTime ParseDateTime(string inp)

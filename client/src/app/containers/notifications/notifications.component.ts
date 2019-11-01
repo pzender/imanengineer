@@ -27,7 +27,6 @@ export class NotificationsComponent implements OnInit {
     this.requestStatus = "waiting";
     this.service.fetch(this.filters).subscribe(
       response => { 
-        console.log(response)
         this.listing = response; 
         this.requestStatus = response.length > 0 ? "success" : "empty";
       },

@@ -27,9 +27,18 @@ services:
     container_name: client
     ports:
       - 80:80
+      - 443:443
     environment:
       - TZ=Europe/Warsaw 
+    volumes: 
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     restart: unless-stopped
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   db:
     image: mcr.microsoft.com/mssql/server
     container_name: db
