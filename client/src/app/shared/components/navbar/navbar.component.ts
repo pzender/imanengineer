@@ -12,6 +12,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class NavbarComponent implements OnInit {
   public new_name = '';
   public searchterms = '';
+  public showMenu = true;
 
   constructor(private _router: Router,
               private _http: HttpClient,
@@ -26,5 +27,9 @@ export class NavbarComponent implements OnInit {
 
   public search() {
     this._router.navigate(['Search']);
+  }
+
+  public toggleMenu() {
+    this.showMenu = !this.showMenu;
   }
 }

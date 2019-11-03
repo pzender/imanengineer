@@ -1,19 +1,34 @@
-<nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top">
+  
+<nav class="navbar navbar-expand-md bg-secondary navbar-dark sticky-top">
   <a href="#" class="navbar-brand">
-    <img src="assets/icons/icon-96x96.png" height="40px">
-    Looking Glass
-  </a>
+    <img src="assets/icons/icon-96x96.png" height="40px"> Looking Glass
+  </a>    
+  <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse" *ngIf="showMenu">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item"><a [routerLink]="['/Channel']" routerLinkActive="active" class="nav-link">Kanały</a></li>
+      <li class="nav-item"><a [routerLink]="['/Profile']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Mój profil</a></li>
+      <li class="nav-item"><a [routerLink]="['/Notifications']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Powiadomienia</a></li>
+      <li class="nav-item"><a [routerLink]="['/Recommended']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Polecane</a></li>
+    </ul>
+    <app-login></app-login>
+  </div>
+</nav>
+
+
+  <!-- 
   <ul class="navbar-nav">
     <li class="nav-item"><a [routerLink]="['/Channel']" routerLinkActive="active" class="nav-link">Kanały</a></li>
     <li class="nav-item"><a [routerLink]="['/Profile']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Mój profil</a></li>
     <li class="nav-item"><a [routerLink]="['/Notifications']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Powiadomienia</a></li>
     <li class="nav-item"><a [routerLink]="['/Recommended']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Polecane</a></li>
-    <!-- <li class="nav-item"><a href="#" class="nav-link">Seriale</a></li> -->
+    <li class="nav-item"><a href="#" class="nav-link">Seriale</a></li>
     <li class="nav-item">
     </li>
   </ul>
   <li class="form-inline mx-auto">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchterms" (keyup.enter)="search()">
   </li>
-  <app-login></app-login>
-</nav>
+   -->

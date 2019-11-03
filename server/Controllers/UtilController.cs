@@ -51,7 +51,14 @@ namespace TV_App.Controllers
                     if (notification.Emissions.First().Start < DateTime.Now.AddMinutes(30) )
                     {
                         notificationsToSend.Add(notification);
-                        push.Notify(user, $"Twój program zaczyna się za {Math.Floor((notification.Emissions.First().Start - DateTime.Now).TotalMinutes)} minut", $"{notification.Title} na {notification.Emissions.First().Channel.Name}: {notification.Emissions.First().Start.TimeOfDay}");
+                        var time_diff = notification.Emissions.First().Start - DateTime.Now;
+                        if (time_diff > TimeSpan.Zero)
+                        {
+                            push.Notify(user, 
+                                $"Twój program zaczyna się za {Math.Floor(time_diff.TotalMinutes)} minut", 
+                                $"{notification.Title} na {notification.Emissions.First().Channel.Name}: {notification.Emissions.First().Start.TimeOfDay}"
+                            );
+                        }
                         var notificationEntity = db.Notifications.First(not => not.EmissionId == notification.Emissions.First().Id && not.UserLogin == user.Login);
                         db.Notifications.Remove(notificationEntity);
                     }

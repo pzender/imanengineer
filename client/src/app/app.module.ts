@@ -25,6 +25,7 @@ import { OfferPickerComponent } from './shared/components/offer-picker/offer-pic
 import { NotificationsComponent } from './containers/notifications/notifications.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { registerLocaleData } from '@angular/common';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import localePl from "@angular/common/locales/pl";
 
 registerLocaleData(localePl)
@@ -54,6 +55,7 @@ registerLocaleData(localePl)
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgbModalModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
