@@ -23,13 +23,6 @@ namespace TV_App.Controllers
         private readonly ProgrammeService programmeService = new ProgrammeService();
         private readonly ChannelService channelService = new ChannelService();
 
-        // GET: api/Users
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET: api/Users/Przemek
         [HttpGet("{name}", Name = "Get")]
         public ObjectResult Get(string name)
@@ -120,7 +113,6 @@ namespace TV_App.Controllers
         {
             var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
             Filter filter = Filter.Create(from, to, date, channels);
-            // IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, name);
             User user = DbContext.Users
                 .Include(u => u.Ratings)
                     .ThenInclude(r => r.RelProgramme)
@@ -134,11 +126,47 @@ namespace TV_App.Controllers
             return programmes;
         }
 
+        // POST: api/Users/Przemek/Subscribe
+        [HttpPost("{name}/Subscribtions")]
+        public ObjectResult Subscribe(string name, [FromBody] PushSubscriptionJson subscription)
+        {
+            User user = DbContext.Users
+                .Include(u => u.Subscriptions)
+                .FirstOrDefault(u => u.Login == name);
+            if (user != null)
+            {
+                Subscription sub = new Subscription()
+                {
+                    PushEndpoint = subscription.endpoint,
+                    PushAuth = subscription.keys.auth,
+                    PushP256dh = subscription.keys.p256dh,
+                    UserLogin = user.Login,
+                    RelUser = user
+                };
+                user.Subscriptions.Add(sub);
+                DbContext.SaveChanges();
+                subscription.id = sub.Id;
+                return StatusCode(200, subscription);
+            }
+            else return StatusCode(404, new { error = "No such user!" });
+        }
 
+        [HttpDelete("{name}/Subscribtions/{id}")]
+        public StatusCodeResult Unsubscribe(string name, int id)
+        {
+            Subscription sub = DbContext.Subscriptions.SingleOrDefault(s => s.Id == id);
+            if (sub != null)
+            {
+                DbContext.Subscriptions.Remove(sub);
+                DbContext.SaveChanges();
+                return StatusCode(204);
+            }
+            else return StatusCode(404);
+        }
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ObjectResult> PostAsync()
+        public async Task<ObjectResult> CreateUser()
         {
             string name = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
@@ -167,7 +195,18 @@ namespace TV_App.Controllers
             public long RatingValue { get; set; }
         }
 
-
+        public class PushSubscriptionJson
+        {
+            public long? id { get; set; }
+            public string endpoint { get; set; }
+            public string expirationTime { get; set; }
+            public KeysJson keys { get; set; }
+            public class KeysJson
+            {
+                public string p256dh { get; set; }
+                public string auth { get; set; }
+            }
+        }
 
     }
 }

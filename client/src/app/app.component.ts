@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from './shared/services/notifications.service';
-import { HttpClient } from '@angular/common/http';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +9,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'Looking Glass';
-
-  constructor(private notificationService: NotificationsService) {  }
+  constructor() {  }
 
   ngOnInit(): void {
-    Notification.requestPermission().then(result => {
-      console.log(`[Notification.requestPermission] ${result}`)
-    })
-
-    this.notificationService.initConnection();
-    this.notificationService.addNotificationListener();
+    
   }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TV_App.Models;
 
 namespace TV_App.Migrations
 {
     [DbContext(typeof(TvAppContext))]
-    partial class TvAppContextModelSnapshot : ModelSnapshot
+    [Migration("20191102174101_PushNotificationsDb")]
+    partial class PushNotificationsDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -386,13 +388,13 @@ namespace TV_App.Migrations
                     b.ToTable("Series");
                 });
 
-            modelBuilder.Entity("TV_App.Models.Subscription", b =>
+            modelBuilder.Entity("TV_App.Models.User", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Login")
+                        .HasColumnName("login")
+                        .HasColumnType("varchar(20)")
+                        .HasMaxLength(20)
+                        .IsUnicode(false);
 
                     b.Property<string>("PushAuth")
                         .HasColumnName("push_auth")
@@ -408,29 +410,6 @@ namespace TV_App.Migrations
                         .HasColumnName("push_p256dh")
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
-
-                    b.Property<string>("UserLogin")
-                        .IsRequired()
-                        .HasColumnName("user_login")
-                        .HasColumnType("varchar(20)")
-                        .HasMaxLength(20)
-                        .IsUnicode(false);
-
-                    b.HasKey("Id")
-                        .HasName("PK_Subscription");
-
-                    b.HasIndex("UserLogin");
-
-                    b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("TV_App.Models.User", b =>
-                {
-                    b.Property<string>("Login")
-                        .HasColumnName("login")
-                        .HasColumnType("varchar(20)")
-                        .HasMaxLength(20)
-                        .IsUnicode(false);
 
                     b.Property<double>("WeightActor")
                         .ValueGeneratedOnAdd()
@@ -568,15 +547,6 @@ namespace TV_App.Migrations
 
                     b.HasOne("TV_App.Models.User", "RelUser")
                         .WithMany("Ratings")
-                        .HasForeignKey("UserLogin")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TV_App.Models.Subscription", b =>
-                {
-                    b.HasOne("TV_App.Models.User", "RelUser")
-                        .WithMany("Subscriptions")
                         .HasForeignKey("UserLogin")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

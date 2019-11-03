@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private notificationService: NotificationsService) { }
   public showLogin: boolean = false;
   public actionResult: {success: boolean, message: string};
 
@@ -19,13 +20,14 @@ export class LoginComponent implements OnInit {
   login(username: string) {
     if(username !== '') {
       this.userService.login(username).subscribe(
-        resp => { this.actionResult = { success: true, message: 'Zalogowano' } },
+        resp => { 
+          this.actionResult = { success: true, message: 'Zalogowano' };
+        },
         err => { this.actionResult = { success: false, message: 'Użytkownik nie istnieje' } }
       )
       this.showLogin = false;
     }
   }
-
   create(username: string) {
     if(username !== '') {
       this.userService.register(username).subscribe(

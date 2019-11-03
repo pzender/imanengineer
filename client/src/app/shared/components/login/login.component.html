@@ -5,9 +5,10 @@
 </span>
 <span *ngIf="isLoggedIn()">
   Witaj, {{getUsername()}}!
-  <button type="button" class="btn btn-secondary" (click)="logout()">
-    Wyloguj
-  </button>
+  <div class="btn-group">
+    <button class="btn btn-secondary" (click)="logout()">Wyloguj</button>
+  </div>
+  
 </span>
 
 <div *ngIf="showLogin"

@@ -34,5 +34,9 @@ namespace TV_App.Models
         [InverseProperty(nameof(Notification.RelUser))]
         public virtual ICollection<Notification> Notifications { get; set; }
 
+        [InverseProperty(nameof(Subscription.RelUser))]
+        public virtual ICollection<Subscription> Subscriptions { get; set; }
+
+
     }
 }

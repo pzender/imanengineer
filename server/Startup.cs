@@ -23,35 +23,17 @@ namespace TV_App
             services.AddCors();
             services.AddRouting();
             services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.IgnoreNullValues = true; });
-            services.AddSignalR()
-                .AddJsonProtocol()
-                .AddHubOptions<NotificationHub>(options => { options.EnableDetailedErrors = true; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
-            app.UseCors(builder => builder
-                .WithOrigins("client")
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-            );
-
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseRouting();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<NotificationHub>("/api/notificationHub");
                 endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
             });
         }

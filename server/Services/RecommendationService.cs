@@ -10,7 +10,7 @@ namespace TV_App.Services
 {
     public class RecommendationService
     {
-        private SimilarityCalculator similarityCalculator = new SimilarityCalculator();
+        private readonly SimilarityCalculator similarityCalculator = new SimilarityCalculator();
         private readonly TvAppContext db = new TvAppContext();
 
         public IEnumerable<Programme> GetSimilar(Programme prog, User user)

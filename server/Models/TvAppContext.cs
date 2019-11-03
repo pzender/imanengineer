@@ -31,6 +31,7 @@ namespace TV_App.Models
         public virtual DbSet<Series> Series { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<Subscription> Subscriptions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -226,6 +227,21 @@ namespace TV_App.Models
 
             });
 
+            modelBuilder.Entity<Subscription>(entity =>
+            {
+                entity.HasKey(s => s.Id)
+                    .HasName("PK_Subscription");
+
+                entity.Property(e => e.UserLogin).IsUnicode(false);
+
+                entity.HasOne(d => d.RelUser)
+                    .WithMany(p => p.Subscriptions)
+                    .HasForeignKey(d => d.UserLogin);
+
+            });
+
+
+
 
             modelBuilder.Entity<Series>(entity =>
             {
@@ -249,6 +265,7 @@ namespace TV_App.Models
                 entity.Property(e => e.WeightKeyword).HasDefaultValueSql("((0.3))");
                 entity.Property(e => e.WeightYear).HasDefaultValueSql("((0.1))");
             });
+
 
             OnModelCreatingPartial(modelBuilder);
         }
