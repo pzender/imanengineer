@@ -1,3 +1,17 @@
+<form (submit)="search()">
+  <div class="form-group">
+    <h5>Szukasz czegoś konkrentego?  </h5>
+    <input 
+      class="form-control" 
+      type="text" 
+      name="search" 
+      id="field_search" 
+      placeholder="szukaj"
+      [(ngModel)]="searchterm"
+    >
+    <button class="btn btn-secondary btn-block" type="submit">szukaj</button>
+  </div>
+</form>
 <form>
   <div class="form-group" *ngIf="this.showTime">
     <h5>Kiedy?</h5>

@@ -42,10 +42,9 @@ namespace TV_App.Controllers
         public IEnumerable<ProgrammeDTO> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
             var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
+            Feature f = DbContext.Features.Single(f => f.Id == id);
             Filter filter = Filter.Create(from, to, date, channels);
-            IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, username);
-            programmes = programmes.Where(prog => prog.Features.Any(f => f.Id == id)).OrderBy(prog => prog.Emissions.First().Start);
-            programmes = programmes.ToList();
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetWithFeature(f, filter, username);
             int count = programmes.Count();
             Response.Headers.Add("X-Total-Count", count.ToString());
             return programmes;

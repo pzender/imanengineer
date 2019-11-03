@@ -12,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProgrammedetailsComponent } from './shared/components/programmedetails/programmedetails.component';
 import { FormsModule } from '@angular/forms';
 import { ChannelListingComponent } from './containers/channel-listing/channel-listing.component';
-import { GuideComponent } from './containers/guide/guide.component';
 import { RecommendationsComponent } from './containers/recommendations/recommendations.component';
 import { ProfileComponent } from './containers/profile/profile.component';
 import { DetailsComponent } from './containers/details/details.component';
@@ -27,6 +26,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { registerLocaleData } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import localePl from "@angular/common/locales/pl";
+import { SearchComponent } from './containers/search/search.component';
 
 registerLocaleData(localePl)
 
@@ -39,7 +39,6 @@ registerLocaleData(localePl)
     ListingElementComponent,
     ProgrammedetailsComponent,
     ChannelListingComponent,
-    GuideComponent,
     RecommendationsComponent,
     ProfileComponent,
     DetailsComponent,
@@ -49,6 +48,7 @@ registerLocaleData(localePl)
     OfferPickerComponent,
     NotificationsComponent,
     FooterComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

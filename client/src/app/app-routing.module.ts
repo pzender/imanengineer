@@ -8,6 +8,7 @@ import { DetailsComponent } from './containers/details/details.component';
 import { UserKnownGuard } from './shared/services/user-known.guard';
 import { AllChannelsComponent } from './containers/all-channels/all-channels.component';
 import { NotificationsComponent } from './containers/notifications/notifications.component';
+import { SearchComponent } from './containers/search/search.component';
 
 const routes: Routes = [
   { path: 'Recommended', component: RecommendationsComponent, canActivate: [UserKnownGuard] }, //bez username'a powinien wyświetlić obecnego, bez obecnego przekierować do...?
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'Channel/:id', component: ChannelListingComponent }, 
   { path: 'Feature/:id', component: FeatureComponent },
   { path: 'Programme/:id', component: DetailsComponent },
+  { path: 'Search/:term', component: SearchComponent },
   { path: '', redirectTo: 'Recommended', pathMatch: 'full' }
 ];
 

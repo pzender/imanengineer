@@ -25,7 +25,12 @@ namespace TV_App.Controllers
         [HttpGet]
         public IEnumerable<ProgrammeDTO> Get([FromQuery] string username = "", [FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
         {
-            throw new NotImplementedException();
+            var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
+            Filter filter = Filter.Create(from, to, date, channels);
+            IEnumerable<ProgrammeDTO> programmes = programmeService.GetBySearchTerm(search, filter, username);
+            int count = programmes.Count();
+            Response.Headers.Add("X-Total-Count", count.ToString());
+            return programmes;
         }
 
 

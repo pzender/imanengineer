@@ -41,7 +41,7 @@ namespace TV_App.Services
                              Id = programme.Id,
                              Title = programme.Title,
                              IconUrl = programme.IconUrl,
-                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id) == null ? 0 : (ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id).RatingValue),
+                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
                              Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
                              Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
                          };
@@ -121,6 +121,84 @@ namespace TV_App.Services
                          };
             Console.WriteLine($"[{DateTime.Now}] Standard - {result.Count()} programmes after filter");
             return result;
+        }
+
+        public IEnumerable<ProgrammeDTO> GetWithFeature(Feature feature, Filter filter = null, string user = null)
+        {
+            var programmes = db.Programmes
+                .Include(prog => prog.ProgrammesFeatures)
+                .Where(prog => prog.ProgrammesFeatures.Any(pf => pf.FeatureId == feature.Id))
+                .AsNoTracking()
+                .ToList();
+            var emissions = db.Emissions
+                .Include(em => em.ChannelEmitted)
+                .AsNoTracking()
+                .ToList();
+            var features = db.Features
+                .Include(f => f.RelType)
+                .AsNoTracking()
+                .ToList();
+            var ratings = db.Ratings
+                .Where(r => r.UserLogin == user)
+                .AsNoTracking()
+                .ToList();
+
+            var filtered_emissions = emissions.Where(em => filter.Apply(em)).ToList();
+
+            var result = from programme in programmes
+                         join emission in filtered_emissions on programme.Id equals emission.ProgrammeId into prog_emissions
+                         where prog_emissions.Any() && !IGNORED_TITLES.Contains(programme.Title)
+                         select new ProgrammeDTO()
+                         {
+                             Id = programme.Id,
+                             Title = programme.Title,
+                             IconUrl = programme.IconUrl,
+                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
+                             Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
+                             Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
+                         };
+
+            return result;
+
+        }
+
+        public IEnumerable<ProgrammeDTO> GetBySearchTerm(string term, Filter filter = null, string user = null)
+        {
+            var programmes = db.Programmes
+                .Include(prog => prog.ProgrammesFeatures)
+                .Where(prog => prog.Title.Contains(term))
+                .AsNoTracking()
+                .ToList();
+            var emissions = db.Emissions
+                .Include(em => em.ChannelEmitted)
+                .AsNoTracking()
+                .ToList();
+            var features = db.Features
+                .Include(f => f.RelType)
+                .AsNoTracking()
+                .ToList();
+            var ratings = db.Ratings
+                .Where(r => r.UserLogin == user)
+                .AsNoTracking()
+                .ToList();
+
+            var filtered_emissions = emissions.Where(em => filter.Apply(em)).ToList();
+
+            var result = from programme in programmes
+                         join emission in filtered_emissions on programme.Id equals emission.ProgrammeId into prog_emissions
+                         where prog_emissions.Any() && !IGNORED_TITLES.Contains(programme.Title)
+                         select new ProgrammeDTO()
+                         {
+                             Id = programme.Id,
+                             Title = programme.Title,
+                             IconUrl = programme.IconUrl,
+                             Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
+                             Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
+                             Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
+                         };
+
+            return result;
+
         }
     }
 }

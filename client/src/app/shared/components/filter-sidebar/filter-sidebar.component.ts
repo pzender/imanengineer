@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Time } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter-sidebar',
@@ -12,9 +13,9 @@ export class FilterSidebarComponent implements OnInit {
   @Input() showTime: boolean = true;
   @Input() showOffer: boolean = true;
 
-  constructor() { }
+  constructor(private router: Router) { }
   ONE_DAY: number = 1000 * 60 * 60 * 24;
-  
+  searchterm: string;
   timeFrom: string;
   timeTo: string;
   currentDate: number = Date.now();
@@ -56,6 +57,10 @@ export class FilterSidebarComponent implements OnInit {
   public themePicked(value: number) {
     this.currentTheme = value;
     this.filtersChanged.emit(this.buildFilter())
+  }
+
+  public search() {
+    this.router.navigate(['Search', this.searchterm])
   }
 
   private buildFilter() {
