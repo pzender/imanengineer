@@ -6,7 +6,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - "TZ=Europe/Warsaw"
+      - TZ=Europe/Warsaw
     volumes:
       - ./webgrab/config:/config
       - ./webgrab/data:/data
@@ -18,7 +18,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      - "TZ=Europe/Warsaw" 
+      - TZ=Europe/Warsaw
     volumes:
       - ./webgrab/data:/data
   client:
@@ -29,7 +29,7 @@ services:
       - 80:80
       - 443:443
     environment:
-      - "TZ=Europe/Warsaw" 
+      - TZ=Europe/Warsaw
     volumes: 
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
@@ -47,7 +47,7 @@ services:
     volumes:
       -  ./.mssql:/var/opt/mssql
     environment:
-      - "TZ=Europe/Warsaw" 
+      - TZ=Europe/Warsaw
       - ACCEPT_EULA=Y
       - SA_PASSWORD=P@ssw0rd
       - MSSQL_PID=Express

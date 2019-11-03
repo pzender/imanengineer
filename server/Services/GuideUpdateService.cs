@@ -11,12 +11,8 @@ namespace TV_App.Services
 {
     public class GuideUpdateService
     {
-        private readonly TvAppContext context;
+        private readonly TvAppContext context = new TvAppContext();
         private long lastGuideUpdateId;
-        public GuideUpdateService(TvAppContext context)
-        {
-            this.context = context;
-        }
         private void InitGuideUpdate(string src)
         {
             lastGuideUpdateId = GetNewId(context.GuideUpdates);
@@ -298,7 +294,7 @@ namespace TV_App.Services
             context.SaveChanges();
         }
 
-        private long GetNewId<T> (DbSet<T> dbset) where T : class, IEntityWithID
+        public long GetNewId<T> (DbSet<T> dbset) where T : class, IEntityWithID
         {
             long id = 0;
             if (dbset != null && dbset.Count() > 0)
@@ -308,7 +304,5 @@ namespace TV_App.Services
             }
             return id;
         }
-
-
     }
 }

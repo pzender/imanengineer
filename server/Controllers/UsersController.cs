@@ -22,6 +22,7 @@ namespace TV_App.Controllers
         private readonly RecommendationService recommendations = new RecommendationService();
         private readonly ProgrammeService programmeService = new ProgrammeService();
         private readonly ChannelService channelService = new ChannelService();
+        private readonly GuideUpdateService updateService = new GuideUpdateService();
 
         // GET: api/Users/Przemek
         [HttpGet("{name}", Name = "Get")]
@@ -67,6 +68,7 @@ namespace TV_App.Controllers
             {
                 Notification new_reminder = new Notification()
                 {
+                    Id = updateService.GetNewId(DbContext.Notifications),
                     EmissionId = body.Id,
                     RelEmission = remindMeOf,
                     UserLogin = name

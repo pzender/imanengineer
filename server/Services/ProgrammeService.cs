@@ -89,8 +89,6 @@ namespace TV_App.Services
 
             return result;
         }
-
-        // TODO: jak zwracać powiadomienia?
         public IEnumerable<ProgrammeDTO> GetNotificationsFor(string username)
         {
             var programmes = db.Programmes
@@ -123,7 +121,6 @@ namespace TV_App.Services
                          };
             Console.WriteLine($"[{DateTime.Now}] Standard - {result.Count()} programmes after filter");
             return result;
-
         }
     }
 }

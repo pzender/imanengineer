@@ -19,6 +19,7 @@ namespace TV_App.Controllers
     public class GuideUpdateController : ControllerBase
     {
         private readonly TvAppContext context = new TvAppContext();
+        private readonly GuideUpdateService service = new GuideUpdateService();
         // GET: api/GuideUpdate/Last
         [HttpGet("Last")]
         public GuideUpdateJson Get()
@@ -49,7 +50,6 @@ namespace TV_App.Controllers
 
             if (body != "")
             {
-                GuideUpdateService service = new GuideUpdateService(context);
                 service.ParseAll(XDocument.Parse(body));
             }
         }
