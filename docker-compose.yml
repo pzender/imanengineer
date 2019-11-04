@@ -40,7 +40,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   db:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+    image: mcr.microsoft.com/mssql/server
     container_name: db
     ports:
       - 1433:1433
