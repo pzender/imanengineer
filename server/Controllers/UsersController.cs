@@ -39,6 +39,13 @@ namespace TV_App.Controllers
             Programme ratedProgramme = DbContext.Programmes.FirstOrDefault(prog => prog.Id == body.Id);
             if (ratedProgramme != null)
             {
+                User user = DbContext.Users
+                    .Include(u => u.Ratings)
+                        .ThenInclude(r => r.RelProgramme)
+                            .ThenInclude(prog => prog.ProgrammesFeatures)
+                                .ThenInclude(pf => pf.RelFeature)
+                    .Single(u => u.Login == name);
+
                 Rating existing_rating = DbContext.Ratings.SingleOrDefault(r => r.ProgrammeId == body.Id && r.UserLogin == name);
                 Rating new_rating = new Rating()
                 {
@@ -53,6 +60,7 @@ namespace TV_App.Controllers
                 else
                     existing_rating.RatingValue = body.RatingValue;
                 DbContext.SaveChanges();
+                recommendations.UpdateWeights(ratedProgramme, user, body.RatingValue);
                 return StatusCode(200, new RatingJson() { Id = new_rating.ProgrammeId, RatingValue = new_rating.RatingValue });
             }
 
