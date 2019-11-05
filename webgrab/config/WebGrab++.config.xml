@@ -142,7 +142,6 @@
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/eleven-208" xmltv_id="Eleven">Eleven</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/eleven-sports-212" xmltv_id="Eleven Sports">Eleven Sports</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/fightbox-436" xmltv_id="FightBox">FightBox</channel>
-
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/kuchnia-489" xmltv_id="Kuchnia+">Kuchnia+</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/domo-106" xmltv_id="Domo+">Domo+</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/canal-246" xmltv_id="CANAL+">CANAL+</channel>
@@ -172,8 +171,11 @@
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/power-tv-176" xmltv_id="Power TV">Power TV</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/nuta-tv-214" xmltv_id="Nuta.TV">Nuta.TV</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/viva-polska-10" xmltv_id="MTV Music">MTV Music</channel>
-
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/baby-tv-285" xmltv_id="Baby TV">Baby TV</channel>
     <channel update="i" site="programtv.onet.pl" site_id="/program-tv/tvr-132" xmltv_id="TVR">TVR</channel>
 
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/nova-331" xmltv_id="Nova">Nova</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/wp-532" xmltv_id="WP">WP</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/super-polsat-541" xmltv_id="Super Polsat">Super Polsat</channel>
+    <channel update="i" site="programtv.onet.pl" site_id="/program-tv/metro-535" xmltv_id="METRO">METRO</channel>
 </settings>
