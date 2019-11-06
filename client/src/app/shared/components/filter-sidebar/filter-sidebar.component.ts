@@ -16,51 +16,47 @@ export class FilterSidebarComponent implements OnInit {
   constructor(private router: Router) { }
   ONE_DAY: number = 1000 * 60 * 60 * 24;
   searchterm: string;
-  timeFrom: string;
-  timeTo: string;
+  timeFrom: string = this.timeOfDay();
+  timeTo: string = '00:00';
   currentDate: number = Date.now();
   currentOffer: number = 0;
   currentTheme: number = 0;
-  
-
-
 
   ngOnInit() { 
     this.filtersChanged.emit(this.buildFilter())
   }
 
+  timeOfDay() : string {
+    return `${new Date().getHours()}:${new Date().getMinutes()}`;
+  }
+
   onFromInput($event) {
     this.timeFrom = ($event.target.value);
-    this.filtersChanged.emit(this.buildFilter())
+    this.filtersChanged.emit(this.buildFilter());
   }
 
   onToInput($event) {
     this.timeTo = ($event.target.value);
-    this.filtersChanged.emit(this.buildFilter())
-  }
-
-  public nextDay() {
-    this.currentDate += this.ONE_DAY;
     this.filtersChanged.emit(this.buildFilter());
   }
 
-  public prevDay() {
-    this.currentDate -= this.ONE_DAY;
-    this.filtersChanged.emit(this.buildFilter())
+  public moveDay(value: number) {
+    this.currentDate += (value * this.ONE_DAY);
+    this.filtersChanged.emit(this.buildFilter());
   }
 
   public offerPicked(value: number) {
     this.currentOffer = value;
-    this.filtersChanged.emit(this.buildFilter())
+    this.filtersChanged.emit(this.buildFilter());
   }
 
   public themePicked(value: number) {
     this.currentTheme = value;
-    this.filtersChanged.emit(this.buildFilter())
+    this.filtersChanged.emit(this.buildFilter());
   }
 
   public search() {
-    this.router.navigate(['Search', this.searchterm])
+    this.router.navigate(['Search', this.searchterm]);
   }
 
   private buildFilter() {
@@ -82,36 +78,4 @@ export class FilterSidebarComponent implements OnInit {
     }
     return filter;
   }
-
-  private parseTime(input: string): Time {
-    return {
-      hours: parseInt(input.split(':')[0]),
-      minutes: parseInt(input.split(':')[1]),
-    };
-  }
-
-  public translateDate(initial: string): string {
-    return initial
-      .replace('Mon', 'Pn')
-      .replace('Tue', 'Wt')
-      .replace('Wed', 'Śr')
-      .replace('Thu', 'Cz')
-      .replace('Fri', 'Pt')
-      .replace('Sat', 'Sb')
-      .replace('Sun', 'Nd')
-      .replace('Jan', 'Sty')
-      .replace('Feb', 'Lut')
-      .replace('Mar', 'Mar')
-      .replace('Apr', 'Kwi')
-      .replace('May', 'Maj')
-      .replace('Jun', 'Cze')
-      .replace('Jul', 'Lip')
-      .replace('Aug', 'Sie')
-      .replace('Sep', 'Wrz')
-      .replace('Oct', 'Paź')
-      .replace('Nov', 'Lis')
-      .replace('Dec', 'Gru');
-  }
-
-
 }

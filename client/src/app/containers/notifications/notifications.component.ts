@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService } from './notifications.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Time } from '@angular/common';
+import { FilterSidebarComponent } from 'src/app/shared/components/filter-sidebar/filter-sidebar.component';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notifications',
@@ -10,11 +12,12 @@ import { Time } from '@angular/common';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
+  @ViewChild('sidebar') sidebar: FilterSidebarComponent
 
   constructor(private service: NotificationsService, private route: ActivatedRoute, public user: UserService) { }
 
   listing: any[];
-  requestStatus: string;
+  requestStatus: string = 'waiting';
   title: string
   filters: {from: Time, to: Time, date: number};
 
@@ -35,6 +38,11 @@ export class NotificationsComponent implements OnInit {
       }
     )
   }
-  ngOnInit() {  }
+  ngOnInit() {
+    this.sidebar.filtersChanged
+      .pipe(debounceTime(500))
+      .subscribe(ev => this.updateFilters(ev));
+
+  }
 
 }

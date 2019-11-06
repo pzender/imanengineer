@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { ActivatedRoute } from '@angular/router';
 import { Time } from '@angular/common';
 import { UserService } from 'src/app/shared/services/user.service';
+import { FilterSidebarComponent } from 'src/app/shared/components/filter-sidebar/filter-sidebar.component';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -10,11 +12,12 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('sidebar') sidebar: FilterSidebarComponent
 
   constructor(private service: ProfileService, private route: ActivatedRoute, public user: UserService) { }
 
   listing: any[];
-  requestStatus: string;
+  requestStatus: string = 'waiting';
   title: string
   filters: {from: Time, to: Time, date: number};
 
@@ -36,6 +39,10 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.sidebar.filtersChanged
+      .pipe(debounceTime(500))
+      .subscribe(ev => this.updateFilters(ev));
+  }
 
 }

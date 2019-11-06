@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { ProgrammesApiService } from 'src/app/shared/services/programmes-api.service';
 import { Time } from '@angular/common';
 import { SearchService } from './search.service';
+import { FilterSidebarComponent } from 'src/app/shared/components/filter-sidebar/filter-sidebar.component';
 
 @Component({
   selector: 'app-search',
@@ -11,7 +12,7 @@ import { SearchService } from './search.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-
+  @ViewChild('sidebar') sidebar: FilterSidebarComponent
   constructor(private route: ActivatedRoute, private service: SearchService) { }
   searchterm: string;
 
@@ -42,9 +43,10 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(param => {
-      this.searchterm = param['term'];
-      this.fetch()
-    })
+    forkJoin(this.route.params, this.sidebar.filtersChanged)
+      .subscribe(value => {
+        this.searchterm = value[0]['term'];
+        this.updateFilters(value[1])
+      })
   }
 }

@@ -1,8 +1,6 @@
 <div class="row">
   <div class="col-12 col-md-4 col-lg-2 bg-dark py-3">
-    <app-filter-sidebar
-      (filtersChanged)="updateFilters($event)"
-    ></app-filter-sidebar>
+    <app-filter-sidebar #sidebar></app-filter-sidebar>
   </div>
   <div class="col-12 col-md-8 col-lg-10">
     <h1>Polecane dla ciebie</h1>

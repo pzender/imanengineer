@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DetailsService } from './details.service';
 import { ActivatedRoute } from '@angular/router';
 import { Time } from '@angular/common';
+import { debounceTime } from 'rxjs/operators';
+import { FilterSidebarComponent } from 'src/app/shared/components/filter-sidebar/filter-sidebar.component';
 
 @Component({
   selector: 'app-details',
@@ -9,11 +11,12 @@ import { Time } from '@angular/common';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  @ViewChild('sidebar') sidebar: FilterSidebarComponent
 
   constructor(private service: DetailsService, private route: ActivatedRoute) { }
 
   listing: any[];
-  requestStatus: string;
+  requestStatus: string = 'waiting';
   title: string
   id: number;
   info: any;
@@ -42,6 +45,10 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.sidebar.filtersChanged
+      .pipe(debounceTime(500))
+      .subscribe(ev => this.updateFilters(ev));
+
   }
 
 }
