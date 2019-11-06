@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { Time } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-filter-sidebar',
@@ -8,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./filter-sidebar.component.scss']
 })
 export class FilterSidebarComponent implements OnInit {
-
   @Output() filtersChanged = new EventEmitter<any>();
   @Input() showTime: boolean = true;
   @Input() showOffer: boolean = true;
@@ -21,6 +21,7 @@ export class FilterSidebarComponent implements OnInit {
   currentDate: number = Date.now();
   currentOffer: number = 0;
   currentTheme: number = 0;
+  timeFromDefault = true;
 
   ngOnInit() { 
     this.filtersChanged.emit(this.buildFilter())
@@ -31,6 +32,7 @@ export class FilterSidebarComponent implements OnInit {
   }
 
   onFromInput($event) {
+    this.timeFromDefault = false;
     this.timeFrom = ($event.target.value);
     this.filtersChanged.emit(this.buildFilter());
   }
@@ -41,6 +43,8 @@ export class FilterSidebarComponent implements OnInit {
   }
 
   public moveDay(value: number) {
+    if(this.timeFromDefault) this.timeFrom = '00:00';
+
     this.currentDate += (value * this.ONE_DAY);
     this.filtersChanged.emit(this.buildFilter());
   }

@@ -21,7 +21,7 @@
       <span class="mx-2 w-75">{{currentDate | date:'EE d MMM'}}</span>
       <a (click)="moveDay(1)" class="btn btn-sm btn-dark">&gt;</a></div>
     <label for="time_from">Od godziny: </label>
-    <input type="time" id="time_from" class="form-control" [value]="timeFrom" (change)="onFromInput($event)" >
+    <input type="time" id="time_from" class="form-control" [value]="timeFrom" (change)="onFromInput($event)">
     <label for="time_from">Do godziny: </label>
     <input type="time" id="time_to" class="form-control" [value] = "timeTo" (change)="onToInput($event)" >
   </div>
