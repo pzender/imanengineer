@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OfferPickerComponent } from './offer-picker.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 describe('OfferPickerComponent', () => {
   let component: OfferPickerComponent;
@@ -8,7 +12,14 @@ describe('OfferPickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OfferPickerComponent ]
+      declarations: [ OfferPickerComponent ],
+      imports: [
+        FormsModule, 
+        HttpClientTestingModule, 
+        RouterTestingModule,
+        ServiceWorkerModule.register('', {enabled: false})
+      ]
+
     })
     .compileComponents();
   }));

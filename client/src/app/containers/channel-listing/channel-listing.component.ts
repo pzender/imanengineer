@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChannelListingService } from './channel-listing.service';
 import { ActivatedRoute } from '@angular/router';
 import { Time } from '@angular/common';
-import { fromEvent } from 'rxjs';
 import { FilterSidebarComponent } from 'src/app/shared/components/filter-sidebar/filter-sidebar.component';
 import { debounceTime } from 'rxjs/operators';
 
