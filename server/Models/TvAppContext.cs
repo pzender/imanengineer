@@ -173,7 +173,7 @@ namespace TV_App.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.IconUrl).IsUnicode(false);
                 entity.Property(e => e.SeqNumber).IsUnicode(false);
-                entity.Property(e => e.Title).IsUnicode(false);
+                entity.Property(e => e.Title).IsUnicode(true);
             });
 
             modelBuilder.Entity<ProgrammesFeature>(entity =>

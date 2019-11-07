@@ -2,18 +2,18 @@
   <img src="{{programme.iconUrl}}" width="100px" class="align-self-start m-1 mr-3">
   <div class="media-body">
     <h5>
-      <a href="/Programme/{{programme.id}}">{{programme.title}}</a>
+      <a routerLink="/Programme/{{programme.id}}">{{programme.title}}</a>
       <div class="badge badge-secondary mx-1" *ngIf="!this.user.isAnonymous() && this.ratingAvailable()" style="float: right;">
         {{ratingText(this.programme.rating)}}
       </div>
     </h5>
       <div *ngIf="programme.emissions">
         <div *ngFor="let e of programme.emissions">
-            <a href="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{e.start | date:'EEE d MMM, H:mm'}} - {{e.stop | date:'EEE d MMM, H:mm'}}
+            <a routerLink="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{e.start | date:'EEE d MMM, H:mm'}} - {{e.stop | date:'EEE d MMM, H:mm'}}
         </div>
       </div>
       <div *ngFor="let ft of feat_types()">{{ft}}: 
-        <span *ngFor="let f of feat_array(ft)"><a href="/Feature/{{f.id}}">{{f.name}}</a>, </span> 
+        <span *ngFor="let f of feat_array(ft)"><a routerLink="/Feature/{{f.id}}">{{f.name}}</a>, </span> 
       </div>
       <button *ngIf="!this.user.isAnonymous() && this.programme.emissions.length > 0" type="button" class="btn btn-secondary mt-3 mr-2" (click)="this.remindme()">Przypomnij mi</button>
       <div class="btn-group mt-3" role="group" aria-label="Rating buttons" *ngIf="!this.user.isAnonymous() && !this.ratingAvailable()">

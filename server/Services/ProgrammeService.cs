@@ -45,7 +45,7 @@ namespace TV_App.Services
                              Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
                              Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
                          };
-
+            Console.WriteLine($"[{DateTime.Now}] Filtered - {result.Count()} programmes after filter; {programmes.Count} before filter");
             return result;
         }
 
@@ -86,7 +86,7 @@ namespace TV_App.Services
                              Rating = ratings.FirstOrDefault(r => r.ProgrammeId == programme.Id)?.RatingValue,
                              Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
                          };
-
+            Console.WriteLine($"[{DateTime.Now}] Ratings - {result.Count()} programmes after filter; {programmes.Count} before filter");
             return result;
         }
         public IEnumerable<ProgrammeDTO> GetNotificationsFor(string username)
@@ -119,7 +119,7 @@ namespace TV_App.Services
                                  new EmissionDTO(notification.RelEmission)
                              }
                          };
-            Console.WriteLine($"[{DateTime.Now}] Standard - {result.Count()} programmes after filter");
+            Console.WriteLine($"[{DateTime.Now}] Notifications - {result.Count()} programmes after filter; {programmes.Count} before filter");
             return result;
         }
 
@@ -166,7 +166,7 @@ namespace TV_App.Services
         {
             var programmes = db.Programmes
                 .Include(prog => prog.ProgrammesFeatures)
-                .Where(prog => prog.Title.Contains(term))
+                .Where(prog => prog.Title.ToLower().Contains(term.ToLower()))
                 .AsNoTracking()
                 .ToList();
             var emissions = db.Emissions
@@ -196,6 +196,8 @@ namespace TV_App.Services
                              Emissions = prog_emissions.Select(em => new EmissionDTO(em)),
                              Features = features.Where(f => programme.ProgrammesFeatures.Select(pf => pf.FeatureId).Contains(f.Id)).Select(f => new FeatureDTO(f))
                          };
+            
+            Console.WriteLine($"[{DateTime.Now}] Search for {term} - {result.Count()} programmes after filter; {programmes.Count} before filter");
 
             return result;
 

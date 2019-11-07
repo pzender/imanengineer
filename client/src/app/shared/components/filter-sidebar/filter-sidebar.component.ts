@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Time } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './filter-sidebar.component.html',
   styleUrls: ['./filter-sidebar.component.scss']
 })
-export class FilterSidebarComponent implements OnInit {
+export class FilterSidebarComponent implements OnInit, AfterViewInit {
   @Output() filtersChanged = new EventEmitter<any>();
   @Input() showTime: boolean = true;
   @Input() showOffer: boolean = true;
@@ -24,8 +24,13 @@ export class FilterSidebarComponent implements OnInit {
   timeFromDefault = true;
 
   ngOnInit() { 
+    
+  }
+
+  ngAfterViewInit() {
     this.filtersChanged.emit(this.buildFilter())
   }
+
 
   timeOfDay() : string {
     return `${new Date().getHours()}:${new Date().getMinutes()}`;
@@ -60,7 +65,8 @@ export class FilterSidebarComponent implements OnInit {
   }
 
   public search() {
-    this.router.navigate(['Search', this.searchterm]);
+    if(this.searchterm && this.searchterm !== '')
+      this.router.navigate(['Search', this.searchterm]);
   }
 
   private buildFilter() {

@@ -67,7 +67,7 @@ namespace Controllers
 
         // GET: api/Channel/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeDTO> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0)
+        public IEnumerable<ProgrammeDTO> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "00:00", [FromQuery] string to = "00:00", [FromQuery] long date = 0)
         {
             Filter filter = Filter.Create(from, to, date, new long[] { id });
             IEnumerable<ProgrammeDTO> programmes = programmeService.GetFilteredProgrammes(filter, username);

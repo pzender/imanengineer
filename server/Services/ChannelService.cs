@@ -22,7 +22,7 @@ namespace TV_App.Services
             return new ChannelDTO(channel);
         }
 
-        public IEnumerable<ChannelDTO> GetGroup(long offer_id)
+        public IEnumerable<ChannelDTO> GetGroup(long offer_id = 0, long theme_id = 0)
         {
             var channels = db.Channels
                 .Include(ch => ch.OfferedChannels)
@@ -30,7 +30,9 @@ namespace TV_App.Services
                 .ToList();
 
             return from channel in channels
-                   where channel.OfferedChannels.Any(oc => oc.OfferId == offer_id || offer_id == 0)
+                   where 
+                        channel.OfferedChannels.Any(oc => oc.OfferId == offer_id || offer_id == 0) &&
+                        channel.OfferedChannels.Any(oc => oc.OfferId == theme_id || theme_id == 0)
                    select new ChannelDTO(channel);
         }
 

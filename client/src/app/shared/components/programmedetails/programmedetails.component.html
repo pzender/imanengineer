@@ -1,14 +1,14 @@
 <div *ngIf="programme" class="border my-3 p-3">
   <h1>{{programme.title}}</h1>
   <div *ngFor="let e of programme.emissions">
-    <a href="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(this.e.start | date:'EE, d MMM, H:mm')}} - {{this.translateDate(e.stop | date:'EE, d MMM, H:mm')}}
+    <a routerLink="/Channel/{{e.channel.id}}">{{e.channel.name}}</a>: {{this.translateDate(this.e.start | date:'EE, d MMM, H:mm')}} - {{this.translateDate(e.stop | date:'EE, d MMM, H:mm')}}
   </div>
   <img src="{{programme.iconUrl}}" class="m-1">
   <p class="text-justify my-3">
     {{programme.description}}
   </p>
   <div *ngFor="let ft of feat_types()">{{ft}}: 
-    <span *ngFor="let f of feat_array(ft)"><a href="/Feature/{{f.id}}">{{f.name}}</a>, </span> 
+    <span *ngFor="let f of feat_array(ft)"><a routerLink="/Feature/{{f.id}}">{{f.name}}</a>, </span> 
   </div>  
   <button *ngIf="!this.user.isAnonymous()" type="button" class="btn btn-secondary mt-3 mx-2" (click)=this.remindme()>Chcę obejrzeć</button>
   <div class="btn-group mt-3" role="group" aria-label="Rating buttons" *ngIf="!this.user.isAnonymous()">

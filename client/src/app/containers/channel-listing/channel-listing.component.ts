@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Time } from '@angular/common';
 import { FilterSidebarComponent } from 'src/app/shared/components/filter-sidebar/filter-sidebar.component';
 import { debounceTime } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-channel-listing',
@@ -42,9 +43,11 @@ export class ChannelListingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.sidebar.filtersChanged
+    combineLatest(this.route.params, this.sidebar.filtersChanged.asObservable())
       .pipe(debounceTime(500))
-      .subscribe(ev => this.updateFilters(ev));
+      .subscribe(value => {
+        this.id = value[0]['id'];
+        this.updateFilters(value[1])
+      })
   }
 }

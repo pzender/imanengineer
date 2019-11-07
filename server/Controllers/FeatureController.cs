@@ -39,9 +39,9 @@ namespace TV_App.Controllers
 
         // GET: api/Feature/5/Programmes
         [HttpGet("{id}/Programmes")]
-        public IEnumerable<ProgrammeDTO> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        public IEnumerable<ProgrammeDTO> GetProgrammes(int id, [FromQuery] string username = null, [FromQuery] string from = "00:00", [FromQuery] string to = "00:00", [FromQuery] long date = 0, long offer_id = 0, long theme_id = 0)
         {
-            var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
+            var channels = channelService.GetGroup(offer_id, theme_id).Select(ch => ch.Id);
             Feature f = DbContext.Features.Single(f => f.Id == id);
             Filter filter = Filter.Create(from, to, date, channels);
             IEnumerable<ProgrammeDTO> programmes = programmeService.GetWithFeature(f, filter, username);

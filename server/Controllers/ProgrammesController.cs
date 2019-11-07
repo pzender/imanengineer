@@ -23,10 +23,10 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes
         [HttpGet]
-        public IEnumerable<ProgrammeDTO> Get([FromQuery] string username = "", [FromQuery] string search = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        public IEnumerable<ProgrammeDTO> Get([FromQuery] string username = "", [FromQuery] string search = "", long offer_id = 0, long theme_id = 0)
         {
-            var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
-            Filter filter = Filter.Create(from, to, date, channels);
+            var channels = channelService.GetGroup(offer_id, theme_id).Select(ch => ch.Id);
+            Filter filter = Filter.Create(null, null, 0, channels);
             IEnumerable<ProgrammeDTO> programmes = programmeService.GetBySearchTerm(search, filter, username);
             int count = programmes.Count();
             Response.Headers.Add("X-Total-Count", count.ToString());
@@ -36,10 +36,9 @@ namespace TV_App.Controllers
 
         // GET: api/Programmes/5/Similar
         [HttpGet("{id}/Similar")]
-        public IEnumerable<ProgrammeDTO> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0)
+        public IEnumerable<ProgrammeDTO> GetSimilar(int id, [FromQuery] string username = "", [FromQuery] string from = "0:0", [FromQuery] string to = "0:0", [FromQuery] long date = 0, long offer_id = 0, long theme_id = 0)
         {
-            
-            var channels = channelService.GetGroup(offer_id).Select(ch => ch.Id);
+            var channels = channelService.GetGroup(offer_id, theme_id).Select(ch => ch.Id);
             var target = db.Programmes
                 .Include(prog => prog.ProgrammesFeatures)
                     .ThenInclude(pf => pf.RelFeature)

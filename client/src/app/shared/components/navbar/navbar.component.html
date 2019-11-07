@@ -1,6 +1,6 @@
   
 <nav class="navbar navbar-expand-md bg-secondary navbar-dark sticky-top">
-  <a href="#" class="navbar-brand">
+  <a routerLink="#" class="navbar-brand">
     <img src="assets/icons/icon-96x96.png" height="40px"> Looking Glass
   </a>    
   <button class="navbar-toggler" type="button" (click)="toggleMenu()">
@@ -24,7 +24,7 @@
     <li class="nav-item"><a [routerLink]="['/Profile']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Mój profil</a></li>
     <li class="nav-item"><a [routerLink]="['/Notifications']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Powiadomienia</a></li>
     <li class="nav-item"><a [routerLink]="['/Recommended']" routerLinkActive="active" class="nav-link" *ngIf="isLoggedIn()">Polecane</a></li>
-    <li class="nav-item"><a href="#" class="nav-link">Seriale</a></li>
+    <li class="nav-item"><a routerLink="#" class="nav-link">Seriale</a></li>
     <li class="nav-item">
     </li>
   </ul>
