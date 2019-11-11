@@ -95,18 +95,18 @@ namespace TV_App.Services
             }
         }
 
-        public void UpdateWeights(Programme programme, User user, long actual_rating)
+        public User UpdateWeights(Programme programme, User user, long actual_rating)
         {
             double weight_sum = user.WeightActor + user.WeightCategory + user.WeightCountry + user.WeightDirector + user.WeightYear + user.WeightKeyword;
             double expected_rating = RecommendationSupport(programme, user);
-            user.WeightActor *= WEIGHT_UPDATE * (actual_rating - expected_rating) / weight_sum;
-            user.WeightCategory *= WEIGHT_UPDATE * (actual_rating - expected_rating) / weight_sum;
-            user.WeightCountry *= WEIGHT_UPDATE * (actual_rating - expected_rating) / weight_sum;
-            user.WeightDirector *= WEIGHT_UPDATE * (actual_rating - expected_rating) / weight_sum;
-            user.WeightKeyword *= WEIGHT_UPDATE * (actual_rating - expected_rating) / weight_sum;
-            user.WeightYear *= WEIGHT_UPDATE * (actual_rating - expected_rating) / weight_sum;
+            user.WeightActor += WEIGHT_UPDATE * user.WeightActor * (actual_rating - expected_rating) / weight_sum;
+            user.WeightCategory += WEIGHT_UPDATE * user.WeightCategory * (actual_rating - expected_rating) / weight_sum;
+            user.WeightCountry += WEIGHT_UPDATE * user.WeightCountry * (actual_rating - expected_rating) / weight_sum;
+            user.WeightDirector += WEIGHT_UPDATE * user.WeightDirector * (actual_rating - expected_rating) / weight_sum;
+            user.WeightKeyword += WEIGHT_UPDATE * user.WeightKeyword * (actual_rating - expected_rating) / weight_sum;
+            user.WeightYear += WEIGHT_UPDATE * user.WeightYear * (actual_rating - expected_rating) / weight_sum;
 
-            db.SaveChanges();
+            return user;
         }
     }
 }

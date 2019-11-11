@@ -13,6 +13,9 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class ListingElementComponent implements OnInit {
   @Output() buttonClicked = new EventEmitter<string>();
   @Input('programme') programme: IProgrammeListElement;
+  requestPending = false;
+  displayRatingText = '';
+
   constructor(private _http: HttpClient, public user: UserService) { }
 
   feat_types(): string[] {
@@ -36,6 +39,7 @@ export class ListingElementComponent implements OnInit {
   }
 
   rateButton(value: number) {
+    this.requestPending = true;
     this._http.post(
       `${environment.api}Users/${this.user.getUser()}/Ratings`,
       { Id: this.programme.id, RatingValue: value },
@@ -43,7 +47,10 @@ export class ListingElementComponent implements OnInit {
     )
     .subscribe(result => {
       this.buttonClicked.emit(result.toString());
-      this.programme.rating = result['RatingValue']
+      this.programme.rating = result['ratingValue'];
+      console.log(result['ratingValue']);
+      this.displayRatingText = this.ratingText(result['ratingValue']);
+      this.requestPending = false;
     });
   }
 
@@ -55,7 +62,6 @@ export class ListingElementComponent implements OnInit {
     )
     .subscribe(result => {
       this.buttonClicked.emit(result.toString());
-      this.programme.rating = result['RatingValue']
     });
     this.rateButton(1);
 
@@ -70,35 +76,13 @@ export class ListingElementComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.ratingAvailable())
+      this.displayRatingText = this.ratingText(this.programme.rating)
   }
 
   onlyUnique(value: any, index: number, self: any[]) {
     return self.indexOf(value) === index;
   }
-
-  public translateDate(initial: string): string {
-    return initial
-      .replace('Mon', 'Pn')
-      .replace('Tue', 'Wt')
-      .replace('Wed', 'Śr')
-      .replace('Thu', 'Cz')
-      .replace('Fri', 'Pt')
-      .replace('Sat', 'Sb')
-      .replace('Sun', 'Nd')
-      .replace('Jan', 'Sty')
-      .replace('Feb', 'Lut')
-      .replace('Mar', 'Mar')
-      .replace('Apr', 'Kwi')
-      .replace('May', 'Maj')
-      .replace('Jun', 'Cze')
-      .replace('Jul', 'Lip')
-      .replace('Aug', 'Sie')
-      .replace('Sep', 'Wrz')
-      .replace('Oct', 'Paź')
-      .replace('Nov', 'Lis')
-      .replace('Dec', 'Gru');
-  }
-
   private ratingTexts = ['Nie podobał mi się', 'Nie interesuje mnie', 'Podobał mi się'];
 
 }

@@ -3,8 +3,8 @@
   <div class="media-body">
     <h5>
       <a routerLink="/Programme/{{programme.id}}">{{programme.title}}</a>
-      <div class="badge badge-secondary mx-1" *ngIf="!this.user.isAnonymous() && this.ratingAvailable()" style="float: right;">
-        {{ratingText(this.programme.rating)}}
+      <div class="badge badge-secondary mx-1" *ngIf="!this.user.isAnonymous() && displayRatingText" style="float: right;">
+        {{displayRatingText}}
       </div>
     </h5>
       <div *ngIf="programme.emissions">
@@ -16,10 +16,13 @@
         <span *ngFor="let f of feat_array(ft)"><a routerLink="/Feature/{{f.id}}">{{f.name}}</a>, </span> 
       </div>
       <button *ngIf="!this.user.isAnonymous() && this.programme.emissions.length > 0" type="button" class="btn btn-secondary mt-3 mr-2" (click)="this.remindme()">Przypomnij mi</button>
-      <div class="btn-group mt-3" role="group" aria-label="Rating buttons" *ngIf="!this.user.isAnonymous() && !this.ratingAvailable()">
-        <button type="button" class="btn btn-secondary" (click)="this.rateButton(1)">Podobał mi się</button>
-        <button type="button" class="btn btn-secondary" (click)="this.rateButton(0)">Nie interesuje mnie</button>
-        <button type="button" class="btn btn-secondary" (click)="this.rateButton(-1)">Nie podobał mi się</button>
+      <div class="btn-group mt-3" role="group" aria-label="Rating buttons" *ngIf="!this.user.isAnonymous() && !this.ratingAvailable() && !this.requestPending">
+        <button type="button" class="btn btn-secondary" (click)="this.rateButton(1)">{{ratingText(1)}}</button>
+        <button type="button" class="btn btn-secondary" (click)="this.rateButton(0)">{{ratingText(0)}}</button>
+        <button type="button" class="btn btn-secondary" (click)="this.rateButton(-1)">{{ratingText(-1)}}</button>
+      </div>
+      <div class="btn-group mt-3" role="group" aria-label="Rating buttons" *ngIf="!this.user.isAnonymous() && !this.ratingAvailable() && this.requestPending">
+        zapisujemy...
       </div>
   </div>
 </div>

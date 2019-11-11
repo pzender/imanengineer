@@ -59,8 +59,9 @@ namespace TV_App.Controllers
                     DbContext.Ratings.Add(new_rating);
                 else
                     existing_rating.RatingValue = body.RatingValue;
+                user = recommendations.UpdateWeights(ratedProgramme, user, body.RatingValue);
+                Console.WriteLine($"[{DateTime.Now}] Weights: {user.WeightCategory} {user.WeightActor} {user.WeightCountry} {user.WeightDirector} {user.WeightYear}");
                 DbContext.SaveChanges();
-                recommendations.UpdateWeights(ratedProgramme, user, body.RatingValue);
                 return StatusCode(200, new RatingJson() { Id = new_rating.ProgrammeId, RatingValue = new_rating.RatingValue });
             }
 
