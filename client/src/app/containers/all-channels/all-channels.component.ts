@@ -10,7 +10,7 @@ import { AllChannelsService } from './all-channels.service';
 export class AllChannelsComponent implements OnInit {
 
   constructor(private channelService: AllChannelsService) { }
-  public requestStatus = "none";
+  public requestStatus = "waiting";
   public channels: ChannelLink[] = [];
 
   updateFilters(filter: any) {

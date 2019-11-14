@@ -48,7 +48,6 @@ export class ListingElementComponent implements OnInit {
     .subscribe(result => {
       this.buttonClicked.emit(result.toString());
       this.programme.rating = result['ratingValue'];
-      console.log(result['ratingValue']);
       this.displayRatingText = this.ratingText(result['ratingValue']);
       this.requestPending = false;
     });
@@ -64,7 +63,6 @@ export class ListingElementComponent implements OnInit {
       this.buttonClicked.emit(result.toString());
     });
     this.rateButton(1);
-
   }
 
   ratingAvailable(): boolean{

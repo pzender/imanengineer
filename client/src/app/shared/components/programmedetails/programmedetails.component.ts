@@ -46,36 +46,17 @@ export class ProgrammedetailsComponent implements OnInit {
 
   remindme() {
     this._http.post(
-      `${environment.api}Users/${this.user.getUser()}/Ratings`,
-      {ProgrammeId: this.programme.id, RatingValue: 1},
-      {responseType: 'json'}
-    ).subscribe(result => this.buttonClicked.emit(result.toString()));
+      `${environment.api}Users/${this.user.getUser()}/Notifications`,
+      { Id: this.programme.emissions[0].id, RatingValue: 1 },
+      { responseType: 'json' }
+    )
+    .subscribe(result => {
+      this.buttonClicked.emit(result.toString());
+    });
+    this.rateButton(1);
   }
 
   onlyUnique(value: any, index: number, self: any[]) {
     return self.indexOf(value) === index;
-  }
-
-  translateDate(initial: string): string {
-    return initial
-      .replace('Mon', 'Pn')
-      .replace('Tue', 'Wt')
-      .replace('Wed', 'Śr')
-      .replace('Thu', 'Cz')
-      .replace('Fri', 'Pt')
-      .replace('Sat', 'Sb')
-      .replace('Sun', 'Nd')
-      .replace('Jan', 'Sty')
-      .replace('Feb', 'Lut')
-      .replace('Mar', 'Mar')
-      .replace('Apr', 'Kwi')
-      .replace('May', 'Maj')
-      .replace('Jun', 'Cze')
-      .replace('Jul', 'Lip')
-      .replace('Aug', 'Sie')
-      .replace('Sep', 'Wrz')
-      .replace('Oct', 'Paź')
-      .replace('Nov', 'Lis')
-      .replace('Dec', 'Gru');
   }
 }
