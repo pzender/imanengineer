@@ -1,0 +1,37 @@
+<programme start="20190819190000 +0200" stop="20190819210000 +0200" channel="HBO2">
+    <title lang="pl">Ant-Man i Osa</title>
+    <title lang="xx">Ant-Man and the Wasp</title>
+    <desc lang="pl">
+        Scott Lang (Paul Rudd) (...) w filmie.(n)
+    </desc>
+    <credits>
+        <director>Peyton Reed</director>
+        <actor>Paul Rudd</actor>
+        <actor>Evangeline Lilly</actor>
+        <actor>Walton Goggins</actor>
+        <actor>Bobby Cannavale</actor>
+        <actor>Michael Pena</actor>
+        <actor>Judy Greer</actor>
+        <actor>Tip 'T.I.' Harris</actor>
+        <actor>David Dastmalchian</actor>
+        <actor>Hannah John-Kamen</actor>
+        <actor>Abby Ryder Fortson</actor>
+    </credits>
+    <date>2018</date>
+    <category lang="pl">Film</category>
+    <category lang="pl">Sensacyjny</category>
+    <icon src="https://ocdn.eu/program-tv/..." />
+    <country lang="pl">USA</country>
+    <rating>
+        <value>12</value>
+    </rating>
+    <star-rating>
+        <value>3</value>
+    </star-rating>
+</programme>
+
+<channel id="HBO2">
+    <display-name lang="pl">HBO2</display-name>
+    <icon src="http://ocdn.eu/program-tv-transforms/1/..." />
+    <url>http://www.programtv.onet.pl</url>
+</channel>

@@ -61,10 +61,9 @@ namespace TV_App.Services
             }
 
             IEnumerable<XElement> channels_in_xml = doc.Root.Elements("channel");
-
+            InitGuideUpdate(channels_in_xml.First().Element("url").Value);
             ParseChannels(channels_in_xml);
-            InitGuideUpdate(channels_in_xml.First().Element("url").Value); 
-
+             
             //programy
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing programmes");
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme").ToList();
