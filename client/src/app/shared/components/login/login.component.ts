@@ -38,16 +38,6 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
-
   login(username: string) {
     if(username !== '') {
       this.userService.login(username).subscribe(
@@ -58,6 +48,7 @@ export class LoginComponent implements OnInit {
       )
     }
   }
+  
   create(username: string) {
     if(username !== '') {
       this.userService.register(username).subscribe(

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tap } from "rxjs/operators";
 import { NotificationsService } from './notifications.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService {
     return localStorage.getItem(UserService.USER);
   }
 
-  login(username: string) {
+  login(username: string): Observable<any> {
     return this._http.get(`${environment.api}Users/${username}`).pipe(
       tap(resp => { 
         localStorage.setItem(UserService.USER, resp['login']); 
@@ -28,7 +29,7 @@ export class UserService {
     this.push.unsubscribeToNotifications(this.getUser());
   }
 
-  register(username: string) {
+  register(username: string): Observable<any> {
     return this._http.post(`${environment.api}Users`, username).pipe(
       tap(resp => { 
         localStorage.setItem(UserService.USER, resp['login']); 

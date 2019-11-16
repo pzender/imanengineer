@@ -65,6 +65,7 @@ describe('ListingElementComponent', () => {
     }
     userService = TestBed.get(UserService);
     http = TestBed.get(HttpClient);
+
     fixture.detectChanges();
   });
 
@@ -109,7 +110,8 @@ describe('ListingElementComponent', () => {
 
 
   it('should display emissons correctly', () => {
-    expect(fixture.nativeElement.querySelector('div.media-body').textContent).toContain('test_channel: Fri 15 Nov, 0:20 - Fri 15 Nov, 0:20');
+    expect(fixture.nativeElement.querySelector('div.media-body').textContent)
+      .toContain('test_channel: Fri 15 Nov, 0:20 - Fri 15 Nov, 0:20');
   })
 
   it('should parse date correctly', () => {
@@ -121,6 +123,4 @@ describe('ListingElementComponent', () => {
     const expected = [{id: 0, name: 'Serial'}]
     expect(component.feat_array('category')).toEqual(expected);
   })
-
-
 });
