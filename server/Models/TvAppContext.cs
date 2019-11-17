@@ -259,11 +259,11 @@ namespace TV_App.Models
 
                 entity.Property(e => e.Login).IsUnicode(false);
                 entity.Property(e => e.WeightActor).HasDefaultValueSql("((0.2))");
-                entity.Property(e => e.WeightCategory).HasDefaultValueSql("((0.3))");
-                entity.Property(e => e.WeightCountry).HasDefaultValueSql("((0.15))");
+                entity.Property(e => e.WeightCategory).HasDefaultValueSql("((0.4))");
+                entity.Property(e => e.WeightCountry).HasDefaultValueSql("((0.1))");
                 entity.Property(e => e.WeightDirector).HasDefaultValueSql("((0.2))");
                 entity.Property(e => e.WeightKeyword).HasDefaultValueSql("((0.0))");
-                entity.Property(e => e.WeightYear).HasDefaultValueSql("((0.15))");
+                entity.Property(e => e.WeightYear).HasDefaultValueSql("((0.1))");
             });
 
 

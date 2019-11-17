@@ -11,8 +11,16 @@ namespace TV_App.Services
 {
     public class GuideUpdateService
     {
-        private readonly TvAppContext context = new TvAppContext();
+        private readonly TvAppContext context;
         private long lastGuideUpdateId;
+
+        public GuideUpdateService(TvAppContext context)
+        {
+            this.context = context;
+        }
+
+        public GuideUpdateService() : this(new TvAppContext()) { }
+
         private void InitGuideUpdate(string src)
         {
             lastGuideUpdateId = GetNewId(context.GuideUpdates);
@@ -68,7 +76,8 @@ namespace TV_App.Services
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing programmes");
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme").ToList();
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - {programmes_in_xml.Count()} found");
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - first at {programmes_in_xml.First().Attribute("start")}");
+            if(programmes_in_xml.Count() > 0 )
+                Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - first at {programmes_in_xml.First().Attribute("start")}");
             List<Programme> new_programmes = new List<Programme>();
             long new_id = GetNewId(context.Programmes);
             List<Emission> new_emissions = new List<Emission>();
@@ -225,7 +234,7 @@ namespace TV_App.Services
             var old_notifications = context.Notifications
                 .Include(n => n.RelEmission)
                 .Where(n => n.RelEmission.Stop < DateTime.Today);
-            context.Notifications.RemoveRange(old_notifications);
+            //context.Notifications.RemoveRange(old_notifications);
             context.SaveChanges();
             Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - emissions");
             context.Emissions.RemoveRange(

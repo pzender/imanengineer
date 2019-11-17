@@ -19,7 +19,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestChannels.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestChannels);
             // act
             service.ParseAll(mockData);
             service.ParseAll(mockData);
@@ -36,7 +36,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesBasic);
             // act
             service.ParseAll(mockData);
             service.ParseAll(mockData);
@@ -52,7 +52,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesBasic);
             // act
             service.ParseAll(mockData);
             // assert
@@ -68,7 +68,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesMissingEmission.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesMissingEmission);
             // act
             Assert.Throws<DataException>(() => service.ParseAll(mockData));
 
@@ -80,7 +80,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesSeparateEmissions.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesSeparateEmission);
             // act
             service.ParseAll(mockData);
             // assert
@@ -97,7 +97,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesBasic);
             // act
             service.ParseAll(mockData);
             // assert
@@ -129,7 +129,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesBasic);
             // act
             service.ParseAll(mockData);
             service.ParseAll(mockData);
@@ -149,7 +149,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesBasic);
 
             context.Features.AddRange(new List<Feature>()
             {
@@ -178,7 +178,7 @@ namespace TV_AppTests
             // arrange 
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestProgrammesBasic.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestProgrammesBasic);
             // act
             service.ParseAll(mockData);
             service.ParseAll(mockData);
@@ -195,7 +195,7 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/TestSeparateProgrammes.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.TestSeparateProgrammes);
             // act
             service.ParseAll(mockData);
 
@@ -230,13 +230,12 @@ namespace TV_AppTests
             // arrange
             TvAppContext context = new MockContext();
             GuideUpdateService service = new GuideUpdateService(context);
-            XDocument mockData = XDocument.Load("TestData/Problem_DelBoca.xml");
+            XDocument mockData = XDocument.Parse(SampleXMLs.ProblemDelBoca);
             // act
             service.ParseAll(mockData);
             // assert
             var DelBoca = context.Features.Single(f => f.Value.ToLower() == "andrea del boca" && f.Type == 4);
             Assert.NotNull(DelBoca);
-
         }
 
     }

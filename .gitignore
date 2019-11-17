@@ -8,6 +8,7 @@ _ReSharper.*
 bin
 obj
 packages
+TestResults
 *.sqlite
 
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <tv generator-info-name="WebGrab+Plus/w MDB &amp; REX Postprocess -- version V2.1.9 -- Jan van Straaten" generator-info-url="http://www.webgrabplus.com">
   <channel id="POLSAT">
     <display-name lang="pl">POLSAT</display-name>
@@ -73,5 +73,4 @@
       <value>3</value>
     </star-rating>
   </programme>
-
 </tv>
