@@ -12,7 +12,9 @@ namespace TV_App.Services
     {
         private const double WEIGHT_UPDATE = 0.2;
         private readonly SimilarityCalculator similarityCalculator = new SimilarityCalculator();
-        private readonly TvAppContext db = new TvAppContext();
+        private readonly TvAppContext db;
+        public RecommendationService(TvAppContext db) { this.db = db; }
+        public RecommendationService() : this(new TvAppContext()) { }
 
         public IEnumerable<Programme> GetSimilar(Programme prog, User user)
         {
@@ -49,7 +51,7 @@ namespace TV_App.Services
                 .Include(prog => prog.Emissions)
                     .ThenInclude(em => em.ChannelEmitted)
                 .AsNoTracking();
-            Console.WriteLine($"[{DateTime.Now}] Recommendations - {available_programmes.Count()} programmes");
+            LogService.Log($"Recommendations - {available_programmes.Count()} programmes");
 
             Dictionary<Programme, double> recom_supports = available_programmes
                 .ToDictionary(p => p, p => RecommendationSupport(p, user));

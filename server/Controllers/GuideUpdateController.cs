@@ -41,7 +41,7 @@ namespace TV_App.Controllers
         [HttpPost]
         public async Task PostAsync()
         {
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - start");
+            LogService.Log($"start");
             string body = "";
             using (StreamReader sr = new StreamReader(Request.Body, Encoding.UTF8))
             {

@@ -46,7 +46,7 @@ namespace TV_App.Controllers
                 {
                     string sending = "sending";
                     string too_soon = "too soon";
-                    Console.WriteLine($"[{DateTime.Now}] {notification.Title} at {notification.Emissions.First().Start} - {(notification.Emissions.First().Start < DateTime.Now.AddMinutes(30) ? sending : too_soon)}");
+                    LogService.Log($"{notification.Title} at {notification.Emissions.First().Start} - {(notification.Emissions.First().Start < DateTime.Now.AddMinutes(30) ? sending : too_soon)}");
                     
                     if (notification.Emissions.First().Start < DateTime.Now.AddMinutes(30) )
                     {

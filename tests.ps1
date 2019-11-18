@@ -15,8 +15,9 @@ try {
     {
         throw [System.IO.FileNotFoundException] "$testResultsFolder not found."
     }
-
-    dotnet test $testProjectPath --settings:$testSettingsPath 
+    Remove-Item -Recurse $testResultsFolder
+    New-Item -ItemType directory -Path $testResultsFolder
+    dotnet test $testProjectPath --settings:$testSettingsPath --collect:"Code Coverage"
     $recentCoverageFile = Get-ChildItem -File -Filter *.coverage -Path $testResultsFolder -Name -Recurse | Select-Object -First 1;
     write-host 'Test Completed'  -ForegroundColor Green
 
@@ -25,7 +26,6 @@ try {
 
     dotnet C:\Users\Przemek\.nuget\packages\reportgenerator\4.3.6\tools\netcoreapp2.1\ReportGenerator.dll "-reports:$testResultsFolder\MyTestOutput.coveragexml" "-targetdir:$testResultsFolder\coveragereport"
     write-host 'CoverageReport Published'  -ForegroundColor Green
-
 }
 catch {
     write-host "Caught an exception:" -ForegroundColor Red

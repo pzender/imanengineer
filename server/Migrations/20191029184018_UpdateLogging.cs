@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TV_App.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class UpdateLogging : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

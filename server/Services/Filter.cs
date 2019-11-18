@@ -34,7 +34,7 @@ namespace TV_App.Services
                 Date = desiredDate,
                 ChannelIds = channel_ids
             };
-            Console.WriteLine($"[{DateTime.Now}] {f.Log()}");
+            LogService.Log($"{f.Log()}");
             return f;
         }
 

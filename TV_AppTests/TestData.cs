@@ -1,11 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TV_App.Models;
 
 namespace TV_AppTests
 {
-    public class SampleXMLs
+    public class TestData
     {
+
+        public static Feature[] SampleFeatures = new Feature[]
+        {
+            new Feature() { Id =  0, Value = "USA", Type = 1 },
+            new Feature() { Id =  1, Value = "Japan", Type = 1 },
+            new Feature() { Id =  2, Value = "2016", Type = 2 },
+            new Feature() { Id =  3, Value = "2006", Type = 2 },
+            new Feature() { Id =  4, Value = "Sophie Turner", Type = 4 },
+            new Feature() { Id =  5, Value = "Jennifer Lawrence", Type = 4 },
+            new Feature() { Id =  6, Value = "Michael Fassbender", Type = 4 },
+            new Feature() { Id =  7, Value = "Bruce Willis", Type = 4 },
+            new Feature() { Id =  8, Value = "Bryan Singer", Type = 5 },
+            new Feature() { Id =  9, Value = "Quentin Tarantino", Type = 5 },
+            new Feature() { Id = 10, Value = "Film", Type = 7 },
+            new Feature() { Id = 11, Value = "Serial", Type = 7 },
+            new Feature() { Id = 12, Value = "Sensacyjny", Type = 7 },
+            new Feature() { Id = 13, Value = "Dokumentalny", Type = 7 },
+        };
+
+
         public static string TestChannels = @"<?xml version = ""1.0"" encoding=""utf-8"" ?>
                 <tv generator-info-name=""WebGrab+Plus/w MDB &amp; REX Postprocess -- version V2.1.9 -- Jan van Straaten"" generator-info-url=""http://www.webgrabplus.com"">
                     <channel id=""Stopklatka TV"">

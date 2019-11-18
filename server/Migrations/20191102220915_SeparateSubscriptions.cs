@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TV_App.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class SeparateSubscriptions : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

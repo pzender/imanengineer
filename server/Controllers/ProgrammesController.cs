@@ -27,7 +27,17 @@ namespace TV_App.Controllers
         {
             var channels = channelService.GetGroup(offer_id, theme_id).Select(ch => ch.Id);
             Filter filter = Filter.Create(null, null, 0, channels);
-            IEnumerable<ProgrammeDTO> programmes = programmeService.GetBySearchTerm(search, filter, username);
+            LogService.Log($" search: {search}");
+            List<ProgrammeDTO> programmes = programmeService.GetBySearchTerm(search, filter, username).ToList();
+            LogService.Log($" search: {search} - {programmes.Count} found by title");
+            IEnumerable<Feature> features = programmeService.GetFeatures(search);
+            foreach(Feature f in features)
+            {
+                var foundByFeature = programmeService.GetWithFeature(f, filter, username).ToList();
+                LogService.Log($" search: {search} - {foundByFeature.Count} found by feature {f.Value}");
+                programmes.AddRange(foundByFeature);
+            }
+            programmes = programmes.Distinct().ToList();
             int count = programmes.Count();
             Response.Headers.Add("X-Total-Count", count.ToString());
             return programmes;

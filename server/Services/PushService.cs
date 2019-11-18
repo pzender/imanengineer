@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using TV_App.Data_Transfer_Objects;
+using TV_App.DataTransferObjects;
 using TV_App.Models;
 using WebPush;
 
@@ -26,14 +26,14 @@ namespace TV_App.Services
                 var vapidDetails = new VapidDetails(SUBJECT, PUBLIC_KEY, PRIVATE_KEY);
                 var payload = new MessageDTO(title, body);
                 var webPushClient = new WebPushClient();
-                Console.WriteLine($"[{DateTime.Now}] Notification to {user.Login}: {title} - {body}");
+                LogService.Log($"Notification to {user.Login}: {title} - {body}");
                 try
                 {
                     webPushClient.SendNotification(subscription, JsonConvert.SerializeObject(payload), vapidDetails);
                 }
                 catch(WebPushException e)
                 {
-                    Console.WriteLine($"[{DateTime.Now}] Error - {e.Message}");
+                    LogService.Log($"Error - {e.Message}");
                 }
             }
         }

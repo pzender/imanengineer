@@ -1,17 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-//using Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
-using System.IO;
 using TV_App.Models;
 using TV_App.DataTransferObjects;
 using Microsoft.EntityFrameworkCore;
 using TV_App.Services;
 
-namespace Controllers
+namespace TV_App.Controllers
 {
     [Route("api/[controller]")]
     public class ChannelsController : Controller

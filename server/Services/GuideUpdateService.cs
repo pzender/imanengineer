@@ -11,19 +11,15 @@ namespace TV_App.Services
 {
     public class GuideUpdateService
     {
-        private readonly TvAppContext context;
+        private readonly TvAppContext db;
         private long lastGuideUpdateId;
 
-        public GuideUpdateService(TvAppContext context)
-        {
-            this.context = context;
-        }
-
+        public GuideUpdateService(TvAppContext db) { this.db = db; }
         public GuideUpdateService() : this(new TvAppContext()) { }
 
         private void InitGuideUpdate(string src)
         {
-            lastGuideUpdateId = GetNewId(context.GuideUpdates);
+            lastGuideUpdateId = GetNewId(db.GuideUpdates);
 
             GuideUpdate new_gu = new GuideUpdate()
             {
@@ -31,20 +27,20 @@ namespace TV_App.Services
                 Started = DateTime.Now,
                 Source = src
             };
-            context.GuideUpdates.Add(new_gu);
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - entry added");
-            context.SaveChanges();
+            db.GuideUpdates.Add(new_gu);
+            LogService.Log($"entry added");
+            db.SaveChanges();
 
         }
 
         public void ParseChannels(IEnumerable<XElement> channels_in_xml)
         {
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing channels");
-            long new_id = GetNewId(context.Channels);
+            LogService.Log($"parsing channels");
+            long new_id = GetNewId(db.Channels);
 
             foreach (XElement channel in channels_in_xml)
             {
-                if (!context.Channels.Where(ch => ch.Name == channel.Attribute("id").Value).Any())
+                if (!db.Channels.Where(ch => ch.Name == channel.Attribute("id").Value).Any())
                 {
                     Channel new_channel = new Channel()
                     {
@@ -52,18 +48,18 @@ namespace TV_App.Services
                         Name = channel.Attribute("id").Value,
                         IconUrl = channel.Element("icon")?.Attribute("src").Value,
                     };
-                    context.Channels.Add(new_channel);
+                    db.Channels.Add(new_channel);
                     new_id++;
                 }
             }
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - saving channels");
-            context.SaveChanges();
+            LogService.Log($"saving channels");
+            db.SaveChanges();
         }
 
         public void ParseAll(XDocument doc)
         {
             
-            if (!context.FeatureTypes.Any())
+            if (!db.FeatureTypes.Any())
             {
                 FillFeatureTypes();
             }
@@ -73,20 +69,20 @@ namespace TV_App.Services
             ParseChannels(channels_in_xml);
              
             //programy
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - parsing programmes");
+            LogService.Log($"parsing programmes");
             IEnumerable<XElement> programmes_in_xml = doc.Root.Elements("programme").ToList();
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - {programmes_in_xml.Count()} found");
+            LogService.Log($"{programmes_in_xml.Count()} found");
             if(programmes_in_xml.Count() > 0 )
-                Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - first at {programmes_in_xml.First().Attribute("start")}");
+                LogService.Log($"first at {programmes_in_xml.First().Attribute("start")}");
             List<Programme> new_programmes = new List<Programme>();
-            long new_id = GetNewId(context.Programmes);
+            long new_id = GetNewId(db.Programmes);
             List<Emission> new_emissions = new List<Emission>();
-            long em_id = GetNewId(context.Emissions);
+            long em_id = GetNewId(db.Emissions);
 
             List<Description> new_descriptions = new List<Description>();
-            long desc_id = GetNewId(context.Descriptions);
+            long desc_id = GetNewId(db.Descriptions);
             List<Feature> new_features = new List<Feature>();
-            long feat_id = GetNewId(context.Features);
+            long feat_id = GetNewId(db.Features);
 
             List<ProgrammesFeature> new_feature_examples = new List<ProgrammesFeature>();
             foreach (XElement programme in programmes_in_xml)
@@ -100,8 +96,8 @@ namespace TV_App.Services
                     new_title += "...";
                 }
                 Programme new_prog = null;
-                if (context.Programmes.Any())
-                    new_prog = context.Programmes.SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
+                if (db.Programmes.Any())
+                    new_prog = db.Programmes.SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
                 if (new_prog == null)
                     new_prog = new_programmes.SingleOrDefault(prog => prog.Title.ToLower() == new_title.ToLower());
 
@@ -123,10 +119,10 @@ namespace TV_App.Services
 
                 DateTime em_start = ParseDateTime(programme.Attribute("start").Value);
                 DateTime em_stop = ParseDateTime(programme.Attribute("stop").Value);
-                Channel em_channel = context.Channels.Where(ch => ch.Name == programme.Attribute("channel").Value).Single();
+                Channel em_channel = db.Channels.Where(ch => ch.Name == programme.Attribute("channel").Value).Single();
 
-                if (context.Emissions.Any())
-                    new_em = context.Emissions.FirstOrDefault(e => e.Start == em_start && e.Stop == em_stop && e.ChannelId == em_channel.Id);
+                if (db.Emissions.Any())
+                    new_em = db.Emissions.FirstOrDefault(e => e.Start == em_start && e.Stop == em_stop && e.ChannelId == em_channel.Id);
                 if (new_em == null)
                     new_em = new_prog.Emissions.FirstOrDefault(e => e.Start == em_start && e.Stop == em_stop && e.ChannelId == em_channel.Id);
 
@@ -150,7 +146,7 @@ namespace TV_App.Services
                     }
                 }
 
-                Description new_desc = context.Descriptions.Any() ? context.Descriptions.FirstOrDefault(desc => desc.ProgrammeId == new_prog.Id) : null;
+                Description new_desc = db.Descriptions.Any() ? db.Descriptions.FirstOrDefault(desc => desc.ProgrammeId == new_prog.Id) : null;
 
                 if (new_desc == null)
                 {
@@ -179,14 +175,14 @@ namespace TV_App.Services
                 {
                     string type = feat.Name.LocalName;
                    
-                    long type_id = context.FeatureTypes
+                    long type_id = db.FeatureTypes
                         .FirstOrDefault(ft => ft.TypeName == type)
                         .Id;
 
                     string value = feat.Value;
                     Feature new_feat = null;
-                    if (context.Features != null && context.Features.Count() > 0)
-                        new_feat = context.Features.SingleOrDefault(f => f.Type == type_id && f.Value.ToLower() == value.ToLower());
+                    if (db.Features != null && db.Features.Count() > 0)
+                        new_feat = db.Features.SingleOrDefault(f => f.Type == type_id && f.Value.ToLower() == value.ToLower());
                     if (new_feat == null)
                         new_feat = new_features.SingleOrDefault(f => f.Type == type_id && f.Value.ToLower() == value.ToLower());
                     if (new_feat == null)
@@ -194,7 +190,7 @@ namespace TV_App.Services
                         new_feat = new Feature()
                         {
                             Id = feat_id,
-                            RelType = context.FeatureTypes.Single(ft => ft.TypeName == type),
+                            RelType = db.FeatureTypes.Single(ft => ft.TypeName == type),
                             Type = type_id,
                             Value = value
                         };
@@ -204,8 +200,8 @@ namespace TV_App.Services
 
                     ProgrammesFeature pf_value_found = null;
 
-                    if (context.ProgrammesFeatures != null && context.ProgrammesFeatures.Any())
-                        pf_value_found = context.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id);
+                    if (db.ProgrammesFeatures != null && db.ProgrammesFeatures.Any())
+                        pf_value_found = db.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id);
                     if (new_prog.ProgrammesFeatures != null && new_prog.ProgrammesFeatures.Any())
                         pf_value_found = new_prog.ProgrammesFeatures.SingleOrDefault(fe => fe.FeatureId == new_feat.Id && fe.ProgrammeId == new_prog.Id);
                     if (pf_value_found == null)
@@ -218,11 +214,11 @@ namespace TV_App.Services
                     }
                 }
             }
-            context.Features.AddRange(new_features);
-            context.Programmes.AddRange(new_programmes);
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - saving programmes");
-            context.SaveChanges();
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - programmes done");
+            db.Features.AddRange(new_features);
+            db.Programmes.AddRange(new_programmes);
+            LogService.Log($"saving programmes");
+            db.SaveChanges();
+            LogService.Log($"programmes done");
 
             Cleanup();
             FinishGuideUpdate();
@@ -230,48 +226,48 @@ namespace TV_App.Services
 
         private void Cleanup()
         {
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - notifications");
-            var old_notifications = context.Notifications
+            LogService.Log($"cleanup - notifications");
+            var old_notifications = db.Notifications
                 .Include(n => n.RelEmission)
                 .Where(n => n.RelEmission.Stop < DateTime.Today);
             //context.Notifications.RemoveRange(old_notifications);
-            context.SaveChanges();
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - emissions");
-            context.Emissions.RemoveRange(
-                context.Emissions.Where(em => em.Stop < DateTime.Today)
+            db.SaveChanges();
+            LogService.Log($"cleanup - emissions");
+            db.Emissions.RemoveRange(
+                db.Emissions.Where(em => em.Stop < DateTime.Today)
             );
-            context.SaveChanges();
+            db.SaveChanges();
 
-            List<long> emptyProgrammeIds = context.Programmes
+            List<long> emptyProgrammeIds = db.Programmes
                 .Include(prog => prog.Emissions)
                 .Include(prog => prog.Ratings)
                 .Where(prog => prog.Emissions.Count == 0 && prog.Ratings.Count == 0)
                 .Select(prog => prog.Id)
                 .ToList();
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - {emptyProgrammeIds.Count} empty");
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - descriptions");
-            context.Descriptions
-                .RemoveRange(context.Descriptions.Where(desc => emptyProgrammeIds.Contains(desc.ProgrammeId)));
-            context.SaveChanges();
+            LogService.Log($"cleanup - {emptyProgrammeIds.Count} empty");
+            LogService.Log($"cleanup - descriptions");
+            db.Descriptions
+                .RemoveRange(db.Descriptions.Where(desc => emptyProgrammeIds.Contains(desc.ProgrammeId)));
+            db.SaveChanges();
 
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - programme-featues");
-            context.ProgrammesFeatures
-                .RemoveRange(context.ProgrammesFeatures.Where(pf => emptyProgrammeIds.Contains(pf.ProgrammeId)));
-            context.SaveChanges();
+            LogService.Log($"cleanup - programme-featues");
+            db.ProgrammesFeatures
+                .RemoveRange(db.ProgrammesFeatures.Where(pf => emptyProgrammeIds.Contains(pf.ProgrammeId)));
+            db.SaveChanges();
 
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - programmes");
-            context.Programmes
-                .RemoveRange(context.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
-            context.SaveChanges();
+            LogService.Log($"cleanup - programmes");
+            db.Programmes
+                .RemoveRange(db.Programmes.Where(prog => emptyProgrammeIds.Contains(prog.Id)));
+            db.SaveChanges();
         }
 
         private void FinishGuideUpdate()
         {
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - cleanup - finished");
-            GuideUpdate last = context.GuideUpdates.Single(gu => gu.Id == lastGuideUpdateId);
+            LogService.Log($"cleanup - finished");
+            GuideUpdate last = db.GuideUpdates.Single(gu => gu.Id == lastGuideUpdateId);
             last.Finished = DateTime.Now;
-            context.SaveChanges();
-            Console.WriteLine($"[{DateTime.Now}] GuideUpdate processing - finish");
+            db.SaveChanges();
+            LogService.Log($"finish");
         }
 
         private DateTime ParseDateTime(string inp)
@@ -287,7 +283,7 @@ namespace TV_App.Services
         }
         private void FillFeatureTypes()
         {
-            context.FeatureTypes.AddRange(new List<FeatureType>
+            db.FeatureTypes.AddRange(new List<FeatureType>
             {
                 new FeatureType() { Id = 1, TypeName = "country" },
                 new FeatureType() { Id = 2, TypeName = "date" },
@@ -299,7 +295,7 @@ namespace TV_App.Services
                 new FeatureType() { Id = 8, TypeName = "keyword" },
 
             });
-            context.SaveChanges();
+            db.SaveChanges();
         }
 
         public long GetNewId<T> (DbSet<T> dbset) where T : class, IEntityWithID

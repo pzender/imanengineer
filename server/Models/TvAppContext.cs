@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace TV_App.Models
 {
+    [ExcludeFromCodeCoverage]
     public partial class TvAppContext : DbContext
     {
         private const string DB_HOST = "167.71.51.30";
