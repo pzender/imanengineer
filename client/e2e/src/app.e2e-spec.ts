@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('workspace-project App', () => {
+describe('LookingGlass app', () => {
   let page: AppPage;
 
   beforeEach(() => {
@@ -33,4 +33,27 @@ describe('workspace-project App', () => {
     prog_link.click();
     expect(page.getHeader()).toEqual(prog_link_text);
   });
+
+  it('should log in correctly', () => {
+    expect(page.login()).toEqual('Witaj, auto!');
+    page.clickHeaderLink('Wyloguj');
+  });
+
+  it('should display show rated programme in ratings', () => {
+    expect(page.login()).toEqual('Witaj, auto!');
+    page.getChannelLink().click();
+    page.nextDay();
+    let prog_link = page.getFirstTitle();
+    page.clickHeaderLink('Wyloguj');
+
+  });
+
+  it('should display recommendations', () => {
+    expect(page.login()).toEqual('Witaj, auto!');
+    page.clickHeaderLink('Polecane');
+    expect(page.getFirstTitle()).toBeTruthy();
+    page.clickHeaderLink('Wyloguj');
+  });
+
+
 });

@@ -184,7 +184,7 @@ namespace TV_App.Controllers
             {
                 name = await sr.ReadToEndAsync();
             }
-            
+            LogService.Log($"creating user - {name}");
             User user = DbContext.Users.Where(u => u.Login == name).FirstOrDefault();
             if (user == null)
             {
@@ -193,7 +193,7 @@ namespace TV_App.Controllers
                     Login = name
                 };
                 DbContext.Users.Add(user);
-                await DbContext.SaveChangesAsync();
+                DbContext.SaveChanges();
                 return StatusCode(200, user);
             }
             else return StatusCode(409, "Username exists!");
